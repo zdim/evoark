@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2F6FF9E3-07F5-4D4A-896C-E4CF13117F0C}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>EvoArk</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Fiercy\Desktop\EvoArk Strawman\EvoArk\GameStates\LevelStates;C:\Users\Fiercy\Desktop\EvoArk Strawman\EvoArk\GameStates;C:\Users\Fiercy\Desktop\EvoArk Strawman\EvoArk\Entities\Ships;C:\Users\Fiercy\Desktop\EvoArk Strawman\EvoArk\Entities;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Entities\Entity.h" />
+    <ClInclude Include="Entities\EntityManager.h" />
+    <ClInclude Include="Entities\IEntity.h" />
+    <ClInclude Include="Entities\Modules\Engine.h" />
+    <ClInclude Include="Entities\Modules\LaserModule.h" />
+    <ClInclude Include="Entities\Modules\MissileModule.h" />
+    <ClInclude Include="Entities\Modules\Module.h" />
+    <ClInclude Include="Entities\Modules\PushModule.h" />
+    <ClInclude Include="Entities\Modules\ShieldModule.h" />
+    <ClInclude Include="Entities\Modules\TurretModule.h" />
+    <ClInclude Include="Entities\Modules\WarpModule.h" />
+    <ClInclude Include="Entities\Modules\WellModule.h" />
+    <ClInclude Include="Entities\Projectiles\GravityProjectile.h" />
+    <ClInclude Include="Entities\Projectiles\Missile.h" />
+    <ClInclude Include="Entities\Projectiles\Projectile.h" />
+    <ClInclude Include="Entities\Projectiles\Push.h" />
+    <ClInclude Include="Entities\Projectiles\Well.h" />
+    <ClInclude Include="Entities\Ships\Enemies\Cobra.h" />
+    <ClInclude Include="Entities\Ships\Enemies\Coordinator.h" />
+    <ClInclude Include="Entities\Ships\Enemies\Copperhead.h" />
+    <ClInclude Include="Entities\Ships\Enemies\Coral.h" />
+    <ClInclude Include="Entities\Ships\Enemies\Enemy.h" />
+    <ClInclude Include="Entities\Ships\Enemies\EnemyLeader.h" />
+    <ClInclude Include="Entities\Ships\Enemies\Mamba.h" />
+    <ClInclude Include="Entities\Ships\Enemies\Moccasin.h" />
+    <ClInclude Include="Entities\Ships\Human.h" />
+    <ClInclude Include="Entities\Ships\Player.h" />
+    <ClInclude Include="Entities\Ships\Ship.h" />
+    <ClInclude Include="Event System\CustomEvent.h" />
+    <ClInclude Include="Event System\EventManager.h" />
+    <ClInclude Include="GameStates\CreditsState.h" />
+    <ClInclude Include="GameStates\GameState.h" />
+    <ClInclude Include="GameStates\IGameState.h" />
+    <ClInclude Include="GameStates\LevelStates\FinalLevelState.h" />
+    <ClInclude Include="GameStates\LevelStates\ILevelState.h" />
+    <ClInclude Include="GameStates\LevelStates\MainLevelState.h" />
+    <ClInclude Include="GameStates\LevelStates\TutorialState.h" />
+    <ClInclude Include="GameStates\MainMenuState.h" />
+    <ClInclude Include="GameStates\OptionsState.h" />
+    <ClInclude Include="GameStates\PauseState.h" />
+    <ClInclude Include="GameStates\SaveSelectState.h" />
+    <ClInclude Include="GameStates\UpgradeState.h" />
+    <ClInclude Include="Graphics\Particles\Emitter.h" />
+    <ClInclude Include="Graphics\Particles\Flyweight.h" />
+    <ClInclude Include="Graphics\Particles\Particle.h" />
+    <ClInclude Include="Graphics\Particles\ParticleSystem.h" />
+    <ClInclude Include="Message System\Message.h" />
+    <ClInclude Include="Message System\MessageManager.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="SGD Wrappers\SGD_AudioManager.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Color.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Declarations.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Geometry.h" />
+    <ClInclude Include="SGD Wrappers\SGD_GraphicsManager.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Handle.h" />
+    <ClInclude Include="SGD Wrappers\SGD_HandleManager.h" />
+    <ClInclude Include="SGD Wrappers\SGD_HandleManager.hpp" />
+    <ClInclude Include="SGD Wrappers\SGD_InputManager.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Key.h" />
+    <ClInclude Include="SGD Wrappers\SGD_String.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TinyXML\tinystr.h" />
+    <ClInclude Include="TinyXML\tinyxml.h" />
+    <ClInclude Include="WinMain.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Entities\Entity.cpp" />
+    <ClCompile Include="Entities\EntityManager.cpp" />
+    <ClCompile Include="Entities\IEntity.cpp" />
+    <ClCompile Include="Entities\Modules\Engine.cpp" />
+    <ClCompile Include="Entities\Modules\LaserModule.cpp" />
+    <ClCompile Include="Entities\Modules\MissileModule.cpp" />
+    <ClCompile Include="Entities\Modules\Module.cpp" />
+    <ClCompile Include="Entities\Modules\PushModule.cpp" />
+    <ClCompile Include="Entities\Modules\ShieldModule.cpp" />
+    <ClCompile Include="Entities\Modules\TurretModule.cpp" />
+    <ClCompile Include="Entities\Modules\WarpModule.cpp" />
+    <ClCompile Include="Entities\Modules\WellModule.cpp" />
+    <ClCompile Include="Entities\Projectiles\GravityProjectile.cpp" />
+    <ClCompile Include="Entities\Projectiles\Missile.cpp" />
+    <ClCompile Include="Entities\Projectiles\Projectile.cpp" />
+    <ClCompile Include="Entities\Projectiles\Push.cpp" />
+    <ClCompile Include="Entities\Projectiles\Well.cpp" />
+    <ClCompile Include="Entities\Ships\Enemies\Cobra.cpp" />
+    <ClCompile Include="Entities\Ships\Enemies\Coordinator.cpp" />
+    <ClCompile Include="Entities\Ships\Enemies\Copperhead.cpp" />
+    <ClCompile Include="Entities\Ships\Enemies\Coral.cpp" />
+    <ClCompile Include="Entities\Ships\Enemies\Enemy.cpp" />
+    <ClCompile Include="Entities\Ships\Enemies\EnemyLeader.cpp" />
+    <ClCompile Include="Entities\Ships\Enemies\Mamba.cpp" />
+    <ClCompile Include="Entities\Ships\Enemies\Moccasin.cpp" />
+    <ClCompile Include="Entities\Ships\Human.cpp" />
+    <ClCompile Include="Entities\Ships\Player.cpp" />
+    <ClCompile Include="Entities\Ships\Ship.cpp" />
+    <ClCompile Include="Event System\CustomEvent.cpp" />
+    <ClCompile Include="Event System\EventManager.cpp" />
+    <ClCompile Include="GameStates\CreditsState.cpp" />
+    <ClCompile Include="GameStates\GameState.cpp" />
+    <ClCompile Include="GameStates\IGameState.cpp" />
+    <ClCompile Include="GameStates\LevelStates\FinalLevelState.cpp" />
+    <ClCompile Include="GameStates\LevelStates\ILevelState.cpp" />
+    <ClCompile Include="GameStates\LevelStates\MainLevelState.cpp" />
+    <ClCompile Include="GameStates\LevelStates\TutorialState.cpp" />
+    <ClCompile Include="GameStates\MainMenuState.cpp" />
+    <ClCompile Include="GameStates\OptionsState.cpp" />
+    <ClCompile Include="GameStates\PauseState.cpp" />
+    <ClCompile Include="GameStates\SaveSelectState.cpp" />
+    <ClCompile Include="GameStates\UpgradeState.cpp" />
+    <ClCompile Include="Graphics\Particles\Emitter.cpp" />
+    <ClCompile Include="Graphics\Particles\Flyweight.cpp" />
+    <ClCompile Include="Graphics\Particles\Particle.cpp" />
+    <ClCompile Include="Graphics\Particles\ParticleSystem.cpp" />
+    <ClCompile Include="Message System\Message.cpp" />
+    <ClCompile Include="Message System\MessageManager.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_Geometry.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_GraphicsManager.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_InputManager.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinystr.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="WinMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="EvoArk.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="EvoArk.ico" />
+    <Image Include="small.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
