@@ -139,6 +139,8 @@
     <ClInclude Include="SGD Wrappers\SGD_Key.h" />
     <ClInclude Include="SGD Wrappers\SGD_String.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TinyXML\tinystr.h" />
+    <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="WinMain.h" />
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +197,10 @@
     <ClCompile Include="SGD Wrappers\SGD_Geometry.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_GraphicsManager.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_InputManager.cpp" />
+    <ClCompile Include="TinyXML\tinystr.cpp" />
+    <ClCompile Include="TinyXML\tinyxml.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
