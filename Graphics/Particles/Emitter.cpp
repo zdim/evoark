@@ -32,7 +32,7 @@ void CEmitter::Update(float deltaTime)
 			it->SetCurLife(0);
 
 		// primitive movement 
-		SGD::Point pos;
+		SGD::Point pos = SGD::Point{ 0, 0 };
 		pos.x += particleData.GetMaxVelX();
 		pos.y += particleData.GetMaxVelY();
 		it->SetCurPos(pos);
