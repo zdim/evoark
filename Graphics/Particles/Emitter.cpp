@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "Emitter.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 
@@ -43,10 +43,10 @@ void CEmitter::Update(float deltaTime)
 #pragma region Calc Particle Color Change
 
 
-		unsigned char A = particleData.GetEndA() + fLifeCycle * (particleData.GetStartA() - particleData.GetEndA());
-		unsigned char R = particleData.GetEndR() + fLifeCycle * (particleData.GetStartR() - particleData.GetEndR());
-		unsigned char G = particleData.GetEndG() + fLifeCycle * (particleData.GetStartG() - particleData.GetEndG());
-		unsigned char B = particleData.GetEndB() + fLifeCycle * (particleData.GetStartB() - particleData.GetEndB());
+		float A = particleData.GetEndA() + fLifeCycle * (particleData.GetStartA() - particleData.GetEndA());
+		float R = particleData.GetEndR() + fLifeCycle * (particleData.GetStartR() - particleData.GetEndR());
+		float G = particleData.GetEndG() + fLifeCycle * (particleData.GetStartG() - particleData.GetEndG());
+		float B = particleData.GetEndB() + fLifeCycle * (particleData.GetStartB() - particleData.GetEndB());
 
 		if (A < 0) { A = 0; }
 		else if (A > 255) { A = 255; }

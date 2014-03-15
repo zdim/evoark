@@ -13,7 +13,7 @@
 \***********************************************************************/
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>		// Win32 Application
-#include "stdafx.h"
+
 //#include <vld.h>			// Visual Leak Detector!
 //#include "Game.h"			// Game class
 
