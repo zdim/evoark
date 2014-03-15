@@ -1,7 +1,7 @@
 #pragma once
-#include "GameState.h"
+#include "IGameState.h"
 class CPauseState :
-	public CGameState
+	public IGameState
 {
 public:
 	CPauseState();

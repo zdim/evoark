@@ -15,7 +15,7 @@
 #include <Windows.h>		// Win32 Application
 
 //#include <vld.h>			// Visual Leak Detector!
-//#include "Game.h"			// Game class
+#include "GameStates\Game.h"			// Game class
 
 
 //*********************************************************************//
@@ -63,11 +63,11 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	// Initialize game
 	
 	// Access the game singleton
-	//Game* pGame = Game::GetInstance();
+	Game* pGame = Game::GetInstance();
 
 	// Initialize
-	//if( pGame->Initialize( WINDOW_WIDTH, WINDOW_HEIGHT ) == false )
-		//return -3;
+	if( pGame->Initialize( WINDOW_WIDTH, WINDOW_HEIGHT ) == false )
+		return -3;
 
 
 
@@ -88,9 +88,9 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		{
 			/////////////////////////////////////////////////////////////
 			// Run game
-			/*int result = pGame->Main();
+			int result = pGame->Main();
 			if( result != 0 )
-				PostQuitMessage( result );*/
+				PostQuitMessage( result );
 
 		}
 	}
@@ -98,9 +98,9 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	
 	/////////////////////////////////////////////////////////////////////
 	// Terminate game
-	//pGame->Terminate();
-	//pGame = nullptr;
-	//Game::DeleteInstance();
+	pGame->Terminate();
+	pGame = nullptr;
+	Game::DeleteInstance();
 
 
 	// Unregister the window class

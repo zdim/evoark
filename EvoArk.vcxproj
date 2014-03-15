@@ -108,6 +108,7 @@
     <ClInclude Include="Event System\CustomEvent.h" />
     <ClInclude Include="Event System\EventManager.h" />
     <ClInclude Include="GameStates\CreditsState.h" />
+    <ClInclude Include="GameStates\Game.h" />
     <ClInclude Include="GameStates\GameState.h" />
     <ClInclude Include="GameStates\IGameState.h" />
     <ClInclude Include="GameStates\LevelStates\FinalLevelState.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Event System\CustomEvent.cpp" />
     <ClCompile Include="Event System\EventManager.cpp" />
     <ClCompile Include="GameStates\CreditsState.cpp" />
+    <ClCompile Include="GameStates\Game.cpp" />
     <ClCompile Include="GameStates\GameState.cpp" />
     <ClCompile Include="GameStates\IGameState.cpp" />
     <ClCompile Include="GameStates\LevelStates\FinalLevelState.cpp" />
