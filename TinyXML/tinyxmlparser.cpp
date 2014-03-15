@@ -1,4 +1,3 @@
-
 /*
 www.sourceforge.net/projects/tinyxml
 Original code by Lee Thomason (www.grinninglizard.com)
@@ -25,6 +24,7 @@ distribution.
 
 #include <ctype.h>
 #include <stddef.h>
+
 #include "tinyxml.h"
 
 //#define DEBUG_PARSER
