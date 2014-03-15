@@ -74,7 +74,7 @@ bool Game::Initialize( int width, int height )
 	m_pInput	= SGD::InputManager::GetInstance();
 	
 	// Initialize each singleton
-	if( m_pAudio->Initialize() == false 
+	if(   m_pAudio->Initialize() == false 
 	   || m_pGraphics->Initialize( false ) == false 
 	   || m_pInput->Initialize() == false )
 	{
@@ -120,7 +120,7 @@ bool Game::Initialize( int width, int height )
 int Game::Main( void )
 {
 	if( m_pAudio->Update() == false 
-	   || m_pGraphics->Update() == false 
+	   ||m_pGraphics->Update() == false 
 	   || m_pInput->Update() == false )
 	{
 		return -10;		// abort!
@@ -172,7 +172,7 @@ void Game::Terminate( void )
 //	delete m_pFont;
 //	m_pFont = nullptr;
 
-//	m_pAudio->UnloadAudio(m_hSfxMusic);
+	//m_pAudio->UnloadAudio(m_hSfxMusic);
 
 
 	// Terminate & deallocate the SGD wrappers

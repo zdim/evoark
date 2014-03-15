@@ -1,6 +1,8 @@
 #pragma once
 #include "IGameState.h"
 #include "../SGD Wrappers/SGD_Handle.h"
+class CFlyweight;
+class CEmitter;
 
 class CGameState :
 	public IGameState
@@ -20,5 +22,12 @@ private:
 	virtual ~CGameState();
 
 	SGD::HTexture BackgroundImage;
+	SGD::HTexture TestParticle;
+	CFlyweight    *dataParticleTest;
+	CEmitter      *testEmit;
+
+	CFlyweight    *dataParticleTest2;
+	CEmitter      *testEmit2;
+
 };
 

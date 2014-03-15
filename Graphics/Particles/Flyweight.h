@@ -1,6 +1,7 @@
 #pragma once
 #include "../../SGD Wrappers/SGD_Color.h"
 #include "../../SGD Wrappers/SGD_Handle.h"
+#include "../../SGD Wrappers/SGD_Geometry.h"
 
 class CFlyweight
 {
@@ -8,7 +9,7 @@ class CFlyweight
 private:
 	SGD::HTexture image;
 
-
+	
 	float m_fStartScale;
 	float m_fEndScale;
 
@@ -31,6 +32,7 @@ private:
 
 	float m_fVelYMax;
 	float m_fVelYMin;
+
 
 
 public:

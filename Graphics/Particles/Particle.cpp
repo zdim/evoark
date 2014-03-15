@@ -25,3 +25,15 @@ CParticle::~CParticle()
 {
 }
 
+RECT CParticle::GetRect(void) const
+{
+	RECT rSelf =
+	{
+		(LONG)curPosition.x,
+		(LONG)curPosition.y,
+		(LONG)(curPosition.x + 256),
+		(LONG)(curPosition.y + 256)
+	};
+
+	return rSelf;
+}

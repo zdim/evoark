@@ -1,5 +1,7 @@
 #pragma once
+#define WINDOWS_LEAN_AND_MEAN
 #include "Flyweight.h"
+#include <Windows.h>
 #include "../../SGD Wrappers/SGD_Color.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 class CParticle
@@ -57,6 +59,10 @@ public:
 	void SetCurVelX(float velX)    { m_fCurVelX = velX; }
 	void SetCurVelY(float velY)    { m_fCurVelY = velY; }
 	void SetCurScale(float scale)  { m_fCurScale = scale; }
+
+	RECT GetRect(void) const;
+	
+
 
 
 };
