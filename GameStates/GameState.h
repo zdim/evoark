@@ -1,6 +1,7 @@
 #pragma once
 #include "IGameState.h"
 #include "../SGD Wrappers/SGD_Handle.h"
+#include "../Entities/EntityManager.h"
 #include "../SGD Wrappers/SGD_Geometry.h"
 #include "../SGD Wrappers/SGD_Color.h"
 #include <vector>
@@ -13,6 +14,7 @@ class CGameState :
 {
 public:
 	static CGameState* GetInstance(void);
+
 
 	virtual void	Enter(void)				override;
 	virtual void	Exit(void)				override;
@@ -28,6 +30,8 @@ private:
 	int m_nScreenHeight = 0;
 	int m_nScreenWidth = 0;
 	SGD::HTexture BackgroundImage;
+	//CEntityManager EnitityManager;
+	SGD::GraphicsManager* graphics;
 
 	// level creation
 	enum Objects { PLAYER, COPPERHEAD, COBRA, MAMBA, CORAL, MOCASSIN, ASTEROID, NONE, NUM_OBJECTS };

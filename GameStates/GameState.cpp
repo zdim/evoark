@@ -25,8 +25,13 @@ CGameState* CGameState::GetInstance(void)
 
 void	CGameState::Enter(void)
 {
+	graphics = SGD::GraphicsManager::GetInstance();
+	BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
+
+	//JD's Test flock, ally and player
+//	EnitityManager.Spawn(EntityType::Player, {100,150}, 1);
 	srand((unsigned int)time(nullptr));
-	BackgroundImage = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/backgroundTmp.png");
+
 	Generate();
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
@@ -72,16 +77,19 @@ bool	CGameState::Input(void)
 
 void	CGameState::Update(float dt)
 {
+	//EnitityManager.Update(dt);
 	testEmit->Update(dt);
 	testEmit2->Update(dt);
 }
 
 void	CGameState::Render(void)
 {
-	SGD::GraphicsManager::GetInstance()->DrawTexture(BackgroundImage, {0,0});
+	graphics->DrawTexture(BackgroundImage, { 0, 0 });
+
 	//SGD::GraphicsManager::GetInstance()->DrawTexture(BackgroundImage, testEmit->GetEmitterPosition());
 	testEmit->Render();
 	testEmit2->Render();
+	//EnitityManager.Render();
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		if (enemies[i].type != NONE)

@@ -80,6 +80,7 @@
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\EntityManager.h" />
     <ClInclude Include="Entities\IEntity.h" />
+    <ClInclude Include="Entities\Leader.h" />
     <ClInclude Include="Entities\Modules\Engine.h" />
     <ClInclude Include="Entities\Modules\LaserModule.h" />
     <ClInclude Include="Entities\Modules\MissileModule.h" />
@@ -95,7 +96,6 @@
     <ClInclude Include="Entities\Projectiles\Push.h" />
     <ClInclude Include="Entities\Projectiles\Well.h" />
     <ClInclude Include="Entities\Ships\Enemies\Cobra.h" />
-    <ClInclude Include="Entities\Ships\Enemies\Coordinator.h" />
     <ClInclude Include="Entities\Ships\Enemies\Copperhead.h" />
     <ClInclude Include="Entities\Ships\Enemies\Coral.h" />
     <ClInclude Include="Entities\Ships\Enemies\Enemy.h" />
@@ -147,6 +147,7 @@
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\EntityManager.cpp" />
     <ClCompile Include="Entities\IEntity.cpp" />
+    <ClCompile Include="Entities\Leader.cpp" />
     <ClCompile Include="Entities\Modules\Engine.cpp" />
     <ClCompile Include="Entities\Modules\LaserModule.cpp" />
     <ClCompile Include="Entities\Modules\MissileModule.cpp" />
@@ -162,7 +163,6 @@
     <ClCompile Include="Entities\Projectiles\Push.cpp" />
     <ClCompile Include="Entities\Projectiles\Well.cpp" />
     <ClCompile Include="Entities\Ships\Enemies\Cobra.cpp" />
-    <ClCompile Include="Entities\Ships\Enemies\Coordinator.cpp" />
     <ClCompile Include="Entities\Ships\Enemies\Copperhead.cpp" />
     <ClCompile Include="Entities\Ships\Enemies\Coral.cpp" />
     <ClCompile Include="Entities\Ships\Enemies\Enemy.cpp" />
