@@ -39,7 +39,7 @@ void CEmitter::Update(float deltaTime)
 	m_fEmitTime -= deltaTime;
 	
 	
-		
+	//While loop is to expenisve create a timer for that 	
 
 	while (m_fTimeFromLastSpawn >= m_fSpawnRate)
 	{
@@ -95,7 +95,13 @@ void CEmitter::Update(float deltaTime)
 #pragma endregion 
 
 			// Calc Partical Scale Change 
-			(*it)->SetCurScale(particleData->GetEndScale() * fLifeCycle * (particleData->GetStartScale() - particleData->GetEndScale()));
+
+			float curWidth = particleData->GetEndScale().width * fLifeCycle * (particleData->GetStartScale().width - particleData->GetEndScale().width);
+			float curHeight = particleData->GetEndScale().height * fLifeCycle * (particleData->GetStartScale().height - particleData->GetEndScale().height);
+
+			SGD::Size curSize{ curWidth, curHeight };
+
+			(*it)->SetCurScale(curSize);
 
 
 			//Kill dead particles
@@ -120,9 +126,9 @@ void CEmitter::Render()
 	for (std::list<CParticle*>::iterator it = m_lAliveParticles.begin(); it != m_lAliveParticles.end(); ++it)
 	{
 		SGD::Vector test{ 0, 0 };
-		SGD::Size testscale { 0.05f, 0.05f };
+		//SGD::Size testscale { 0.05f, 0.05f };
 		
-		SGD::GraphicsManager::GetInstance()->DrawTexture(particleData->GetImage(), (*it)->GetCurPos(), 0.0f, test, (*it)->GetCurColor(), testscale);
+		SGD::GraphicsManager::GetInstance()->DrawTexture(particleData->GetImage(), (*it)->GetCurPos(), 0.0f, test, (*it)->GetCurColor(), (*it)->GetCurScale());
 	}
 }
 
@@ -133,7 +139,7 @@ CParticle CEmitter::CreateParticle()
 	float      tempLife = particleData->GetMaxLife();
 	float      tempVelX = particleData->GetMaxVelX();
 	float      tempVelY = particleData->GetMaxVelY();
-	float      tempScale = particleData->GetStartScale();
+	SGD::Size      tempScale = particleData->GetStartScale();
 	CParticle tempParticle(tempColor, emitterPosition, tempLife, tempVelX, tempVelY, tempScale);
 	return tempParticle;
 }

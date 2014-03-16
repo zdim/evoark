@@ -10,7 +10,7 @@ CParticle::CParticle()
 CParticle::CParticle(SGD::Color cColor, SGD::Point cPosition,
 	float CurLife,
 	float CurVelX, float CurVelY,
-	float CurScale
+	SGD::Size CurScale
 	)
 {
 	curColor = cColor;

@@ -24,13 +24,13 @@ void	CGameState::Enter(void)
 	BackgroundImage = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/backgroundTmp.png");
 	TestParticle = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/test.png");
 
-	dataParticleTest = new CFlyweight(TestParticle, 1.0f, 1.0f,
+	dataParticleTest = new CFlyweight(TestParticle, { 0.4f, 0.4f }, { 0.1f, 0.1f },
 		255, 127, 0, 0, 
 		255, 255, 0, 0, 
 		1, 1,
 		35, 5, 35, 5);
 
-	dataParticleTest2 = new CFlyweight(TestParticle, 1.0f, 1.0f,
+	dataParticleTest2 = new CFlyweight(TestParticle, { 0.4f, 0.4f }, { 0.1f, 0.1f },
 		255, 150, 0, 0,
 		255, 1, 0, 1,
 		1, 1,
