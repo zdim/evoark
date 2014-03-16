@@ -30,7 +30,7 @@ void	CGameState::Enter(void)
 	Generate();
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
-}
+
 	TestParticle = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/test.png");
 
 	dataParticleTest = new CFlyweight(TestParticle, { 0.4f, 0.4f }, { 0.1f, 0.1f },
@@ -78,7 +78,7 @@ void	CGameState::Update(float dt)
 
 void	CGameState::Render(void)
 {
-	
+	SGD::GraphicsManager::GetInstance()->DrawTexture(BackgroundImage, {0,0});
 	//SGD::GraphicsManager::GetInstance()->DrawTexture(BackgroundImage, testEmit->GetEmitterPosition());
 	testEmit->Render();
 	testEmit2->Render();
