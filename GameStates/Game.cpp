@@ -1,6 +1,6 @@
 /***************************************************************
 |	File:		Game.cpp
-|	Author:		Jonathan Sullivan
+|	Author:		
 |	Course:		SGD 1401
 |	Purpose:	Game class controls the SGD wrappers
 |				& runs the game state machine

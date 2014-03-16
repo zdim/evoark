@@ -28,27 +28,39 @@ private:
 	SGD::HTexture BackgroundImage;
 
 	// level creation
+	enum Objects { PLAYER, COPPERHEAD, COBRA, MAMBA, CORAL, MOCASSIN, ASTEROID, NONE, NUM_OBJECTS };
 
 	struct enemy
 	{
-		SGD::Rectangle pos;
+		SGD::Point pos;
+		SGD::Size size;
 		SGD::Color col;
-		std::string type;
+		Objects type;
+	};
+
+	struct Quadrant
+	{
+		int x;
+		int y;
+		int possibleObjects;
+		Objects objType;
+		int objectAmount;
 	};
 
 	void		Generate();
 	int m_nQuadWidth = 0;
 	int m_nQuadHeight = 0;
+	int m_nNumQuadsWidth = 0;
+	int m_nNumQuadsHeight = 0;
 	std::vector<enemy> enemies;
-	
-	struct Quadrant
-	{
-		int x;
-		int y;
-		std::string objectType;
-		int objectAmount;
 
-	};
+	typedef std::vector<Quadrant> QuadCol;
+	typedef std::vector<QuadCol> World;
+	//QuadRow quadRow;
+	World world;
+	
+
+
 
 	// xml test
 	bool	LoadXMLLevel(const char* pXMLFile);
