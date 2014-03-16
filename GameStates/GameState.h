@@ -1,12 +1,14 @@
 #pragma once
 #include "IGameState.h"
 #include "../SGD Wrappers/SGD_Handle.h"
+#include "../Entities/EntityManager.h"
 
 class CGameState :
 	public IGameState
 {
 public:
 	static CGameState* GetInstance(void);
+
 
 	virtual void	Enter(void)				override;
 	virtual void	Exit(void)				override;
@@ -20,5 +22,7 @@ private:
 	virtual ~CGameState();
 
 	SGD::HTexture BackgroundImage;
+	//CEntityManager EnitityManager;
+	SGD::GraphicsManager* graphics;
 };
 

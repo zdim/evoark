@@ -20,7 +20,11 @@ CGameState* CGameState::GetInstance(void)
 
 void	CGameState::Enter(void)
 {
-	BackgroundImage = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/backgroundTmp.png");
+	graphics = SGD::GraphicsManager::GetInstance();
+	BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
+
+	//JD's Test flock, ally and player
+//	EnitityManager.Spawn(EntityType::Player, {100,150}, 1);
 }
 
 void	CGameState::Exit(void)
@@ -35,10 +39,11 @@ bool	CGameState::Input(void)
 
 void	CGameState::Update(float dt)
 {
-
+	//EnitityManager.Update(dt);
 }
 
 void	CGameState::Render(void)
 {
-	SGD::GraphicsManager::GetInstance()->DrawTexture(BackgroundImage, { 0, 0});
+	graphics->DrawTexture(BackgroundImage, { 0, 0 });
+	//EnitityManager.Render();
 }
