@@ -9,7 +9,7 @@ CFlyweight::CFlyweight()
 
 CFlyweight::CFlyweight(
 	  SGD::HTexture img, 
-	  float StartScale, float EndScale, 
+	  SGD::Size StartScale, SGD::Size EndScale,
 	  unsigned char sA,
 	  unsigned char sR,
 	  unsigned char sG,
