@@ -19,12 +19,12 @@ bool CLeader::Assign(const EntityGroup& flock)
 
 	members.resize(flock.size());
 	destinations.resize(flock.size());
-	CalculateDestinations();
 	for (unsigned int i = 0; i < members.size(); i++)
 	{
 		members[i] = flock[i];
 		members[i]->SetPosition(destinations[i]);
 	}
+	CalculateDestinations();
 	return true;
 }
 

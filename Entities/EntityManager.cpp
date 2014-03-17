@@ -128,7 +128,8 @@ void CEntityManager::Update(float dt)
 	{
 		smallEnemies[i]->Update(dt);
 	}
-	player->Update(dt);
+	if (player)
+		player->Update(dt);
 }
 
 void CEntityManager::Render()

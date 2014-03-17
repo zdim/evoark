@@ -14,7 +14,7 @@ class CEntityManager
 	EntityGroup barriers;
 	EntityGroup gravObjects;
 	EntityGroup allies;
-	CEntity* player;
+	CEntity* player = nullptr;
 	Coordinator* coordinator;
 	std::vector<SGD::HTexture> images;
 

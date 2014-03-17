@@ -29,7 +29,8 @@ void	CGameState::Enter(void)
 	BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
 
 	//JD's Test flock, ally and player
-//	EnitityManager.Spawn(EntityType::Player, {100,150}, 1);
+	EntityManager = new CEntityManager();
+	EntityManager->Spawn(EntityType::Player, {100,150}, 1);
 	srand((unsigned int)time(nullptr));
 
 	Generate();
@@ -66,8 +67,10 @@ void	CGameState::Enter(void)
 
 void	CGameState::Exit(void)
 {
-	dataParticleTest = nullptr;
 	delete dataParticleTest;
+	dataParticleTest = nullptr;
+	delete EntityManager;
+	EntityManager = nullptr;
 }
 
 bool	CGameState::Input(void)
@@ -77,7 +80,7 @@ bool	CGameState::Input(void)
 
 void	CGameState::Update(float dt)
 {
-	//EnitityManager.Update(dt);
+	EntityManager->Update(dt);
 	testEmit->Update(dt);
 	testEmit2->Update(dt);
 }
@@ -86,10 +89,10 @@ void	CGameState::Render(void)
 {
 	graphics->DrawTexture(BackgroundImage, { 0, 0 });
 
-	//SGD::GraphicsManager::GetInstance()->DrawTexture(BackgroundImage, testEmit->GetEmitterPosition());
+	SGD::GraphicsManager::GetInstance()->DrawTexture(BackgroundImage, testEmit->GetEmitterPosition());
 	testEmit->Render();
 	testEmit2->Render();
-	//EnitityManager.Render();
+	EntityManager->Render();
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		if (enemies[i].type != NONE)

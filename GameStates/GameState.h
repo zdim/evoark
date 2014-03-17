@@ -30,7 +30,7 @@ private:
 	int m_nScreenHeight = 0;
 	int m_nScreenWidth = 0;
 	SGD::HTexture BackgroundImage;
-	//CEntityManager EnitityManager;
+	CEntityManager* EntityManager;
 	SGD::GraphicsManager* graphics;
 
 	// level creation
