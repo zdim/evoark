@@ -28,7 +28,7 @@ void	CEntity::Render()
 	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
 }
 
-void	CEntity::HandleCollision()
+void	CEntity::HandleCollision(IEntity* other)
 {
 	//Should never collide with anything.
 	//TODO: Review catch/throw, and throw an error here

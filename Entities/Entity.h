@@ -33,6 +33,10 @@ public:
 	virtual float			GetRotation() override { return rotation; }
 	virtual SGD::Size		GetSize()	  override { return size; }
 	virtual SGD::Vector		GetGravVec() override {return gravVec;}
+	virtual bool			IsCircle() override {return false;}
+
+	//Simplify rect collision
+	virtual SGD::Rectangle	GetRect() { return SGD::Rectangle{position - size, size}; }
 
 	//Mutators
 	virtual void SetImage(SGD::HTexture newImage)override {image = newImage;}
@@ -42,7 +46,7 @@ public:
 	virtual void SetSize(SGD::Size newSize)		override {size = newSize;}
 	virtual void AddGravity(SGD::Vector grav) override {}
 
-	virtual void HandleCollision() override;
+	virtual void HandleCollision(IEntity* other) override;
 
 	virtual void AddRef() final;
 	virtual void Release() final;

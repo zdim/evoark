@@ -36,11 +36,11 @@ void	CGameState::Enter(void)
 	player->SetImage(graphics->LoadTexture("Resources/Graphics/shipTmp.png"));
 	player->SetPosition(SGD::Point{ 100, 100 });
 	player->SetSize(SGD::Size{ 16, 16 });
-	dynamic_cast<CShip*>(player)->setSpeed(20.0);
+	dynamic_cast<CShip*>(player)->setSpeed(200.0);
 
 
 	// commented out until all objects have sprites and proper initialization
-	Generate();
+	//Generate();
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 
