@@ -1,6 +1,7 @@
 #pragma once
 #include "../../SGD Wrappers/SGD_Color.h"
 #include "../../SGD Wrappers/SGD_Handle.h"
+#include "../../SGD Wrappers/SGD_Geometry.h"
 
 class CFlyweight
 {
@@ -8,9 +9,9 @@ class CFlyweight
 private:
 	SGD::HTexture image;
 
-
-	float m_fStartScale;
-	float m_fEndScale;
+	
+	SGD::Size m_fStartScale;
+	SGD::Size m_fEndScale;
 
 	unsigned char       startA;
 	unsigned char       startR;
@@ -33,13 +34,14 @@ private:
 	float m_fVelYMin;
 
 
+
 public:
 
 	CFlyweight::CFlyweight();
 
 	CFlyweight::CFlyweight(
 		SGD::HTexture img,
-		float StartScale, float EndScale,
+		SGD::Size StartScale, SGD::Size EndScale,
 		unsigned char sA,
 		unsigned char sR,
 		unsigned char sG,
@@ -58,8 +60,8 @@ public:
 	//A&M
 	SGD::HTexture GetImage() { return image; }
 
-	float GetStartScale() { return m_fStartScale; }
-	float GetEndScale()   { return m_fEndScale; }
+	SGD::Size GetStartScale() { return m_fStartScale; }
+	SGD::Size GetEndScale()   { return m_fEndScale; }
 
 	float GetMaxLife() { return m_fMaxLife; }
 	float GetMinLife() { return m_fMinLife; }

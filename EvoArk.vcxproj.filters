@@ -50,7 +50,7 @@
       <UniqueIdentifier>{6c6c9506-5dbc-46b3-8318-b0efe3bc159b}</UniqueIdentifier>
     </Filter>
     <Filter Include="TinyXML">
-      <UniqueIdentifier>{0afc5e41-dc69-495f-966d-ba9fbaa74185}</UniqueIdentifier>
+      <UniqueIdentifier>{abaf2723-90e6-419e-97c3-7d1fa45172a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +243,12 @@
     <ClInclude Include="GameStates\Game.h">
       <Filter>GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="TinyXML\tinystr.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="TinyXML\tinyxml.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -406,6 +412,18 @@
     </ClCompile>
     <ClCompile Include="GameStates\Game.cpp">
       <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinystr.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxml.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxmlerror.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxmlparser.cpp">
+      <Filter>TinyXML</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
