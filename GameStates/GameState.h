@@ -4,6 +4,7 @@
 #include "../Entities/EntityManager.h"
 #include "../SGD Wrappers/SGD_Geometry.h"
 #include "../SGD Wrappers/SGD_Color.h"
+#include "../Entities/Ships/Player.h"
 #include <vector>
 #include <string>
 class CFlyweight;
@@ -32,6 +33,8 @@ private:
 	SGD::HTexture BackgroundImage;
 	CEntityManager* EntityManager;
 	SGD::GraphicsManager* graphics;
+
+	CEntity* player = nullptr;
 
 	// level creation
 	enum Objects { PLAYER, COPPERHEAD, COBRA, MAMBA, CORAL, MOCASSIN, ASTEROID, NONE, NUM_OBJECTS };

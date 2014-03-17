@@ -25,15 +25,22 @@ CGameState* CGameState::GetInstance(void)
 
 void	CGameState::Enter(void)
 {
+	srand((unsigned int)time(nullptr));
 	graphics = SGD::GraphicsManager::GetInstance();
 	BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
 
 	//JD's Test flock, ally and player
 	EntityManager = new CEntityManager();
-	EntityManager->Spawn(EntityType::Player, {100,150}, 1);
-	srand((unsigned int)time(nullptr));
+	//EntityManager->Spawn(EntityType::Player, SGD::Point{100,150});
+	player = new CPlayer();
+	player->SetImage(graphics->LoadTexture("Resources/Graphics/shipTmp.png"));
+	player->SetPosition(SGD::Point{ 100, 100 });
+	player->SetSize(SGD::Size{ 512, 512 });
+	dynamic_cast<CShip*>(player)->setSpeed(20.0);
 
-	Generate();
+
+	// commented out until all objects have sprites and proper initialization
+	//Generate();
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 
@@ -83,20 +90,22 @@ void	CGameState::Update(float dt)
 	EntityManager->Update(dt);
 	testEmit->Update(dt);
 	testEmit2->Update(dt);
+	player->Update(dt);
+
 }
 
 void	CGameState::Render(void)
 {
 	graphics->DrawTexture(BackgroundImage, { 0, 0 });
 
-	SGD::GraphicsManager::GetInstance()->DrawTexture(BackgroundImage, testEmit->GetEmitterPosition());
 	testEmit->Render();
 	testEmit2->Render();
 	EntityManager->Render();
+	player->Render();
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		if (enemies[i].type != NONE)
-			SGD::GraphicsManager::GetInstance()->DrawRectangle({ enemies[i].pos.x, enemies[i].pos.y, enemies[i].pos.x + 20, enemies[i].pos.y + 20 }, enemies[i].col);
+			graphics->DrawRectangle({ enemies[i].pos.x, enemies[i].pos.y, enemies[i].pos.x + 20, enemies[i].pos.y + 20 }, enemies[i].col);
 	}
 }
 

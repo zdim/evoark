@@ -21,17 +21,17 @@ class CPlayer :
 	float missileTimer;
 	float wellTimer;
 	float pushTimer;
-	float warpTimer;
+	float warpTimer = 0;
 
 	float shieldDelay;
 	float laserDelay;
 	float missileDelay;
 	float wellDelay;
 	float pushDelay;
-	float warpDelay;
+	float warpDelay = 1;
 
 	float warpSpeed;
-	float warpDuration;
+	float warpDuration = 1;
 
 public:
 	CPlayer();

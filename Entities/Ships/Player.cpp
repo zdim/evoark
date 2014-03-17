@@ -1,5 +1,6 @@
 //
 #include "Player.h"
+#include <math.h>
 #include "../../SGD Wrappers/SGD_InputManager.h"
 
 CPlayer::CPlayer()
@@ -37,15 +38,20 @@ void CPlayer::Update(float dt)
 		dir.x -= 1;
 	if (input->IsKeyDown(SGD::Key::D))
 		dir.x += 1;
-	dir.Normalize();
-	if (warpTimer <= warpDuration)
+	if (dir != SGD::Vector{0, 0})
+		dir.Normalize();
+	// commented out until finished implementing - was messing up standard input
+	/*if (warpTimer <= warpDuration)
 	{
 		velocity = dir * (speed + warpSpeed);
 	}
 	else
 	{
 		velocity = dir *speed;
-	}
+	}*/
+	velocity = dir * speed;
+	SGD::Point mousePos = input->GetMousePosition();
+	rotation = atan2(mousePos.y - position.y, mousePos.x - position.x) + SGD::PI / 2;
 	CEntity::Update(dt);
 
 	//Abilities

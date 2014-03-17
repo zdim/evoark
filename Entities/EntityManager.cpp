@@ -47,6 +47,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		player = new CPlayer();
 		player->SetImage(images[(int)EntityType::Player]);
 		player->SetPosition(position);
+		player->SetSize({ 32, 32 });
 		break;
 	case EntityType::Human:
 	{
@@ -138,6 +139,6 @@ void CEntityManager::Render()
 	{
 		smallEnemies[i]->Render();
 	}
-	player->Render();
-
+	if (player)
+		player->Render();
 }
