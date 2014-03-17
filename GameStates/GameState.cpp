@@ -31,16 +31,16 @@ void	CGameState::Enter(void)
 
 	//JD's Test flock, ally and player
 	EntityManager = new CEntityManager();
-	//EntityManager->Spawn(EntityType::Player, SGD::Point{100,150});
+	EntityManager->Spawn(EntityType::Player, SGD::Point{100,150});
 	player = new CPlayer();
 	player->SetImage(graphics->LoadTexture("Resources/Graphics/shipTmp.png"));
 	player->SetPosition(SGD::Point{ 100, 100 });
-	player->SetSize(SGD::Size{ 512, 512 });
+	player->SetSize(SGD::Size{ 16, 16 });
 	dynamic_cast<CShip*>(player)->setSpeed(20.0);
 
 
 	// commented out until all objects have sprites and proper initialization
-	//Generate();
+	Generate();
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 
