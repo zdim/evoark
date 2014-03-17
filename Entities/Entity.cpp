@@ -25,7 +25,8 @@ void	CEntity::Update(float dt)
 void	CEntity::Render()
 {
 	float scale = std::max(size.width/imageSize.width, size.height/imageSize.height);
-	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
+	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, position - size / 2, rotation, imageSize / 2, {}, { scale, scale });
 }
 
 void	CEntity::HandleCollision(IEntity* other)

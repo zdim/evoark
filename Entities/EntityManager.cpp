@@ -2,7 +2,8 @@
 #include "EntityManager.h"
 #include "Ships\Player.h"
 #include "Ships\Human.h"
-#include "Ships\Enemies\Cobra.h" //Includes Copperhead and leader indirectly
+#include "Ships\Enemies\Cobra.h"
+#include "Ships\Enemies\Mamba.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 
 CEntityManager::CEntityManager()
@@ -15,8 +16,12 @@ CEntityManager::CEntityManager()
 	}
 	images[(int)EntityType::Player] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 	images[(int)EntityType::Human] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
-	images[(int)EntityType::Copperhead] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
-	images[(int)EntityType::Cobra] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	images[(int)EntityType::Copperhead] = graphics->LoadTexture("Resources/Graphics/Ship1.png");
+	images[(int)EntityType::Cobra] = graphics->LoadTexture("Resources/Graphics/Ship3.png");
+	images[(int)EntityType::Mamba] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
+	images[(int)EntityType::Coral] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
+	images[(int)EntityType::Moccasin] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
+
 }
 
 
@@ -47,7 +52,10 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		player = new CPlayer();
 		player->SetImage(images[(int)EntityType::Player]);
 		player->SetPosition(position);
-		player->SetSize({ 16, 16 });
+		//player->SetSize({ 16, 16 });
+		dynamic_cast<CShip*>(player)->setSpeed(200);
+		dynamic_cast<CEntity*>(player)->SetImageSize({ 384, 415 });
+
 		break;
 	case EntityType::Human:
 	{
@@ -70,6 +78,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		{
 			copperheads[i] = new CCopperhead();
 			copperheads[i]->SetImage(images[(int)EntityType::Copperhead]);
+			dynamic_cast<CEntity*>(copperheads[i])->SetImageSize({ 70, 94 });
 			smallEnemies.push_back(copperheads[i]);
 		}
 		leader->SetHome(position);
@@ -85,10 +94,27 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		{
 			cobras[i] = new CCobra();
 			cobras[i]->SetImage(images[(int)EntityType::Cobra]);
+			dynamic_cast<CEntity*>(cobras[i])->SetImageSize({ 77, 93 });
 			smallEnemies.push_back(cobras[i]);
 		}
 		leader->SetHome(position);
 		leader->Assign(cobras);
+		break;
+	}
+	case EntityType::Mamba:
+	{
+		CLeader* leader = new CLeader();
+		EntityGroup mambas;
+		mambas.resize(amount);
+		for (unsigned int i = 0; i < mambas.size(); i++)
+		{
+			mambas[i] = new CMamba();
+			mambas[i]->SetImage(images[(int)EntityType::Mamba]);
+			dynamic_cast<CEntity*>(mambas[i])->SetImageSize({ 96, 78 });
+			smallEnemies.push_back(mambas[i]);
+		}
+		leader->SetHome(position);
+		leader->Assign(mambas);
 		break;
 	}
 	}

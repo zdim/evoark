@@ -4,7 +4,7 @@
 
 
 //Entity, GravityProjectile, and Ship should all return BaseClass to let us know that the entity SHOULD have a more specific type.
-enum class EntityType { BaseClass, Laser, Missile, Push, Well, Player, Human, Copperhead, Cobra, Mamba, Coral, Moccasin, Coordinator, Count };
+enum class EntityType { BaseClass, Laser, Missile, Push, Well, Player, Human, Copperhead, Cobra, Mamba, Coral, Moccasin, Coordinator, Asteroid, Count };
 class CEntity :
 	public IEntity
 {
@@ -15,7 +15,7 @@ protected:
 	SGD::Vector gravVec = SGD::Vector{ 0, 0 };
 	float rotation = 0.0f;
 	SGD::Size size = SGD::Size{ 16, 16 };
-	SGD::Size imageSize = SGD::Size{383, 415};
+	SGD::Size imageSize = SGD::Size{0, 0};
 	unsigned int refCount = 1;
 
 public:
@@ -44,6 +44,7 @@ public:
 	virtual void SetVelocity(SGD::Vector newVel)override {velocity = newVel;}
 	virtual void SetRotation(float newRot)		override {rotation = newRot;}
 	virtual void SetSize(SGD::Size newSize)		override {size = newSize;}
+	virtual void SetImageSize(SGD::Size newSize)		{ imageSize = newSize;}
 	virtual void AddGravity(SGD::Vector grav) override {}
 
 	virtual void HandleCollision(IEntity* other) override;

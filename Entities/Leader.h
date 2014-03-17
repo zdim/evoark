@@ -8,7 +8,7 @@ class Coordinator;
 class CLeader
 {
 	enum class LeaderState { Attack, Search, Return, Stay, Backup };
-	CShip* target;
+	CShip* target = nullptr;
 	EntityGroup members;
 	std::vector<SGD::Point> destinations;
 	int totalHull;

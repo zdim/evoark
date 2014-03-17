@@ -31,16 +31,18 @@ void	CGameState::Enter(void)
 
 	//JD's Test flock, ally and player
 	EntityManager = new CEntityManager();
-	EntityManager->Spawn(EntityType::Player, SGD::Point{100,150});
-	player = new CPlayer();
-	player->SetImage(graphics->LoadTexture("Resources/Graphics/shipTmp.png"));
-	player->SetPosition(SGD::Point{ 100, 100 });
-	player->SetSize(SGD::Size{ 16, 16 });
-	dynamic_cast<CShip*>(player)->setSpeed(200.0);
+	//EntityManager->Spawn(EntityType::Player, SGD::Point{100,150});
+
+	// test player
+	//player = new CPlayer();
+	//player->SetImage(graphics->LoadTexture("Resources/Graphics/shipTmp.png"));
+	//player->SetPosition(SGD::Point{ 100, 100 });
+	//player->SetSize(SGD::Size{ 16, 16 });
+	//dynamic_cast<CShip*>(player)->setSpeed(200.0);
 
 
 	// commented out until all objects have sprites and proper initialization
-	//Generate();
+	Generate();
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 
@@ -90,7 +92,6 @@ void	CGameState::Update(float dt)
 	EntityManager->Update(dt);
 	testEmit->Update(dt);
 	testEmit2->Update(dt);
-	player->Update(dt);
 
 }
 
@@ -98,10 +99,19 @@ void	CGameState::Render(void)
 {
 	graphics->DrawTexture(BackgroundImage, { 0, 0 });
 
+	// draw grids
+	for (unsigned int i = 0; i < m_nNumQuadsWidth; i++)
+	{
+		for (unsigned int j = 0; j < m_nNumQuadsHeight; j++)
+		{
+			SGD::Rectangle r = { SGD::Point{ m_nQuadWidth * i, m_nQuadHeight * j }, SGD::Size{ m_nQuadWidth, m_nQuadHeight } };
+			graphics->DrawRectangle(r, SGD::Color{ 0, 0, 0, 0 }, { 255, 255, 255 });
+		}
+	}
+
 	testEmit->Render();
 	testEmit2->Render();
 	EntityManager->Render();
-	player->Render();
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		if (enemies[i].type != NONE)
@@ -118,10 +128,10 @@ void	CGameState::Generate()
 			QuadCol& col = world[i];
 			for (int j = 0; j < m_nNumQuadsHeight; j++)
 			{
-				enemy e;
+				/*enemy e;
 
-				float left = float(m_nQuadWidth * j + rand() % m_nQuadWidth);
-				float top = float(m_nQuadHeight * i + rand() % m_nQuadHeight);
+				float left = float(m_nQuadWidth * i + rand() % m_nQuadWidth);
+				float top = float(m_nQuadHeight * j + rand() % m_nQuadHeight);
 				e.pos = { left, top };
 				e.size = { 20, 20 };
 				e.type = col[j].objType;
@@ -152,7 +162,36 @@ void	CGameState::Generate()
 				
 
 				}
-				enemies.push_back(e);
+				enemies.push_back(e);*/
+				float left = float(m_nQuadWidth * i + rand() % m_nQuadWidth);
+				float top = float(m_nQuadHeight * j + rand() % m_nQuadHeight);
+
+				switch (col[j].objType)
+				{
+				case PLAYER:
+					EntityManager->Spawn(EntityType::Player, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5))});
+					break;
+				case COPPERHEAD:
+					EntityManager->Spawn(EntityType::Copperhead, { left, top }, col[j].objectAmount);
+					break;
+				case COBRA:
+					EntityManager->Spawn(EntityType::Cobra, { left, top }, col[j].objectAmount);
+					break;
+				case MAMBA:
+					EntityManager->Spawn(EntityType::Mamba, { left, top }, col[j].objectAmount);
+					break;
+				case CORAL:
+					EntityManager->Spawn(EntityType::Coral, { left, top }, col[j].objectAmount);
+					break;
+				case MOCASSIN:
+					EntityManager->Spawn(EntityType::Moccasin, { left, top }, col[j].objectAmount);
+					break;
+				case ASTEROID:
+					EntityManager->Spawn(EntityType::Asteroid, { left, top }, col[j].objectAmount);
+					break;
+
+
+				}
 			}
 		}
 	}
@@ -171,7 +210,6 @@ void	CGameState::Generate()
 	//	tempNames.push_back(white);
 	//	std::string green = "green";
 	//	tempNames.push_back(green);
-
 	//	Quadrant grid[4][4];
 	//	for (int x = 0; x < 4; x++)
 	//	{
@@ -261,7 +299,6 @@ bool CGameState::LoadXMLLevel(const char* pXMLFile)
 				continue;
 			}
 
-			//pType->Attribute("type", &type);
 			type = pType->Attribute("type");
 			pType->Attribute("amount", &q.objectAmount);
 			break;
@@ -282,15 +319,6 @@ bool CGameState::LoadXMLLevel(const char* pXMLFile)
 			q.objType = ASTEROID;
 		else if (type == "NONE")
 			q.objType = NONE;
-		//world[count % 4].push_back(q);
-		//for (int i = 0; i < m_nNumQuadsWidth; i++)
-		//{
-		//	QuadCol& col = world[i];
-		//	for (int j = 0; j < m_nNumQuadsHeight; j++)
-		//	{
-		//		col[j] = q;
-		//	}
-		//}
 
 		world[q.y][q.x] = q;
 
