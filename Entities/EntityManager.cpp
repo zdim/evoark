@@ -5,6 +5,7 @@
 #include "Ships\Enemies\Cobra.h"
 #include "Ships\Enemies\Mamba.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
+#include "..\GameStates\Game.h"
 
 CEntityManager::CEntityManager()
 {
@@ -352,10 +353,14 @@ void CEntityManager::Update(float dt)
 
 void CEntityManager::Render()
 {
+	SGD::Rectangle screen = { SGD::Point{ 0, 0 }, SGD::Size{Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } };
+	//SGD::Rectangle test = { SGD::Point{ 0, 0 }, SGD::Size{ 400, 400 } }; // rect. for testing culling
 	for (unsigned int i = 0; i < smallEnemies.size(); i++)
 	{
-		smallEnemies[i]->Render();
+		if (smallEnemies[i]->GetRect().IsIntersecting(screen))
+			smallEnemies[i]->Render();
 	}
 	if (player)
+	if (player->GetRect().IsIntersecting(screen))
 		player->Render();
 }

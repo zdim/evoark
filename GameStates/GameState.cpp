@@ -94,7 +94,7 @@ void	CGameState::Render(void)
 
 void	CGameState::Generate()
 {
-	if (LoadXMLLevel("worldXML.xml"))
+	if (LoadXMLLevel("Resources/XML/World/worldXML.xml"))
 	{
 		for (int i = 0; i < m_nNumQuadsWidth; i++)
 		{
