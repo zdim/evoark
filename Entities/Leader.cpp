@@ -19,10 +19,15 @@ bool CLeader::Assign(const EntityGroup& flock)
 
 	members.resize(flock.size());
 	destinations.resize(flock.size());
-	CalculateDestinations();
 	for (unsigned int i = 0; i < members.size(); i++)
 	{
 		members[i] = flock[i];
+		//members[i]->SetPosition(destinations[i]);
+	}
+	CalculateDestinations();
+	for (unsigned int i = 0; i < members.size(); i++)
+	{
+		//members[i] = flock[i];
 		members[i]->SetPosition(destinations[i]);
 	}
 	return true;
@@ -36,9 +41,17 @@ void CLeader::CalculateDestinations()
 		destinations[0] = home;
 		for (unsigned int i = 1; i < destinations.size(); i++)
 		{
+			// sloppy, but it works for now. adjusted because it was always giving cos = 1 and sin = 0
+			float size = members.size();
+			float a = i / size;
+			float toCos = a * 2.0f * SGD::PI;
+			float cos = cosf(toCos);
+			float sin = sinf(toCos);
 			SGD::Vector offset = SGD::Vector
-				{shipSize * 2.0f * (cosf(i/members.size() * 2.0f * SGD::PI)),
-				shipSize * 2.0f * (sinf(i/members.size() * 2.0f * SGD::PI))};
+				{shipSize * 2.0f * cos,
+				shipSize * 2.0f * sin};
+
+			destinations[i] = { home.x + offset.x, home.y + offset.y };
 		}
 	}
 }

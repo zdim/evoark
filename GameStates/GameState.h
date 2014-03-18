@@ -4,6 +4,7 @@
 #include "../Entities/EntityManager.h"
 #include "../SGD Wrappers/SGD_Geometry.h"
 #include "../SGD Wrappers/SGD_Color.h"
+#include "../Entities/Ships/Player.h"
 #include <vector>
 #include <string>
 #include "../Graphics/Particles/ParticleSystem.h"
@@ -36,8 +37,10 @@ private:
 	int m_nScreenHeight = 0;
 	int m_nScreenWidth = 0;
 	SGD::HTexture BackgroundImage;
-	//CEntityManager EnitityManager;
+	CEntityManager* EntityManager;
 	SGD::GraphicsManager* graphics;
+
+	CEntity* player = nullptr;
 
 	// level creation
 	enum Objects { PLAYER, COPPERHEAD, COBRA, MAMBA, CORAL, MOCASSIN, ASTEROID, NONE, NUM_OBJECTS };

@@ -20,6 +20,11 @@ public:
 	virtual float			GetRotation() = 0;
 	virtual SGD::Size		GetSize() = 0;
 	virtual SGD::Vector		GetGravVec() = 0;
+	virtual bool			IsCircle() = 0;
+
+	//Simplify rect collision
+	virtual SGD::Rectangle	GetRect() = 0;
+
 
 	//Mutators
 	virtual void SetImage(SGD::HTexture newImage) = 0;
@@ -29,7 +34,7 @@ public:
 	virtual void SetSize(SGD::Size newSize) = 0;
 	virtual void AddGravity(SGD::Vector grav) = 0;
 
-	virtual void HandleCollision() = 0;
+	virtual void HandleCollision(IEntity* other) = 0;
 	
 	virtual void AddRef() = 0;
 	virtual void Release() = 0;

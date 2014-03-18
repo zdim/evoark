@@ -4,7 +4,7 @@
 
 
 //Entity, GravityProjectile, and Ship should all return BaseClass to let us know that the entity SHOULD have a more specific type.
-enum class EntityType { BaseClass, Laser, Missile, Push, Well, Player, Human, Copperhead, Cobra, Mamba, Coral, Moccasin, Coordinator, Count };
+enum class EntityType { BaseClass, Laser, Missile, Push, Well, Player, Human, Copperhead, Cobra, Mamba, Coral, Moccasin, Coordinator, Asteroid, Count };
 class CEntity :
 	public IEntity
 {
@@ -14,7 +14,8 @@ protected:
 	SGD::Vector velocity = SGD::Vector{0,0};
 	SGD::Vector gravVec = SGD::Vector{ 0, 0 };
 	float rotation = 0.0f;
-	SGD::Size size = SGD::Size{16,16};
+	SGD::Size size = SGD::Size{ 16, 16 };
+	SGD::Size imageSize = SGD::Size{0, 0};
 	unsigned int refCount = 1;
 
 public:
@@ -32,6 +33,10 @@ public:
 	virtual float			GetRotation() override { return rotation; }
 	virtual SGD::Size		GetSize()	  override { return size; }
 	virtual SGD::Vector		GetGravVec() override {return gravVec;}
+	virtual bool			IsCircle() override {return false;}
+
+	//Simplify rect collision
+	virtual SGD::Rectangle	GetRect() { return SGD::Rectangle{position - size, size}; }
 
 	//Mutators
 	virtual void SetImage(SGD::HTexture newImage)override {image = newImage;}
@@ -39,9 +44,10 @@ public:
 	virtual void SetVelocity(SGD::Vector newVel)override {velocity = newVel;}
 	virtual void SetRotation(float newRot)		override {rotation = newRot;}
 	virtual void SetSize(SGD::Size newSize)		override {size = newSize;}
+	virtual void SetImageSize(SGD::Size newSize)		{ imageSize = newSize;}
 	virtual void AddGravity(SGD::Vector grav) override {}
 
-	virtual void HandleCollision() override;
+	virtual void HandleCollision(IEntity* other) override;
 
 	virtual void AddRef() final;
 	virtual void Release() final;

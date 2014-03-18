@@ -14,7 +14,7 @@ class CEntityManager
 	EntityGroup barriers;
 	EntityGroup gravObjects;
 	EntityGroup allies;
-	CEntity* player;
+	CEntity* player = nullptr;
 	Coordinator* coordinator;
 	std::vector<SGD::HTexture> images;
 
@@ -26,7 +26,11 @@ public:
 	void Destroy(CEntity* entity);	//Calls ClearTargeted() on the given entity, then entity->release, and erases the pointer from the list.
 	void DestroyGroup(EntityType group);	//Iterates through every entity in a group, calling Destroy()
 	void DestroyAll();	//Calls DestroyGroup on all groups
-	void CheckCollision(EntityGroup group1, EntityGroup group2);
+	void CheckCollision(EntityGroup& group1, EntityGroup& group2);
+	float circleLineInterection(SGD::Point circlePos, float radius, SGD::Point p1, SGD::Point p2);	// < 0 means no intersection. == 0 means one intersction point. > 0 means 2 intersection points.
+	bool circlecollision(IEntity* circle1, IEntity* circle2);
+	bool circleRectCollision(IEntity* circle, IEntity* rect);
+	bool rectCollision(IEntity* rect1, IEntity* rect2);
 
 	void Update(float dt);
 	void Render();

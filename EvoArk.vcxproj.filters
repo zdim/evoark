@@ -114,9 +114,6 @@
     <ClInclude Include="Entities\Ships\Enemies\Cobra.h">
       <Filter>Entities\Ships\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Entities\Ships\Enemies\Coordinator.h">
-      <Filter>Entities\Ships\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="Entities\Ships\Enemies\Copperhead.h">
       <Filter>Entities\Ships\Enemies</Filter>
     </ClInclude>
@@ -249,6 +246,9 @@
     <ClInclude Include="TinyXML\tinyxml.h">
       <Filter>TinyXML</Filter>
     </ClInclude>
+    <ClInclude Include="Entities\Leader.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -282,9 +282,6 @@
       <Filter>Entities\Ships</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Ships\Enemies\Cobra.cpp">
-      <Filter>Entities\Ships\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Entities\Ships\Enemies\Coordinator.cpp">
       <Filter>Entities\Ships\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Ships\Enemies\Copperhead.cpp">
@@ -424,6 +421,9 @@
     </ClCompile>
     <ClCompile Include="TinyXML\tinyxmlparser.cpp">
       <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Leader.cpp">
+      <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

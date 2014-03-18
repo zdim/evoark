@@ -6,7 +6,7 @@ class CShip :
 protected:
 	int hull;
 	int maxHull;
-	float speed;
+	float speed = 1;
 public:
 	CShip();
 	virtual ~CShip();
