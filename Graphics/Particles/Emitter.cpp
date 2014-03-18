@@ -2,6 +2,7 @@
 #include "Emitter.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../SGD Wrappers/SGD_Geometry.h"
 //#include <stdlib.h>
 
 CEmitter::CEmitter()
@@ -160,11 +161,28 @@ CParticle CEmitter::CreateParticle()
 	float minLife = particleData->GetMinLife();
 	float randLife = minLife + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (maxLife - minLife)));
 
-	SGD::Point ppositionn{ emitterPosition.x + (rand() % (int)emitterSize.width), emitterPosition.y + (rand() % (int)emitterSize.height) };
+	SGD::Point ppositionn { emitterPosition.x + (rand() % (int)emitterSize.width),
+		emitterPosition.y + (rand() % (int)emitterSize.width) };
+
+	float radius = emitterSize.width / 2;
+
+	SGD::Point EmitterCenter{ emitterPosition.x + emitterSize.width / 2, emitterPosition.y + emitterSize.height / 2 };
 
 
+	float distance = sqrt((double)(EmitterCenter.x - ppositionn.x)*(EmitterCenter.x - ppositionn.x) +
+		                        (EmitterCenter.y - ppositionn.y)*(EmitterCenter.y - ppositionn.y));
+
+	do
+	{
+		    ppositionn = { emitterPosition.x  + (rand() % (int)emitterSize.width),
+			emitterPosition.y + (rand() % (int)emitterSize.width) };
+			distance = sqrt((double)(EmitterCenter.x - ppositionn.x)*(EmitterCenter.x - ppositionn.x) +
+				(EmitterCenter.y - ppositionn.y)*(EmitterCenter.y - ppositionn.y));
+
+	} while (distance >= radius);
 
 	CParticle tempParticle(tempColor, ppositionn, randLife, particleData->GetSpeed(), particleData->GetStartScale(), 0);
+
 	return tempParticle;
 
 }
