@@ -4,6 +4,7 @@
 #include "Ships\Human.h"
 #include "Ships\Enemies\Cobra.h"
 #include "Ships\Enemies\Mamba.h"
+#include "Ships\Enemies\Moccasin.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 
 CEntityManager::CEntityManager()
@@ -38,7 +39,7 @@ CEntityManager::~CEntityManager()
 	}
 }
 
-void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int amount) //Spawns either one entity, or a flock of enemies, making the leader object in the process
+void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int amount, bool coord) //Spawns either one entity, or a flock of enemies, making the leader object in the process
 {
 	switch (type)
 	{
@@ -60,70 +61,113 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		break;
 	case EntityType::Human:
 	{
-		IEntity* human = new CHuman();
-		human->SetPosition(position);
-		human->SetImage(images[(int)EntityType::Human]);
-		allies.push_back(human);
-		ships.push_back(human);
-		type = (EntityType)amount;
-		if (type < EntityType::Copperhead || type > EntityType::Mamba)
-			type = EntityType::Copperhead;
-		Spawn(type, position + SGD::Vector{100, 0}, 1);
-		break;
+							  IEntity* human = new CHuman();
+							  human->SetPosition(position);
+							  human->SetImage(images[(int)EntityType::Human]);
+							  allies.push_back(human);
+							  ships.push_back(human);
+							  type = (EntityType)amount;
+							  if (type < EntityType::Copperhead || type > EntityType::Mamba)
+								  type = EntityType::Copperhead;
+							  Spawn(type, position + SGD::Vector{ 100, 0 }, 1);
+							  break;
 	}
 	case EntityType::Copperhead:
 	{
-		CLeader* leader = new CLeader();
-		EntityGroup copperheads;
-		copperheads.resize(amount);
-		for (unsigned int i = 0; i < copperheads.size(); i++)
-		{
-			copperheads[i] = new CCopperhead();
-			copperheads[i]->SetImage(images[(int)EntityType::Copperhead]);
-			copperheads[i]->SetSize({16,16});
-			copperheads[i]->SetImageSize({ 70, 94 });
-			smallEnemies.push_back(copperheads[i]);
-			ships.push_back(copperheads[i]);
-		}
-		leader->SetHome(position);
-		leader->Assign(copperheads); //Leader repositions entities
-		break;
+								   CLeader* leader = new CLeader();
+								   EntityGroup copperheads;
+								   copperheads.resize(amount);
+								   for (unsigned int i = 0; i < copperheads.size(); i++)
+								   {
+									   if (0 == i && coord && !coordinator)
+									   {
+										   copperheads[i] = new CCopperheadCoord();
+									   }
+									   else
+									   {
+										   copperheads[i] = new CCopperhead();
+									   }
+									   copperheads[i]->SetImage(images[(int)EntityType::Copperhead]);
+									   copperheads[i]->SetSize({ 16, 16 });
+									   copperheads[i]->SetImageSize({ 70, 94 });
+									   smallEnemies.push_back(copperheads[i]);
+									   ships.push_back(copperheads[i]);
+								   }
+								   leader->SetHome(position);
+								   leader->Assign(copperheads); //Leader repositions entities
+								   break;
 	}
 	case EntityType::Cobra:
 	{
-		CLeader* leader = new CLeader();
-		EntityGroup cobras;
-		cobras.resize(amount);
-		for (unsigned int i = 0; i < cobras.size(); i++)
-		{
-			cobras[i] = new CCobra();
-			cobras[i]->SetImage(images[(int)EntityType::Cobra]);
-			cobras[i]->SetImageSize({ 77, 93 });
-			cobras[i]->SetSize({ 16, 16 });
-			smallEnemies.push_back(cobras[i]);
-			ships.push_back(cobras[i]);
-		}
-		leader->SetHome(position);
-		leader->Assign(cobras);
-		break;
+							  CLeader* leader = new CLeader();
+							  EntityGroup cobras;
+							  cobras.resize(amount);
+							  for (unsigned int i = 0; i < cobras.size(); i++)
+							  {
+								  if (0 == i && coord && !coordinator)
+								  {
+									  cobras[i] = new CCobraCoord();
+								  }
+								  else
+								  {
+									  cobras[i] = new CCobra();
+								  }
+								  cobras[i]->SetImage(images[(int)EntityType::Cobra]);
+								  cobras[i]->SetImageSize({ 77, 93 });
+								  cobras[i]->SetSize({ 16, 16 });
+								  smallEnemies.push_back(cobras[i]);
+								  ships.push_back(cobras[i]);
+							  }
+							  leader->SetHome(position);
+							  leader->Assign(cobras);
+							  break;
 	}
 	case EntityType::Mamba:
 	{
-		CLeader* leader = new CLeader();
-		EntityGroup mambas;
-		mambas.resize(amount);
-		for (unsigned int i = 0; i < mambas.size(); i++)
-		{
-			mambas[i] = new CMamba();
-			mambas[i]->SetImage(images[(int)EntityType::Mamba]);
-			mambas[i]->SetImageSize({ 96, 78 });
-			mambas[i]->SetSize({ 16, 16 });
-			smallEnemies.push_back(mambas[i]);
-			ships.push_back(mambas[i]);
-		}
-		leader->SetHome(position);
-		leader->Assign(mambas);
-		break;
+							  CLeader* leader = new CLeader();
+							  EntityGroup mambas;
+							  mambas.resize(amount);
+							  for (unsigned int i = 0; i < mambas.size(); i++)
+							  {
+								  if (0 == i && coord && !coordinator)
+								  {
+									  mambas[i] = new CMambaCoord();
+								  }
+								  else
+								  {
+									  mambas[i] = new CMamba();
+								  }
+								  mambas[i]->SetImage(images[(int)EntityType::Mamba]);
+								  mambas[i]->SetImageSize({ 96, 78 });
+								  mambas[i]->SetSize({ 16, 16 });
+								  smallEnemies.push_back(mambas[i]);
+								  ships.push_back(mambas[i]);
+							  }
+							  leader->SetHome(position);
+							  leader->Assign(mambas);
+							  break;
+	}
+	case EntityType::Coral:
+	{
+							  CLeader* leader = new CLeader();
+							  EntityGroup corals;
+							  corals.resize(amount);
+							  for (unsigned int i = 0; i < corals.size(); i++)
+							  {
+								  corals[i] = new CCoral();
+								  corals[i]->SetImage(images[(int)EntityType::Coral]);
+								  corals[i]->SetImageSize({ 96, 78 });
+								  corals[i]->SetSize({ 16, 16 });
+								  bigEnemies.push_back(corals[i]);
+								  ships.push_back(corals[i]);
+							  }
+							  leader->SetHome(position);
+							  leader->Assign(corals);
+							  break;
+	}
+	case EntityType::Moccasin:
+	{
+								
 	}
 	}
 }
@@ -175,53 +219,10 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 		{
 			for (unsigned int j = i + 1; j < small.size(); j++)
 			{
-				//Avoid self-collision!!!!!
-				if (small[i] == big[j])
-					continue;
-
-				if (small[i]->IsCircle())
+				if (ShapedCollisions(small[i], big[j]))
 				{
-					if (big[j]->IsCircle())
-					{
-						if (circlecollision(small[i], big[j]))
-						{
-							small[i]->HandleCollision(big[j]);
-							big[j]->HandleCollision(small[i]);
-						}
-					}
-					else
-					{
-						if (circleRectCollision(small[i], big[j]))
-						{
-							small[i]->HandleCollision(big[j]);
-							big[j]->HandleCollision(small[i]);
-						}
-					}
-				}
-				else
-				{
-					if (big[j]->IsCircle())
-					{
-						if (circleRectCollision(big[j], small[i]))
-						{
-							small[i]->HandleCollision(big[j]);
-							big[j]->HandleCollision(small[i]);
-						}
-					}
-					else
-					{
-						if (rectCollision(small[i], big[j]))
-						{
-							small[i]->HandleCollision(big[j]);
-							big[j]->HandleCollision(small[i]);
-							if (small[i] == player)
-							{
-								SGD::Rectangle otherBox = big[j]->GetRect();
-								SGD::Rectangle playerBox = small[i]->GetRect();
-								otherBox.top += 0;
-							}
-						}
-					}
+					small[i]->HandleCollision(big[j]);
+					big[j]->HandleCollision(small[i]);
 				}
 			}
 		}
@@ -232,55 +233,41 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 		{
 			for (unsigned int j = 0; j < big.size(); j++)
 			{
-				//Avoid self-collision!!!!!
-				if (small[i] == big[j])
-					continue;
-
-				if (small[i]->IsCircle())
+				if (ShapedCollisions(small[i], big[j]))
 				{
-					if (big[j]->IsCircle())
-					{
-						if (circlecollision(small[i], big[j]))
-						{
-							small[i]->HandleCollision(big[j]);
-							big[j]->HandleCollision(small[i]);
-						}
-					}
-					else
-					{
-						if (circleRectCollision(small[i], big[j]))
-						{
-							small[i]->HandleCollision(big[j]);
-							big[j]->HandleCollision(small[i]);
-						}
-					}
-				}
-				else
-				{
-					if (big[j]->IsCircle())
-					{
-						if (circleRectCollision(big[j], small[i]))
-						{
-							small[i]->HandleCollision(big[j]);
-							big[j]->HandleCollision(small[i]);
-						}
-					}
-					else
-					{
-						if (rectCollision(small[i], big[j]))
-						{
-							small[i]->HandleCollision(big[j]);
-							big[j]->HandleCollision(small[i]);
-							if (small[i] == player)
-							{
-								SGD::Rectangle otherBox = big[j]->GetRect();
-								SGD::Rectangle playerBox = small[i]->GetRect();
-								otherBox.top += 0;
-							}
-						}
-					}
+					small[i]->HandleCollision(big[j]);
+					big[j]->HandleCollision(small[i]);
 				}
 			}
+		}
+	}
+}
+
+bool CEntityManager::ShapedCollisions(IEntity* thing1, IEntity* thing2)
+{
+	if (thing1 == thing2)
+		return false;
+
+	if (thing1->IsCircle())
+	{
+		if (thing2->IsCircle())
+		{
+			return circlecollision(thing1, thing2);
+		}
+		else
+		{
+			return circleRectCollision(thing1, thing2);
+		}
+	}
+	else
+	{
+		if (thing2->IsCircle())
+		{
+			return circleRectCollision(thing2, thing1);
+		}
+		else
+		{
+			return rectCollision(thing1, thing2);
 		}
 	}
 }
@@ -295,8 +282,8 @@ float CEntityManager::circleLineInterection(SGD::Point circlePoint, float radius
 	//and r is the radius of a circle whose center is at (0,0)
 
 	//Form an offset to calculate from.
-	SGD::Vector offset = SGD::Point{0,0} - circlePoint;
-	
+	SGD::Vector offset = SGD::Point{ 0, 0 } -circlePoint;
+
 	//offset the points of the line to test against an origin circle
 	p1 += offset;
 	p2 += offset;
@@ -310,7 +297,7 @@ float CEntityManager::circleLineInterection(SGD::Point circlePoint, float radius
 bool CEntityManager::circlecollision(IEntity* circle1, IEntity* circle2)
 {
 	float distance = SGD::Vector(circle2->GetPosition() - circle1->GetPosition()).ComputeLength();
-	float collisionDistance = circle1->GetSize().width/2.0f + circle2->GetSize().width/2.0f;
+	float collisionDistance = circle1->GetSize().width / 2.0f + circle2->GetSize().width / 2.0f;
 	return distance < collisionDistance;
 }
 
@@ -321,10 +308,10 @@ bool CEntityManager::circleRectCollision(IEntity* circle, IEntity* rect)
 	SGD::Point C = SGD::Point{ rect->GetRect().right, rect->GetRect().bottom };
 	SGD::Point D = SGD::Point{ rect->GetRect().left, rect->GetRect().bottom };
 	return circle->GetPosition().IsWithinRectangle(rect->GetRect()) ||
-		circleLineInterection(circle->GetPosition(), circle->GetSize().width/2.0f, A, B) ||
-		circleLineInterection(circle->GetPosition(), circle->GetSize().width/2.0f, B, C) ||
-		circleLineInterection(circle->GetPosition(), circle->GetSize().width/2.0f, C, D) ||
-		circleLineInterection(circle->GetPosition(), circle->GetSize().width/2.0f, D, A);
+		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, A, B) ||
+		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, B, C) ||
+		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, C, D) ||
+		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, D, A);
 }
 
 bool CEntityManager::rectCollision(IEntity* rect1, IEntity* rect2)

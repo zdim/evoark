@@ -6,12 +6,12 @@ class CShip :
 protected:
 	int hull = 100;
 	int maxHull = 100;
-	float speed = 1;
+	float speed = 200;
 public:
 	CShip();
 	virtual ~CShip();
 
-	virtual void TakeDamage(int damage);
+	virtual void TakeDamage(int damage, bool collision = false);
 	void HandleCollision(IEntity* other) override;
 
 	//Comment this out later?
@@ -25,5 +25,7 @@ public:
 	virtual void setHull(int newHull) { hull = newHull; }
 	virtual void setMaxHull(int newMaxHull) { maxHull = newMaxHull; }
 	virtual void setSpeed(float newSpeed) { speed = newSpeed; } 
+
+	virtual void AddGravity(SGD::Vector grav) override;
 };
 

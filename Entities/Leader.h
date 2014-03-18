@@ -28,6 +28,9 @@ public:
 	void Update(float dt);
 	void SetState(LeaderState newState, SGD::Point location);
 	void SetHome(SGD::Point location) {home = location;}
+
+	CShip* GetTarget() {return target;}
+	void SetTarget(CShip* newTarget);
 };
 
 class Coordinator

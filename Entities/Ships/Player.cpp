@@ -136,8 +136,12 @@ void CPlayer::Warp()
 	warpTimer = 0;
 }
 
-void CPlayer::TakeDamage(int damage)
+void CPlayer::TakeDamage(int damage, bool collision)
 {
+	if (collision && warpTimer <= warpDuration && warpLevel >= 3)
+	{
+		return;
+	}
 	shieldTimer = 0;
 	if (shield > 0)
 	{

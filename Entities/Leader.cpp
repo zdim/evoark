@@ -62,3 +62,17 @@ void CLeader::Update(float dt)
 {
 	//AI not in this user story. Just need a stub to build
 }
+
+void CLeader::SetTarget(CShip* newTarget)
+{
+	if (target == newTarget)
+		return;
+
+	if (target)
+		target->Release();
+	
+	if (newTarget)
+		newTarget->AddRef();
+
+	target = newTarget;
+}

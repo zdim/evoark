@@ -1,5 +1,6 @@
 #pragma once
 #include "Copperhead.h"
+#include "../../Leader.h"
 class CCobra :
 	public CCopperhead
 {
@@ -17,3 +18,7 @@ public:
 	void AddGrav(SGD::Vector);
 };
 
+class CCobraCoord : public CCobra, public Coordinator
+{
+
+};
