@@ -77,6 +77,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Entities\Asteroid.h" />
+    <ClInclude Include="Entities\Barrier.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\EntityManager.h" />
     <ClInclude Include="Entities\IEntity.h" />
@@ -90,7 +92,9 @@
     <ClInclude Include="Entities\Modules\TurretModule.h" />
     <ClInclude Include="Entities\Modules\WarpModule.h" />
     <ClInclude Include="Entities\Modules\WellModule.h" />
+    <ClInclude Include="Entities\Planet.h" />
     <ClInclude Include="Entities\Projectiles\GravityProjectile.h" />
+    <ClInclude Include="Entities\Projectiles\Laser.h" />
     <ClInclude Include="Entities\Projectiles\Missile.h" />
     <ClInclude Include="Entities\Projectiles\Projectile.h" />
     <ClInclude Include="Entities\Projectiles\Push.h" />
@@ -124,7 +128,6 @@
     <ClInclude Include="Graphics\Particles\Flyweight.h" />
     <ClInclude Include="Graphics\Particles\Particle.h" />
     <ClInclude Include="Graphics\Particles\ParticleSystem.h" />
-    <ClInclude Include="Laser.h" />
     <ClInclude Include="Message System\Message.h" />
     <ClInclude Include="Message System\MessageManager.h" />
     <ClInclude Include="Resource.h" />
@@ -145,6 +148,7 @@
     <ClInclude Include="WinMain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entities\Asteroid.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\EntityManager.cpp" />
     <ClCompile Include="Entities\IEntity.cpp" />
@@ -158,7 +162,9 @@
     <ClCompile Include="Entities\Modules\TurretModule.cpp" />
     <ClCompile Include="Entities\Modules\WarpModule.cpp" />
     <ClCompile Include="Entities\Modules\WellModule.cpp" />
+    <ClCompile Include="Entities\Planet.cpp" />
     <ClCompile Include="Entities\Projectiles\GravityProjectile.cpp" />
+    <ClCompile Include="Entities\Projectiles\Laser.cpp" />
     <ClCompile Include="Entities\Projectiles\Missile.cpp" />
     <ClCompile Include="Entities\Projectiles\Projectile.cpp" />
     <ClCompile Include="Entities\Projectiles\Push.cpp" />

@@ -249,8 +249,17 @@
     <ClInclude Include="Entities\Leader.h">
       <Filter>Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Laser.h">
+    <ClInclude Include="Entities\Projectiles\Laser.h">
       <Filter>Entities\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Planet.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Barrier.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Asteroid.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -426,6 +435,15 @@
       <Filter>TinyXML</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Leader.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Projectiles\Laser.cpp">
+      <Filter>Entities\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Planet.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Asteroid.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
