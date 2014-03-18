@@ -4,12 +4,19 @@ class CShip :
 	public CEntity
 {
 protected:
-	int hull;
-	int maxHull;
+	int hull = 100;
+	int maxHull = 100;
 	float speed = 1;
 public:
 	CShip();
 	virtual ~CShip();
+
+	virtual void TakeDamage(int damage);
+	void HandleCollision(IEntity* other) override;
+
+	//Comment this out later?
+	void Render() override;
+
 
 	virtual int getHull() {return hull;}
 	virtual int getMaxHull() {return maxHull;}

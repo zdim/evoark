@@ -37,8 +37,13 @@ public:
 	CPlayer();
 	virtual ~CPlayer();
 
+	int GetType() override {return (int)EntityType::Player;}
 	void Update(float dt) override;
 	void AddGravity(SGD::Vector grav) override;
+	void TakeDamage(int damage) override;
+	//void HandleCollision(IEntity* other) override;
+	//Coment out later:
+	void Render() override;
 
 	void CreateLaser();
 	void CreateMissile();

@@ -52,9 +52,10 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		player = new CPlayer();
 		player->SetImage(images[(int)EntityType::Player]);
 		player->SetPosition(position);
-		//player->SetSize({ 16, 16 });
+		player->SetSize({ 16, 16 });
+		player->SetImageSize({ 384, 415 });
 		dynamic_cast<CShip*>(player)->setSpeed(200);
-		dynamic_cast<CEntity*>(player)->SetImageSize({ 384, 415 });
+		ships.push_back(player);
 
 		break;
 	case EntityType::Human:
@@ -63,6 +64,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		human->SetPosition(position);
 		human->SetImage(images[(int)EntityType::Human]);
 		allies.push_back(human);
+		ships.push_back(human);
 		type = (EntityType)amount;
 		if (type < EntityType::Copperhead || type > EntityType::Mamba)
 			type = EntityType::Copperhead;
@@ -78,8 +80,10 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		{
 			copperheads[i] = new CCopperhead();
 			copperheads[i]->SetImage(images[(int)EntityType::Copperhead]);
-			dynamic_cast<CEntity*>(copperheads[i])->SetImageSize({ 70, 94 });
+			copperheads[i]->SetSize({16,16});
+			copperheads[i]->SetImageSize({ 70, 94 });
 			smallEnemies.push_back(copperheads[i]);
+			ships.push_back(copperheads[i]);
 		}
 		leader->SetHome(position);
 		leader->Assign(copperheads); //Leader repositions entities
@@ -94,8 +98,10 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		{
 			cobras[i] = new CCobra();
 			cobras[i]->SetImage(images[(int)EntityType::Cobra]);
-			dynamic_cast<CEntity*>(cobras[i])->SetImageSize({ 77, 93 });
+			cobras[i]->SetImageSize({ 77, 93 });
+			cobras[i]->SetSize({ 16, 16 });
 			smallEnemies.push_back(cobras[i]);
+			ships.push_back(cobras[i]);
 		}
 		leader->SetHome(position);
 		leader->Assign(cobras);
@@ -110,8 +116,10 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		{
 			mambas[i] = new CMamba();
 			mambas[i]->SetImage(images[(int)EntityType::Mamba]);
-			dynamic_cast<CEntity*>(mambas[i])->SetImageSize({ 96, 78 });
+			mambas[i]->SetImageSize({ 96, 78 });
+			mambas[i]->SetSize({ 16, 16 });
 			smallEnemies.push_back(mambas[i]);
+			ships.push_back(mambas[i]);
 		}
 		leader->SetHome(position);
 		leader->Assign(mambas);
@@ -161,45 +169,115 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 	EntityGroup& big = *bigGroup;
 	//Much better
 
-	for (unsigned int i = 0; i < small.size(); i++)
+	if (group1 == group2)
 	{
-		for (unsigned int j = 0; j < big.size(); j++)
+		for (unsigned int i = 0; i < small.size(); i++)
 		{
-			if (small[i]->IsCircle())
+			for (unsigned int j = i + 1; j < small.size(); j++)
 			{
-				if (big[j]->IsCircle())
+				//Avoid self-collision!!!!!
+				if (small[i] == big[j])
+					continue;
+
+				if (small[i]->IsCircle())
 				{
-					if (circlecollision(small[i], big[j]))
+					if (big[j]->IsCircle())
 					{
-						small[i]->HandleCollision(big[j]);
-						big[j]->HandleCollision(small[i]);
+						if (circlecollision(small[i], big[j]))
+						{
+							small[i]->HandleCollision(big[j]);
+							big[j]->HandleCollision(small[i]);
+						}
+					}
+					else
+					{
+						if (circleRectCollision(small[i], big[j]))
+						{
+							small[i]->HandleCollision(big[j]);
+							big[j]->HandleCollision(small[i]);
+						}
 					}
 				}
 				else
 				{
-					if (circleRectCollision(small[i], big[j]))
+					if (big[j]->IsCircle())
 					{
-						small[i]->HandleCollision(big[j]);
-						big[j]->HandleCollision(small[i]);
+						if (circleRectCollision(big[j], small[i]))
+						{
+							small[i]->HandleCollision(big[j]);
+							big[j]->HandleCollision(small[i]);
+						}
+					}
+					else
+					{
+						if (rectCollision(small[i], big[j]))
+						{
+							small[i]->HandleCollision(big[j]);
+							big[j]->HandleCollision(small[i]);
+							if (small[i] == player)
+							{
+								SGD::Rectangle otherBox = big[j]->GetRect();
+								SGD::Rectangle playerBox = small[i]->GetRect();
+								otherBox.top += 0;
+							}
+						}
 					}
 				}
 			}
-			else
+		}
+	}
+	else
+	{
+		for (unsigned int i = 0; i < small.size(); i++)
+		{
+			for (unsigned int j = 0; j < big.size(); j++)
 			{
-				if (big[j]->IsCircle())
+				//Avoid self-collision!!!!!
+				if (small[i] == big[j])
+					continue;
+
+				if (small[i]->IsCircle())
 				{
-					if (circleRectCollision(big[j], small[i]))
+					if (big[j]->IsCircle())
 					{
-						small[i]->HandleCollision(big[j]);
-						big[j]->HandleCollision(small[i]);
+						if (circlecollision(small[i], big[j]))
+						{
+							small[i]->HandleCollision(big[j]);
+							big[j]->HandleCollision(small[i]);
+						}
+					}
+					else
+					{
+						if (circleRectCollision(small[i], big[j]))
+						{
+							small[i]->HandleCollision(big[j]);
+							big[j]->HandleCollision(small[i]);
+						}
 					}
 				}
 				else
 				{
-					if (rectCollision(small[i], big[j]))
+					if (big[j]->IsCircle())
 					{
-						small[i]->HandleCollision(big[j]);
-						big[j]->HandleCollision(small[i]);
+						if (circleRectCollision(big[j], small[i]))
+						{
+							small[i]->HandleCollision(big[j]);
+							big[j]->HandleCollision(small[i]);
+						}
+					}
+					else
+					{
+						if (rectCollision(small[i], big[j]))
+						{
+							small[i]->HandleCollision(big[j]);
+							big[j]->HandleCollision(small[i]);
+							if (small[i] == player)
+							{
+								SGD::Rectangle otherBox = big[j]->GetRect();
+								SGD::Rectangle playerBox = small[i]->GetRect();
+								otherBox.top += 0;
+							}
+						}
 					}
 				}
 			}
@@ -251,8 +329,9 @@ bool CEntityManager::circleRectCollision(IEntity* circle, IEntity* rect)
 
 bool CEntityManager::rectCollision(IEntity* rect1, IEntity* rect2)
 {
-
-	return rect1->GetRect().IsIntersecting(rect2->GetRect());
+	SGD::Rectangle box1 = rect1->GetRect();
+	SGD::Rectangle box2 = rect2->GetRect();
+	return box1.IsIntersecting(box2);
 }
 
 void CEntityManager::Update(float dt)
@@ -268,7 +347,7 @@ void CEntityManager::Update(float dt)
 	if (player)
 		player->Update(dt);
 
-	
+	CheckCollision(ships, ships);
 }
 
 void CEntityManager::Render()

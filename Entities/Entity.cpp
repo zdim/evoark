@@ -3,7 +3,7 @@
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
 #include <algorithm>
 
-#define GRAVDECAY 0.75F
+#define GRAVDECAY 0.05F
 
 CEntity::CEntity()
 {
@@ -18,8 +18,18 @@ CEntity::~CEntity()
 
 void	CEntity::Update(float dt)
 {
-	position += (gravVec + velocity) * dt;
-	gravVec *= GRAVDECAY;
+	position += (velocity) * dt;
+	position += gravVec * dt;
+	float gravSpeed = gravVec.ComputeLength();
+	float mySpeed = velocity.ComputeLength();
+	if (gravVec != SGD::Vector{ 0, 0 })
+	{
+		gravVec -= (gravVec * GRAVDECAY);
+		if (gravVec.ComputeLength() <= 3)
+		{
+			gravVec = SGD::Vector{0,0};
+		}
+	}
 }
 
 void	CEntity::Render()

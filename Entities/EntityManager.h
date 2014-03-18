@@ -7,14 +7,15 @@
 class CEntityManager
 {
 	std::vector<CLeader*> leaders;
+	CEntity* player = nullptr;
+	EntityGroup allies;
 	EntityGroup smallEnemies;
 	EntityGroup bigEnemies;
+	EntityGroup ships;
 	EntityGroup projectiles;
 	EntityGroup asteroids;
 	EntityGroup barriers;
 	EntityGroup gravObjects;
-	EntityGroup allies;
-	CEntity* player = nullptr;
 	Coordinator* coordinator;
 	std::vector<SGD::HTexture> images;
 

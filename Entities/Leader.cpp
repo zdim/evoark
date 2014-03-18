@@ -47,9 +47,11 @@ void CLeader::CalculateDestinations()
 			float toCos = a * 2.0f * SGD::PI;
 			float cos = cosf(toCos);
 			float sin = sinf(toCos);
+			//I changed the 2.0f in the following lines to 3.0f because the ships were WAY too close together.
+			//We may even want to change it to 4 when we're spawning them in a larger environment.
 			SGD::Vector offset = SGD::Vector
-				{shipSize * 2.0f * cos,
-				shipSize * 2.0f * sin};
+				{shipSize * 3.0f * cos,
+				shipSize * 3.0f * sin};
 
 			destinations[i] = { home.x + offset.x, home.y + offset.y };
 		}

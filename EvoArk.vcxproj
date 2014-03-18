@@ -124,6 +124,7 @@
     <ClInclude Include="Graphics\Particles\Flyweight.h" />
     <ClInclude Include="Graphics\Particles\Particle.h" />
     <ClInclude Include="Graphics\Particles\ParticleSystem.h" />
+    <ClInclude Include="Laser.h" />
     <ClInclude Include="Message System\Message.h" />
     <ClInclude Include="Message System\MessageManager.h" />
     <ClInclude Include="Resource.h" />

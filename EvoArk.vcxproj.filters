@@ -249,6 +249,9 @@
     <ClInclude Include="Entities\Leader.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Laser.h">
+      <Filter>Entities\Projectiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">

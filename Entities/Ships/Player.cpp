@@ -2,9 +2,16 @@
 #include "Player.h"
 #include <math.h>
 #include "../../SGD Wrappers/SGD_InputManager.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include <algorithm>
 
 CPlayer::CPlayer()
 {
+	maxShield = 500;
+	shield = maxShield;
+	shieldRegen = 500;
+	shieldDelay = 2;
+
 }
 
 
@@ -24,7 +31,10 @@ void CPlayer::Update(float dt)
 
 	if (shieldTimer >= shieldDelay)
 	{
+
 		shield += int(shieldRegen * dt);
+		if (shield > maxShield)
+			shield = maxShield;
 	}
 
 	//Movement
@@ -124,4 +134,34 @@ void CPlayer::Warp()
 	if (warpTimer <= warpDelay)
 		return;
 	warpTimer = 0;
+}
+
+void CPlayer::TakeDamage(int damage)
+{
+	shieldTimer = 0;
+	if (shield > 0)
+	{
+		shield -= damage;
+		damage -= shield;
+	}
+
+	if (damage <= 0)
+	{
+		return;
+	}
+
+	hull -= damage;
+	if (hull <= 0)
+	{
+		//Send gameOver message
+	}
+}
+
+void CPlayer::Render()
+{
+	SGD::Color color = {};
+	if (shield < maxShield)
+		color = SGD::Color{ 255, 0, 0 };
+	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, position - size / 2, rotation, imageSize / 2, color, { scale, scale });
 }

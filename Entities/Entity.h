@@ -4,6 +4,7 @@
 
 
 //Entity, GravityProjectile, and Ship should all return BaseClass to let us know that the entity SHOULD have a more specific type.
+//Order IS significant here. All ships are lumped together so we can say if(type > Player && type < Asteroid) or something similar
 enum class EntityType { BaseClass, Laser, Missile, Push, Well, Player, Human, Copperhead, Cobra, Mamba, Coral, Moccasin, Coordinator, Asteroid, Count };
 class CEntity :
 	public IEntity
@@ -36,7 +37,7 @@ public:
 	virtual bool			IsCircle() override {return false;}
 
 	//Simplify rect collision
-	virtual SGD::Rectangle	GetRect() { return SGD::Rectangle{position - size, size}; }
+	virtual SGD::Rectangle	GetRect() { return SGD::Rectangle{position - size / 2, position + size}; }
 
 	//Mutators
 	virtual void SetImage(SGD::HTexture newImage)override {image = newImage;}

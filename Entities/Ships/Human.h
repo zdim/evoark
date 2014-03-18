@@ -15,6 +15,7 @@ public:
 	CHuman();
 	virtual ~CHuman();
 
+	int GetType() override { return (int)EntityType::Human; }
 	void Update(float dt);
 	void AddGrav(SGD::Vector grav) {gravVec += grav;}
 };

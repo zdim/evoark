@@ -28,6 +28,7 @@ public:
 
 	//Mutators
 	virtual void SetImage(SGD::HTexture newImage) = 0;
+	virtual void SetImageSize(SGD::Size newSize) = 0;
 	virtual void SetPosition(SGD::Point newPos) = 0;
 	virtual void SetVelocity(SGD::Vector newVel) = 0;
 	virtual void SetRotation(float newRot) = 0;
