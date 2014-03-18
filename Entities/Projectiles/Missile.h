@@ -1,10 +1,17 @@
 #pragma once
-#include "Projectile.h"
+#include "Laser.h"
+#include "../Ships/Ship.h"
 class CMissile :
-	public CProjectile
+	public CLaser
 {
+	CShip* target = nullptr;
 public:
 	CMissile();
 	virtual ~CMissile();
+
+	const CShip* GetTarget() {return target;}
+	void SetTarget(CShip* newTarget) {target = newTarget;}
+
+	void HandleCollision(IEntity* other) override;
 };
 
