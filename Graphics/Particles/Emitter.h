@@ -16,7 +16,7 @@ private:
 	int                    m_nNumParticles;
 	float                  m_fSpawnRate;
 	float                  m_fTimeFromLastSpawn;
-	bool                   m_bEmitWay;
+	bool                   m_bLoop;
 	float                  m_fEmitTime;
 
 	
@@ -27,7 +27,7 @@ private:
 public:
 	CEmitter(); 
 	CEmitter(CFlyweight *parData, SGD::Size eSize, SGD::Point ePosition, int nParticles, float fSpawnRate,
-	float fTimeFromLastSpawn, bool emway, float emitTime);
+	float fTimeFromLastSpawn, bool emway, float emitTime = 0 );
 	virtual ~CEmitter();
 	void Initialize();
 	void Update(float deltaTime);

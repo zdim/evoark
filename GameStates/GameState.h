@@ -6,8 +6,12 @@
 #include "../SGD Wrappers/SGD_Color.h"
 #include <vector>
 #include <string>
+#include "../Graphics/Particles/ParticleSystem.h"
+
 class CFlyweight;
 class CEmitter;
+class CParticleSystem;
+
 
 class CGameState :
 	public IGameState
@@ -21,6 +25,8 @@ public:
 	virtual bool	Input(void)				override;
 	virtual void	Update(float dt)	override;
 	virtual void	Render(void)				override;
+
+
 
 private:
 
@@ -70,12 +76,11 @@ private:
 
 	// xml test
 	bool	LoadXMLLevel(const char* pXMLFile);
-	SGD::HTexture TestParticle;
-	CFlyweight    *dataParticleTest;
-	CEmitter      *testEmit;
+	
+	
 
-	CFlyweight    *dataParticleTest2;
-	CEmitter      *testEmit2;
+	CParticleSystem pSystem;
+
 
 };
 

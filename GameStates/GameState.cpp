@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include "../TinyXML/tinyxml.h"
 //#include "../TinyXML/tinystr.h"
-#include "../Graphics/Particles/Flyweight.h"
-#include "../Graphics/Particles/Emitter.h"
+//#include "../Graphics/Particles/Flyweight.h"
+//#include "../Graphics/Particles/Emitter.h"
 
 CGameState::CGameState()
 {
@@ -36,33 +36,11 @@ void	CGameState::Enter(void)
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 
-	TestParticle = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/test.png");
 
-	dataParticleTest = new CFlyweight(TestParticle, { 0.4f, 0.4f }, { 0.1f, 0.1f },
-		255, 127, 0, 0, 
-		255, 255, 0, 0, 
-		1, 1,
-		35, 5, 35, 5);
+	pSystem.Init();
 
-	dataParticleTest2 = new CFlyweight(TestParticle, { 0.4f, 0.4f }, { 0.1f, 0.1f },
-		255, 150, 0, 0,
-		255, 1, 0, 1,
-		1, 1,
-		15, 5, 15, 5);
-
-
-	SGD::Size tempSize = { 4, 4 };
-	SGD::Point tempPosition = { 333, 333 };
-
-	SGD::Size tempSize2 = { 3, 3 };
-	SGD::Point tempPosition2 = { 150, 150 };
-
-
-	testEmit = new CEmitter(dataParticleTest, tempSize, tempPosition, 150,0.01f,1.0f,true,30);
-	testEmit2 = new CEmitter(dataParticleTest2, tempSize2, tempPosition2, 25, 0.3f, 0.3f,false,5);
-	testEmit->Initialize();
-	testEmit2->Initialize();
-} 
+	
+ } 
 
 void	CGameState::Exit(void)
 {
@@ -78,17 +56,17 @@ bool	CGameState::Input(void)
 void	CGameState::Update(float dt)
 {
 	//EnitityManager.Update(dt);
-	testEmit->Update(dt);
-	testEmit2->Update(dt);
+
+	pSystem.Update(dt);
+
 }
 
 void	CGameState::Render(void)
 {
 	graphics->DrawTexture(BackgroundImage, { 0, 0 });
 
-	//SGD::GraphicsManager::GetInstance()->DrawTexture(BackgroundImage, testEmit->GetEmitterPosition());
-	testEmit->Render();
-	testEmit2->Render();
+	pSystem.Render();
+
 	//EnitityManager.Render();
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{

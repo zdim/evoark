@@ -10,8 +10,9 @@ private:
 	SGD::HTexture image;
 
 	
-	SGD::Size m_fStartScale;
-	SGD::Size m_fEndScale;
+	SGD::Size         m_fStartScale;
+	SGD::Size         m_fEndScale;
+	SGD::Vector       rotationOffset;
 
 	unsigned char       startA;
 	unsigned char       startR;
@@ -27,11 +28,13 @@ private:
 	float m_fMaxLife;
 	float m_fMinLife;
 
-	float m_fVelXMax;
-	float m_fVelXMin;
 
-	float m_fVelYMax;
-	float m_fVelYMin;
+
+	SGD::Vector speed;
+
+	float m_fInertia;
+
+	float m_fRotationSpeed;
 
 
 
@@ -42,6 +45,7 @@ public:
 	CFlyweight::CFlyweight(
 		SGD::HTexture img,
 		SGD::Size StartScale, SGD::Size EndScale,
+		SGD::Vector       rOffset,
 		unsigned char sA,
 		unsigned char sR,
 		unsigned char sG,
@@ -51,8 +55,9 @@ public:
 		unsigned char eG,
 		unsigned char eB,
 		float MaxLife, float MinLife,
-		float VelXMax, float VelXMin,
-		float VelYMax, float VelYMin);
+		SGD::Vector s,
+		float Inertia,
+		float RotationSpeed);
 
 	~CFlyweight();
 
@@ -66,11 +71,10 @@ public:
 	float GetMaxLife() { return m_fMaxLife; }
 	float GetMinLife() { return m_fMinLife; }
 
-	float GetMaxVelX() { return m_fVelXMax; }
-	float GetMinVelX() { return m_fVelXMin; }
-
-	float GetMaxVelY() { return m_fVelYMax; }
-	float GetMinVelY() { return m_fVelYMin; }
+	SGD::Vector GetSpeed() { return speed; }
+	SGD::Vector GetRotationOffset() { return rotationOffset; }
+	float       GetInertia() { return m_fInertia; }
+	float       GetRotaionSpeed() { return m_fRotationSpeed; }
 
 
 	unsigned char GetStartA()   { return startA; }
