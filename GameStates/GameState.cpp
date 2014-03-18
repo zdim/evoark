@@ -54,8 +54,7 @@ void	CGameState::Enter(void)
 
 void	CGameState::Exit(void)
 {
-	delete dataParticleTest;
-	dataParticleTest = nullptr;
+
 	delete EntityManager;
 	EntityManager = nullptr;
 }
@@ -88,8 +87,7 @@ void	CGameState::Render(void)
 		}
 	}
 
-	testEmit->Render();
-	testEmit2->Render();
+
 	pSystem.Render();
 
 	EntityManager->Render();
