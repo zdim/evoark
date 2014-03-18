@@ -45,14 +45,6 @@ private:
 	// level creation
 	enum Objects { PLAYER, COPPERHEAD, COBRA, MAMBA, CORAL, MOCASSIN, ASTEROID, NONE, NUM_OBJECTS };
 
-	struct enemy
-	{
-		SGD::Point pos;
-		SGD::Size size;
-		SGD::Color col;
-		Objects type;
-	};
-
 	struct Quadrant
 	{
 		int x;
@@ -67,7 +59,6 @@ private:
 	int m_nQuadHeight = 0;
 	int m_nNumQuadsWidth = 0;
 	int m_nNumQuadsHeight = 0;
-	std::vector<enemy> enemies;
 
 	typedef std::vector<Quadrant> QuadCol;
 	typedef std::vector<QuadCol> World;

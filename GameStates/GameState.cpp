@@ -78,24 +78,18 @@ void	CGameState::Render(void)
 	graphics->DrawTexture(BackgroundImage, { 0, 0 });
 
 	// draw grids
-	for (unsigned int i = 0; i < m_nNumQuadsWidth; i++)
+	for (int i = 0; i < m_nNumQuadsWidth; i++)
 	{
-		for (unsigned int j = 0; j < m_nNumQuadsHeight; j++)
+		for (int j = 0; j < m_nNumQuadsHeight; j++)
 		{
-			SGD::Rectangle r = { SGD::Point{ m_nQuadWidth * i, m_nQuadHeight * j }, SGD::Size{ m_nQuadWidth, m_nQuadHeight } };
+			SGD::Rectangle r = { SGD::Point{ float(m_nQuadWidth * i), float(m_nQuadHeight * j) }, SGD::Size{ float(m_nQuadWidth), float(m_nQuadHeight) } };
 			graphics->DrawRectangle(r, SGD::Color{ 0, 0, 0, 0 }, { 255, 255, 255 });
 		}
 	}
 
-
 	pSystem.Render();
 
 	EntityManager->Render();
-	for (unsigned int i = 0; i < enemies.size(); i++)
-	{
-		if (enemies[i].type != NONE)
-			graphics->DrawRectangle({ enemies[i].pos.x, enemies[i].pos.y, enemies[i].pos.x + 20, enemies[i].pos.y + 20 }, enemies[i].col);
-	}
 }
 
 void	CGameState::Generate()
@@ -107,41 +101,7 @@ void	CGameState::Generate()
 			QuadCol& col = world[i];
 			for (int j = 0; j < m_nNumQuadsHeight; j++)
 			{
-				/*enemy e;
 
-				float left = float(m_nQuadWidth * i + rand() % m_nQuadWidth);
-				float top = float(m_nQuadHeight * j + rand() % m_nQuadHeight);
-				e.pos = { left, top };
-				e.size = { 20, 20 };
-				e.type = col[j].objType;
-				switch (col[j].objType)
-				{
-				case PLAYER:
-					e.pos = { float(m_nQuadWidth * i + (m_nQuadWidth * .5) - 10), float(m_nQuadHeight * j + (m_nQuadHeight * .5) - 10) };
-					e.col = { 255, 255, 255 };
-					break;
-				case COPPERHEAD:
-					e.col = { 255, 0, 0 };
-					break;
-				case COBRA:
-					e.col = { 0, 255, 0 };
-					break;
-				case MAMBA:
-					e.col = { 0, 0, 255 };
-					break;
-				case CORAL:
-					e.col = { 255, 255, 0 };
-					break;
-				case MOCASSIN:
-					e.col = { 127, 127, 127 };
-					break;
-				case ASTEROID:
-					e.col = { 255, 0, 255 };
-					break;
-				
-
-				}
-				enemies.push_back(e);*/
 				float left = float(m_nQuadWidth * i + rand() % m_nQuadWidth);
 				float top = float(m_nQuadHeight * j + rand() % m_nQuadHeight);
 
@@ -168,7 +128,6 @@ void	CGameState::Generate()
 				case ASTEROID:
 					EntityManager->Spawn(EntityType::Asteroid, { left, top }, col[j].objectAmount);
 					break;
-
 
 				}
 			}
@@ -257,7 +216,7 @@ bool CGameState::LoadXMLLevel(const char* pXMLFile)
 		world[size].resize(m_nNumQuadsHeight);
 
 	TiXmlElement* pQuad = pDetails->FirstChildElement("Quad");
-	int count = 0;
+
 	while (pQuad != nullptr)
 	{
 		Quadrant q;
@@ -301,7 +260,7 @@ bool CGameState::LoadXMLLevel(const char* pXMLFile)
 
 		world[q.y][q.x] = q;
 
-		count++;
+
 		pQuad = pQuad->NextSiblingElement("Quad");
 	}
 
