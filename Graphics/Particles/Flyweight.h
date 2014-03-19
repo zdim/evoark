@@ -13,6 +13,8 @@ private:
 	SGD::Size         m_fStartScale;
 	SGD::Size         m_fEndScale;
 	SGD::Vector       rotationOffset;
+	SGD::Vector       StartSpeed;
+	SGD::vEC
 
 	unsigned char       startA;
 	unsigned char       startR;
@@ -27,6 +29,8 @@ private:
 
 	float m_fMaxLife;
 	float m_fMinLife;
+
+	
 
 
 
