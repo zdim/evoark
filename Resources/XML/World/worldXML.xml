@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Level>
+  <Details width="4" height="4" quadWidth="200" quadHeight="200">
+    <Quad x="0" y="0" possibleTypes="1">
+      <Type type="COPPERHEAD" amount="2"/>
+    </Quad>
+    <Quad x="0" y="1" possibleTypes="1">
+      <Type type="MAMBA" amount="2"/>
+    </Quad>
+    <Quad x="0" y="2" possibleTypes="3">
+      <Type type="COPPERHEAD" amount="3"/>
+      <Type type="MAMBA" amount="2"/>
+      <Type type="ASTEROID" amount="1"/>
+    </Quad>
+    <Quad x="0" y="3" possibleTypes="1">
+      <Type type="MOCASSIN" amount="1"/>>
+    </Quad>
+    <Quad x="1" y="0" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5"/>
+      <Type type="COBRA" amount="3"/>
+    </Quad>
+    <Quad x="1" y="1" possibleTypes="2">
+      <Type type="ASTEROID" amount="1"/>
+      <Type type="NONE" amount="1"/>
+    </Quad>
+    <Quad x="1" y="2" possibleTypes="3">
+      <Type type="COPPERHEAD" amount="5"/>
+      <Type type="COBRA" amount="3"/>
+      <Type type="ASTEROID" amount="1"/>
+    </Quad>
+    <Quad x="1" y="3" possibleTypes="2">
+      <Type type="MAMBA" amount="3"/>
+      <Type type="COBRA" amount="3"/>
+    </Quad>
+    <Quad x="2" y="0" possibleTypes="3">
+      <Type type="COPPERHEAD" amount="5"/>
+      <Type type="MAMBA" amount="2"/>
+      <Type type="ASTEROID" amount="1"/>
+    </Quad>
+    <Quad x="2" y="1" possibleTypes="1">
+      <Type type="NONE" amount="1"/>>
+    </Quad>
+    <Quad x="2" y="2" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5"/>
+      <Type type="COBRA" amount="3"/>
+    </Quad>
+    <Quad x="2" y="3" possibleTypes="2">
+      <Type type="ASTEROID" amount="1"/>
+      <Type type="NONE" amount="1"/>
+    </Quad>
+    <Quad x="3" y="0" possibleTypes="1">
+      <Type type="PLAYER" amount="1"/>
+    </Quad>
+    <Quad x="3" y="1" possibleTypes="1">
+      <Type type="NONE" amount="1"/>>
+    </Quad>
+    <Quad x="3" y="2" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5"/>
+      <Type type="COBRA" amount="3"/>
+    </Quad>
+    <Quad x="3" y="3" possibleTypes="2">
+      <Type type="ASTEROID" amount="1"/>
+      <Type type="NONE" amount="1"/>
+    </Quad>
+  </Details>
+</Level>

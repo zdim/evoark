@@ -1,63 +1,50 @@
 #pragma once
+#define WINDOWS_LEAN_AND_MEAN
 #include "Flyweight.h"
+#include <Windows.h>
 #include "../../SGD Wrappers/SGD_Color.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
+
 class CParticle
 {
 private:
-	//CFlyweight * particleInfo;
-	SGD::Color curColor;
-	SGD::Point curPosition;
-	float      m_fCurLife;
-	float      m_fCurVelX;
-	float      m_fCurVelY;
-	float      m_fCurScale;
 
-
-
-
-
-
+	SGD::Color     curColor;
+	SGD::Point     curPosition;
+	SGD::Vector    curSpeed;
+	SGD::Size      curScale;
+	float          m_fCurLife;
+	float          m_fRotation;
+	
 
 public:
-	CParticle();
-	CParticle(SGD::Color cColor, SGD::Point cPosition, 
-		float CurLife,
-		float CurVelX, float CurVelY, 
-		float CurScale
-		);
 
+	CParticle();
+
+	CParticle(SGD::Color cColor, SGD::Point cPosition, 
+		float cLife,SGD::Vector cSpeed,
+		SGD::Size cScale, float cRotation );
 
 	virtual ~CParticle();
 
 
+	SGD::Color  GetCurColor()          { return curColor; }
+	SGD::Point  GetCurPos()            { return curPosition; }
+	SGD::Vector GetCurSpeed()          { return curSpeed; }
+	SGD::Size   GetCurScale()          { return curScale; }
+	float       GetCurLife()           { return m_fCurLife; }
+	float       GetCurRotation()       { return m_fRotation; }
 
 
-
-	//CFlyweight* GetParticleInfo(){ return particleInfo; }
-
-
-	SGD::Color GetCurColor() { return curColor; }
-	SGD::Point GetCurPos()   { return curPosition; }
-
-	float GetCurLife()       { return m_fCurLife; }
-	//float GetEndLife()       { return m_fEndLife; }
-
-	float GetCurVelX()       { return m_fCurVelX; }
-	float GetCurVelY()       { return m_fCurVelY; }
-	float GetCurScale()      { return m_fCurScale; }
-
-	void SetCurColor(SGD::Color c) { curColor = c; }
-	void SetCurPos(SGD::Point p)   { curPosition = p; }
-
-	void SetCurLife(float sLife)    { m_fCurLife = sLife; }
-	//void SetEndLife(float eLife)    { m_fEndLife = eLife; }
-
-
-	void SetCurVelX(float velX)    { m_fCurVelX = velX; }
-	void SetCurVelY(float velY)    { m_fCurVelY = velY; }
-	void SetCurScale(float scale)  { m_fCurScale = scale; }
-
-
+	void SetCurColor(SGD::Color c)     { curColor = c; }
+	void SetCurPos(SGD::Point p)       { curPosition = p; }
+	void SetCurSpeedX(float x)         { curSpeed.x = x; }
+	void SetCurSpeedY(float y)         { curSpeed.y = y; }
+	void SetCurSpeed(SGD::Vector s)    { curSpeed = s; }
+	void SetCurScale(SGD::Size scale)  { curScale = scale; }
+	void SetCurLife(float sLife)       { m_fCurLife = sLife; }
+	void SetCurRotation(float rotation) { m_fRotation = rotation; }
+	
+	
 };
 

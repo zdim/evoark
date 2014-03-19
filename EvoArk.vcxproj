@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Microsoft DirectX SDK\Include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Microsoft DirectX SDK\Lib\x86;D:\Microsoft DirectX SDK\Lib\x64;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -77,9 +77,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Entities\Asteroid.h" />
+    <ClInclude Include="Entities\Barrier.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\EntityManager.h" />
     <ClInclude Include="Entities\IEntity.h" />
+    <ClInclude Include="Entities\Leader.h" />
     <ClInclude Include="Entities\Modules\Engine.h" />
     <ClInclude Include="Entities\Modules\LaserModule.h" />
     <ClInclude Include="Entities\Modules\MissileModule.h" />
@@ -89,13 +92,14 @@
     <ClInclude Include="Entities\Modules\TurretModule.h" />
     <ClInclude Include="Entities\Modules\WarpModule.h" />
     <ClInclude Include="Entities\Modules\WellModule.h" />
+    <ClInclude Include="Entities\Planet.h" />
     <ClInclude Include="Entities\Projectiles\GravityProjectile.h" />
+    <ClInclude Include="Entities\Projectiles\Laser.h" />
     <ClInclude Include="Entities\Projectiles\Missile.h" />
     <ClInclude Include="Entities\Projectiles\Projectile.h" />
     <ClInclude Include="Entities\Projectiles\Push.h" />
     <ClInclude Include="Entities\Projectiles\Well.h" />
     <ClInclude Include="Entities\Ships\Enemies\Cobra.h" />
-    <ClInclude Include="Entities\Ships\Enemies\Coordinator.h" />
     <ClInclude Include="Entities\Ships\Enemies\Copperhead.h" />
     <ClInclude Include="Entities\Ships\Enemies\Coral.h" />
     <ClInclude Include="Entities\Ships\Enemies\Enemy.h" />
@@ -139,12 +143,16 @@
     <ClInclude Include="SGD Wrappers\SGD_Key.h" />
     <ClInclude Include="SGD Wrappers\SGD_String.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TinyXML\tinystr.h" />
+    <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="WinMain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entities\Asteroid.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\EntityManager.cpp" />
     <ClCompile Include="Entities\IEntity.cpp" />
+    <ClCompile Include="Entities\Leader.cpp" />
     <ClCompile Include="Entities\Modules\Engine.cpp" />
     <ClCompile Include="Entities\Modules\LaserModule.cpp" />
     <ClCompile Include="Entities\Modules\MissileModule.cpp" />
@@ -154,13 +162,14 @@
     <ClCompile Include="Entities\Modules\TurretModule.cpp" />
     <ClCompile Include="Entities\Modules\WarpModule.cpp" />
     <ClCompile Include="Entities\Modules\WellModule.cpp" />
+    <ClCompile Include="Entities\Planet.cpp" />
     <ClCompile Include="Entities\Projectiles\GravityProjectile.cpp" />
+    <ClCompile Include="Entities\Projectiles\Laser.cpp" />
     <ClCompile Include="Entities\Projectiles\Missile.cpp" />
     <ClCompile Include="Entities\Projectiles\Projectile.cpp" />
     <ClCompile Include="Entities\Projectiles\Push.cpp" />
     <ClCompile Include="Entities\Projectiles\Well.cpp" />
     <ClCompile Include="Entities\Ships\Enemies\Cobra.cpp" />
-    <ClCompile Include="Entities\Ships\Enemies\Coordinator.cpp" />
     <ClCompile Include="Entities\Ships\Enemies\Copperhead.cpp" />
     <ClCompile Include="Entities\Ships\Enemies\Coral.cpp" />
     <ClCompile Include="Entities\Ships\Enemies\Enemy.cpp" />
@@ -195,6 +204,10 @@
     <ClCompile Include="SGD Wrappers\SGD_Geometry.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_GraphicsManager.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_InputManager.cpp" />
+    <ClCompile Include="TinyXML\tinystr.cpp" />
+    <ClCompile Include="TinyXML\tinyxml.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>

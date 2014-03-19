@@ -9,7 +9,8 @@ CFlyweight::CFlyweight()
 
 CFlyweight::CFlyweight(
 	  SGD::HTexture img, 
-	  float StartScale, float EndScale, 
+	  SGD::Size StartScale, SGD::Size EndScale,
+	  SGD::Vector       rOffset,
 	  unsigned char sA,
 	  unsigned char sR,
 	  unsigned char sG,
@@ -19,8 +20,9 @@ CFlyweight::CFlyweight(
 	  unsigned char eG,
 	  unsigned char eB,
 	  float MaxLife, float MinLife, 
-	  float VelXMax, float VelXMin, 
-	  float VelYMax,float VelYMin) 
+	  SGD::Vector s,
+	  float  Inertia,
+	  float RotationSpeed)
 {
 
 	image = img;
@@ -28,6 +30,8 @@ CFlyweight::CFlyweight(
 
 	m_fStartScale = StartScale;
 	m_fEndScale = EndScale;
+
+	rotationOffset = rOffset;
 
 	startA = sA;
 	startR = sR;
@@ -42,11 +46,9 @@ CFlyweight::CFlyweight(
 	m_fMaxLife = MaxLife;
 	m_fMinLife = MinLife;
 
-	m_fVelXMax = VelXMax;
-	m_fVelXMin = VelXMin;
-
-	m_fVelYMax = VelYMax;
-	m_fVelYMin = VelYMin;
+	speed = s;
+	m_fInertia = Inertia;
+	m_fRotationSpeed = RotationSpeed;
 
 }
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include <list>
 #include "Particle.h"
 #include "Flyweight.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
@@ -8,11 +8,17 @@ class CEmitter
 {
 
 private:
-	std::vector<CParticle> m_vParticles;
-	CFlyweight             particleData;
+	std::list<CParticle*>   m_lAliveParticles;
+	std::list<CParticle*>   m_lDeadParticles;
+	CFlyweight             *particleData;
 	SGD::Size              emitterSize;
 	SGD::Point             emitterPosition;
-	int                    numParticles;
+	int                    m_nNumParticles;
+	float                  m_fSpawnRate;
+	float                  m_fTimeFromLastSpawn;
+	bool                   m_bLoop;
+	float                  m_fEmitTime;
+
 	
 
 
@@ -20,13 +26,17 @@ private:
 
 public:
 	CEmitter(); 
-	CEmitter(CFlyweight parData, SGD::Size eSize, SGD::Point ePosition,int nParticles);
+	CEmitter(CFlyweight *parData, SGD::Size eSize, SGD::Point ePosition, int nParticles, float fSpawnRate,
+	float fTimeFromLastSpawn, bool emway, float emitTime = 0 );
 	virtual ~CEmitter();
+	void Initialize();
 	void Update(float deltaTime);
 	void Render();
-	void CreateParticle();
+	CParticle CreateParticle();
 
 
+
+	SGD::Point GetEmitterPosition() { return emitterPosition; }
 	
 
 

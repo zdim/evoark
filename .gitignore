@@ -1,0 +1,12 @@
+
+*.sdf
+*.opensdf
+*.suo
+*.user
+/Debug
+/Release
+/ipch
+/Tools/World Editor/bin/Debug
+/Tools/World Editor/obj/Debug
+/Tools/World Editor/bin/Debug
+/Tools/World Editor/obj/Debug
