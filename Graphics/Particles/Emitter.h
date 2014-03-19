@@ -18,7 +18,7 @@ private:
 	float                  m_fTimeFromLastSpawn;
 	bool                   m_bLoop;
 	float                  m_fEmitTime;
-
+	int                    shape; 
 	
 
 

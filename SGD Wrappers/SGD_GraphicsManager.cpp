@@ -89,6 +89,7 @@ namespace SGD
 			virtual	bool		DrawTexture				( HTexture handle, Point position, float rotation, Vector rotationOffset, Color color, Size scale )						override;
 			virtual	bool		DrawTextureSection		( HTexture handle, Point position, Rectangle section, float rotation, Vector rotationOffset, Color color, Size scale )	override;
 			virtual	bool		UnloadTexture			( HTexture& handle )							override;
+			virtual SGD::Vector                          GetTextureData(HTexture& handle)	override;
 
 		private:
 			// SINGLETON
@@ -1450,7 +1451,13 @@ namespace SGD
 			return true;
 		}
 		//*************************************************************//
-
+		SGD::Vector GraphicsManager::GetTextureData(HTexture& handle)
+		{
+			TextureInfo* data = m_HandleManager.GetData(handle);
+			
+			SGD::Vector tempPoint{ data->fWidth, data->fHeight };
+			return tempPoint;
+		}
 
 
 		//*************************************************************//

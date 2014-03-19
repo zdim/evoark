@@ -13,8 +13,9 @@ private:
 	SGD::Size         m_fStartScale;
 	SGD::Size         m_fEndScale;
 	SGD::Vector       rotationOffset;
-	SGD::Vector       StartSpeed;
-	SGD::vEC
+
+	SGD::Vector       MinSpeed;
+	SGD::Vector       MaxSpeed; 
 
 	unsigned char       startA;
 	unsigned char       startR;
@@ -31,10 +32,6 @@ private:
 	float m_fMinLife;
 
 	
-
-
-
-	SGD::Vector speed;
 
 	float m_fInertia;
 
@@ -59,7 +56,8 @@ public:
 		unsigned char eG,
 		unsigned char eB,
 		float MaxLife, float MinLife,
-		SGD::Vector s,
+		SGD::Vector maxs,
+		SGD::Vector mins,
 		float Inertia,
 		float RotationSpeed);
 
@@ -75,7 +73,8 @@ public:
 	float GetMaxLife() { return m_fMaxLife; }
 	float GetMinLife() { return m_fMinLife; }
 
-	SGD::Vector GetSpeed() { return speed; }
+	SGD::Vector GetMinSpeed() { return MinSpeed; }
+	SGD::Vector GetMaxSpeed()   { return MaxSpeed; }
 	SGD::Vector GetRotationOffset() { return rotationOffset; }
 	float       GetInertia() { return m_fInertia; }
 	float       GetRotaionSpeed() { return m_fRotationSpeed; }

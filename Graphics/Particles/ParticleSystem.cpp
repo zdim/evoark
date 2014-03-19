@@ -1,5 +1,6 @@
 #include "ParticleSystem.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../SGD Wrappers/SGD_HandleManager.h"
 #include "../../TinyXML/tinyxml.h"
 #include <string>
 
@@ -76,7 +77,7 @@ void CParticleSystem::LoadEffect()
 
 	//Temp variables for loading
 
-	std::string   imageFilePath;
+	std::string   imageFilePath = "Resources/Graphics/";
 	double startScaleX;
 	double startScaleY;
 	double endScaleX;
@@ -100,7 +101,7 @@ void CParticleSystem::LoadEffect()
 
 
 	TiXmlElement* pFlyweight = pEmittor->NextSiblingElement();
-	imageFilePath = pFlyweight->Attribute("image");
+	imageFilePath += pFlyweight->Attribute("image");
 	pFlyweight->Attribute("m_fStartScaleX", &startScaleX);
 	pFlyweight->Attribute("m_fStartScaleY", &startScaleY);
 	pFlyweight->Attribute("m_fEndScaleX", &endScaleX);
@@ -122,19 +123,25 @@ void CParticleSystem::LoadEffect()
 	pFlyweight->Attribute("Inertia", &Inertia);
 	pFlyweight->Attribute("RotationSpeed", &RotationSpeed);
 
-
+	
 
 
 	char * imageFile = new char[imageFilePath.size() + 1];
+
 	std::copy(imageFilePath.begin(), imageFilePath.end(), imageFile);
 	imageFile[imageFilePath.size()] = '\0';
+
 	SGD::HTexture TestParticle = SGD::GraphicsManager::GetInstance()->LoadTexture(imageFile);
+	
+	//TestParticle
+
 	delete[] imageFile;
 
 	SGD::Size startScale { (float)startScaleX, (float)startScaleY };
 	SGD::Size endScale{ (float)endScaleX, (float)endScaleY };
-	SGD::Vector offsetImage{ widthOffset, heightOffset };
+	SGD::Vector offsetImage = SGD::GraphicsManager::GetInstance()->GetTextureData(TestParticle)/2;
 	SGD::Vector speed    { SpeedX, SpeedY };
+	SGD::Vector speedend    { -50, -50 };
 
 	CFlyweight* eData = new CFlyweight(TestParticle, startScale, endScale,
 	offsetImage,
@@ -142,6 +149,7 @@ void CParticleSystem::LoadEffect()
 	endA, endR, endG, endB,
 	MaxLife, MinLife,
 	speed,
+	speedend,
 	Inertia,
 	RotationSpeed);
 

@@ -60,6 +60,7 @@ namespace SGD
 		virtual	bool		DrawTexture			( HTexture handle, Point position, float rotation = 0.0f, Vector rotationOffset = {}, Color color = {}, Size scale = {1.0f, 1.0f} )						= 0;
 		virtual	bool		DrawTextureSection	( HTexture handle, Point position, Rectangle section, float rotation = 0.0f, Vector rotationOffset = {}, Color color = {}, Size scale = {1.0f, 1.0f} )	= 0;
 		virtual	bool		UnloadTexture		( HTexture& handle )										= 0;
+		virtual SGD::Vector                          GetTextureData(HTexture& handle) = 0;
 
 
 	protected:

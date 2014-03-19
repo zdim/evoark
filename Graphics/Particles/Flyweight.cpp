@@ -20,7 +20,8 @@ CFlyweight::CFlyweight(
 	  unsigned char eG,
 	  unsigned char eB,
 	  float MaxLife, float MinLife, 
-	  SGD::Vector s,
+	  SGD::Vector maxs,
+	  SGD::Vector mine,
 	  float  Inertia,
 	  float RotationSpeed)
 {
@@ -46,7 +47,9 @@ CFlyweight::CFlyweight(
 	m_fMaxLife = MaxLife;
 	m_fMinLife = MinLife;
 
-	speed = s;
+	MaxSpeed = maxs;
+	MinSpeed = mine;
+
 	m_fInertia = Inertia;
 	m_fRotationSpeed = RotationSpeed;
 
