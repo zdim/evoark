@@ -1,0 +1,9 @@
+F:\Classes\SGP\Editor\bin\Debug\Editor.exe.config
+F:\Classes\SGP\Editor\bin\Debug\Editor.exe
+F:\Classes\SGP\Editor\bin\Debug\Editor.pdb
+F:\Classes\SGP\Editor\obj\Debug\Editor.csprojResolveAssemblyReference.cache
+F:\Classes\SGP\Editor\obj\Debug\Editor.Properties.Resources.resources
+F:\Classes\SGP\Editor\obj\Debug\Editor.csproj.GenerateResource.Cache
+F:\Classes\SGP\Editor\obj\Debug\Editor.exe
+F:\Classes\SGP\Editor\obj\Debug\Editor.pdb
+F:\Classes\SGP\Editor\obj\Debug\Editor.Form1.resources
