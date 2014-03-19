@@ -63,6 +63,10 @@ namespace Editor
 
         public void Render()
         {
+            Point offset = new Point(0, 0);
+            offset.X += panel1.AutoScrollPosition.X;
+            offset.Y += panel1.AutoScrollPosition.Y;
+
             D3D.Clear(panel1, Color.Black);
             D3D.DeviceBegin();
             D3D.SpriteBegin();
@@ -82,7 +86,8 @@ namespace Editor
             }
             if (selected != null)
             {
-                Rectangle s = new Rectangle(selected.X * quadSize.Width, selected.Y * quadSize.Height, quadSize.Width, quadSize.Height);
+                Rectangle s = new Rectangle(selected.X * quadSize.Width + panel1.AutoScrollPosition.X,
+                    selected.Y * quadSize.Height + panel1.AutoScrollPosition.Y, quadSize.Width, quadSize.Height);
                 D3D.DrawHollowRect(s, Color.Cyan, 2);
             }
             D3D.SpriteEnd();
@@ -121,29 +126,45 @@ namespace Editor
             int temp = Int32.Parse(numRows.Value.ToString());
             
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
-                worldSize.Height * quadSize.Height);
+                temp * quadSize.Height);
 
             Quad[,] newWorld = new Quad[worldSize.Width, temp];
 
             for(int i = 0; i < worldSize.Width; i++)
-                for(int j = 0; j < worldSize.Height; j++)
+                for(int j = 0; j < temp; j++)
                 {
-                    // TODO: FIX THIS
-                    if(world[i,j] != null)
+                    if (j < worldSize.Height)
                     {
                         newWorld[i, j] = world[i, j];
                     }
+                    else
+                        newWorld[i, j] = new Quad(i, j);
                 }
 
             worldSize = new Size(worldSize.Width, temp);
+            world = newWorld;
         }
 
         private void numCols_ValueChanged(object sender, EventArgs e)
         {
             int temp = Int32.Parse(numCols.Value.ToString());
-            worldSize = new Size(temp, worldSize.Height);
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
+
+            Quad[,] newWorld = new Quad[temp, worldSize.Height];
+
+            for (int i = 0; i < temp; i++)
+                for (int j = 0; j < worldSize.Height; j++)
+                {
+                    if (i < worldSize.Width)
+                    {
+                        newWorld[i, j] = world[i, j];
+                    }
+                    else
+                        newWorld[i, j] = new Quad(i, j);
+                }
+            worldSize = new Size(temp, worldSize.Height);
+            world = newWorld;
         }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
@@ -188,7 +209,7 @@ namespace Editor
                 
             }
             listBox1.Items.Add(spawn);
-            //world[selected.X, selected.Y].Spawns.Add(spawn);
+            world[selected.X, selected.Y].Spawns.Add(spawn);
         }
     }
 }
