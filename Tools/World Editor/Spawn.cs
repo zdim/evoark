@@ -8,15 +8,6 @@ namespace Editor
 {
     class Spawn
     {
-        public enum Object { None, Player, Copperhead, Cobra, Mamba, Coral, Moccasin, Asteroid, Planet, }
-
-        Object obj;
-
-        public Object Obj
-        {
-            get { return obj; }
-            set { obj = value; }
-        }
 
         int x;
 
@@ -34,18 +25,28 @@ namespace Editor
             set { y = value; }
         }
 
-        int amount;
+        int width;
 
-        public int Amount
+        public int Width
         {
-            get { return amount; }
-            set { amount = value; }
+            get { return width; }
+            set { width = value; }
         }
 
-        public override string ToString()
+        int height;
+
+        public int Height
         {
-            string name = amount.ToString() + " - " + obj.ToString();
-            return name;
+            get { return height; }
+            set { height = value; }
         }
+
+        
+
+        //public override string ToString()
+        //{
+        //    string name = amount.ToString() + " - " + obj.ToString();
+        //    return name;
+        //}
     }
 }
