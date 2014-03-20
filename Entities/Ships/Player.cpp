@@ -4,6 +4,7 @@
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include <algorithm>
+#include "../../Message System/CreateLaserMessage.h"
 
 CPlayer::CPlayer()
 {
@@ -11,7 +12,8 @@ CPlayer::CPlayer()
 	shield = maxShield;
 	shieldRegen = 500;
 	shieldDelay = 2;
-
+	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 0;
+	laserDelay = 0.25f;
 }
 
 
@@ -99,7 +101,12 @@ void CPlayer::CreateLaser()
 		return;
 	laserTimer = 0;
 	//TODO: Send CreateLaser message
+	int damage = 25;
+	if (laserLevel >= 1)
+		damage += 15;
 
+	CreateLaserMessage* msg = new CreateLaserMessage(position,rotation,damage, (laserLevel >= 3));
+	msg->QueueMessage();
 }
 
 void CPlayer::CreateMissile()

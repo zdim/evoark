@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include "../Graphics/Particles/ParticleSystem.h"
+#include "../SGD Wrappers/SGD_Message.h"
 
 class CFlyweight;
 class CEmitter;
@@ -26,6 +27,7 @@ public:
 	virtual bool	Input(void)				override;
 	virtual void	Update(float dt)	override;
 	virtual void	Render(void)				override;
+	static void MessageProc(const SGD::Message* msg);
 
 
 
