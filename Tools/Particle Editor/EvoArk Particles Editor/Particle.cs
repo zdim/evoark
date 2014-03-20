@@ -14,9 +14,21 @@ namespace EvoArk_Particles_Editor
         Color curColor;
         Point curPosition;
         Point curSpeed;
-        Point curScale;
+        Size curScale;
         float m_fCurLife;
+
+        public float FCurLife
+        {
+            get { return m_fCurLife; }
+            set { m_fCurLife = value; }
+        }
         float m_fRotation;
+
+        public float FRotation
+        {
+            get { return m_fRotation; }
+            set { m_fRotation = value; }
+        }
 
 
         public Color ParticleColor
@@ -37,11 +49,13 @@ namespace EvoArk_Particles_Editor
             set { curSpeed = value; }
         }
 
-        public Point ParticleScale
+        public Size ParticleScale
         {
-            get { return curScale; }
+            get { return  curScale; }
             set { curScale = value; }
         }
+
+
 
 
         public Particle()
@@ -51,7 +65,7 @@ namespace EvoArk_Particles_Editor
             Color cColor,
             Point cPosition,
             Point cSpeed,
-            Point cScale,
+            Size cScale,
             float curLife,
             float Rotation 
             )

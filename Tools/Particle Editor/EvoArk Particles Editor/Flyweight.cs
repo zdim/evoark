@@ -7,11 +7,93 @@ using System.Threading.Tasks;
 
 namespace EvoArk_Particles_Editor
 {
+
+    class Size
+    {
+        public float Width { get; set; }
+        public float Height { get; set; }
+
+        public Size()
+        {
+        }
+
+        public Size(float w, float h)
+        {
+            this.Width = w;
+            this.Height = h;
+        }
+
+       
+        public static Size operator *(Size s, float n)
+        {
+            return new Size(s.Width * n, s.Height * n);
+        }
+
+        public static Size operator +(Size s, float n)
+        {
+            return new Size(s.Width + n, s.Height + n);
+        }
+
+        //public static Size operator -(Size s, float n)
+        //{
+        //    return new Size(s.Width - n, s.Height - n);
+        //}
+
+        public static Size operator -(Size s, Size n)
+        {
+            Size tS = new Size(s.Width, s.Height);
+            Size tN = new Size(n.Width, n.Height);
+            return new Size(s.Width - n.Width, s.Height - n.Height);
+           
+        }
+
+        public static Size operator +(Size s, Size n)
+        {
+            Size tS = new Size(s.Width, s.Height);
+            Size tN = new Size(n.Width, n.Height);
+            return new Size(s.Width + n.Width, s.Height + n.Height);
+
+        }
+
+
+    }
+
+    class Point
+    {
+        public float X { get; set; }
+        public float Y { get; set; }
+
+        public Point()
+        {
+        }
+
+        public Point(float x, float y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
+
+
+        public static Point operator *(Point p, float n)
+        {
+            return new Point(p.X * n, p.Y * n);
+        }
+
+        public static Point operator +(Point s, Point n)
+        {
+            Point tS = new Point(s.X, s.Y);
+            Point tN = new Point(n.X, n.Y);
+            return new Point(s.X + n.X, s.Y + n.Y);
+        }
+
+    }
+
+
     class Flyweight
     {
         int   m_nParticleImageID;
-		Point StartScale;
-        Point EndScale;
+        Size StartScale;
+        Size EndScale;
 		Point rOffset;
 		int sA;
 		int sR;
@@ -33,13 +115,13 @@ namespace EvoArk_Particles_Editor
             set { m_nParticleImageID = value; }
         }
 
-        public Point ParticleStartScale
+        public Size ParticleStartScale
         {
             get { return StartScale; }
             set { StartScale = value; }
         }
 
-        public Point ParticleEndScale
+        public Size ParticleEndScale
         {
             get { return EndScale; }
             set { EndScale = value; }
@@ -132,12 +214,15 @@ namespace EvoArk_Particles_Editor
             set { RotationSpeed = value; }
         }
 
+        public Flyweight()
+        { 
+        }
 
         public Flyweight(
 
         int ParticleImageID,
-		Point SScale,
-        Point EScale,
+        Size SScale,
+        Size EScale,
 		Point Offset,
 		int A,
 		int R,
