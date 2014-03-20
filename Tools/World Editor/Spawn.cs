@@ -25,6 +25,22 @@ namespace Editor
             set { y = value; }
         }
 
+        int width;
+
+        public int Width
+        {
+            get { return width; }
+            set { width = value; }
+        }
+
+        int height;
+
+        public int Height
+        {
+            get { return height; }
+            set { height = value; }
+        }
+
         
 
         //public override string ToString()

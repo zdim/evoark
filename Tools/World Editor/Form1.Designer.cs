@@ -51,6 +51,8 @@
             this.possibleEntities = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.worldGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioButtonStatic = new System.Windows.Forms.RadioButton();
+            this.radioButtonGenerated = new System.Windows.Forms.RadioButton();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -64,8 +66,7 @@
             this.panelleft = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.radioButtonGenerated = new System.Windows.Forms.RadioButton();
-            this.radioButtonStatic = new System.Windows.Forms.RadioButton();
+            this.collisionCheck = new System.Windows.Forms.CheckBox();
             this.quadGroupBox.SuspendLayout();
             this.groupBoxSize.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
@@ -89,6 +90,7 @@
             // 
             // quadGroupBox
             // 
+            this.quadGroupBox.Controls.Add(this.collisionCheck);
             this.quadGroupBox.Controls.Add(this.groupBoxSize);
             this.quadGroupBox.Controls.Add(this.radioButtonEvent);
             this.quadGroupBox.Controls.Add(this.radioButtonObject);
@@ -144,21 +146,41 @@
             // numericUpDownHeight
             // 
             this.numericUpDownHeight.Location = new System.Drawing.Point(42, 48);
+            this.numericUpDownHeight.Minimum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             this.numericUpDownHeight.Name = "numericUpDownHeight";
             this.numericUpDownHeight.Size = new System.Drawing.Size(61, 20);
             this.numericUpDownHeight.TabIndex = 1;
+            this.numericUpDownHeight.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             // 
             // numericUpDownWidth
             // 
             this.numericUpDownWidth.Location = new System.Drawing.Point(42, 22);
+            this.numericUpDownWidth.Minimum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             this.numericUpDownWidth.Name = "numericUpDownWidth";
             this.numericUpDownWidth.Size = new System.Drawing.Size(61, 20);
             this.numericUpDownWidth.TabIndex = 0;
+            this.numericUpDownWidth.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             // 
             // radioButtonEvent
             // 
             this.radioButtonEvent.AutoSize = true;
-            this.radioButtonEvent.Location = new System.Drawing.Point(165, 19);
+            this.radioButtonEvent.Location = new System.Drawing.Point(185, 80);
             this.radioButtonEvent.Name = "radioButtonEvent";
             this.radioButtonEvent.Size = new System.Drawing.Size(53, 17);
             this.radioButtonEvent.TabIndex = 9;
@@ -170,7 +192,7 @@
             // 
             this.radioButtonObject.AutoSize = true;
             this.radioButtonObject.Checked = true;
-            this.radioButtonObject.Location = new System.Drawing.Point(63, 19);
+            this.radioButtonObject.Location = new System.Drawing.Point(57, 80);
             this.radioButtonObject.Name = "radioButtonObject";
             this.radioButtonObject.Size = new System.Drawing.Size(56, 17);
             this.radioButtonObject.TabIndex = 8;
@@ -237,16 +259,17 @@
             // 
             // removeEntity
             // 
-            this.removeEntity.Location = new System.Drawing.Point(254, 97);
+            this.removeEntity.Location = new System.Drawing.Point(257, 154);
             this.removeEntity.Name = "removeEntity";
             this.removeEntity.Size = new System.Drawing.Size(24, 23);
             this.removeEntity.TabIndex = 4;
             this.removeEntity.Text = "-";
             this.removeEntity.UseVisualStyleBackColor = true;
+            this.removeEntity.Click += new System.EventHandler(this.removeEntity_Click);
             // 
             // addEntity
             // 
-            this.addEntity.Location = new System.Drawing.Point(254, 68);
+            this.addEntity.Location = new System.Drawing.Point(257, 125);
             this.addEntity.Name = "addEntity";
             this.addEntity.Size = new System.Drawing.Size(24, 23);
             this.addEntity.TabIndex = 4;
@@ -257,7 +280,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(45, 224);
+            this.label2.Location = new System.Drawing.Point(39, 256);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 13);
             this.label2.TabIndex = 5;
@@ -265,7 +288,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(130, 222);
+            this.numericUpDown1.Location = new System.Drawing.Point(124, 254);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             20,
             0,
@@ -288,7 +311,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(60, 197);
+            this.label1.Location = new System.Drawing.Point(54, 229);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 13);
             this.label1.TabIndex = 3;
@@ -297,7 +320,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(130, 194);
+            this.comboBox1.Location = new System.Drawing.Point(124, 226);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 2;
@@ -305,7 +328,7 @@
             // possibleEntities
             // 
             this.possibleEntities.AutoSize = true;
-            this.possibleEntities.Location = new System.Drawing.Point(91, 52);
+            this.possibleEntities.Location = new System.Drawing.Point(102, 109);
             this.possibleEntities.Name = "possibleEntities";
             this.possibleEntities.Size = new System.Drawing.Size(83, 13);
             this.possibleEntities.TabIndex = 1;
@@ -314,7 +337,7 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(27, 68);
+            this.listBox1.Location = new System.Drawing.Point(31, 125);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(224, 95);
             this.listBox1.TabIndex = 0;
@@ -337,6 +360,30 @@
             this.worldGroupBox.TabIndex = 3;
             this.worldGroupBox.TabStop = false;
             this.worldGroupBox.Text = "World Info";
+            // 
+            // radioButtonStatic
+            // 
+            this.radioButtonStatic.AutoSize = true;
+            this.radioButtonStatic.Location = new System.Drawing.Point(186, 74);
+            this.radioButtonStatic.Name = "radioButtonStatic";
+            this.radioButtonStatic.Size = new System.Drawing.Size(52, 17);
+            this.radioButtonStatic.TabIndex = 9;
+            this.radioButtonStatic.Text = "Static";
+            this.radioButtonStatic.UseVisualStyleBackColor = true;
+            this.radioButtonStatic.Click += new System.EventHandler(this.radioButtonStatic_Click);
+            // 
+            // radioButtonGenerated
+            // 
+            this.radioButtonGenerated.AutoSize = true;
+            this.radioButtonGenerated.Checked = true;
+            this.radioButtonGenerated.Location = new System.Drawing.Point(186, 43);
+            this.radioButtonGenerated.Name = "radioButtonGenerated";
+            this.radioButtonGenerated.Size = new System.Drawing.Size(75, 17);
+            this.radioButtonGenerated.TabIndex = 8;
+            this.radioButtonGenerated.TabStop = true;
+            this.radioButtonGenerated.Text = "Generated";
+            this.radioButtonGenerated.UseVisualStyleBackColor = true;
+            this.radioButtonGenerated.Click += new System.EventHandler(this.radioButtonGenerated_Click);
             // 
             // label6
             // 
@@ -515,29 +562,16 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // radioButtonGenerated
+            // collisionCheck
             // 
-            this.radioButtonGenerated.AutoSize = true;
-            this.radioButtonGenerated.Checked = true;
-            this.radioButtonGenerated.Location = new System.Drawing.Point(186, 43);
-            this.radioButtonGenerated.Name = "radioButtonGenerated";
-            this.radioButtonGenerated.Size = new System.Drawing.Size(75, 17);
-            this.radioButtonGenerated.TabIndex = 8;
-            this.radioButtonGenerated.TabStop = true;
-            this.radioButtonGenerated.Text = "Generated";
-            this.radioButtonGenerated.UseVisualStyleBackColor = true;
-            this.radioButtonGenerated.Click += new System.EventHandler(this.radioButtonGenerated_Click);
-            // 
-            // radioButtonStatic
-            // 
-            this.radioButtonStatic.AutoSize = true;
-            this.radioButtonStatic.Location = new System.Drawing.Point(186, 74);
-            this.radioButtonStatic.Name = "radioButtonStatic";
-            this.radioButtonStatic.Size = new System.Drawing.Size(52, 17);
-            this.radioButtonStatic.TabIndex = 9;
-            this.radioButtonStatic.Text = "Static";
-            this.radioButtonStatic.UseVisualStyleBackColor = true;
-            this.radioButtonStatic.Click += new System.EventHandler(this.radioButtonStatic_Click);
+            this.collisionCheck.AutoSize = true;
+            this.collisionCheck.Location = new System.Drawing.Point(97, 41);
+            this.collisionCheck.Name = "collisionCheck";
+            this.collisionCheck.Size = new System.Drawing.Size(91, 17);
+            this.collisionCheck.TabIndex = 10;
+            this.collisionCheck.Text = "Paint Collision";
+            this.collisionCheck.UseVisualStyleBackColor = true;
+            this.collisionCheck.Click += new System.EventHandler(this.collisionCheck_Click);
             // 
             // Form1
             // 
@@ -620,6 +654,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownWidth;
         private System.Windows.Forms.RadioButton radioButtonStatic;
         private System.Windows.Forms.RadioButton radioButtonGenerated;
+        private System.Windows.Forms.CheckBox collisionCheck;
     }
 }
 
