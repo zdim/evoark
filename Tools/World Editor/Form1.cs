@@ -40,7 +40,7 @@ namespace Editor
 
             TM.Initialize(D3D.Device, D3D.Sprite);
 
-            comboBox1.DataSource = Enum.GetValues(typeof(Spawn.Object));
+            comboBox1.DataSource = Enum.GetValues(typeof(ObjectSpawn.Object));
             //panel1.AutoScroll = true;
 
             for (int i = 0; i < 4; i++)
@@ -196,20 +196,90 @@ namespace Editor
 
         private void addEntity_Click(object sender, EventArgs e)
         {
-            Spawn spawn = new Spawn();
-            spawn.Obj = (Spawn.Object)comboBox1.SelectedItem;
-            spawn.Amount = (int)numericUpDown1.Value;
-            if(randomizeCheck.Enabled)
+            //Spawn spawn = new Spawn();
+            if (radioButtonObject.Checked == true)
             {
-                spawn.X = rand.Next(0, quadSize.Width);
-                spawn.Y = rand.Next(0, quadSize.Height);
+                Spawn spawn = new ObjectSpawn();
+                if (spawn is ObjectSpawn)
+                {
+                    ObjectSpawn oSpawn = new ObjectSpawn();
+                    oSpawn.Obj = (ObjectSpawn.Object)comboBox1.SelectedItem;
+                    oSpawn.Amount = (int)numericUpDown1.Value;
+                    spawn = oSpawn;
+                }
+                if (randomizeCheck.Enabled)
+                {
+                    spawn.X = -1;
+                    spawn.Y = -1;
+                }
+                else
+                {
+                    spawn.X = (int)numericUpDownX.Value;
+                    spawn.Y = (int)numericUpDownY.Value;
+                }
+                listBox1.Items.Add(spawn);
+                world[selected.X, selected.Y].Spawns.Add(spawn);
+            }
+            else if(radioButtonEvent.Checked == true)
+            {
+                Spawn spawn = new EventSpawn();
+                if(spawn is EventSpawn)
+                {
+                    EventSpawn eSpawn = new EventSpawn();
+                    eSpawn.Evnt = (EventSpawn.Event)comboBox1.SelectedItem;
+                    eSpawn.Width = (int)numericUpDownWidth.Value;
+                    eSpawn.Height = (int)numericUpDownHeight.Value;
+                    spawn = eSpawn;
+                }
+                listBox1.Items.Add(spawn);
+                world[selected.X, selected.Y].Spawns.Add(spawn);
+
+            }
+            
+        }
+
+        private void radioButtonEvent_Click(object sender, EventArgs e)
+        {
+            radioButtonObject.Checked = false;
+            groupBoxPosition.Enabled = false;
+            randomizeCheck.Enabled = false;
+            comboBox1.DataSource = Enum.GetValues(typeof(EventSpawn.Event));
+            groupBoxSize.Enabled = true;
+            numericUpDown1.Enabled = false;
+            label1.Text = "Event Type";
+        }
+
+        private void radioButtonObject_Click(object sender, EventArgs e)
+        {
+            radioButtonEvent.Checked = false;
+            groupBoxPosition.Enabled = true;
+            randomizeCheck.Enabled = true;
+            comboBox1.DataSource = Enum.GetValues(typeof(ObjectSpawn.Object));
+            groupBoxSize.Enabled = false;
+            numericUpDown1.Enabled = true;
+            label1.Text = "Object Type";
+        }
+
+        private void randomizeCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if (randomizeCheck.Checked == true)
+            {
+                groupBoxPosition.Enabled = false;
             }
             else
-            {
-                
-            }
-            listBox1.Items.Add(spawn);
-            world[selected.X, selected.Y].Spawns.Add(spawn);
+                groupBoxPosition.Enabled = true;
         }
+
+        private void radioButtonGenerated_Click(object sender, EventArgs e)
+        {
+            radioButtonStatic.Checked = false;
+        }
+
+        private void radioButtonStatic_Click(object sender, EventArgs e)
+        {
+            radioButtonGenerated.Checked = false;
+        }
+
+
     }
 }
