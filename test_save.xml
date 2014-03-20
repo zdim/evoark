@@ -1,5 +1,5 @@
 <root>
     <NumParticals Emittors="1" />
     <Emittor Width="270" Height="155" X="400" Y="350" NumParticals="5" SpawnRate="0.01" TimeFromLastSpawn="0,1" IsLoooping="1" EmitTime="0" />
-    <Flyweight image="test.png" m_fStartScaleX="0.1" m_fStartScaleY="0.1" m_fEndScaleX="0.1" m_fEndScaleY="0.1" VectorOffsetWidth="128" VectorOffsetHeight="128" startA="255" startR="255" startG="0" startB="0" endA="255" endR="127" endG="0" endB="0" MaxLife="4" MinLife="2" SpeedX="1" SpeedY="1" Inertia="0" RotationSpeed="3.14" />
+    <Flyweight image="test.png" m_fStartScaleX="0.9" m_fStartScaleY="0.9" m_fEndScaleX="0.9" m_fEndScaleY="0.9" VectorOffsetWidth="128" VectorOffsetHeight="128" startA="255" startR="255" startG="0" startB="0" endA="255" endR="127" endG="0" endB="0" MaxLife="4" MinLife="2" SpeedX="1" SpeedY="1" Inertia="0" RotationSpeed="3.14" />
 </root>

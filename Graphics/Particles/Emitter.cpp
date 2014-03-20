@@ -13,7 +13,7 @@ CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, SGD::Point ePosition, i
 {
 	particleData = parData;
 
-	shape = 4; 
+	shape = 2; 
 
 	switch (shape)
 	{

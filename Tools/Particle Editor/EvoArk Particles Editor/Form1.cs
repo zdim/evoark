@@ -59,6 +59,10 @@ namespace EvoArk_Particles_Editor
             looping = false;
         }
 
-       
+
+
+        public Panel DirectXPanel { get { return panel1; } }
+
+
     }
 }
