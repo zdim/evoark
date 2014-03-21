@@ -8,19 +8,17 @@ namespace Editor
 {
     class EventSpawn : Spawn
     {
-        public enum Event { Example, Stargate, }
+        string eventType;
 
-        Event evnt;
-
-        public Event Evnt
+        public string EventType
         {
-            get { return evnt; }
-            set { evnt = value; }
+            get { return eventType; }
+            set { eventType = value; }
         }
 
         public override string ToString()
         {
-            return evnt.ToString();
+            return eventType + " - " + this.X + ", " + this.Y;
         }
     }
 }

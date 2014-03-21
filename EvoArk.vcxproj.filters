@@ -147,12 +147,6 @@
     <ClInclude Include="Entities\Ships\Enemies\EnemyLeader.h">
       <Filter>Entities\Ships\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Message System\Message.h">
-      <Filter>Message System</Filter>
-    </ClInclude>
-    <ClInclude Include="Message System\MessageManager.h">
-      <Filter>Message System</Filter>
-    </ClInclude>
     <ClInclude Include="Event System\CustomEvent.h">
       <Filter>Event System</Filter>
     </ClInclude>
@@ -261,6 +255,30 @@
     <ClInclude Include="Entities\Asteroid.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="SGD Wrappers\SGD_MessageManager.h">
+      <Filter>SGDWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="SGD Wrappers\SGD_Message.h">
+      <Filter>SGDWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Event System\IListener.h">
+      <Filter>Event System</Filter>
+    </ClInclude>
+    <ClInclude Include="Event System\EventID.h">
+      <Filter>Event System</Filter>
+    </ClInclude>
+    <ClInclude Include="Message System\DestroyEntityMessage.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
+    <ClInclude Include="Message System\MessageID.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
+    <ClInclude Include="Message System\CreateEntityMessage.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
+    <ClInclude Include="Message System\CreateLaserMessage.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -328,12 +346,6 @@
     </ClCompile>
     <ClCompile Include="Entities\Ships\Enemies\EnemyLeader.cpp">
       <Filter>Entities\Ships\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Message System\Message.cpp">
-      <Filter>Message System</Filter>
-    </ClCompile>
-    <ClCompile Include="Message System\MessageManager.cpp">
-      <Filter>Message System</Filter>
     </ClCompile>
     <ClCompile Include="Event System\CustomEvent.cpp">
       <Filter>Event System</Filter>
@@ -445,6 +457,21 @@
     </ClCompile>
     <ClCompile Include="Entities\Asteroid.cpp">
       <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="SGD Wrappers\SGD_MessageManager.cpp">
+      <Filter>SGDWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="SGD Wrappers\SGD_Message.cpp">
+      <Filter>SGDWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="Message System\CreateEntityMessage.cpp">
+      <Filter>Message System</Filter>
+    </ClCompile>
+    <ClCompile Include="Message System\DestroyEntityMessage.cpp">
+      <Filter>Message System</Filter>
+    </ClCompile>
+    <ClCompile Include="Message System\CreateLaserMessage.cpp">
+      <Filter>Message System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

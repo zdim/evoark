@@ -2,9 +2,10 @@
 #include "EntityManager.h"
 #include "Ships\Player.h"
 #include "Ships\Human.h"
-#include "Ships\Enemies\Cobra.h"
+#include "Ships\Enemies\Cobra.h"	//Also includes Copperhead indirectly
 #include "Ships\Enemies\Mamba.h"
-#include "Ships\Enemies\Moccasin.h"
+#include "Ships\Enemies\Moccasin.h"	//Also includes Coral indirectly
+#include "Projectiles\Missile.h"	//Also includes Laser indirectly
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
 
@@ -23,6 +24,7 @@ CEntityManager::CEntityManager()
 	images[(int)EntityType::Mamba] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
 	images[(int)EntityType::Coral] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
 	images[(int)EntityType::Moccasin] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
+	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Laser.png");
 
 }
 
@@ -172,6 +174,60 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	}
 	}
 }
+
+void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, float rotation, int damage, unsigned int tier, float radius)
+{
+	switch (type)
+	{
+	case EntityType::Laser:
+	{
+							  CLaser* laser = new CLaser();
+							  laser->SetPosition(position);
+							  laser->SetRotation(rotation);
+							  laser->SetDamage(damage);
+							  SGD::Vector vel = {400, 0};
+							  vel.Rotate(rotation);
+							  laser->SetVelocity(vel);
+
+							  laser->SetImage(images[(int)EntityType::Laser]);
+							  laser->SetSize({ 4, 16 });
+							  laser->SetImageSize({ 74, 290 });
+
+							  projectiles.push_back(laser);
+							  break;
+	}
+	}
+}
+
+//int CEntityManager::GetDamageFromEntity(IEntity* entity, EntityType projType)
+//{
+//	EntityType type = (EntityType)entity->GetType();
+//	switch (type)
+//	{
+//	case EntityType::Player:
+//	{
+//		dynamic_cast<CPlayer*>(entity)->GetLaserLevel();
+//		break;
+//	}
+//	case EntityType::Human:
+//		break;
+//	case EntityType::Copperhead:
+//	case EntityType::Cobra:
+//	case EntityType::Mamba:
+//	case EntityType::Coordinator:
+//		break;
+//	case EntityType::LaserModule:
+//		break;
+//	case EntityType::MissileModule:
+//		break;
+//	case EntityType::WellModule:
+//		break;
+//	case EntityType::PushModule:
+//		break;
+//	case EntityType::WarpModule:
+//		break;
+//	}
+//}
 
 void CEntityManager::ClearTargeted(CEntity* entity)	//Iterates through the groups that could potentially have this entity targeted, and tells them to untarget it.
 {
@@ -328,24 +384,32 @@ void CEntityManager::Update(float dt)
 	{
 		leaders[i]->Update(dt);
 	}
-	for (unsigned int i = 0; i < smallEnemies.size(); i++)
+	for (unsigned int i = 0; i < ships.size(); i++)
 	{
-		smallEnemies[i]->Update(dt);
+		ships[i]->Update(dt);
 	}
-	if (player)
-		player->Update(dt);
+	for (unsigned int i = 0; i < projectiles.size(); i++)
+	{
+		projectiles[i]->Update(dt);
+	}
 
 	CheckCollision(ships, ships);
+	CheckCollision(projectiles, ships);
 }
 
 void CEntityManager::Render()
 {
 	SGD::Rectangle screen = { SGD::Point{ 0, 0 }, SGD::Size{Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } };
 	//SGD::Rectangle test = { SGD::Point{ 0, 0 }, SGD::Size{ 400, 400 } }; // rect. for testing culling
-	for (unsigned int i = 0; i < smallEnemies.size(); i++)
+	for (unsigned int i = 0; i < ships.size(); i++)
 	{
-		if (smallEnemies[i]->GetRect().IsIntersecting(screen))
-			smallEnemies[i]->Render();
+		if (ships[i]->GetRect().IsIntersecting(screen))
+			ships[i]->Render();
+	}
+	for (unsigned int i = 0; i < projectiles.size(); i++)
+	{
+		if (projectiles[i]->GetRect().IsIntersecting(screen))
+			projectiles[i]->Render();
 	}
 	if (player)
 	if (player->GetRect().IsIntersecting(screen))

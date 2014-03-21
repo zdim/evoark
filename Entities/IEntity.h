@@ -3,6 +3,18 @@
 #include "../SGD Wrappers/SGD_Handle.h"
 #include "../SGD Wrappers/SGD_Declarations.h"
 
+//Entity, GravityProjectile, and Ship should all return BaseClass to let us know that the entity SHOULD have a more specific type.
+//Order IS significant here. All ships are lumped together so we can say if(type > Player && type < Asteroid) or something similar
+enum class EntityType {
+	BaseClass,
+	Laser, Missile, Push, Well,
+	Player, Human, Copperhead, Cobra, Mamba, Coordinator,
+	Coral, Moccasin,
+	BaseModule, LaserModule, MissileModule, WellModule, PushModule, WarpModule, ShieldModule, EngineModule,
+	Asteroid, Planet, Barrier, Trigger,
+	Count
+};
+
 class IEntity
 {
 public:
