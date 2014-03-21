@@ -6,6 +6,7 @@
 
 CParticleSystem::CParticleSystem()
 {
+	numEmitters = 2;
 }
 
 
@@ -141,7 +142,7 @@ void CParticleSystem::LoadEffect()
 	SGD::Size endScale{ (float)endScaleX, (float)endScaleY };
 	SGD::Vector offsetImage = SGD::GraphicsManager::GetInstance()->GetTextureData(TestParticle)/2;
 	SGD::Vector speed    { SpeedX, SpeedY };
-	SGD::Vector speedend    { -50, -50 };
+	SGD::Vector speedend    { 0, 0 };
 
 	CFlyweight* eData = new CFlyweight(TestParticle, startScale, endScale,
 	offsetImage,
@@ -154,8 +155,129 @@ void CParticleSystem::LoadEffect()
 	RotationSpeed);
 
 
-	for (int i = 0; i < numEmitters; i++)
-		particleEffect[i] = new CEmitter(eData, emitterSize, emitterPosition, m_nNumParticles, m_fSpawnRate, m_fTimeFromLastSpawn, m_nLoop, m_fEmitTime);
+
+
+	TiXmlDocument doc2;
+	doc.LoadFile("test_save2.xml");
+	TiXmlElement* pRoot2 = doc.RootElement();
+
+
+	TiXmlElement* pNumEmittors2 = pRoot2->FirstChildElement();
+	pNumEmittors2->Attribute("Emittors", &numEmitters);
+
+	//Possible loop creation here for multiple emittors 
+
+
+	TiXmlElement* pEmittor2 = pNumEmittors2->NextSiblingElement();
+
+	//Temp variables for loading
+	double emitW2;
+	double emitH2;
+	double emitX2;
+	double emitY2;
+	int m_nNumParticles2;
+	double m_fSpawnRate2;
+	double m_fTimeFromLastSpawn2;
+	int    m_nLoop2;
+	double  m_fEmitTime2;
+
+
+	pEmittor2->Attribute("Width", &emitW2);
+	pEmittor2->Attribute("Height", &emitH2);
+	pEmittor2->Attribute("X", &emitX2);
+	pEmittor2->Attribute("Y", &emitY2);
+	pEmittor2->Attribute("NumParticals", &m_nNumParticles2);
+	pEmittor2->Attribute("SpawnRate", &m_fSpawnRate2);
+	pEmittor2->Attribute("TimeFromLastSpawn", &m_fTimeFromLastSpawn2);
+	pEmittor2->Attribute("IsLoooping", &m_nLoop2);
+	pEmittor2->Attribute("EmitTime", &m_fEmitTime2);
+
+
+	SGD::Size emitterSize2{ (float)emitW2, (float)emitH2 };
+	SGD::Point emitterPosition2{ (float)emitX2, (float)emitY2 };
+
+
+	//Temp variables for loading
+
+	std::string   imageFilePath2 = "Resources/Graphics/";
+	double startScaleX2;
+	double startScaleY2;
+	double endScaleX2;
+	double endScaleY2;
+	int    widthOffset2;
+	int    heightOffset2;
+	int    startA2;
+	int    startR2;
+	int    startG2;
+	int    startB2;
+	int    endA2;
+	int    endR2;
+	int    endG2;
+	int    endB2;
+	double MaxLife2;
+	double MinLife2;
+	double SpeedX2;
+	double SpeedY2;
+	double Inertia2;
+	double RotationSpeed2;
+
+
+	TiXmlElement* pFlyweight2 = pEmittor2->NextSiblingElement();
+	imageFilePath2 += pFlyweight2->Attribute("image");
+	pFlyweight2->Attribute("m_fStartScaleX", &startScaleX2);
+	pFlyweight2->Attribute("m_fStartScaleY", &startScaleY2);
+	pFlyweight2->Attribute("m_fEndScaleX", &endScaleX2);
+	pFlyweight2->Attribute("m_fEndScaleY", &endScaleY2);
+	pFlyweight2->Attribute("VectorOffsetWidth", &widthOffset2);
+	pFlyweight2->Attribute("VectorOffsetHeight", &heightOffset2);
+	pFlyweight2->Attribute("startA", &startA2);
+	pFlyweight2->Attribute("startR", &startR2);
+	pFlyweight2->Attribute("startG", &startG2);
+	pFlyweight2->Attribute("startB", &startB2);
+	pFlyweight2->Attribute("endA", &endA2);
+	pFlyweight2->Attribute("endR", &endR2);
+	pFlyweight2->Attribute("endG", &endG2);
+	pFlyweight2->Attribute("endB", &endB2);
+	pFlyweight2->Attribute("MaxLife", &MaxLife2);
+	pFlyweight2->Attribute("MinLife", &MinLife2);
+	pFlyweight2->Attribute("SpeedX", &SpeedX2);
+	pFlyweight2->Attribute("SpeedY", &SpeedY2);
+	pFlyweight2->Attribute("Inertia", &Inertia2);
+	pFlyweight2->Attribute("RotationSpeed", &RotationSpeed2);
+
+
+
+
+	char * imageFile2 = new char[imageFilePath.size() + 1];
+
+	std::copy(imageFilePath.begin(), imageFilePath.end(), imageFile2);
+	imageFile2[imageFilePath.size()] = '\0';
+
+	SGD::HTexture TestParticle2 = SGD::GraphicsManager::GetInstance()->LoadTexture(imageFile2);
+
+	//TestParticle
+
+	delete[] imageFile2;
+
+	SGD::Size startScale2{ (float)startScaleX2, (float)startScaleY2 };
+	SGD::Size endScale2{ (float)endScaleX2, (float)endScaleY2 };
+	SGD::Vector offsetImage2 = SGD::GraphicsManager::GetInstance()->GetTextureData(TestParticle2) / 2;
+	SGD::Vector speed2{ SpeedX2, SpeedY2 };
+	SGD::Vector speedend2{ 0, 0 };
+
+	CFlyweight* eData2 = new CFlyweight(TestParticle2, startScale2, endScale2,
+		offsetImage2,
+		startA2, startR2, startG2, startB2,
+		endA2, endR2, endG2, endB2,
+		MaxLife2, MinLife2,
+		speed2,
+		speedend2,
+		Inertia2,
+		RotationSpeed2);
+
+	
+		particleEffect[0] = new CEmitter(eData, emitterSize, emitterPosition, m_nNumParticles, m_fSpawnRate, m_fTimeFromLastSpawn, m_nLoop, m_fEmitTime);
+		particleEffect[1] = new CEmitter(eData2, emitterSize2, emitterPosition2, m_nNumParticles2, m_fSpawnRate2, m_fTimeFromLastSpawn2, m_nLoop2, m_fEmitTime2);
 
 }
 void CParticleSystem::SaveEffect()

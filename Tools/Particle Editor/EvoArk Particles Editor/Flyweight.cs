@@ -105,9 +105,37 @@ namespace EvoArk_Particles_Editor
 		int eB;
 		float MaxLife; 
         float MinLife;
-		Point s;
+        Point StartSpeedMin;
+        Point StartSpeedMax;
+        Point EndSpeedMin;
+        Point EndSppedMax;
 		float Inertia;
         float RotationSpeed;
+
+
+        public Point StartSMin
+        {
+            get { return StartSpeedMin; }
+            set { StartSpeedMin = value; }
+        }
+
+        internal Point StartSMax
+        {
+            get { return StartSpeedMax; }
+            set { StartSpeedMax = value; }
+        }
+
+        internal Point EndSMin
+        {
+            get { return EndSpeedMin; }
+            set { EndSpeedMin = value; }
+        }
+
+        internal Point EndSMax
+        {
+            get { return EndSppedMax; }
+            set { EndSppedMax = value; }
+        }
 
         public int ParticleImage
         {
@@ -196,11 +224,7 @@ namespace EvoArk_Particles_Editor
             set { MinLife = value; }
         }
 
-        public Point ParticleSpeed
-        {
-            get { return s; }
-            set { s = value; }
-        }
+
 
         public float ParticleInertia
         {
@@ -234,7 +258,10 @@ namespace EvoArk_Particles_Editor
 		int eBc,
 		float maxLife, 
         float minLife,
-		Point speed,
+		Point StartSMin,
+        Point StartSMax,
+        Point EndSMin,
+        Point EndSMax,
 		float inertia,
         float rotationSpeed
         )
@@ -253,7 +280,10 @@ namespace EvoArk_Particles_Editor
             eB                 =eBc;
             MaxLife          = maxLife;
             MinLife          = minLife;
-            s                = speed;
+            StartSpeedMin    = StartSMin;
+            StartSpeedMax    = StartSMax;
+            EndSpeedMin      = EndSMin;
+            EndSppedMax      = EndSMax;
             Inertia          = inertia;
             RotationSpeed    = rotationSpeed; 
         }

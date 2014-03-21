@@ -20,10 +20,22 @@ namespace EvoArk_Particles_Editor
 
             Form1 particleEditorForm = new Form1();
             particleEditorForm.Show();
+            particleEditorForm.Initialize();
+
+            float dt;
+            long curTime = 0;
+            long prevTime = 0;
+
+       
+
 
             while (particleEditorForm.Looping )
             {
-                particleEditorForm.Update();
+                curTime = System.DateTime.Now.Ticks;
+                dt = (curTime - prevTime) * 0.0000001f;
+                prevTime = System.DateTime.Now.Ticks;
+
+                particleEditorForm.Update(dt);
                 particleEditorForm.Render();
                 Application.DoEvents();
             }

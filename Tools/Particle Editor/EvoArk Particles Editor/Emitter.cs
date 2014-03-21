@@ -13,7 +13,7 @@ namespace EvoArk_Particles_Editor
 
         CSGP_Direct3D D3D = CSGP_Direct3D.GetInstance();
         CSGP_TextureManager TM = CSGP_TextureManager.GetInstance();
-        Form1 mainForm = new Form1();
+        Form1 mainForm;
 
         List<Particle> m_lAliveParticles = new List<Particle>();
         List<Particle> m_lDeadParticles = new List<Particle>();
@@ -25,10 +25,25 @@ namespace EvoArk_Particles_Editor
         int m_nNumParticles = new int();
         float m_fSpawnRate = new float();
         float m_fTimeFromLastSpawn = new float();
-        bool m_bLoop = new bool();
+        bool  m_bLoop = new bool();
         float m_fEmitTime = new float();
+        int m_nShape = new int();
+        float m_fRadius = new float();
 
-        System.Random r = new System.Random();
+        public float FRadius
+        {
+            get { return m_fRadius; }
+            set { m_fRadius = value; }
+        }
+
+
+        public int NShape
+        {
+            get { return m_nShape; }
+            set { m_nShape = value; }
+        }
+
+        System.Random r =  new Random(Guid.NewGuid().GetHashCode());
 
 
         public List<Particle> AliveParticles
@@ -91,10 +106,15 @@ namespace EvoArk_Particles_Editor
             set { m_fEmitTime = value; }
         }
 
-        public Emitter(List<Particle> AliveParticles,
-                 List<Particle> DeadParticles,
+
+        public Emitter()
+        {
+
+        }
+
+        public Emitter(
                  Flyweight pData,
-                 Point eSize,
+                 int Shape,
                  Point ePosition,
                  int NumParticles,
                  float SpawnRate,
@@ -106,7 +126,27 @@ namespace EvoArk_Particles_Editor
             m_lAliveParticles = AliveParticles;
             m_lDeadParticles = DeadParticles;
             particleData = pData;
-            emitterSize = eSize;
+            m_nShape = Shape;
+
+            switch (Shape)
+            {
+                case 1:
+                    emitterSize = new Point(1, 1);
+                    break;
+                case 2:
+                    emitterSize = new Point(100, 1);
+                    break;
+                case 3:
+                    emitterSize = new Point(100, 100);
+                    break;
+                case 4:
+                    emitterSize = new Point(100, 200);
+                    break; 
+                default:
+                    emitterSize = new Point(1, 1);
+                    break;
+            }
+
             emitterPosition = ePosition;
             m_nNumParticles = NumParticles;
             m_fSpawnRate = SpawnRate;
@@ -179,14 +219,23 @@ namespace EvoArk_Particles_Editor
                         m_lAliveParticles[i].ParticleSpeed.Y = 0;
                 }
 
-            
-                //Speed Change 
-                m_lAliveParticles[i].ParticlePositon = m_lAliveParticles[i].ParticlePositon + m_lAliveParticles[i].ParticleSpeed * deltaTime;
-
-
 
                 //Life of the particle 
                 float fLifeCycle = m_lAliveParticles[i].FCurLife / particleData.ParticleMaxLife;
+            
+                //Speed Change 
+
+                float ParticleSpeedX = m_lAliveParticles[i].ParticleSpeed.X;
+                float ParticleSpeedY = m_lAliveParticles[i].ParticleSpeed.Y;
+
+                ParticleSpeedX = (m_lAliveParticles[i].EndS.X - particleData.StartSMax.X) * fLifeCycle;
+                ParticleSpeedY = (m_lAliveParticles[i].EndS.Y - particleData.StartSMax.Y) * fLifeCycle;
+
+                m_lAliveParticles[i].ParticleSpeed = new Point(ParticleSpeedX, ParticleSpeedY);
+
+
+                m_lAliveParticles[i].ParticlePositon = m_lAliveParticles[i].ParticlePositon + m_lAliveParticles[i].ParticleSpeed * deltaTime;
+
 
 
                 // Color Change 
@@ -212,6 +261,7 @@ namespace EvoArk_Particles_Editor
                 if (particleData.ParticleStartScale != particleData.ParticleEndScale)
                     m_lAliveParticles[i].ParticleScale = particleData.ParticleEndScale + (particleData.ParticleStartScale - particleData.ParticleEndScale) * fLifeCycle;
 
+                m_lAliveParticles[i].FRotation = m_lAliveParticles[i].FRotation + (particleData.ParticleRotationSpeed / 2 * deltaTime);
 
                 // killing dead particles 
                 if (m_lAliveParticles[i].FCurLife <= 0)
@@ -228,7 +278,21 @@ namespace EvoArk_Particles_Editor
 
         public void Render()
         {
+            for (int i = 0; i < m_lAliveParticles.Count; ++i)
+            {
+                TM.Draw(particleData.ParticleImage,
+                    (int)m_lAliveParticles[i].ParticlePositon.X,
+                    (int)m_lAliveParticles[i].ParticlePositon.Y,
+                    m_lAliveParticles[i].ParticleScale.Width,
+                    m_lAliveParticles[i].ParticleScale.Height,
+                    Rectangle.Empty,
+                    particleData.ParticleOffset.X * m_lAliveParticles[i].ParticleScale.Width ,
+                    particleData.ParticleOffset.Y * m_lAliveParticles[i].ParticleScale.Height,
+                    m_lAliveParticles[i].FRotation,
+                    m_lAliveParticles[i].ParticleColor
+                    );
 
+            }
         }
 
         public Particle CreateParticle()
@@ -240,16 +304,65 @@ namespace EvoArk_Particles_Editor
 
             float maxLife = particleData.ParticleMaxLife;
             float minLife = particleData.ParticleMinLife;
-            float randLife = RandomFloat(maxLife, minLife);
-            Point tSpeed = particleData.ParticleSpeed;
+            float randLife = RandomFloat(maxLife, minLife);        
+
+            float startSMaxX = particleData.StartSMax.X;
+            float startSMinX = ParticlesData.StartSMin.X;
+            float startSX = 0;
+            if( startSMinX != startSMaxX )
+               startSX = RandomFloat(startSMaxX, startSMinX);
+
+            float startSMaxY = particleData.StartSMax.Y;
+            float startSMinY = ParticlesData.StartSMin.Y;
+            float startSY = 0;
+            if (startSMinY != startSMaxY)
+                startSY = RandomFloat(startSMaxY, startSMinY);
+
+            Point startSpeed = new Point(startSX,startSY);
+
+
+            float endSMaxX = particleData.EndSMax.X;
+            float endSMinX = ParticlesData.EndSMin.X;
+            float endSX = 0;
+            if (endSMinX != endSMaxX)
+                endSX = RandomFloat(endSMaxX, endSMinX);
+
+            float endSMaxY = particleData.EndSMax.Y;
+            float endSMinY = ParticlesData.EndSMin.Y;
+            float endSY = 0;
+            if (endSMinY != endSMaxY)
+                endSY = RandomFloat(endSMaxY, endSMinY);
+
+            Point EndSpeed = new Point(endSX, endSY);
+
             Size tScale = particleData.ParticleStartScale;
-            float rot = particleData.ParticleRotationSpeed;
+            float rot = 0;
 
+            Point tempParticlePosition = new Point();
 
-            Point pos = new Point(mainForm.DirectXPanel.Width / 2, mainForm.DirectXPanel.Height / 2);
+            
+            if(m_nShape == 1 || m_nShape == 2 || m_nShape == 3 )
+            tempParticlePosition = new Point(emitterPosition.X + r.Next((int)EmitterSize.X/2), emitterPosition.Y + r.Next((int)EmitterSize.Y/2));
 
-            Point tempParticlePosition = new Point(emitterPosition.X + r.Next((int)EmitterSize.X), emitterPosition.Y + r.Next((int)EmitterSize.Y));
-            Particle tempP = new Particle(tempColor, pos, tSpeed, tScale, (float)randLife, rot);
+            if(m_nShape == 4 )
+            {
+                tempParticlePosition = new Point(emitterPosition.X + r.Next((int)EmitterSize.X/2), emitterPosition.Y + r.Next((int)EmitterSize.Y/2));
+                m_fRadius = emitterSize.X / 2;
+                Point EmitterCenter = new Point( EmitterPosition.X + emitterSize.X/2
+                    , emitterPosition.X + emitterSize.X/2 );
+
+                double Distance = Math.Sqrt((double)(EmitterCenter.X - tempParticlePosition.X) * (EmitterCenter.X - tempParticlePosition.X) +
+                                                    (EmitterCenter.Y - tempParticlePosition.Y) * (EmitterCenter.Y - tempParticlePosition.Y));
+
+                do
+                {
+                    tempParticlePosition = new Point(emitterPosition.X + r.Next((int)EmitterSize.X), emitterPosition.Y + r.Next((int)EmitterSize.Y));
+                    Distance = Math.Sqrt((double)(EmitterCenter.X - tempParticlePosition.X) * (EmitterCenter.X - tempParticlePosition.X) +
+                                                    (EmitterCenter.Y - tempParticlePosition.Y) * (EmitterCenter.Y - tempParticlePosition.Y));
+                } while ((float)Distance >= m_fRadius);
+            }
+
+            Particle tempP = new Particle(tempColor, tempParticlePosition, startSpeed,EndSpeed, tScale, (float)randLife, rot);
 
             return tempP;
         }
