@@ -7,6 +7,9 @@
 //#include "../TinyXML/tinystr.h"
 //#include "../Graphics/Particles/Flyweight.h"
 //#include "../Graphics/Particles/Emitter.h"
+#include "../SGD Wrappers/SGD_MessageManager.h"
+#include "../Message System/CreateEntityMessage.h"
+#include "../Message System/CreateLaserMessage.h"
 
 CGameState::CGameState()
 {
@@ -49,6 +52,7 @@ void	CGameState::Enter(void)
 
 	pSystem.Init();
 
+	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
 	
  } 
 
@@ -70,7 +74,7 @@ void	CGameState::Update(float dt)
 
 	pSystem.Update(dt);
 
-
+	SGD::MessageManager::GetInstance()->Update();
 }
 
 void	CGameState::Render(void)
@@ -266,4 +270,26 @@ bool CGameState::LoadXMLLevel(const char* pXMLFile)
 
 	return true;
 
+}
+
+void CGameState::MessageProc(const SGD::Message* msg)
+{
+	MessageID id = msg->GetMessageID();
+	switch (id)
+	{
+	case MessageID::CreateEntity:
+	{
+		break;
+	}
+	case MessageID::CreateLaser:
+	{
+								   const CreateLaserMessage* lMsg = dynamic_cast<const CreateLaserMessage*>(msg);
+								   unsigned int tier = 1;
+								   if (lMsg->GetBoost())
+								   {
+									   tier = 3;
+								   }
+		CGameState::GetInstance()->EntityManager->SpawnProjectile(EntityType::Laser,lMsg->GetPosition(),lMsg->GetRotation(),lMsg->GetDamage(), tier);
+	}
+	}
 }

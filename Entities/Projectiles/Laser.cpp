@@ -1,6 +1,7 @@
 #include "Laser.h"
 #include "../Ships/Ship.h"
 #include "../Asteroid.h"
+#include "../../Message System/DestroyEntityMessage.h"
 
 CLaser::CLaser()
 {
@@ -30,6 +31,8 @@ void CLaser::HandleCollision(IEntity* other)
 		ship->TakeDamage(damage);
 
 		//Throw a message to destroy this
+		DestroyEntityMessage* msg = new DestroyEntityMessage(this);
+		msg->QueueMessage();
 	}
 
 	//Is other an asteroid?

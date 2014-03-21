@@ -3,7 +3,7 @@
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
 #include <algorithm>
 
-#define GRAVDECAY 0.05F
+#define GRAVDECAY 0.025F
 
 CEntity::CEntity()
 {
