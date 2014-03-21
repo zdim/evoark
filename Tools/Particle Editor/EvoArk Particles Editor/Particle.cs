@@ -14,8 +14,16 @@ namespace EvoArk_Particles_Editor
         Color curColor;
         Point curPosition;
         Point curSpeed;
+        Point EndSpeed;
         Size curScale;
         float m_fCurLife;
+
+
+        internal Point EndS
+        {
+            get { return EndSpeed; }
+            set { EndSpeed = value; }
+        }
 
         public float FCurLife
         {
@@ -65,6 +73,7 @@ namespace EvoArk_Particles_Editor
             Color cColor,
             Point cPosition,
             Point cSpeed,
+            Point ESpeed,
             Size cScale,
             float curLife,
             float Rotation 
@@ -73,6 +82,7 @@ namespace EvoArk_Particles_Editor
         curColor    = cColor;
         curPosition = cPosition;  
         curSpeed    = cSpeed;
+        EndSpeed    = ESpeed;
         curScale    = cScale;
         m_fCurLife  = curLife;
         m_fRotation = Rotation;

@@ -13,7 +13,7 @@ CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, SGD::Point ePosition, i
 {
 	particleData = parData;
 
-	shape = 2; 
+	shape = 4; 
 
 	switch (shape)
 	{
@@ -209,7 +209,8 @@ CParticle CEmitter::CreateParticle()
 
 		float radius = emitterSize.width / 2;
 
-		SGD::Point EmitterCenter{ emitterPosition.x + emitterSize.width / 2, emitterPosition.y + emitterSize.height / 2 };
+		SGD::Point EmitterCenter{ emitterPosition.x + emitterSize.width / 2
+			, emitterPosition.y + emitterSize.height / 2 };
 
 		float distance = sqrt((double)(EmitterCenter.x - ppositionn.x)*(EmitterCenter.x - ppositionn.x) +
 			(EmitterCenter.y - ppositionn.y)*(EmitterCenter.y - ppositionn.y));
