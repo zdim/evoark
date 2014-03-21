@@ -30,14 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.quadGroupBox = new System.Windows.Forms.GroupBox();
-            this.collisionCheck = new System.Windows.Forms.CheckBox();
             this.groupBoxSize = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownWidth = new System.Windows.Forms.NumericUpDown();
-            this.radioButtonEvent = new System.Windows.Forms.RadioButton();
-            this.radioButtonObject = new System.Windows.Forms.RadioButton();
             this.groupBoxPosition = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -52,7 +49,11 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.possibleEntities = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.collisionCheck = new System.Windows.Forms.CheckBox();
+            this.radioButtonEvent = new System.Windows.Forms.RadioButton();
+            this.radioButtonObject = new System.Windows.Forms.RadioButton();
             this.worldGroupBox = new System.Windows.Forms.GroupBox();
+            this.labelWorldSize = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -64,41 +65,40 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panelleft = new System.Windows.Forms.Panel();
+            this.groupBoxEditMode = new System.Windows.Forms.GroupBox();
+            this.groupBoxEvents = new System.Windows.Forms.GroupBox();
+            this.eventRemove = new System.Windows.Forms.Button();
+            this.eventAdd = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.groupBoxEventPosition = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.numericUpDownEventY = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownEventX = new System.Windows.Forms.NumericUpDown();
+            this.groupBoxEventSize = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.numericUpDownEventHeight = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownEventWidth = new System.Windows.Forms.NumericUpDown();
+            this.groupBoxWorldType = new System.Windows.Forms.GroupBox();
+            this.radioButtonStatic = new System.Windows.Forms.RadioButton();
+            this.radioButtonGenerated = new System.Windows.Forms.RadioButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.radioButtonGenerated = new System.Windows.Forms.RadioButton();
-            this.radioButtonStatic = new System.Windows.Forms.RadioButton();
-            this.groupBoxWorldType = new System.Windows.Forms.GroupBox();
-            this.groupBoxEditMode = new System.Windows.Forms.GroupBox();
-            this.groupBoxEvents = new System.Windows.Forms.GroupBox();
-            this.groupBoxEventSize = new System.Windows.Forms.GroupBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.numericUpDownEventHeight = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownEventWidth = new System.Windows.Forms.NumericUpDown();
-            this.groupBoxEventPosition = new System.Windows.Forms.GroupBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.numericUpDownEventY = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownEventX = new System.Windows.Forms.NumericUpDown();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.eventAdd = new System.Windows.Forms.Button();
-            this.eventRemove = new System.Windows.Forms.Button();
-            this.newWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.labelWorldSize = new System.Windows.Forms.Label();
             this.quadGroupBox.SuspendLayout();
             this.groupBoxSize.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
@@ -117,17 +117,17 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panelleft.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            this.groupBoxWorldType.SuspendLayout();
             this.groupBoxEditMode.SuspendLayout();
             this.groupBoxEvents.SuspendLayout();
-            this.groupBoxEventSize.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventWidth)).BeginInit();
             this.groupBoxEventPosition.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventX)).BeginInit();
+            this.groupBoxEventSize.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventWidth)).BeginInit();
+            this.groupBoxWorldType.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // quadGroupBox
@@ -149,17 +149,6 @@
             this.quadGroupBox.TabIndex = 2;
             this.quadGroupBox.TabStop = false;
             this.quadGroupBox.Text = "Selected Quad";
-            // 
-            // collisionCheck
-            // 
-            this.collisionCheck.AutoSize = true;
-            this.collisionCheck.Location = new System.Drawing.Point(174, 20);
-            this.collisionCheck.Name = "collisionCheck";
-            this.collisionCheck.Size = new System.Drawing.Size(91, 17);
-            this.collisionCheck.TabIndex = 10;
-            this.collisionCheck.Text = "Paint Collision";
-            this.collisionCheck.UseVisualStyleBackColor = true;
-            this.collisionCheck.Click += new System.EventHandler(this.collisionCheck_Click);
             // 
             // groupBoxSize
             // 
@@ -228,30 +217,6 @@
             0,
             0});
             this.numericUpDownWidth.ValueChanged += new System.EventHandler(this.numericUpDownWidth_ValueChanged);
-            // 
-            // radioButtonEvent
-            // 
-            this.radioButtonEvent.AutoSize = true;
-            this.radioButtonEvent.Location = new System.Drawing.Point(93, 19);
-            this.radioButtonEvent.Name = "radioButtonEvent";
-            this.radioButtonEvent.Size = new System.Drawing.Size(53, 17);
-            this.radioButtonEvent.TabIndex = 9;
-            this.radioButtonEvent.Text = "Event";
-            this.radioButtonEvent.UseVisualStyleBackColor = true;
-            this.radioButtonEvent.Click += new System.EventHandler(this.radioButtonEvent_Click);
-            // 
-            // radioButtonObject
-            // 
-            this.radioButtonObject.AutoSize = true;
-            this.radioButtonObject.Checked = true;
-            this.radioButtonObject.Location = new System.Drawing.Point(31, 19);
-            this.radioButtonObject.Name = "radioButtonObject";
-            this.radioButtonObject.Size = new System.Drawing.Size(56, 17);
-            this.radioButtonObject.TabIndex = 8;
-            this.radioButtonObject.TabStop = true;
-            this.radioButtonObject.Text = "Object";
-            this.radioButtonObject.UseVisualStyleBackColor = true;
-            this.radioButtonObject.Click += new System.EventHandler(this.radioButtonObject_Click);
             // 
             // groupBoxPosition
             // 
@@ -378,6 +343,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 2;
+            this.comboBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox1_KeyPress);
             // 
             // possibleEntities
             // 
@@ -396,6 +362,41 @@
             this.listBox1.Size = new System.Drawing.Size(224, 95);
             this.listBox1.TabIndex = 0;
             // 
+            // collisionCheck
+            // 
+            this.collisionCheck.AutoSize = true;
+            this.collisionCheck.Location = new System.Drawing.Point(174, 20);
+            this.collisionCheck.Name = "collisionCheck";
+            this.collisionCheck.Size = new System.Drawing.Size(91, 17);
+            this.collisionCheck.TabIndex = 10;
+            this.collisionCheck.Text = "Paint Collision";
+            this.collisionCheck.UseVisualStyleBackColor = true;
+            this.collisionCheck.Click += new System.EventHandler(this.collisionCheck_Click);
+            // 
+            // radioButtonEvent
+            // 
+            this.radioButtonEvent.AutoSize = true;
+            this.radioButtonEvent.Location = new System.Drawing.Point(93, 19);
+            this.radioButtonEvent.Name = "radioButtonEvent";
+            this.radioButtonEvent.Size = new System.Drawing.Size(53, 17);
+            this.radioButtonEvent.TabIndex = 9;
+            this.radioButtonEvent.Text = "Event";
+            this.radioButtonEvent.UseVisualStyleBackColor = true;
+            this.radioButtonEvent.Click += new System.EventHandler(this.radioButtonEvent_Click);
+            // 
+            // radioButtonObject
+            // 
+            this.radioButtonObject.AutoSize = true;
+            this.radioButtonObject.Checked = true;
+            this.radioButtonObject.Location = new System.Drawing.Point(31, 19);
+            this.radioButtonObject.Name = "radioButtonObject";
+            this.radioButtonObject.Size = new System.Drawing.Size(56, 17);
+            this.radioButtonObject.TabIndex = 8;
+            this.radioButtonObject.TabStop = true;
+            this.radioButtonObject.Text = "Object";
+            this.radioButtonObject.UseVisualStyleBackColor = true;
+            this.radioButtonObject.Click += new System.EventHandler(this.radioButtonObject_Click);
+            // 
             // worldGroupBox
             // 
             this.worldGroupBox.Controls.Add(this.labelWorldSize);
@@ -413,6 +414,15 @@
             this.worldGroupBox.TabIndex = 3;
             this.worldGroupBox.TabStop = false;
             this.worldGroupBox.Text = "World Info";
+            // 
+            // labelWorldSize
+            // 
+            this.labelWorldSize.AutoSize = true;
+            this.labelWorldSize.Location = new System.Drawing.Point(90, 73);
+            this.labelWorldSize.Name = "labelWorldSize";
+            this.labelWorldSize.Size = new System.Drawing.Size(106, 13);
+            this.labelWorldSize.TabIndex = 8;
+            this.labelWorldSize.Text = "World Size: 400, 400";
             // 
             // label6
             // 
@@ -582,116 +592,6 @@
             this.panelleft.Size = new System.Drawing.Size(297, 770);
             this.panelleft.TabIndex = 0;
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.editToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1307, 24);
-            this.menuStrip1.TabIndex = 6;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newWorldToolStripMenuItem,
-            this.openWorldToolStripMenuItem,
-            this.saveWorldToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripButton,
-            this.openToolStripButton,
-            this.saveToolStripButton,
-            this.toolStripSeparator1,
-            this.helpToolStripButton});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1307, 25);
-            this.toolStrip1.TabIndex = 7;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // newToolStripButton
-            // 
-            this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
-            this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newToolStripButton.Name = "newToolStripButton";
-            this.newToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.newToolStripButton.Text = "&New";
-            // 
-            // openToolStripButton
-            // 
-            this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
-            this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openToolStripButton.Name = "openToolStripButton";
-            this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.openToolStripButton.Text = "&Open";
-            // 
-            // saveToolStripButton
-            // 
-            this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
-            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripButton.Name = "saveToolStripButton";
-            this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.saveToolStripButton.Text = "&Save";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // helpToolStripButton
-            // 
-            this.helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.helpToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripButton.Image")));
-            this.helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.helpToolStripButton.Name = "helpToolStripButton";
-            this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
-            // 
-            // radioButtonGenerated
-            // 
-            this.radioButtonGenerated.AutoSize = true;
-            this.radioButtonGenerated.Checked = true;
-            this.radioButtonGenerated.Location = new System.Drawing.Point(43, 19);
-            this.radioButtonGenerated.Name = "radioButtonGenerated";
-            this.radioButtonGenerated.Size = new System.Drawing.Size(75, 17);
-            this.radioButtonGenerated.TabIndex = 8;
-            this.radioButtonGenerated.TabStop = true;
-            this.radioButtonGenerated.Text = "Generated";
-            this.radioButtonGenerated.UseVisualStyleBackColor = true;
-            this.radioButtonGenerated.Click += new System.EventHandler(this.radioButtonGenerated_Click);
-            // 
-            // radioButtonStatic
-            // 
-            this.radioButtonStatic.AutoSize = true;
-            this.radioButtonStatic.Location = new System.Drawing.Point(149, 19);
-            this.radioButtonStatic.Name = "radioButtonStatic";
-            this.radioButtonStatic.Size = new System.Drawing.Size(52, 17);
-            this.radioButtonStatic.TabIndex = 9;
-            this.radioButtonStatic.Text = "Static";
-            this.radioButtonStatic.UseVisualStyleBackColor = true;
-            this.radioButtonStatic.Click += new System.EventHandler(this.radioButtonStatic_Click);
-            // 
-            // groupBoxWorldType
-            // 
-            this.groupBoxWorldType.Controls.Add(this.radioButtonStatic);
-            this.groupBoxWorldType.Controls.Add(this.radioButtonGenerated);
-            this.groupBoxWorldType.Location = new System.Drawing.Point(5, 102);
-            this.groupBoxWorldType.Name = "groupBoxWorldType";
-            this.groupBoxWorldType.Size = new System.Drawing.Size(286, 47);
-            this.groupBoxWorldType.TabIndex = 4;
-            this.groupBoxWorldType.TabStop = false;
-            this.groupBoxWorldType.Text = "World Type";
-            // 
             // groupBoxEditMode
             // 
             this.groupBoxEditMode.Controls.Add(this.collisionCheck);
@@ -720,6 +620,104 @@
             this.groupBoxEvents.TabIndex = 0;
             this.groupBoxEvents.TabStop = false;
             this.groupBoxEvents.Text = "Events";
+            // 
+            // eventRemove
+            // 
+            this.eventRemove.Location = new System.Drawing.Point(245, 64);
+            this.eventRemove.Name = "eventRemove";
+            this.eventRemove.Size = new System.Drawing.Size(24, 23);
+            this.eventRemove.TabIndex = 9;
+            this.eventRemove.Text = "-";
+            this.eventRemove.UseVisualStyleBackColor = true;
+            // 
+            // eventAdd
+            // 
+            this.eventAdd.Location = new System.Drawing.Point(245, 35);
+            this.eventAdd.Name = "eventAdd";
+            this.eventAdd.Size = new System.Drawing.Size(24, 23);
+            this.eventAdd.TabIndex = 9;
+            this.eventAdd.Text = "+";
+            this.eventAdd.UseVisualStyleBackColor = true;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(102, 19);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(54, 13);
+            this.label16.TabIndex = 9;
+            this.label16.Text = "Event List";
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(19, 35);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(224, 95);
+            this.listBox2.TabIndex = 9;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(40, 139);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(62, 13);
+            this.label15.TabIndex = 9;
+            this.label15.Text = "Event Type";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(111, 136);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 9;
+            this.comboBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox2_KeyPress);
+            // 
+            // groupBoxEventPosition
+            // 
+            this.groupBoxEventPosition.Controls.Add(this.label13);
+            this.groupBoxEventPosition.Controls.Add(this.label14);
+            this.groupBoxEventPosition.Controls.Add(this.numericUpDownEventY);
+            this.groupBoxEventPosition.Controls.Add(this.numericUpDownEventX);
+            this.groupBoxEventPosition.Location = new System.Drawing.Point(31, 163);
+            this.groupBoxEventPosition.Name = "groupBoxEventPosition";
+            this.groupBoxEventPosition.Size = new System.Drawing.Size(111, 78);
+            this.groupBoxEventPosition.TabIndex = 8;
+            this.groupBoxEventPosition.TabStop = false;
+            this.groupBoxEventPosition.Text = "Position";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(22, 50);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(14, 13);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "Y";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(22, 24);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(14, 13);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "X";
+            // 
+            // numericUpDownEventY
+            // 
+            this.numericUpDownEventY.Location = new System.Drawing.Point(42, 48);
+            this.numericUpDownEventY.Name = "numericUpDownEventY";
+            this.numericUpDownEventY.Size = new System.Drawing.Size(61, 20);
+            this.numericUpDownEventY.TabIndex = 1;
+            // 
+            // numericUpDownEventX
+            // 
+            this.numericUpDownEventX.Location = new System.Drawing.Point(42, 22);
+            this.numericUpDownEventX.Name = "numericUpDownEventX";
+            this.numericUpDownEventX.Size = new System.Drawing.Size(61, 20);
+            this.numericUpDownEventX.TabIndex = 0;
             // 
             // groupBoxEventSize
             // 
@@ -786,119 +784,78 @@
             0,
             0});
             // 
-            // groupBoxEventPosition
+            // groupBoxWorldType
             // 
-            this.groupBoxEventPosition.Controls.Add(this.label13);
-            this.groupBoxEventPosition.Controls.Add(this.label14);
-            this.groupBoxEventPosition.Controls.Add(this.numericUpDownEventY);
-            this.groupBoxEventPosition.Controls.Add(this.numericUpDownEventX);
-            this.groupBoxEventPosition.Location = new System.Drawing.Point(31, 163);
-            this.groupBoxEventPosition.Name = "groupBoxEventPosition";
-            this.groupBoxEventPosition.Size = new System.Drawing.Size(111, 78);
-            this.groupBoxEventPosition.TabIndex = 8;
-            this.groupBoxEventPosition.TabStop = false;
-            this.groupBoxEventPosition.Text = "Position";
+            this.groupBoxWorldType.Controls.Add(this.radioButtonStatic);
+            this.groupBoxWorldType.Controls.Add(this.radioButtonGenerated);
+            this.groupBoxWorldType.Location = new System.Drawing.Point(5, 102);
+            this.groupBoxWorldType.Name = "groupBoxWorldType";
+            this.groupBoxWorldType.Size = new System.Drawing.Size(286, 47);
+            this.groupBoxWorldType.TabIndex = 4;
+            this.groupBoxWorldType.TabStop = false;
+            this.groupBoxWorldType.Text = "World Type";
             // 
-            // label13
+            // radioButtonStatic
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(22, 50);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(14, 13);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Y";
+            this.radioButtonStatic.AutoSize = true;
+            this.radioButtonStatic.Location = new System.Drawing.Point(149, 19);
+            this.radioButtonStatic.Name = "radioButtonStatic";
+            this.radioButtonStatic.Size = new System.Drawing.Size(52, 17);
+            this.radioButtonStatic.TabIndex = 9;
+            this.radioButtonStatic.Text = "Static";
+            this.radioButtonStatic.UseVisualStyleBackColor = true;
+            this.radioButtonStatic.Click += new System.EventHandler(this.radioButtonStatic_Click);
             // 
-            // label14
+            // radioButtonGenerated
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(22, 24);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(14, 13);
-            this.label14.TabIndex = 2;
-            this.label14.Text = "X";
+            this.radioButtonGenerated.AutoSize = true;
+            this.radioButtonGenerated.Checked = true;
+            this.radioButtonGenerated.Location = new System.Drawing.Point(43, 19);
+            this.radioButtonGenerated.Name = "radioButtonGenerated";
+            this.radioButtonGenerated.Size = new System.Drawing.Size(75, 17);
+            this.radioButtonGenerated.TabIndex = 8;
+            this.radioButtonGenerated.TabStop = true;
+            this.radioButtonGenerated.Text = "Generated";
+            this.radioButtonGenerated.UseVisualStyleBackColor = true;
+            this.radioButtonGenerated.Click += new System.EventHandler(this.radioButtonGenerated_Click);
             // 
-            // numericUpDownEventY
+            // menuStrip1
             // 
-            this.numericUpDownEventY.Location = new System.Drawing.Point(42, 48);
-            this.numericUpDownEventY.Name = "numericUpDownEventY";
-            this.numericUpDownEventY.Size = new System.Drawing.Size(61, 20);
-            this.numericUpDownEventY.TabIndex = 1;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1307, 24);
+            this.menuStrip1.TabIndex = 6;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // numericUpDownEventX
+            // fileToolStripMenuItem
             // 
-            this.numericUpDownEventX.Location = new System.Drawing.Point(42, 22);
-            this.numericUpDownEventX.Name = "numericUpDownEventX";
-            this.numericUpDownEventX.Size = new System.Drawing.Size(61, 20);
-            this.numericUpDownEventX.TabIndex = 0;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(111, 136);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 9;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(40, 139);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(62, 13);
-            this.label15.TabIndex = 9;
-            this.label15.Text = "Event Type";
-            // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(19, 35);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(224, 95);
-            this.listBox2.TabIndex = 9;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(102, 19);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(54, 13);
-            this.label16.TabIndex = 9;
-            this.label16.Text = "Event List";
-            // 
-            // eventAdd
-            // 
-            this.eventAdd.Location = new System.Drawing.Point(245, 35);
-            this.eventAdd.Name = "eventAdd";
-            this.eventAdd.Size = new System.Drawing.Size(24, 23);
-            this.eventAdd.TabIndex = 9;
-            this.eventAdd.Text = "+";
-            this.eventAdd.UseVisualStyleBackColor = true;
-            // 
-            // eventRemove
-            // 
-            this.eventRemove.Location = new System.Drawing.Point(245, 64);
-            this.eventRemove.Name = "eventRemove";
-            this.eventRemove.Size = new System.Drawing.Size(24, 23);
-            this.eventRemove.TabIndex = 9;
-            this.eventRemove.Text = "-";
-            this.eventRemove.UseVisualStyleBackColor = true;
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newWorldToolStripMenuItem,
+            this.openWorldToolStripMenuItem,
+            this.saveWorldToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
             // 
             // newWorldToolStripMenuItem
             // 
             this.newWorldToolStripMenuItem.Name = "newWorldToolStripMenuItem";
-            this.newWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newWorldToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.newWorldToolStripMenuItem.Text = "New World";
             // 
             // openWorldToolStripMenuItem
             // 
             this.openWorldToolStripMenuItem.Name = "openWorldToolStripMenuItem";
-            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.openWorldToolStripMenuItem.Text = "Open World";
             // 
             // saveWorldToolStripMenuItem
             // 
             this.saveWorldToolStripMenuItem.Name = "saveWorldToolStripMenuItem";
-            this.saveWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveWorldToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.saveWorldToolStripMenuItem.Text = "Save World";
             // 
             // editToolStripMenuItem
@@ -915,14 +872,59 @@
             this.importBackgroundToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.importBackgroundToolStripMenuItem.Text = "Import Background";
             // 
-            // labelWorldSize
+            // toolStrip1
             // 
-            this.labelWorldSize.AutoSize = true;
-            this.labelWorldSize.Location = new System.Drawing.Point(90, 73);
-            this.labelWorldSize.Name = "labelWorldSize";
-            this.labelWorldSize.Size = new System.Drawing.Size(106, 13);
-            this.labelWorldSize.TabIndex = 8;
-            this.labelWorldSize.Text = "World Size: 400, 400";
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripButton,
+            this.openToolStripButton,
+            this.saveToolStripButton,
+            this.toolStripSeparator1,
+            this.helpToolStripButton});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1307, 25);
+            this.toolStrip1.TabIndex = 7;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // newToolStripButton
+            // 
+            this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
+            this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newToolStripButton.Name = "newToolStripButton";
+            this.newToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.newToolStripButton.Text = "&New";
+            // 
+            // openToolStripButton
+            // 
+            this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
+            this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openToolStripButton.Name = "openToolStripButton";
+            this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.openToolStripButton.Text = "&Open";
+            // 
+            // saveToolStripButton
+            // 
+            this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
+            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveToolStripButton.Name = "saveToolStripButton";
+            this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.saveToolStripButton.Text = "&Save";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // helpToolStripButton
+            // 
+            this.helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.helpToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripButton.Image")));
+            this.helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.helpToolStripButton.Name = "helpToolStripButton";
+            this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             // 
             // Form1
             // 
@@ -959,24 +961,24 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panelleft.ResumeLayout(false);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.groupBoxWorldType.ResumeLayout(false);
-            this.groupBoxWorldType.PerformLayout();
             this.groupBoxEditMode.ResumeLayout(false);
             this.groupBoxEditMode.PerformLayout();
             this.groupBoxEvents.ResumeLayout(false);
             this.groupBoxEvents.PerformLayout();
-            this.groupBoxEventSize.ResumeLayout(false);
-            this.groupBoxEventSize.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventWidth)).EndInit();
             this.groupBoxEventPosition.ResumeLayout(false);
             this.groupBoxEventPosition.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventX)).EndInit();
+            this.groupBoxEventSize.ResumeLayout(false);
+            this.groupBoxEventSize.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventWidth)).EndInit();
+            this.groupBoxWorldType.ResumeLayout(false);
+            this.groupBoxWorldType.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
