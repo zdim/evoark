@@ -16,6 +16,7 @@
 //#include "BitmapFont.h"
 #include "GameState.h"
 #include "MainMenuState.h"
+#include "GameplayState.h"
 
 #include <ctime>
 #include <cstdlib>
@@ -102,8 +103,8 @@ bool Game::Initialize( int width, int height )
 
 
 	// Start the game in the Main Menu state
-	ChangeState( CGameState::GetInstance() );
-	
+	//ChangeState(CTestLevelState::GetInstance());
+	PushState(CGameplayState::GetInstance());
 
 	// Store the current time (in milliseconds)
 	m_ulGameTime	= GetTickCount();
@@ -145,13 +146,16 @@ int Game::Main( void )
 	}
 
 	// Let the current state handle input
-	if( m_pCurrState->Input() == false )
+	if( m_qStates.back()->Input() == false )
 		return 1;	// exit success!
 
 
 	// Update & render the current state
-	m_pCurrState->Update( elapsedTime );
-	m_pCurrState->Render();
+	m_qStates[m_qStates.size()-1]->Update( elapsedTime );
+	for (int i = 0; i < m_qStates.size(); i++)
+	{
+		m_qStates[i]->Render();
+	}
 	return 0;		// keep playing!
 }
 
@@ -164,13 +168,15 @@ int Game::Main( void )
 void Game::Terminate( void )
 {
 	// Exit the current state
-	ChangeState( nullptr );
+	while (!m_qStates.empty())
+	{
 
+	}
 
 	// Terminate & deallocate the font
-//	m_pFont->Terminate();
-//	delete m_pFont;
-//	m_pFont = nullptr;
+	//	m_pFont->Terminate();
+	//	delete m_pFont;
+	//	m_pFont = nullptr;
 
 	//m_pAudio->UnloadAudio(m_hSfxMusic);
 
@@ -196,16 +202,33 @@ void Game::Terminate( void )
 //	- DANGER! Exiting the current state can CRASH the program!
 //	  The state can ONLY be exited from the
 //	  Input, Update, and Render methods!!!
-void Game::ChangeState( IGameState* pNewState )
+//void Game::ChangeState( IGameState* pNewState )
+//{
+//	// Exit the old state
+//	if( m_pCurrState != nullptr )
+//		m_pCurrState->Exit();
+//
+//	// Store the new state
+//	m_pCurrState = pNewState;
+//
+//	// Enter the new state
+//	if( m_pCurrState != nullptr )
+//		m_pCurrState->Enter();
+//}
+
+bool Game::PushState(IGameState* newState)
 {
-	// Exit the old state
-	if( m_pCurrState != nullptr )
-		m_pCurrState->Exit();
+	if (!newState)
+		//Why'd a null even get in here?? Account for everything.
+		return false;
+	newState->Enter();
+	m_qStates.push_back(newState);
+	return true;
+}
 
-	// Store the new state
-	m_pCurrState = pNewState;
-
-	// Enter the new state
-	if( m_pCurrState != nullptr )
-		m_pCurrState->Enter();
+void Game::PopState()
+{
+	m_qStates.back()->Exit();
+	m_qStates.pop_back();
+	//m_qStates.resize(m_qStates.size());
 }

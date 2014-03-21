@@ -3,6 +3,7 @@
 class CMainMenuState :
 	public IGameState
 {
+
 public:
 	CMainMenuState();
 	virtual ~CMainMenuState();
