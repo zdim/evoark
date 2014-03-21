@@ -89,6 +89,7 @@ namespace Editor
             worldObjects.Add("Moccasin");
             worldObjects.Add("Asteroid");
             worldObjects.Add("Planet");
+            worldObjects.Add("Human");
 
             // add initial events
             worldEvents.Add("Stargate");
@@ -174,30 +175,58 @@ namespace Editor
                                 case "Planet":
                                     D3D.DrawRect(spawnRect, Color.Brown);
                                     break;
+                                case "Human":
+                                    D3D.DrawRect(spawnRect, Color.CornflowerBlue);
+                                    break;
                                 default:
+                                    D3D.DrawRect(spawnRect, Color.Pink);
                                     break;
                             }
                         }
-                        if (world[x, y].Spawns[z] is EventSpawn)
-                        {
-                            EventSpawn eSpawn = (EventSpawn)world[x, y].Spawns[z];
-                            Rectangle spawnRect = Rectangle.Empty;
-                            spawnRect.Width = world[x, y].Spawns[z].Width;
-                            spawnRect.Height = world[x, y].Spawns[z].Height;
-                            spawnRect.X = world[x, y].Spawns[z].X + panel1.AutoScrollPosition.X;
-                            spawnRect.Y = world[x, y].Spawns[z].Y + panel1.AutoScrollPosition.Y;
-                            switch (eSpawn.EventType)
-                            {
-                                case "Example":
-                                    D3D.DrawHollowRect(spawnRect, Color.Yellow, 2);
-                                    break;
-                                case "Stargate":
-                                    D3D.DrawHollowRect(spawnRect, Color.Purple, 2);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
+                        //if (world[x, y].Spawns[z] is EventSpawn)
+                        //{
+                        //    EventSpawn eSpawn = (EventSpawn)world[x, y].Spawns[z];
+                        //    Rectangle spawnRect = Rectangle.Empty;
+                        //    spawnRect.Width = world[x, y].Spawns[z].Width;
+                        //    spawnRect.Height = world[x, y].Spawns[z].Height;
+                        //    spawnRect.X = world[x, y].Spawns[z].X + panel1.AutoScrollPosition.X;
+                        //    spawnRect.Y = world[x, y].Spawns[z].Y + panel1.AutoScrollPosition.Y;
+                        //    switch (eSpawn.EventType)
+                        //    {
+                        //        case "Example":
+                        //            D3D.DrawHollowRect(spawnRect, Color.Yellow, 2);
+                        //            break;
+                        //        case "Stargate":
+                        //            D3D.DrawHollowRect(spawnRect, Color.Purple, 2);
+                        //            break;
+                        //        default:
+                        //            D3D.DrawHollowRect(spawnRect, Color.Pink, 2);
+                        //            break;
+                        //    }
+                        //}
+                    }
+                }
+            }
+            if(events.Count > 0)
+            {
+                foreach(EventSpawn ev in events)
+                {
+                    Rectangle spawnRect = Rectangle.Empty;
+                    spawnRect.Width = ev.Width;
+                    spawnRect.Height = ev.Height;
+                    spawnRect.X = ev.X + panel1.AutoScrollPosition.X;
+                    spawnRect.Y = ev.Y + panel1.AutoScrollPosition.Y;
+                    switch(ev.EventType)
+                    {
+                        case "Example":
+                            D3D.DrawHollowRect(spawnRect, Color.Yellow, 2);
+                            break;
+                        case "Stargate":
+                            D3D.DrawHollowRect(spawnRect, Color.Purple, 2);
+                            break;
+                        default:
+                            D3D.DrawHollowRect(spawnRect, Color.Pink, 2);
+                            break;
                     }
                 }
             }
@@ -217,7 +246,11 @@ namespace Editor
 
             if (drawing)
             {
-                D3D.DrawRect(getRectangle(), Color.Pink);
+                if (collisionCheck.Checked == true)
+                    D3D.DrawRect(getRectangle(), Color.Pink);
+                else if (radioButtonEvent.Checked == true)
+                    D3D.DrawRect(getRectangle(), Color.PaleVioletRed);
+
             }
 
             if (selected != null && collisionCheck.Checked == false)
@@ -412,7 +445,7 @@ namespace Editor
                 }
             }
             // add right click to add objects to grid
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right && drawing == false)
             {
                 if (radioButtonObject.Checked == true && collisionCheck.Checked == false)
                 {
@@ -434,15 +467,21 @@ namespace Editor
                 }
                 else if (radioButtonEvent.Checked == true && collisionCheck.Checked == false)
                 {
-                    EventSpawn eSpawn = new EventSpawn();
-                    eSpawn.EventType = comboBox2.SelectedItem.ToString();
-                    eSpawn.Width = (int)numericUpDownWidth.Value;
-                    eSpawn.Height = (int)numericUpDownHeight.Value;
-                    eSpawn.X = e.X - offset.X;
-                    eSpawn.Y = e.Y - offset.Y;
+                    Rectangle r = Rectangle.Empty;
+                    r.X = e.X - offset.X;
+                    r.Y = e.Y - offset.Y;
+                    r.Width = (int)numericUpDownEventWidth.Value;
+                    r.Height = (int)numericUpDownEventHeight.Value;
+                    EventSpawn eSpawn = new EventSpawn(r, comboBox2.SelectedItem.ToString());
+                    //eSpawn.EventType = comboBox2.SelectedItem.ToString();
+                    //eSpawn.Width = (int)numericUpDownWidth.Value;
+                    //eSpawn.Height = (int)numericUpDownHeight.Value;
+                    //eSpawn.X = e.X - offset.X;
+                    //eSpawn.Y = e.Y - offset.Y;
                     events.Add(eSpawn);
-                    listBox2.Items.Add(eSpawn);
-                    listBox2.SelectedIndex = events.Count - 1;
+                    listBox2.DataSource = null;
+                    listBox2.DataSource = events; // FIX: NOT WORKING ON RIGHT CLICK SINCE DRAWING IS FLAGGED
+                    //listBox2.SelectedIndex = events.Count - 1;
                     // FIX EVENT ADDING
 
                     //world[selected.X, selected.Y].Spawns.Add(spawn);
@@ -466,7 +505,7 @@ namespace Editor
             }
             else if (e.Button == MouseButtons.Right)
             {
-                if (collisionCheck.Checked == true)
+                if (collisionCheck.Checked == true || radioButtonEvent.Checked == true)
                 {
                     newPos.X = startPos.X = e.X - offset.X;
                     newPos.Y = startPos.Y = e.Y - offset.Y;
@@ -481,6 +520,10 @@ namespace Editor
             offset.X += panel1.AutoScrollPosition.X;
             offset.Y += panel1.AutoScrollPosition.Y;
 
+            if (e.X > worldSize.Width * quadSize.Width ||
+                e.Y > worldSize.Height * quadSize.Height)
+                return;
+
             newPos.X = e.X - offset.X;
             newPos.Y = e.Y - offset.Y;
             if (drawing)
@@ -493,14 +536,27 @@ namespace Editor
             Point offset = new Point(0, 0);
             offset.X += panel1.AutoScrollPosition.X;
             offset.Y += panel1.AutoScrollPosition.Y;
+           
+            if (e.X > worldSize.Width * quadSize.Width ||
+                e.Y > worldSize.Height * quadSize.Height)
+                return;
 
             if (drawing)
             {
                 drawing = false;
                 var r = getRectangle();
                 if (r.Width > 0 && r.Height > 0)
-                    collisionRects.Add(r);
-                panel1.Invalidate();
+                {
+                    if (collisionCheck.Checked == true) collisionRects.Add(r);
+                    else if (radioButtonEvent.Checked == true)
+                    {
+                        EventSpawn ev = new EventSpawn(r, comboBox2.SelectedItem.ToString());
+                        events.Add(ev);
+                        listBox2.DataSource = null;
+                        listBox2.DataSource = events;
+                    }
+                    panel1.Invalidate();
+                }
             }
         }
 
@@ -532,21 +588,6 @@ namespace Editor
                 }
                 listBox1.Items.Add(spawn);
                 world[selected.X, selected.Y].Spawns.Add(spawn);
-            }
-            else if (radioButtonEvent.Checked == true)
-            {
-                Spawn spawn = new EventSpawn();
-                if (spawn is EventSpawn)
-                {
-                    EventSpawn eSpawn = new EventSpawn();
-                    eSpawn.EventType = comboBox1.SelectedItem.ToString();
-                    eSpawn.Width = (int)numericUpDownWidth.Value;
-                    eSpawn.Height = (int)numericUpDownHeight.Value;
-                    spawn = eSpawn;
-                }
-                listBox1.Items.Add(spawn);
-                world[selected.X, selected.Y].Spawns.Add(spawn);
-
             }
 
         }
@@ -695,6 +736,50 @@ namespace Editor
                             break;
                         }
                     }
+                }
+            }
+        }
+
+        private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == (char)System.Windows.Forms.Keys.Enter)
+            {
+                bool success = false;
+                foreach(string str in worldObjects)
+                {
+                    if(comboBox1.Text.ToUpper() == str.ToUpper())
+                    {
+                        success = true;
+                        break;
+                    }
+                }
+                if(!success)
+                {
+                    worldObjects.Add(comboBox1.Text);
+                    comboBox1.DataSource = null;
+                    comboBox1.DataSource = worldObjects;
+                }
+            }
+        }
+
+        private void comboBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)System.Windows.Forms.Keys.Enter)
+            {
+                bool success = false;
+                foreach (string str in worldEvents)
+                {
+                    if (comboBox2.Text.ToUpper() == str.ToUpper())
+                    {
+                        success = true;
+                        break;
+                    }
+                }
+                if (!success)
+                {
+                    worldEvents.Add(comboBox2.Text);
+                    comboBox2.DataSource = null;
+                    comboBox2.DataSource = worldEvents;
                 }
             }
         }

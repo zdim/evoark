@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Editor
 {
@@ -14,6 +15,15 @@ namespace Editor
         {
             get { return eventType; }
             set { eventType = value; }
+        }
+
+        public EventSpawn(Rectangle r, string s)
+        {
+            this.X = r.X;
+            this.Y = r.Y;
+            this.Width = r.Width;
+            this.Height = r.Height;
+            this.EventType = s;
         }
 
         public override string ToString()
