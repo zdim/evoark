@@ -8,14 +8,12 @@ namespace Editor
 {
     class ObjectSpawn : Spawn
     {
-        public enum Object { None, Player, Copperhead, Cobra, Mamba, Coral, Moccasin, Asteroid, Planet, }
+        string objectType;
 
-        Object obj;
-
-        public Object Obj
+        public string ObjectType
         {
-            get { return obj; }
-            set { obj = value; }
+            get { return objectType; }
+            set { objectType = value; }
         }
 
         int amount;
@@ -28,7 +26,7 @@ namespace Editor
 
         public override string ToString()
         {
-            return amount.ToString() + " - " + obj.ToString();
+            return amount.ToString() + " - " + objectType;
         }
     }
 }
