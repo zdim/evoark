@@ -32,6 +32,8 @@ namespace EvoArk_Particles_Editor
             while (particleEditorForm.Looping )
             {
                 curTime = System.DateTime.Now.Ticks;
+                if (prevTime == 0)
+                    prevTime = curTime;
                 dt = (curTime - prevTime) * 0.0000001f;
                 prevTime = System.DateTime.Now.Ticks;
 

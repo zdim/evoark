@@ -86,6 +86,13 @@ namespace EvoArk_Particles_Editor
             return new Point(s.X + n.X, s.Y + n.Y);
         }
 
+        public static Point operator -(Point s, Point n)
+        {
+            Point tS = new Point(s.X, s.Y);
+            Point tN = new Point(n.X, n.Y);
+            return new Point(s.X - n.X, s.Y - n.Y);
+        }
+
     }
 
 
@@ -105,36 +112,22 @@ namespace EvoArk_Particles_Editor
 		int eB;
 		float MaxLife; 
         float MinLife;
-        Point StartSpeedMin;
-        Point StartSpeedMax;
-        Point EndSpeedMin;
-        Point EndSppedMax;
+        Point m_pSpeedMin;
+        Point m_pSpeedMax;
 		float Inertia;
         float RotationSpeed;
 
 
-        public Point StartSMin
+        public Point PSpeedMax
         {
-            get { return StartSpeedMin; }
-            set { StartSpeedMin = value; }
-        }
+            get { return m_pSpeedMax; }
+            set { m_pSpeedMax = value; }
+        } 
 
-        internal Point StartSMax
+        public Point PSpeedMin
         {
-            get { return StartSpeedMax; }
-            set { StartSpeedMax = value; }
-        }
-
-        internal Point EndSMin
-        {
-            get { return EndSpeedMin; }
-            set { EndSpeedMin = value; }
-        }
-
-        internal Point EndSMax
-        {
-            get { return EndSppedMax; }
-            set { EndSppedMax = value; }
+            get { return m_pSpeedMin; }
+            set { m_pSpeedMin = value; }
         }
 
         public int ParticleImage
@@ -258,10 +251,8 @@ namespace EvoArk_Particles_Editor
 		int eBc,
 		float maxLife, 
         float minLife,
-		Point StartSMin,
-        Point StartSMax,
-        Point EndSMin,
-        Point EndSMax,
+		Point StartSMax,
+        Point StartSMin,   
 		float inertia,
         float rotationSpeed
         )
@@ -280,10 +271,8 @@ namespace EvoArk_Particles_Editor
             eB                 =eBc;
             MaxLife          = maxLife;
             MinLife          = minLife;
-            StartSpeedMin    = StartSMin;
-            StartSpeedMax    = StartSMax;
-            EndSpeedMin      = EndSMin;
-            EndSppedMax      = EndSMax;
+            m_pSpeedMax      = StartSMax;
+            m_pSpeedMin      = StartSMin;           
             Inertia          = inertia;
             RotationSpeed    = rotationSpeed; 
         }

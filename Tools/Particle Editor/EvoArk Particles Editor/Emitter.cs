@@ -22,7 +22,7 @@ namespace EvoArk_Particles_Editor
 
         Point emitterSize = new Point();
         Point emitterPosition = new Point();
-        int m_nNumParticles = new int();
+        int   m_nNumParticles = new int();
         float m_fSpawnRate = new float();
         float m_fTimeFromLastSpawn = new float();
         bool  m_bLoop = new bool();
@@ -141,10 +141,8 @@ namespace EvoArk_Particles_Editor
                     break;
                 case 4:
                     emitterSize = new Point(100, 200);
+                    m_fRadius = emitterSize.X / 2;
                     break; 
-                default:
-                    emitterSize = new Point(1, 1);
-                    break;
             }
 
             emitterPosition = ePosition;
@@ -169,13 +167,17 @@ namespace EvoArk_Particles_Editor
             m_fTimeFromLastSpawn += deltaTime;
             m_fEmitTime -= deltaTime;
 
-            if (m_fTimeFromLastSpawn >= m_fSpawnRate)
+            if (m_fTimeFromLastSpawn >= m_fSpawnRate )
             {
-                if (m_fEmitTime <= 0 && m_bLoop == false && m_lDeadParticles.Count == 0)
-                    ;
-                else if (m_lDeadParticles.Count == 0)
-                    ;
-                else
+                if (m_bLoop == false && m_fEmitTime >= 0 && m_lDeadParticles.Count != 0)
+                {
+                    m_fTimeFromLastSpawn -= m_fSpawnRate;
+                    Particle p = m_lDeadParticles[0];
+                    p = CreateParticle();
+                    m_lDeadParticles.RemoveAt(0);
+                    m_lAliveParticles.Insert(0, p);
+                }
+                else if (m_bLoop == true && m_lDeadParticles.Count != 0 )
                 {
                     m_fTimeFromLastSpawn -= m_fSpawnRate;
                     Particle p = m_lDeadParticles[0];
@@ -224,16 +226,6 @@ namespace EvoArk_Particles_Editor
                 float fLifeCycle = m_lAliveParticles[i].FCurLife / particleData.ParticleMaxLife;
             
                 //Speed Change 
-
-                float ParticleSpeedX = m_lAliveParticles[i].ParticleSpeed.X;
-                float ParticleSpeedY = m_lAliveParticles[i].ParticleSpeed.Y;
-
-                ParticleSpeedX = (m_lAliveParticles[i].EndS.X - particleData.StartSMax.X) * fLifeCycle;
-                ParticleSpeedY = (m_lAliveParticles[i].EndS.Y - particleData.StartSMax.Y) * fLifeCycle;
-
-                m_lAliveParticles[i].ParticleSpeed = new Point(ParticleSpeedX, ParticleSpeedY);
-
-
                 m_lAliveParticles[i].ParticlePositon = m_lAliveParticles[i].ParticlePositon + m_lAliveParticles[i].ParticleSpeed * deltaTime;
 
 
@@ -304,36 +296,27 @@ namespace EvoArk_Particles_Editor
 
             float maxLife = particleData.ParticleMaxLife;
             float minLife = particleData.ParticleMinLife;
-            float randLife = RandomFloat(maxLife, minLife);        
+            float randLife = RandomFloat(maxLife, minLife);
 
-            float startSMaxX = particleData.StartSMax.X;
-            float startSMinX = ParticlesData.StartSMin.X;
-            float startSX = 0;
-            if( startSMinX != startSMaxX )
-               startSX = RandomFloat(startSMaxX, startSMinX);
+            float speedMaxX = particleData.PSpeedMax.X;
+            float speedMinX = particleData.PSpeedMin.X;
+            float speedX = 0;
 
-            float startSMaxY = particleData.StartSMax.Y;
-            float startSMinY = ParticlesData.StartSMin.Y;
-            float startSY = 0;
-            if (startSMinY != startSMaxY)
-                startSY = RandomFloat(startSMaxY, startSMinY);
+            if (speedMaxX != speedMinX)
+                speedX = RandomFloat(speedMaxX, speedMinX);
 
-            Point startSpeed = new Point(startSX,startSY);
+            float speedMaxY = particleData.PSpeedMax.Y;
+            float speedMinY = particleData.PSpeedMin.Y;
+            float speedY = 0;
+
+            if (speedMaxY != speedMinY)
+                speedY = RandomFloat(speedMaxY, speedMinY);
+
+            Point Speed = new Point(speedX, speedY);
 
 
-            float endSMaxX = particleData.EndSMax.X;
-            float endSMinX = ParticlesData.EndSMin.X;
-            float endSX = 0;
-            if (endSMinX != endSMaxX)
-                endSX = RandomFloat(endSMaxX, endSMinX);
 
-            float endSMaxY = particleData.EndSMax.Y;
-            float endSMinY = ParticlesData.EndSMin.Y;
-            float endSY = 0;
-            if (endSMinY != endSMaxY)
-                endSY = RandomFloat(endSMaxY, endSMinY);
-
-            Point EndSpeed = new Point(endSX, endSY);
+       
 
             Size tScale = particleData.ParticleStartScale;
             float rot = 0;
@@ -347,7 +330,7 @@ namespace EvoArk_Particles_Editor
             if(m_nShape == 4 )
             {
                 tempParticlePosition = new Point(emitterPosition.X + r.Next((int)EmitterSize.X/2), emitterPosition.Y + r.Next((int)EmitterSize.Y/2));
-                m_fRadius = emitterSize.X / 2;
+                
                 Point EmitterCenter = new Point( EmitterPosition.X + emitterSize.X/2
                     , emitterPosition.X + emitterSize.X/2 );
 
@@ -362,7 +345,7 @@ namespace EvoArk_Particles_Editor
                 } while ((float)Distance >= m_fRadius);
             }
 
-            Particle tempP = new Particle(tempColor, tempParticlePosition, startSpeed,EndSpeed, tScale, (float)randLife, rot);
+            Particle tempP = new Particle(tempColor, tempParticlePosition, Speed, tScale, (float)randLife, rot);
 
             return tempP;
         }

@@ -1,0 +1,1 @@
+1) Radius of a cirlce can freeze the entire program up ( Be ware of seeting the position and radius ) Look up the fixes 
