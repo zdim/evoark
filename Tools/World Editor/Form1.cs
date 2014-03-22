@@ -48,6 +48,9 @@ namespace Editor
                 Math.Abs(startPos.Y - newPos.Y));
         }
 
+        int backgroundID;
+        string backgroundPath = "";
+
         bool looping = true;
 
         public bool Looping
@@ -80,28 +83,28 @@ namespace Editor
                 }
 
             // add initial objects
-            worldObjects.Add("None");
-            worldObjects.Add("Player");
-            worldObjects.Add("Copperhead");
-            worldObjects.Add("Cobra");
-            worldObjects.Add("Mamba");
-            worldObjects.Add("Coral");
-            worldObjects.Add("Moccasin");
-            worldObjects.Add("Asteroid");
-            worldObjects.Add("Planet");
-            worldObjects.Add("Human");
+            worldObjects.Add("NONE");
+            worldObjects.Add("PLAYER");
+            worldObjects.Add("COPPERHEAD");
+            worldObjects.Add("COBRA");
+            worldObjects.Add("MAMBA");
+            worldObjects.Add("CORAL");
+            worldObjects.Add("MOCCASIN");
+            worldObjects.Add("ASTEROID");
+            worldObjects.Add("PLANET");
+            worldObjects.Add("HUMAN");
 
             // add initial events
-            worldEvents.Add("Stargate");
-            worldEvents.Add("Tutorial.Movement");
-            worldEvents.Add("Tutorial.Lasers");
-            worldEvents.Add("Tutorial.Missiles");
-            worldEvents.Add("Tutorial.Warp");
-            worldEvents.Add("Tutorial.Well");
-            worldEvents.Add("Tutorial.Push");
-            worldEvents.Add("Tutorial.Coordinator");
-            worldEvents.Add("Tutorial.Ally");
-            worldEvents.Add("Tutorial.Boss");
+            worldEvents.Add("STARGATE");
+            worldEvents.Add("TUTORIAL.MOVEMENT");
+            worldEvents.Add("TUTORIAL.LASERS");
+            worldEvents.Add("TUTORIAL.MISSILES");
+            worldEvents.Add("TUTORIAL.WARP");
+            worldEvents.Add("TUTORIAL.WELL");
+            worldEvents.Add("TUTORIAL.PUSH");
+            worldEvents.Add("TUTORIAL.COORDINATOR");
+            worldEvents.Add("TUTORIAL.ALLY");
+            worldEvents.Add("TUTORIAL.BOSS");
 
             comboBox1.DataSource = worldObjects;
             comboBox2.DataSource = worldEvents;
@@ -124,6 +127,12 @@ namespace Editor
             D3D.Clear(panel1, Color.Black);
             D3D.DeviceBegin();
             D3D.SpriteBegin();
+
+            if(backgroundPath.Length > 0)
+            {
+                TM.Draw(backgroundID, offset.X, offset.Y);
+            }
+
             for (int x = 0; x < worldSize.Width; x++)
             {
                 for (int y = 0; y < worldSize.Height; y++)
@@ -149,33 +158,33 @@ namespace Editor
                             spawnRect.Y = world[x, y].Spawns[z].Y + panel1.AutoScrollPosition.Y;
                             switch (oSpawn.ObjectType)
                             {
-                                case "None":
+                                case "NONE":
                                     break;
-                                case "Player":
+                                case "PLAYER":
                                     D3D.DrawRect(spawnRect, Color.White);
                                     break;
-                                case "Copperhead":
+                                case "COPPERHEAD":
                                     D3D.DrawRect(spawnRect, Color.Orange);
                                     break;
-                                case "Cobra":
+                                case "COBRA":
                                     D3D.DrawRect(spawnRect, Color.Yellow);
                                     break;
-                                case "Mamba":
+                                case "MAMBA":
                                     D3D.DrawRect(spawnRect, Color.Red);
                                     break;
-                                case "Coral":
+                                case "CORAL":
                                     D3D.DrawRect(spawnRect, Color.Green);
                                     break;
-                                case "Moccasin":
+                                case "MOCCASIN":
                                     D3D.DrawRect(spawnRect, Color.Cyan);
                                     break;
-                                case "Asteroid":
+                                case "ASTEROID":
                                     D3D.DrawRect(spawnRect, Color.Gray);
                                     break;
-                                case "Planet":
+                                case "PLANET":
                                     D3D.DrawRect(spawnRect, Color.Brown);
                                     break;
-                                case "Human":
+                                case "HUMAN":
                                     D3D.DrawRect(spawnRect, Color.CornflowerBlue);
                                     break;
                                 default:
@@ -184,7 +193,7 @@ namespace Editor
                             }
                         }
                     }
-                    Rectangle r = new Rectangle(selectedSpawn.X, selectedSpawn.Y,
+                    Rectangle r = new Rectangle(selectedSpawn.X + panel1.AutoScrollPosition.X, selectedSpawn.Y + panel1.AutoScrollPosition.Y,
                                                 selectedSpawn.Width, selectedSpawn.Height);
                     D3D.DrawHollowRect(r, Color.White, 1);
                 }
@@ -200,10 +209,10 @@ namespace Editor
                     spawnRect.Y = ev.Y + panel1.AutoScrollPosition.Y;
                     switch(ev.EventType)
                     {
-                        case "Example":
+                        case "EXAMPLE":
                             D3D.DrawHollowRect(spawnRect, Color.Yellow, 3);
                             break;
-                        case "Stargate":
+                        case "STARGATE":
                             D3D.DrawHollowRect(spawnRect, Color.Purple, 3);
                             break;
                         default:
@@ -211,7 +220,7 @@ namespace Editor
                             break;
                     }
                 }
-                Rectangle r = new Rectangle(selectedSpawn.X, selectedSpawn.Y,
+                Rectangle r = new Rectangle(selectedSpawn.X + panel1.AutoScrollPosition.X, selectedSpawn.Y + panel1.AutoScrollPosition.Y,
                                             selectedSpawn.Width, selectedSpawn.Height);
                 D3D.DrawHollowRect(r, Color.White, 1);
             }
@@ -220,7 +229,10 @@ namespace Editor
             {
                 for (int i = 0; i < collisionRects.Count; i++)
                 {
-                    D3D.DrawHollowRect(collisionRects[i], Color.Red, 1);
+                    Rectangle r = collisionRects[i];
+                    r.X += panel1.AutoScrollPosition.X;
+                    r.Y += panel1.AutoScrollPosition.Y;
+                    D3D.DrawHollowRect(r, Color.Red, 1);
                 }
 
                 if (selectedCollisionRect != Rectangle.Empty)
@@ -232,10 +244,19 @@ namespace Editor
             if (drawing)
             {
                 if (collisionCheck.Checked == true)
-                    D3D.DrawRect(getRectangle(), Color.Pink);
+                {
+                    Rectangle r = getRectangle();
+                    r.X += panel1.AutoScrollPosition.X;
+                    r.Y += panel1.AutoScrollPosition.Y;
+                    D3D.DrawRect(r, Color.Pink);
+                }
                 else if (radioButtonEvent.Checked == true)
-                    D3D.DrawRect(getRectangle(), Color.PaleVioletRed);
-
+                {
+                    Rectangle r = getRectangle();
+                    r.X += panel1.AutoScrollPosition.X;
+                    r.Y += panel1.AutoScrollPosition.Y;
+                    D3D.DrawRect(r, Color.PaleVioletRed);
+                }
             }
 
             if (selected != null && collisionCheck.Checked == false && radioButtonObject.Checked == true)
@@ -1080,6 +1101,7 @@ namespace Editor
                     writer.WriteAttributeString("quadHeight", quadSize.Height.ToString());
                     writer.WriteAttributeString("events", events.Count.ToString());
                     writer.WriteAttributeString("collision", collisionRects.Count.ToString());
+                    writer.WriteAttributeString("background", backgroundPath);
 
                     // loop through all the quads
                     for (int i = 0; i < worldSize.Width; i++)
@@ -1134,6 +1156,163 @@ namespace Editor
                 }
             }
         }
+
+        public void openWorldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.DefaultExt = "xml";
+            dlg.Filter = "XML Files (*.xml) | *.xml";
+            dlg.FilterIndex = 0;
+            if(DialogResult.OK == dlg.ShowDialog())
+            {
+                selected = new Quad(0, 0);
+                selectedSpawn = new Spawn();
+                selectedCollisionRect = new Rectangle();
+                collisionRects = new List<Rectangle>();
+                events = new List<EventSpawn>();
+
+                XmlReaderSettings settings = new XmlReaderSettings();
+                settings.ConformanceLevel = ConformanceLevel.Document;
+                settings.IgnoreComments = true;
+                settings.IgnoreWhitespace = true;
+
+                using (XmlReader read = XmlReader.Create(dlg.FileName, settings))
+                {
+                    if(read.IsStartElement("Level"))
+                    {
+                        read.ReadStartElement("Level");
+                        read.MoveToFirstAttribute();
+                        worldSize.Width = read.ReadContentAsInt();
+                        read.MoveToNextAttribute();
+                        worldSize.Height = read.ReadContentAsInt();
+                        read.MoveToNextAttribute();
+                        quadSize.Width = read.ReadContentAsInt();
+                        read.MoveToNextAttribute();
+                        quadSize.Height = read.ReadContentAsInt();
+                        read.MoveToNextAttribute();
+
+                        // store amount of events
+                        int numEvents = read.ReadContentAsInt();
+                        read.MoveToNextAttribute();
+                        // store amount of collision rects
+                        int numCollision = read.ReadContentAsInt();
+                        read.MoveToNextAttribute();
+
+                        if(backgroundPath.Length > 0)
+                        {
+                            TM.UnloadTexture(backgroundID);
+                        }
+                        string p = "..//..//Resources//Graphics//";
+                        backgroundPath = read.ReadContentAsString();
+                        p += backgroundPath;
+                        backgroundID = TM.LoadTexture(p);
+
+                        world = new Quad[worldSize.Width, worldSize.Height];
+                        read.ReadStartElement("Details");
+                        for(int i = 0; i < worldSize.Width; i++)
+                            for(int j = 0; j < worldSize.Height; j++)
+                            {
+                                world[i, j] = new Quad();
+                                read.MoveToFirstAttribute();
+                                world[i, j].X = read.ReadContentAsInt();
+                                read.MoveToNextAttribute();
+                                world[i, j].Y = read.ReadContentAsInt();
+                                read.MoveToNextAttribute();
+
+                                // store amount of possible types
+                                int numTypes = read.ReadContentAsInt();
+                                read.ReadStartElement("Quad");
+
+                                for(int k = 0; k < numTypes; k++)
+                                {
+                                    read.MoveToFirstAttribute();
+                                    ObjectSpawn oSpawn = new ObjectSpawn();
+                                    oSpawn.ObjectType = read.ReadContentAsString();
+                                    read.MoveToNextAttribute();
+                                    oSpawn.Amount = read.ReadContentAsInt();
+                                    read.MoveToNextAttribute();
+                                    string b = read.ReadContentAsString();
+                                    oSpawn.Randomized = false;
+                                    if (b == "True") oSpawn.Randomized = true;
+                                    read.MoveToNextAttribute();
+                                    oSpawn.X = read.ReadContentAsInt();
+                                    read.MoveToNextAttribute();
+                                    oSpawn.Y = read.ReadContentAsInt();
+                                    oSpawn.Width = 20;
+                                    oSpawn.Height = 20;
+                                    world[i, j].Spawns.Add(oSpawn);
+                                    read.ReadStartElement("Type");
+                                    read.ReadEndElement();
+                                }
+
+                            }
+
+                        for(int i = 0; i < numEvents; i++)
+                        {
+                            read.MoveToFirstAttribute();
+                            EventSpawn eSpawn = new EventSpawn(Rectangle.Empty, "");
+                            eSpawn.EventType = read.ReadContentAsString();
+                            read.MoveToNextAttribute();
+                            eSpawn.X = read.ReadContentAsInt();
+                            read.MoveToNextAttribute();
+                            eSpawn.Y = read.ReadContentAsInt();
+                            read.MoveToNextAttribute();
+                            eSpawn.Width = read.ReadContentAsInt();
+                            read.MoveToNextAttribute();
+                            eSpawn.Height = read.ReadContentAsInt();
+                            events.Add(eSpawn);
+                            read.ReadStartElement();
+                        }
+
+                        for(int i = 0; i < numCollision; i++)
+                        {
+                            read.MoveToFirstAttribute();
+                            Rectangle r = Rectangle.Empty;
+                            r.X = read.ReadContentAsInt();
+                            read.MoveToNextAttribute();
+                            r.Y = read.ReadContentAsInt();
+                            read.MoveToNextAttribute();
+                            r.Width = read.ReadContentAsInt();
+                            read.MoveToNextAttribute();
+                            r.Height = read.ReadContentAsInt();
+                            collisionRects.Add(r);
+                            read.ReadStartElement();
+                        }
+                        read.ReadEndElement();
+                        read.ReadEndElement();
+                        numericUpDownX.Maximum = quadSize.Width * worldSize.Width;
+                        numericUpDownY.Maximum = quadSize.Height * worldSize.Height;
+                        listBox2.DataSource = null;
+                        listBox2.DataSource = events;
+
+                        panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
+                            worldSize.Height * quadSize.Height);
+                    }
+                }
+            }
+        }
+
+        public void importBackgroundToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.DefaultExt = "png";
+            //dlg.Filter = ".PNG (*.png) | *.png | .JPG (*.jpg) | *.jpg | .BMP (*.bmp) | *.bmp";
+            dlg.Filter = "Image files (*.png;*jpg;*bmp;)|*.png;*jpg;*bmp;";
+
+            dlg.InitialDirectory = System.IO.Path.GetFullPath(System.IO.Directory.GetCurrentDirectory() + "//..//..//Resources//Graphics");
+
+            if(DialogResult.OK == dlg.ShowDialog())
+            {
+                if(backgroundPath.Length > 0)
+                {
+                    TM.UnloadTexture(backgroundID);
+                }
+                backgroundID = TM.LoadTexture(dlg.FileName);
+                backgroundPath = System.IO.Path.GetFileName(dlg.FileName);
+            }
+        }
+
+
 
     }
 }

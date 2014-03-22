@@ -871,6 +871,7 @@
             this.openWorldToolStripMenuItem.Name = "openWorldToolStripMenuItem";
             this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openWorldToolStripMenuItem.Text = "Open World";
+            this.openWorldToolStripMenuItem.Click += new System.EventHandler(this.openWorldToolStripMenuItem_Click);
             // 
             // saveWorldToolStripMenuItem
             // 
@@ -892,6 +893,7 @@
             this.importBackgroundToolStripMenuItem.Name = "importBackgroundToolStripMenuItem";
             this.importBackgroundToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.importBackgroundToolStripMenuItem.Text = "Import Background";
+            this.importBackgroundToolStripMenuItem.Click += new System.EventHandler(this.importBackgroundToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
@@ -934,6 +936,7 @@
             this.saveToolStripButton.Name = "saveToolStripButton";
             this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.saveToolStripButton.Text = "&Save";
+            this.saveToolStripButton.Click += new System.EventHandler(this.saveWorldToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 

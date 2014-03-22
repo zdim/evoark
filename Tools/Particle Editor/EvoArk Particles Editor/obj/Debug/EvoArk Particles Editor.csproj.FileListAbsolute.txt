@@ -37,3 +37,9 @@ C:\Users\Fiercy\Desktop\EvoA Repo\evoark\Tools\Particle Editor\EvoArk Particles 
 C:\Users\Z\Desktop\SGP Repo\evoark 4\Tools\Particle Editor\EvoArk Particles Editor\EvoArk Particles Editor.exe.config
 C:\Users\Z\Desktop\SGP Repo\evoark 4\Tools\Particle Editor\EvoArk Particles Editor\obj\Debug\EvoArk Particles Editor.exe
 C:\Users\Z\Desktop\SGP Repo\evoark 4\Tools\Particle Editor\EvoArk Particles Editor\obj\Debug\EvoArk Particles Editor.pdb
+C:\Users\Z\Desktop\SGP Repo\evoark 4\Tools\Particle Editor\EvoArk Particles Editor\obj\Debug\EvoArk Particles Editor.csprojResolveAssemblyReference.cache
+C:\Users\Z\Desktop\SGP Repo\evoark 4\Tools\Particle Editor\EvoArk Particles Editor\obj\Debug\EvoArk_Particles_Editor.Form1.resources
+C:\Users\Z\Desktop\SGP Repo\evoark 4\Tools\Particle Editor\EvoArk Particles Editor\obj\Debug\EvoArk_Particles_Editor.Properties.Resources.resources
+C:\Users\Z\Desktop\SGP Repo\evoark 4\Tools\Particle Editor\EvoArk Particles Editor\obj\Debug\EvoArk Particles Editor.csproj.GenerateResource.Cache
+C:\Users\Z\Desktop\SGP Repo\evoark 4\Tools\Particle Editor\EvoArk Particles Editor\EvoArk Particles Editor.exe
+C:\Users\Z\Desktop\SGP Repo\evoark 4\Tools\Particle Editor\EvoArk Particles Editor\EvoArk Particles Editor.pdb
