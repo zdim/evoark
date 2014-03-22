@@ -40,7 +40,6 @@ namespace Editor
             get { return height; }
             set { height = value; }
         }
-
         
 
         //public override string ToString()

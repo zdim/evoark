@@ -38,9 +38,9 @@ namespace Editor
             spawns.Clear();
         }
 
-        List<Spawn> spawns = new List<Spawn>();
+        List<ObjectSpawn> spawns = new List<ObjectSpawn>();
 
-        public List<Spawn> Spawns
+        public List<ObjectSpawn> Spawns
         {
             get { return spawns; }
             set { spawns = value; }

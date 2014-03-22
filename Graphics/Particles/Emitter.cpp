@@ -9,38 +9,13 @@ CEmitter::CEmitter()
 {}
 
 
-CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, SGD::Point ePosition, int nParticles, float fSpawnRate, float fTimeFromLastSpawn, bool emway, float emitTime)
+CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, int s, SGD::Point ePosition, int nParticles, float fSpawnRate, float fTimeFromLastSpawn, bool emway, float emitTime)
 {
 	particleData = parData;
 
-	shape = 4; 
-
-	switch (shape)
-	{
-	case 1:
-		emitterSize = SGD::Size{ 1, 1 };
-		emitterPosition = ePosition;
-		break;
-	case 2:
-		emitterSize = SGD::Size{ 100, 1 };
-		emitterPosition = ePosition;
-		break;
-	case 3:
-		emitterSize = SGD::Size{ 100, 100 };
-		emitterPosition = ePosition;
-		break;
-	case 4:
-		emitterSize = SGD::Size{ 100, 100 };
-		emitterPosition = ePosition;
-		break;
-	default:
-		emitterSize = SGD::Size{ 1, 1 };
-		emitterPosition = ePosition;
-		break;
-
-	}
-
-
+	shape = s;
+	emitterSize = eSize;
+	emitterPosition = ePosition;
 	m_nNumParticles = nParticles;
 	m_fSpawnRate = fSpawnRate;
 	m_fTimeFromLastSpawn = 0;
@@ -70,11 +45,7 @@ void CEmitter::Update(float deltaTime)
 
 	if (m_fTimeFromLastSpawn >= m_fSpawnRate)
 	{
-		if (m_fEmitTime <= 0 && m_bLoop == false && m_lDeadParticles.size() == 0)
-			;
-		else if (m_lDeadParticles.size() == 0)
-			;
-		else
+		if (m_fEmitTime >= 0 && m_bLoop == false && m_lDeadParticles.size() != 0)
 		{
 			m_fTimeFromLastSpawn -= m_fSpawnRate;
 			CParticle * p = *m_lDeadParticles.begin();
@@ -82,6 +53,15 @@ void CEmitter::Update(float deltaTime)
 			m_lDeadParticles.pop_front();
 			m_lAliveParticles.push_front(p);
 		}
+		else if (m_bLoop == true && m_lDeadParticles.size() != 0)
+		{
+			m_fTimeFromLastSpawn -= m_fSpawnRate;
+			CParticle * p = *m_lDeadParticles.begin();
+			*p = CreateParticle();
+			m_lDeadParticles.pop_front();
+			m_lAliveParticles.push_front(p);
+		}
+
 	}
 
 
@@ -192,18 +172,18 @@ CParticle CEmitter::CreateParticle()
 	float randLife = minLife + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (maxLife - minLife)));
 
 	SGD::Vector randSpeed = { particleData->GetMinSpeed().x + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (particleData->GetMaxSpeed().x - particleData->GetMinSpeed().x))),
-		                      particleData->GetMinSpeed().y + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (particleData->GetMaxSpeed().y - particleData->GetMinSpeed().y))) };
+		particleData->GetMinSpeed().y + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (particleData->GetMaxSpeed().y - particleData->GetMinSpeed().y))) };
 
 
 	SGD::Point ppositionn{ emitterPosition.x + (rand() % (int)emitterSize.width),
 		emitterPosition.y + (rand() % (int)emitterSize.height) };
 
 
-	if (shape == 3 || shape == 4 )
-	    ppositionn = { emitterPosition.x + (rand() % (int)emitterSize.width),
+	if (shape == 3 || shape == 4)
+		ppositionn = { emitterPosition.x + (rand() % (int)emitterSize.width),
 		emitterPosition.y + (rand() % (int)emitterSize.height) };
 
-	
+
 	if (shape == 4)
 	{
 
