@@ -28,7 +28,7 @@ namespace EvoArk_Particles_Editor
         Emitter emittor = new Emitter();
         int emittorShape = 1;
         Point emitterPos = new Point();
-
+        Point emitterSize = new Point();
 
 
         Flyweight particleData = new Flyweight();
@@ -84,11 +84,11 @@ namespace EvoArk_Particles_Editor
                 (int)EndColorA.Value, (int)EndColorR.Value, (int)EndColorG.Value, (int)EndColorB.Value,
                 (float)LifeMax.Value, (float)LifeMin.Value, SpeedMax, SpeedMin, (float)Enertia.Value, (float)RotationSpeed.Value);
 
-
             emitterPos = new Point(200, 200);
+            emitterSize = new Point((float)EmittorWidth.Value, (float)EmittorHeight.Value);
 
 
-            emittor = new Emitter(particleData, emittorShape, emitterPos, (int)NumParticles.Value,
+            emittor = new Emitter(particleData, emittorShape, emitterSize, emitterPos, (int)NumParticles.Value,
                 (float)SpawnRate.Value, (float)EmissionRate.Value, BoolLoopBox.Checked, (float)EmissionTime.Value);
 
             UpdateControls();
@@ -140,8 +140,7 @@ namespace EvoArk_Particles_Editor
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (null == szFilePath)
-            {
+            
                 SaveFileDialog save = new SaveFileDialog();
                 save.DefaultExt = "xml";
                 save.Filter = "Xml Files (*.xml)|*.xml|All Files (*.*)|*.*";
@@ -153,7 +152,7 @@ namespace EvoArk_Particles_Editor
                 }
                 else
                     return;
-            }
+            
 
             SaveXML();
         }
@@ -177,6 +176,10 @@ namespace EvoArk_Particles_Editor
                 writer.WriteAttributeString("Radius", EmittorRadius.Value.ToString());
                 writer.WriteAttributeString("EmitBool", BoolLoopBox.Checked.ToString());
                 writer.WriteAttributeString("EmitTime", EmissionTime.Value.ToString());
+                writer.WriteAttributeString("PosX", EmittorPosX.Value.ToString());
+                writer.WriteAttributeString("PosY", EmittorPosY.Value.ToString());
+                writer.WriteAttributeString("Width", EmittorWidth.Value.ToString());
+                writer.WriteAttributeString("Height", EmittorHeight.Value.ToString());
                 writer.WriteEndElement();
 
                 writer.WriteStartElement("Particle");
@@ -209,55 +212,76 @@ namespace EvoArk_Particles_Editor
             }
         }
 
+           //switch (Shape)
+           // {
+           //     case 1:
+           //         emitterSize = new Point(1, 1);
+           //         break;
+           //     case 2:
+           //         emitterSize = new Point(100, 1);
+           //         break;
+           //     case 3:
+           //         emitterSize = new Point(100, 100);
+           //         break;
+           //     case 4:
+           //         emitterSize = new Point(100, 200);
+           //         m_fRadius = emitterSize.X / 2;
+           //         break; 
+           // }
+
         private void EmittorShapeButtonPoint_CheckedChanged(object sender, EventArgs e)
         {
 
             emittorShape = 1;
-            ResetEmittor();
-            EmittorWidth.Value = (int)emittor.EmitterSize.X;
-            EmittorHeight.Value = (int)emittor.EmitterSize.Y;
+            EmittorWidth.Value = 1;
+            EmittorHeight.Value = 1;
             EmittorRadius.Visible = false;
             RadiusLabel.Visible = false;
+            ResetEmittor();
         }
 
         private void EmittorShapeButtonLine_CheckedChanged(object sender, EventArgs e)
         {
             emittorShape = 2;
-            ResetEmittor();
-            EmittorWidth.Value = (int)emittor.EmitterSize.X;
-            EmittorHeight.Value = (int)emittor.EmitterSize.Y;
+            EmittorWidth.Value = 100;
+            EmittorHeight.Value = 1;
+           
             EmittorRadius.Visible = false;
             RadiusLabel.Visible = false;
+            ResetEmittor();
         }
 
         private void EmittorShapeButtonRect_CheckedChanged(object sender, EventArgs e)
         {
             emittorShape = 3;
-            ResetEmittor();
-            EmittorWidth.Value = (int)emittor.EmitterSize.X;
-            EmittorHeight.Value = (int)emittor.EmitterSize.Y;
+            EmittorWidth.Value = 100;
+            EmittorHeight.Value = 100;
             EmittorRadius.Visible = false;
             RadiusLabel.Visible = false;
+            ResetEmittor();
         }
 
         private void EmittorShapeButtonCircle_CheckedChanged(object sender, EventArgs e)
         {
             emittorShape = 4;
-            ResetEmittor();
-            EmittorWidth.Value = (int)emittor.EmitterSize.X;
-            EmittorHeight.Value = (int)emittor.EmitterSize.Y;
+
+            EmittorWidth.Value = 100;
+            EmittorHeight.Value = 200;
+            EmittorRadius.Value = (decimal)((float)EmittorWidth.Value / 2);
             EmittorRadius.Visible = true;
             RadiusLabel.Visible = true;
-            UpdateControls();
+            ResetEmittor();
 
         }
 
         public void ResetEmittor()
         {
             emitterPos = new Point((float)EmittorPosX.Value, (float)EmittorPosY.Value);
+            emitterSize = new Point((float)EmittorWidth.Value, (float)EmittorHeight.Value);
 
-            emittor = new Emitter(particleData, emittorShape, emitterPos, (int)NumParticles.Value,
+            emittor = new Emitter(particleData, emittorShape, emitterSize, emitterPos, (int)NumParticles.Value,
                 (float)SpawnRate.Value, (float)EmissionRate.Value, BoolLoopBox.Checked, (float)EmissionTime.Value);
+            emittor.FRadius = (float)EmittorRadius.Value;
             UpdateControls();
             emittor.Initialize();
         }
@@ -561,7 +585,24 @@ namespace EvoArk_Particles_Editor
                             BoolLoopBox.Checked = false; 
 
                         reader.MoveToNextAttribute();
+
                         EmissionTime.Value = (decimal)reader.ReadContentAsFloat();
+                       
+                        reader.MoveToNextAttribute();
+
+                        EmittorPosX.Value = reader.ReadContentAsInt();
+                      
+                        reader.MoveToNextAttribute();
+
+                        EmittorPosY.Value = reader.ReadContentAsInt();
+
+                        reader.MoveToNextAttribute();
+
+                        EmittorWidth.Value = reader.ReadContentAsInt();
+
+                        reader.MoveToNextAttribute();
+
+                        EmittorHeight.Value = reader.ReadContentAsInt();
 
                         reader.ReadStartElement("Emittor");
 
