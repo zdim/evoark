@@ -104,6 +104,7 @@ void	CTestLevelState::Render(void)
 		}
 	}
 
+	Game::GetInstance()->Font.Write(SGD::Point{150,150},"testing");
 	pSystem.Render();
 
 	EntityManager->Render();

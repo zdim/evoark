@@ -29,6 +29,9 @@ using std::string;
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
+//testing
+#include "../BitmapFont/BitmapFont.h"
+
 
 /**************************************************************/
 // Singleton
@@ -109,6 +112,8 @@ bool Game::Initialize( int width, int height )
 	// Store the current time (in milliseconds)
 	m_ulGameTime	= GetTickCount();
 
+	Font.Load("Resources/XML/font.xml");
+
 	return true;	// success!
 }
 
@@ -167,6 +172,8 @@ int Game::Main( void )
 //	- terminate the SGD wrappers
 void Game::Terminate( void )
 {
+	Font.Unload();
+
 	// Exit the current state
 	while (!m_qStates.empty())
 	{
