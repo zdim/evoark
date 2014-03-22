@@ -326,6 +326,7 @@
             0,
             0,
             0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // label1
             // 
@@ -343,6 +344,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 2;
+            this.comboBox1.SelectedValueChanged += new System.EventHandler(this.comboBox1_SelectedValueChanged);
             this.comboBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox1_KeyPress);
             // 
             // possibleEntities
@@ -361,6 +363,7 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(224, 95);
             this.listBox1.TabIndex = 0;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // collisionCheck
             // 
@@ -545,6 +548,7 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -629,6 +633,7 @@
             this.eventRemove.TabIndex = 9;
             this.eventRemove.Text = "-";
             this.eventRemove.UseVisualStyleBackColor = true;
+            this.eventRemove.Click += new System.EventHandler(this.eventRemove_Click);
             // 
             // eventAdd
             // 
@@ -708,16 +713,28 @@
             // numericUpDownEventY
             // 
             this.numericUpDownEventY.Location = new System.Drawing.Point(42, 48);
+            this.numericUpDownEventY.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numericUpDownEventY.Name = "numericUpDownEventY";
             this.numericUpDownEventY.Size = new System.Drawing.Size(61, 20);
             this.numericUpDownEventY.TabIndex = 1;
+            this.numericUpDownEventY.ValueChanged += new System.EventHandler(this.numericUpDownEventY_ValueChanged);
             // 
             // numericUpDownEventX
             // 
             this.numericUpDownEventX.Location = new System.Drawing.Point(42, 22);
+            this.numericUpDownEventX.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numericUpDownEventX.Name = "numericUpDownEventX";
             this.numericUpDownEventX.Size = new System.Drawing.Size(61, 20);
             this.numericUpDownEventX.TabIndex = 0;
+            this.numericUpDownEventX.ValueChanged += new System.EventHandler(this.numericUpDownEventX_ValueChanged);
             // 
             // groupBoxEventSize
             // 
@@ -753,8 +770,8 @@
             // numericUpDownEventHeight
             // 
             this.numericUpDownEventHeight.Location = new System.Drawing.Point(42, 48);
-            this.numericUpDownEventHeight.Minimum = new decimal(new int[] {
-            20,
+            this.numericUpDownEventHeight.Maximum = new decimal(new int[] {
+            1000,
             0,
             0,
             0});
@@ -766,12 +783,13 @@
             0,
             0,
             0});
+            this.numericUpDownEventHeight.ValueChanged += new System.EventHandler(this.numericUpDownEventHeight_ValueChanged);
             // 
             // numericUpDownEventWidth
             // 
             this.numericUpDownEventWidth.Location = new System.Drawing.Point(42, 22);
-            this.numericUpDownEventWidth.Minimum = new decimal(new int[] {
-            20,
+            this.numericUpDownEventWidth.Maximum = new decimal(new int[] {
+            1000,
             0,
             0,
             0});
@@ -783,6 +801,7 @@
             0,
             0,
             0});
+            this.numericUpDownEventWidth.ValueChanged += new System.EventHandler(this.numericUpDownEventWidth_ValueChanged);
             // 
             // groupBoxWorldType
             // 
@@ -843,20 +862,22 @@
             // newWorldToolStripMenuItem
             // 
             this.newWorldToolStripMenuItem.Name = "newWorldToolStripMenuItem";
-            this.newWorldToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.newWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newWorldToolStripMenuItem.Text = "New World";
+            this.newWorldToolStripMenuItem.Click += new System.EventHandler(this.newWorldToolStripMenuItem_Click);
             // 
             // openWorldToolStripMenuItem
             // 
             this.openWorldToolStripMenuItem.Name = "openWorldToolStripMenuItem";
-            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.openWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openWorldToolStripMenuItem.Text = "Open World";
             // 
             // saveWorldToolStripMenuItem
             // 
             this.saveWorldToolStripMenuItem.Name = "saveWorldToolStripMenuItem";
-            this.saveWorldToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.saveWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveWorldToolStripMenuItem.Text = "Save World";
+            this.saveWorldToolStripMenuItem.Click += new System.EventHandler(this.saveWorldToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -894,6 +915,7 @@
             this.newToolStripButton.Name = "newToolStripButton";
             this.newToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.newToolStripButton.Text = "&New";
+            this.newToolStripButton.Click += new System.EventHandler(this.newWorldToolStripMenuItem_Click);
             // 
             // openToolStripButton
             // 

@@ -24,9 +24,19 @@ namespace Editor
             set { amount = value; }
         }
 
+        bool randomized;
+
+        public bool Randomized
+        {
+            get { return randomized; }
+            set { randomized = value; }
+        }
+
         public override string ToString()
         {
-            return amount.ToString() + " - " + objectType;
+            if(!randomized)
+                return amount.ToString() + " - " + objectType;
+            return amount.ToString() + " - R - " + objectType;
         }
     }
 }
