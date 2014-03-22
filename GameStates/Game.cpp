@@ -29,6 +29,9 @@ using std::string;
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
+//testing
+#include "../BitmapFont/BitmapFont.h"
+
 
 /**************************************************************/
 // Singleton
@@ -100,14 +103,16 @@ bool Game::Initialize( int width, int height )
 	// Allocate & initialize the font
 	//m_pFont = new BitmapFont;
 	//m_pFont->Initialize();
+	Font.Load("Resources/XML/font.xml");
 
 
 	// Start the game in the Main Menu state
 	//ChangeState(CTestLevelState::GetInstance());
-	PushState(CGameplayState::GetInstance());
+	PushState(CMainMenuState::GetInstance());
 
 	// Store the current time (in milliseconds)
 	m_ulGameTime	= GetTickCount();
+
 
 	return true;	// success!
 }
@@ -167,11 +172,16 @@ int Game::Main( void )
 //	- terminate the SGD wrappers
 void Game::Terminate( void )
 {
-	// Exit the current state
 	while (!m_qStates.empty())
-	{
+		PopState();
 
-	}
+	Font.Unload();
+
+	// Exit the current state
+	//while (!m_qStates.empty())
+	//{
+
+	//}
 
 	// Terminate & deallocate the font
 	//	m_pFont->Terminate();

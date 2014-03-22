@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SGP;
+using System.Xml;
 
 namespace Editor
 {
@@ -30,7 +31,6 @@ namespace Editor
         // initial list of objects
         List<string> worldObjects = new List<string>();
 
-        //List<string> events = new List<string>();
         List<EventSpawn> events = new List<EventSpawn>();
 
         // drawing collision rects
@@ -183,28 +183,10 @@ namespace Editor
                                     break;
                             }
                         }
-                        //if (world[x, y].Spawns[z] is EventSpawn)
-                        //{
-                        //    EventSpawn eSpawn = (EventSpawn)world[x, y].Spawns[z];
-                        //    Rectangle spawnRect = Rectangle.Empty;
-                        //    spawnRect.Width = world[x, y].Spawns[z].Width;
-                        //    spawnRect.Height = world[x, y].Spawns[z].Height;
-                        //    spawnRect.X = world[x, y].Spawns[z].X + panel1.AutoScrollPosition.X;
-                        //    spawnRect.Y = world[x, y].Spawns[z].Y + panel1.AutoScrollPosition.Y;
-                        //    switch (eSpawn.EventType)
-                        //    {
-                        //        case "Example":
-                        //            D3D.DrawHollowRect(spawnRect, Color.Yellow, 2);
-                        //            break;
-                        //        case "Stargate":
-                        //            D3D.DrawHollowRect(spawnRect, Color.Purple, 2);
-                        //            break;
-                        //        default:
-                        //            D3D.DrawHollowRect(spawnRect, Color.Pink, 2);
-                        //            break;
-                        //    }
-                        //}
                     }
+                    Rectangle r = new Rectangle(selectedSpawn.X, selectedSpawn.Y,
+                                                selectedSpawn.Width, selectedSpawn.Height);
+                    D3D.DrawHollowRect(r, Color.White, 1);
                 }
             }
             if(events.Count > 0)
@@ -219,16 +201,19 @@ namespace Editor
                     switch(ev.EventType)
                     {
                         case "Example":
-                            D3D.DrawHollowRect(spawnRect, Color.Yellow, 2);
+                            D3D.DrawHollowRect(spawnRect, Color.Yellow, 3);
                             break;
                         case "Stargate":
-                            D3D.DrawHollowRect(spawnRect, Color.Purple, 2);
+                            D3D.DrawHollowRect(spawnRect, Color.Purple, 3);
                             break;
                         default:
-                            D3D.DrawHollowRect(spawnRect, Color.Pink, 2);
+                            D3D.DrawHollowRect(spawnRect, Color.Pink, 3);
                             break;
                     }
                 }
+                Rectangle r = new Rectangle(selectedSpawn.X, selectedSpawn.Y,
+                                            selectedSpawn.Width, selectedSpawn.Height);
+                D3D.DrawHollowRect(r, Color.White, 1);
             }
 
             if (collisionRects.Count > 0)
@@ -253,7 +238,7 @@ namespace Editor
 
             }
 
-            if (selected != null && collisionCheck.Checked == false)
+            if (selected != null && collisionCheck.Checked == false && radioButtonObject.Checked == true)
             {
                 Rectangle s = new Rectangle(selected.X * quadSize.Width + panel1.AutoScrollPosition.X,
                     selected.Y * quadSize.Height + panel1.AutoScrollPosition.Y, quadSize.Width, quadSize.Height);
@@ -362,63 +347,75 @@ namespace Editor
             world[selected.X, selected.Y].X = selected.X;
             world[selected.X, selected.Y].Y = selected.Y;
 
-            //numericUpDownX.Value = e.X - offset.X;
-            //numericUpDownY.Value = e.Y - offset.Y;
+            listBox1.DataSource = null;
+            listBox1.DataSource = world[selected.X, selected.Y].Spawns;
 
-            listBox1.Items.Clear();
-
-            if (world[selected.X, selected.Y].Spawns.Count != 0)
-            {
-                for (int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
-                {
-                    listBox1.Items.Add(world[selected.X, selected.Y].Spawns[i]);
-                }
-            }
             if (e.Button == MouseButtons.Left)
             {
                 if (collisionCheck.Checked == false)
                 {
-                    for (int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
+                    if (radioButtonObject.Checked == true)
                     {
-                        Rectangle r = new Rectangle(
-                            world[selected.X, selected.Y].Spawns[i].X,
-                            world[selected.X, selected.Y].Spawns[i].Y,
-                            world[selected.X, selected.Y].Spawns[i].Width,
-                            world[selected.X, selected.Y].Spawns[i].Height);
-                        if (r.Contains(e.Location))
+                        bool success = false;
+                        for (int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
                         {
-                            listBox1.SelectedIndex = i;
-                            numericUpDownX.Value = world[selected.X, selected.Y].Spawns[i].X;
-                            numericUpDownY.Value = world[selected.X, selected.Y].Spawns[i].Y;
-                            numericUpDownWidth.Value = world[selected.X, selected.Y].Spawns[i].Width;
-                            numericUpDownHeight.Value = world[selected.X, selected.Y].Spawns[i].Height;
-                            if (world[selected.X, selected.Y].Spawns[i] is ObjectSpawn)
+                            Rectangle r = new Rectangle(
+                                world[selected.X, selected.Y].Spawns[i].X,
+                                world[selected.X, selected.Y].Spawns[i].Y,
+                                world[selected.X, selected.Y].Spawns[i].Width,
+                                world[selected.X, selected.Y].Spawns[i].Height);
+                            if (r.Contains(e.Location))
                             {
-                                ObjectSpawn oSpawn = (ObjectSpawn)world[selected.X, selected.Y].Spawns[i];
-                                radioButtonObject.Checked = true;
-                                radioButtonEvent.Checked = false;
-                                groupBoxPosition.Enabled = true;
-                                randomizeCheck.Enabled = true;
-                                //comboBox1.DataSource = Enum.GetValues(typeof(ObjectSpawn.Object));
-                                groupBoxSize.Enabled = false;
-                                numericUpDown1.Enabled = true;
-                                label1.Text = "Object Type";
-                                numericUpDown1.Value = oSpawn.Amount;
-                                comboBox1.SelectedItem = oSpawn.ObjectType;
+                                listBox1.SelectedIndex = i;
+                                numericUpDownX.Value = world[selected.X, selected.Y].Spawns[i].X;
+                                numericUpDownY.Value = world[selected.X, selected.Y].Spawns[i].Y;
+                                numericUpDownWidth.Value = world[selected.X, selected.Y].Spawns[i].Width;
+                                numericUpDownHeight.Value = world[selected.X, selected.Y].Spawns[i].Height;
+                                if (world[selected.X, selected.Y].Spawns[i] is ObjectSpawn)
+                                {
+                                    ObjectSpawn oSpawn = (ObjectSpawn)world[selected.X, selected.Y].Spawns[i];
+                                    numericUpDown1.Value = oSpawn.Amount;
+                                    comboBox1.SelectedItem = oSpawn.ObjectType;
+                                    randomizeCheck.Checked = oSpawn.Randomized;
+                                }
+                                selectedSpawn = world[selected.X, selected.Y].Spawns[i];
+                                success = true;
                             }
-                            else if (world[selected.X, selected.Y].Spawns[i] is EventSpawn)
+                        }
+                        if(!success)
+                        {
+                            selectedSpawn = new Spawn();
+                            numericUpDownX.Value = e.X - offset.X;
+                            numericUpDownY.Value = e.Y - offset.Y;
+                            listBox1.SelectedIndex = -1;
+                        }
+                    }
+
+                    else if(radioButtonEvent.Checked == true)
+                    {
+                        bool success = false;
+                        for(int i = 0; i < events.Count; i++)
+                        {
+                            Rectangle r = new Rectangle(
+                                events[i].X, events[i].Y,
+                                events[i].Width, events[i].Height);
+                            if(r.Contains(e.Location))
                             {
-                                EventSpawn eSpawn = (EventSpawn)world[selected.X, selected.Y].Spawns[i];
-                                radioButtonEvent.Checked = true;
-                                radioButtonObject.Checked = false;
-                                groupBoxPosition.Enabled = false;
-                                randomizeCheck.Enabled = false;
-                                //comboBox1.DataSource = Enum.GetValues(typeof(EventSpawn.Event));
-                                groupBoxSize.Enabled = true;
-                                numericUpDown1.Enabled = false;
-                                //label1.Text = "Event Type";
-                                //comboBox1.SelectedItem = eSpawn.EventType;
+                                listBox2.SelectedIndex = i;
+                                numericUpDownEventX.Value = r.X;
+                                numericUpDownEventY.Value = r.Y;
+                                numericUpDownEventWidth.Value = r.Width;
+                                numericUpDownEventHeight.Value = r.Height;
+                                selectedSpawn = events[i];
+                                comboBox2.SelectedItem = events[i].EventType;
+                                success = true;
+                                break;
                             }
+                        }
+                        if(!success)
+                        {
+                            selectedSpawn = new EventSpawn(Rectangle.Empty, "");
+                            listBox2.SelectedIndex = -1;
                         }
                     }
                 }
@@ -440,6 +437,7 @@ namespace Editor
                     if (!success)
                     {
                         selectedCollisionRect = Rectangle.Empty;
+                        listBox1.SelectedIndex = -1;
 
                     }
                 }
@@ -449,21 +447,18 @@ namespace Editor
             {
                 if (radioButtonObject.Checked == true && collisionCheck.Checked == false)
                 {
-                    Spawn spawn = new ObjectSpawn();
-                    if (spawn is ObjectSpawn)
-                    {
-                        ObjectSpawn oSpawn = new ObjectSpawn();
-                        oSpawn.ObjectType = comboBox1.SelectedItem.ToString();
-                        oSpawn.Amount = (int)numericUpDown1.Value;
-                        spawn = oSpawn;
-                    }
+                    ObjectSpawn spawn = new ObjectSpawn();
+                    spawn.ObjectType = comboBox1.SelectedItem.ToString();
+                    spawn.Amount = (int)numericUpDown1.Value;
+                    spawn.Randomized = randomizeCheck.Checked;
                     spawn.X = e.X - offset.X;
                     spawn.Y = e.Y - offset.Y;
                     spawn.Width = 20;
                     spawn.Height = 20;
-                    listBox1.Items.Add(spawn);
-                    listBox1.SelectedIndex = world[selected.X, selected.Y].Spawns.Count - 1;
                     world[selected.X, selected.Y].Spawns.Add(spawn);
+                    listBox1.DataSource = null;
+                    listBox1.DataSource = world[selected.X, selected.Y].Spawns;
+                    listBox1.SelectedIndex = world[selected.X, selected.Y].Spawns.Count - 1;
                 }
                 else if (radioButtonEvent.Checked == true && collisionCheck.Checked == false)
                 {
@@ -473,11 +468,6 @@ namespace Editor
                     r.Width = (int)numericUpDownEventWidth.Value;
                     r.Height = (int)numericUpDownEventHeight.Value;
                     EventSpawn eSpawn = new EventSpawn(r, comboBox2.SelectedItem.ToString());
-                    //eSpawn.EventType = comboBox2.SelectedItem.ToString();
-                    //eSpawn.Width = (int)numericUpDownWidth.Value;
-                    //eSpawn.Height = (int)numericUpDownHeight.Value;
-                    //eSpawn.X = e.X - offset.X;
-                    //eSpawn.Y = e.Y - offset.Y;
                     events.Add(eSpawn);
                     listBox2.DataSource = null;
                     listBox2.DataSource = events; // FIX: NOT WORKING ON RIGHT CLICK SINCE DRAWING IS FLAGGED
@@ -565,40 +555,48 @@ namespace Editor
             //Spawn spawn = new Spawn();
             if (radioButtonObject.Checked == true)
             {
-                Spawn spawn = new ObjectSpawn();
-                if (spawn is ObjectSpawn)
-                {
-                    ObjectSpawn oSpawn = new ObjectSpawn();
-                    oSpawn.ObjectType = comboBox1.SelectedItem.ToString();
-                    oSpawn.Amount = (int)numericUpDown1.Value;
-                    spawn = oSpawn;
-                    // for now - needs to be updated with object sprites.
-                    spawn.Width = 20;
-                    spawn.Height = 20;
-                }
-                if (randomizeCheck.Checked == true)
-                {
-                    spawn.X = -1;
-                    spawn.Y = -1;
-                }
-                else
-                {
-                    spawn.X = (int)numericUpDownX.Value;
-                    spawn.Y = (int)numericUpDownY.Value;
-                }
-                listBox1.Items.Add(spawn);
+                ObjectSpawn spawn = new ObjectSpawn();
+                spawn.ObjectType = comboBox1.SelectedItem.ToString();
+                spawn.Amount = (int)numericUpDown1.Value;
+                spawn.Randomized = randomizeCheck.Checked;
+                // for now - needs to be updated with object sprites.
+                spawn.Width = 20;
+                spawn.Height = 20;
+
+                
+                spawn.X = (int)numericUpDownX.Value;
+                spawn.Y = (int)numericUpDownY.Value;
+                
                 world[selected.X, selected.Y].Spawns.Add(spawn);
+                listBox1.DataSource = null;
+                listBox1.DataSource = world[selected.X, selected.Y].Spawns;
             }
 
         }
 
         private void removeEntity_Click(object sender, EventArgs e)
         {
+            if(collisionCheck.Checked == true)
+            {
+                if(selectedCollisionRect != Rectangle.Empty)
+                {
+                    for(int i = 0; i < collisionRects.Count; i++)
+                    {
+                        if(selectedCollisionRect == collisionRects[i])
+                        {
+                            collisionRects.RemoveAt(i);
+                            selectedCollisionRect = Rectangle.Empty;
+                            return;
+                        }
+                    }
+                }
+            }
             if (listBox1.SelectedIndex != -1)
             {
                 world[selected.X, selected.Y].Spawns.RemoveAt(listBox1.SelectedIndex);
-                listBox1.Items.RemoveAt(listBox1.SelectedIndex);
-                listBox1.Update();
+                listBox1.DataSource = null;
+                listBox1.DataSource = world[selected.X, selected.Y].Spawns;
+                selectedSpawn = new Spawn();
             }
         }
 
@@ -614,12 +612,29 @@ namespace Editor
 
         private void randomizeCheck_CheckedChanged(object sender, EventArgs e)
         {
-            if (randomizeCheck.Checked == true)
+            if(radioButtonObject.Checked && selectedSpawn != null)
             {
-                groupBoxPosition.Enabled = false;
+                for(int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
+                {
+                    if(selectedSpawn == world[selected.X, selected.Y].Spawns[i])
+                    {
+                        ObjectSpawn oSpawn = new ObjectSpawn();
+                        oSpawn.Amount = (int)numericUpDown1.Value;
+                        oSpawn.X = selectedSpawn.X;
+                        oSpawn.Y = selectedSpawn.Y;
+                        oSpawn.Width = selectedSpawn.Width;
+                        oSpawn.Height = selectedSpawn.Height;
+                        oSpawn.ObjectType = comboBox1.SelectedItem.ToString();
+                        oSpawn.Randomized = randomizeCheck.Checked;
+                        selectedSpawn = oSpawn;
+                        world[selected.X, selected.Y].Spawns[i] = (ObjectSpawn)selectedSpawn;
+                        listBox1.DataSource = null;
+                        listBox1.DataSource = world[selected.X, selected.Y].Spawns;
+                        listBox1.SelectedIndex = i;
+                        break;
+                    }
+                }
             }
-            else
-                groupBoxPosition.Enabled = true;
         }
 
         private void radioButtonGenerated_Click(object sender, EventArgs e)
@@ -641,7 +656,7 @@ namespace Editor
                 comboBox1.Enabled = false;
                 numericUpDown1.Enabled = false;
                 addEntity.Enabled = false;
-                removeEntity.Enabled = false;
+                //removeEntity.Enabled = false;
                 radioButtonEvent.Enabled = false;
                 radioButtonObject.Enabled = false;
                 numericUpDownWidth.Maximum = 1000;
@@ -681,6 +696,22 @@ namespace Editor
                     }
                 }
             }
+
+            else
+            {
+                if(selectedSpawn != null)
+                {
+                    for(int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
+                    {
+                        if(selectedSpawn == world[selected.X, selected.Y].Spawns[i])
+                        {
+                            selectedSpawn.X = (int)numericUpDownX.Value;
+                            world[selected.X, selected.Y].Spawns[i] = (ObjectSpawn)selectedSpawn;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         private void numericUpDownY_ValueChanged(object sender, EventArgs e)
@@ -695,6 +726,21 @@ namespace Editor
                         {
                             selectedCollisionRect.Y = (int)numericUpDownY.Value;
                             collisionRects[i] = selectedCollisionRect;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (selectedSpawn != null)
+                {
+                    for (int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
+                    {
+                        if (selectedSpawn == world[selected.X, selected.Y].Spawns[i])
+                        {
+                            selectedSpawn.Y = (int)numericUpDownY.Value;
+                            world[selected.X, selected.Y].Spawns[i] = (ObjectSpawn)selectedSpawn;
                             break;
                         }
                     }
@@ -719,6 +765,21 @@ namespace Editor
                     }
                 }
             }
+            else
+            {
+                if (selectedSpawn != null)
+                {
+                    for (int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
+                    {
+                        if (selectedSpawn == world[selected.X, selected.Y].Spawns[i])
+                        {
+                            selectedSpawn.Width = (int)numericUpDownWidth.Value;
+                            world[selected.X, selected.Y].Spawns[i] = (ObjectSpawn)selectedSpawn;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         private void numericUpDownHeight_ValueChanged(object sender, EventArgs e)
@@ -733,6 +794,21 @@ namespace Editor
                         {
                             selectedCollisionRect.Height = (int)numericUpDownHeight.Value;
                             collisionRects[i] = selectedCollisionRect;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (selectedSpawn != null)
+                {
+                    for (int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
+                    {
+                        if (selectedSpawn == world[selected.X, selected.Y].Spawns[i])
+                        {
+                            selectedSpawn.Height = (int)numericUpDownHeight.Value;
+                            world[selected.X, selected.Y].Spawns[i] = (ObjectSpawn)selectedSpawn;
                             break;
                         }
                     }
@@ -784,6 +860,280 @@ namespace Editor
             }
         }
 
+        private void numericUpDownEventX_ValueChanged(object sender, EventArgs e)
+        {
+            if (radioButtonEvent.Checked == true)
+            {
+                if (selectedSpawn != null)
+                {
+                    for (int i = 0; i < events.Count; i++)
+                    {
+                        if (events[i] == selectedSpawn)
+                        {
+                            selectedSpawn.X = (int)numericUpDownEventX.Value;
+                            events[i] = (EventSpawn)selectedSpawn;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void numericUpDownEventY_ValueChanged(object sender, EventArgs e)
+        {
+            if (radioButtonEvent.Checked == true)
+            {
+                if (selectedSpawn != null)
+                {
+                    for (int i = 0; i < events.Count; i++)
+                    {
+                        if (events[i] == selectedSpawn)
+                        {
+                            selectedSpawn.Y = (int)numericUpDownEventY.Value;
+                            events[i] = (EventSpawn)selectedSpawn;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void numericUpDownEventWidth_ValueChanged(object sender, EventArgs e)
+        {
+            if (radioButtonEvent.Checked == true)
+            {
+                if (selectedSpawn != null)
+                {
+                    for (int i = 0; i < events.Count; i++)
+                    {
+                        if (events[i] == selectedSpawn)
+                        {
+                            selectedSpawn.Width = (int)numericUpDownEventWidth.Value;
+                            events[i] = (EventSpawn)selectedSpawn;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void numericUpDownEventHeight_ValueChanged(object sender, EventArgs e)
+        {
+            if (radioButtonEvent.Checked == true)
+            {
+                if (selectedSpawn != null)
+                {
+                    for (int i = 0; i < events.Count; i++)
+                    {
+                        if (events[i] == selectedSpawn)
+                        {
+                            selectedSpawn.Height = (int)numericUpDownEventHeight.Value;
+                            events[i] = (EventSpawn)selectedSpawn;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void eventRemove_Click(object sender, EventArgs e)
+        {
+            if(listBox2.SelectedIndex != -1)
+            {
+                events.RemoveAt(listBox2.SelectedIndex);
+                listBox2.DataSource = null;
+                listBox2.DataSource = events;
+                selectedSpawn = new Spawn();
+            }
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            if(radioButtonObject.Checked == true)
+            {
+                if(selectedSpawn != null)
+                {
+                    for(int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
+                    {
+                        if(world[selected.X, selected.Y].Spawns[i] == selectedSpawn)
+                        {
+                            ObjectSpawn oSpawn = new ObjectSpawn();
+                            oSpawn.Amount = (int)numericUpDown1.Value;
+                            oSpawn.X = selectedSpawn.X;
+                            oSpawn.Y = selectedSpawn.Y;
+                            oSpawn.Width = selectedSpawn.Width;
+                            oSpawn.Height = selectedSpawn.Height;
+                            oSpawn.ObjectType = comboBox1.SelectedItem.ToString();
+                            oSpawn.Randomized = randomizeCheck.Checked;
+                            selectedSpawn = oSpawn;
+                            world[selected.X, selected.Y].Spawns[i] = (ObjectSpawn)selectedSpawn;
+                            listBox1.DataSource = null;
+                            listBox1.DataSource = world[selected.X, selected.Y].Spawns;
+                            listBox1.SelectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex != -1)
+            {
+                selectedSpawn = world[selected.X, selected.Y].Spawns[listBox1.SelectedIndex];
+            }
+        }
+
+        private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if(selectedSpawn != null)
+            {
+                for (int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
+                {
+                    if (world[selected.X, selected.Y].Spawns[i] == selectedSpawn)
+                    {
+                        ObjectSpawn oSpawn = new ObjectSpawn();
+                        oSpawn.Amount = (int)numericUpDown1.Value;
+                        oSpawn.X = selectedSpawn.X;
+                        oSpawn.Y = selectedSpawn.Y;
+                        oSpawn.Width = selectedSpawn.Width;
+                        oSpawn.Height = selectedSpawn.Height;
+                        oSpawn.ObjectType = comboBox1.SelectedItem.ToString();
+                        oSpawn.Randomized = randomizeCheck.Checked;
+                        selectedSpawn = oSpawn;
+                        world[selected.X, selected.Y].Spawns[i] = (ObjectSpawn)selectedSpawn;
+                        listBox1.DataSource = null;
+                        listBox1.DataSource = world[selected.X, selected.Y].Spawns;
+                        listBox1.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void newWorldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            
+
+            // reset controls
+            quadWidth.Value = quadSize.Width;
+            quadHeight.Value = quadSize.Height;
+            numRows.Value = worldSize.Height;
+            numCols.Value = worldSize.Width;
+            listBox1.DataSource = null;
+            numericUpDown1.Value = 1;
+            numericUpDownX.Value = 0;
+            numericUpDownY.Value = 0;
+            numericUpDownWidth.Value = 20;
+            numericUpDownHeight.Value = 20;
+            randomizeCheck.Checked = false;
+            listBox2.DataSource = null;
+            numericUpDownEventX.Value = 0;
+            numericUpDownEventY.Value = 0;
+            numericUpDownEventWidth.Value = 20;
+            numericUpDownEventHeight.Value = 20;
+
+            worldSize = new Size(4, 4);
+            world = new Quad[4, 4];
+            quadSize = new Size(100, 100);
+            selected = new Quad(0, 0);
+
+            selectedSpawn = new Spawn();
+            selectedCollisionRect = new Rectangle();
+            collisionRects = new List<Rectangle>();
+
+            events = new List<EventSpawn>();
+
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 4; j++)
+                {
+                    world[i, j] = new Quad();
+                    world[i, j].X = i;
+                    world[i, j].Y = j;
+                    world[i, j].Spawns.Clear();
+                }
+        }
+
+        public void saveWorldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.DefaultExt = "xml";
+            dlg.Filter = "XML File (*.xml)|*.xml";
+            dlg.FilterIndex = 0;
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.ConformanceLevel = ConformanceLevel.Document;
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(dlg.FileName, settings))
+                {
+                    writer.WriteStartDocument();
+                    writer.WriteStartElement("Level");
+                    writer.WriteStartElement("Details");
+                    writer.WriteAttributeString("width", worldSize.Width.ToString());
+                    writer.WriteAttributeString("height", worldSize.Height.ToString());
+                    writer.WriteAttributeString("quadWidth", quadSize.Width.ToString());
+                    writer.WriteAttributeString("quadHeight", quadSize.Height.ToString());
+                    writer.WriteAttributeString("events", events.Count.ToString());
+                    writer.WriteAttributeString("collision", collisionRects.Count.ToString());
+
+                    // loop through all the quads
+                    for (int i = 0; i < worldSize.Width; i++)
+                        for (int j = 0; j < worldSize.Height; j++)
+                        {
+                            writer.WriteStartElement("Quad");
+                            writer.WriteAttributeString("x", world[i, j].X.ToString());
+                            writer.WriteAttributeString("y", world[i, j].Y.ToString());
+                            writer.WriteAttributeString("possibleTypes", world[i, j].Spawns.Count.ToString());
+
+                            // loop through all the spawns
+                            for (int k = 0; k < world[i, j].Spawns.Count; k++)
+                            {
+                                writer.WriteStartElement("Type");
+                                writer.WriteAttributeString("type", world[i, j].Spawns[k].ObjectType.ToUpper());
+                                writer.WriteAttributeString("amount", world[i, j].Spawns[k].Amount.ToString());
+                                writer.WriteAttributeString("randomized", world[i, j].Spawns[k].Randomized.ToString());
+                                writer.WriteAttributeString("x", world[i, j].Spawns[k].X.ToString());
+                                writer.WriteAttributeString("y", world[i, j].Spawns[k].Y.ToString());
+                                writer.WriteEndElement();
+                            }
+
+                            writer.WriteEndElement();
+                        }
+                    
+                    // loops through all the events
+                    for (int i = 0; i < events.Count; i++)
+                    {
+                        writer.WriteStartElement("Event");
+                        writer.WriteAttributeString("type", events[i].EventType.ToUpper());
+                        writer.WriteAttributeString("x", events[i].X.ToString());
+                        writer.WriteAttributeString("y", events[i].Y.ToString());
+                        writer.WriteAttributeString("width", events[i].Width.ToString());
+                        writer.WriteAttributeString("height", events[i].Height.ToString());
+                        writer.WriteEndElement();
+                    }
+
+                    // loop through all the collision rects
+                    for (int i = 0; i < collisionRects.Count; i++ )
+                    {
+                        writer.WriteStartElement("Collision");
+                        writer.WriteAttributeString("x", collisionRects[i].X.ToString());
+                        writer.WriteAttributeString("y", collisionRects[i].Y.ToString());
+                        writer.WriteAttributeString("width", collisionRects[i].Width.ToString());
+                        writer.WriteAttributeString("height", collisionRects[i].Height.ToString());
+                        writer.WriteEndElement();
+                    }
+
+                    writer.WriteEndElement();
+                    writer.WriteEndElement();
+                    writer.WriteEndDocument();
+                }
+            }
+        }
 
     }
 }

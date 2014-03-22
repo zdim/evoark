@@ -25,6 +25,7 @@ class IGameState;
 #include "../SGD Wrappers/SGD_Handle.h"
 //#include <deque>
 #include <vector>
+#include "../BitmapFont/BitmapFont.h"
 
 /**************************************************************/
 // Game class
@@ -72,6 +73,9 @@ public:
 	bool PushState(IGameState* newState);
 	void PopState();
 
+	/**********************************************************/
+	// Game Font
+	Fnt				Font;
 private:
 	/**********************************************************/
 	// Singleton Object:
@@ -101,9 +105,6 @@ private:
 	int						m_nScreenWidth = 1;
 	int						m_nScreenHeight = 1;
 
-	/**********************************************************/
-	// Game Font
-	BitmapFont*				m_pFont = nullptr;
 
 
 	/**********************************************************/

@@ -219,6 +219,7 @@ LRESULT CALLBACK WindowProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 		break;
 	
 	case WM_CLOSE:			// Window closed
+		//Game::GetInstance()->Terminate();
 		DestroyWindow( hWnd );	// completely destroy the window
 		break;
 

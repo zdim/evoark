@@ -1,5 +1,7 @@
 #include "Game.h"
 #include "GameState.h"
+#include "MainMenuState.h"
+#include "PauseState.h"
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../SGD Wrappers/SGD_InputManager.h"
 #include <ctime>
@@ -71,12 +73,18 @@ bool	CTestLevelState::Input(void)
 	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::R))
 	{
 		Game::GetInstance()->PopState();
+		return true;
 	}
 	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::Q))
 	{
 		Game::GetInstance()->PopState();
 		Game::GetInstance()->PopState();
 		return false;
+	}
+	if (input->IsKeyPressed(SGD::Key::Escape))
+	{
+		Game::GetInstance()->PushState(CPauseState::GetInstance());
+		return true;
 	}
 	return true;
 }
@@ -104,6 +112,7 @@ void	CTestLevelState::Render(void)
 		}
 	}
 
+	Game::GetInstance()->Font.Write(SGD::Point{150,150},"testing");
 	pSystem.Render();
 
 	EntityManager->Render();
