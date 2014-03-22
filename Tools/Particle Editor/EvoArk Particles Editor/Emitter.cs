@@ -115,6 +115,7 @@ namespace EvoArk_Particles_Editor
         public Emitter(
                  Flyweight pData,
                  int Shape,
+                 Point emitSize,
                  Point ePosition,
                  int NumParticles,
                  float SpawnRate,
@@ -128,24 +129,8 @@ namespace EvoArk_Particles_Editor
             particleData = pData;
             m_nShape = Shape;
 
-            switch (Shape)
-            {
-                case 1:
-                    emitterSize = new Point(1, 1);
-                    break;
-                case 2:
-                    emitterSize = new Point(100, 1);
-                    break;
-                case 3:
-                    emitterSize = new Point(100, 100);
-                    break;
-                case 4:
-                    emitterSize = new Point(100, 200);
-                    m_fRadius = emitterSize.X / 2;
-                    break; 
-            }
-
             emitterPosition = ePosition;
+            emitterSize = emitSize;
             m_nNumParticles = NumParticles;
             m_fSpawnRate = SpawnRate;
             m_fTimeFromLastSpawn = TimeFromLastSpawn;
