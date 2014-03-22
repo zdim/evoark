@@ -78,7 +78,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BitmapFont\BitmapFont.h" />
-    <ClInclude Include="Button.h" />
     <ClInclude Include="Entities\Asteroid.h" />
     <ClInclude Include="Entities\Barrier.h" />
     <ClInclude Include="Entities\Entity.h" />
@@ -133,6 +132,7 @@
     <ClInclude Include="Graphics\Particles\Flyweight.h" />
     <ClInclude Include="Graphics\Particles\Particle.h" />
     <ClInclude Include="Graphics\Particles\ParticleSystem.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Message System\CreateEntityMessage.h" />
     <ClInclude Include="Message System\CreateLaserMessage.h" />
     <ClInclude Include="Message System\DestroyEntityMessage.h" />
@@ -158,7 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BitmapFont\BitmapFont.cpp" />
-    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Entities\Asteroid.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\EntityManager.cpp" />
@@ -210,6 +209,7 @@
     <ClCompile Include="Graphics\Particles\Flyweight.cpp" />
     <ClCompile Include="Graphics\Particles\Particle.cpp" />
     <ClCompile Include="Graphics\Particles\ParticleSystem.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Message System\CreateEntityMessage.cpp" />
     <ClCompile Include="Message System\CreateLaserMessage.cpp" />
     <ClCompile Include="Message System\DestroyEntityMessage.cpp" />

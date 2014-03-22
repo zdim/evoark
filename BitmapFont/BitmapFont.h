@@ -24,4 +24,6 @@ public:
 	void Unload();
 	SGD::Size ComputeStringSpace(std::string str); //Returns the amount of space an entire string will occupy - Usefull for buttons
 	void Write(SGD::Point pos, std::string str);
+	void WriteCenter(SGD::Rectangle box, std::string str);
+
 };

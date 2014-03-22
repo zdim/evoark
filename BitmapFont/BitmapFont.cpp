@@ -47,6 +47,24 @@ void		Fnt::Write(SGD::Point pos, std::string str)
 	//graphics->DrawTexture(image, pos);
 }
 
+void Fnt::WriteCenter(SGD::Rectangle box, std::string str)
+{
+	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
+	SGD::Size stringSize = ComputeStringSpace(str);
+	SGD::Point pos;
+	pos.x = (box.ComputeWidth() - stringSize.width)/2 + box.left;
+	pos.y = (box.ComputeHeight() - stringSize.height)/2 + box.top;
+	for (unsigned int i = 0; i < str.length(); i++)
+	{
+		FntChar ch = characters[str[i]];
+		float oldY = pos.y;
+		pos.y += stringSize.height - ch.size.height;
+		graphics->DrawTextureSection(image, pos, SGD::Rectangle(ch.imagePosition, ch.size));
+		pos.x += ch.size.width;
+		pos.y = oldY;
+	}
+}
+
 void Fnt::procElement(TiXmlElement* elem)
 {
 	if (strcmp(elem->Value(),"char") == 0)

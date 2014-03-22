@@ -55,6 +55,9 @@
     <Filter Include="BitmapFont">
       <UniqueIdentifier>{6f5fe81d-484a-4efe-a589-ee46a07957c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Menu">
+      <UniqueIdentifier>{66008d1c-0100-41d2-925a-78bd38c61614}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -246,50 +249,50 @@
     <ClInclude Include="Entities\Leader.h">
       <Filter>Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entities\Asteroid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entities\Barrier.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entities\Planet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entities\Projectiles\Laser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Event System\EventID.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Event System\IListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStates\GameplayState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message System\CreateEntityMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message System\CreateLaserMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message System\DestroyEntityMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message System\MessageID.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SGD Wrappers\SGD_Message.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SGD Wrappers\SGD_MessageManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BitmapFont\BitmapFont.h">
       <Filter>BitmapFont</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Asteroid.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Barrier.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Message System\CreateEntityMessage.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
+    <ClInclude Include="Message System\CreateLaserMessage.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
+    <ClInclude Include="Message System\DestroyEntityMessage.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
+    <ClInclude Include="Event System\EventID.h">
+      <Filter>Event System</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStates\GameplayState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Event System\IListener.h">
+      <Filter>Event System</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Projectiles\Laser.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Message System\MessageID.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Planet.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="SGD Wrappers\SGD_Message.h">
+      <Filter>SGDWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="SGD Wrappers\SGD_MessageManager.h">
+      <Filter>SGDWrappers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -461,38 +464,38 @@
     <ClCompile Include="Entities\Leader.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entities\Asteroid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entities\Planet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entities\Projectiles\Laser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStates\GameplayState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Message System\CreateEntityMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Message System\CreateLaserMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Message System\DestroyEntityMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SGD Wrappers\SGD_Message.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SGD Wrappers\SGD_MessageManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BitmapFont\BitmapFont.cpp">
       <Filter>BitmapFont</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Asteroid.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Message System\CreateEntityMessage.cpp">
+      <Filter>Message System</Filter>
+    </ClCompile>
+    <ClCompile Include="Message System\CreateLaserMessage.cpp">
+      <Filter>Message System</Filter>
+    </ClCompile>
+    <ClCompile Include="Message System\DestroyEntityMessage.cpp">
+      <Filter>Message System</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStates\GameplayState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Projectiles\Laser.cpp">
+      <Filter>Entities\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Planet.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="SGD Wrappers\SGD_Message.cpp">
+      <Filter>SGDWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="SGD Wrappers\SGD_MessageManager.cpp">
+      <Filter>SGDWrappers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
