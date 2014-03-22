@@ -548,7 +548,9 @@ namespace EvoArk_Particles_Editor
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.DefaultExt = "xml";
             dlg.Filter = "Xml Files (*.xml)|*.xml|All Files (*.*)|*.*";
+            dlg.InitialDirectory = System.IO.Path.GetFullPath(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\..\\Resources\\XML\\ParticleEffects");
             dlg.FilterIndex = 1;
+            
 
             if (DialogResult.OK == dlg.ShowDialog())
             {
@@ -674,7 +676,9 @@ namespace EvoArk_Particles_Editor
             opn.DefaultExt = "png";
             opn.Filter = "Image files (*.png;*jpg;*bmp;)|*.png;*jpg;*bmp;";
             //opn.InitialDirectory = "../../../Resources/Graphics/";
-            opn.InitialDirectory = System.IO.Path.GetFullPath(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\..\\Resources\\Graphics");
+            opn.InitialDirectory = System.IO.Path.GetFullPath(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\..\\Resources\\Graphics\\Particles");
+            
+            
 
             if (DialogResult.OK == opn.ShowDialog())
             {
