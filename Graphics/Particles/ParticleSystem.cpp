@@ -6,7 +6,7 @@
 
 CParticleSystem::CParticleSystem()
 {
-	numEmitters = 1;
+	numEmitters = 0;
 }
 
 
@@ -16,33 +16,44 @@ CParticleSystem::~CParticleSystem()
 
 void CParticleSystem::Init()
 {
-	LoadEffect();	
+	std::string efName = "3.xml";
+	LoadEffect(efName);
+	std::string efName2 = "4.xml";
+	LoadEffect(efName2);
 
-	particleEffect[1]->Initialize();
+	for (int i = 1; i < numEmitters + 1; i++)
+	particleEffect[i]->Initialize();
 }
 
 void CParticleSystem::Update(float dt)
 {
-
-	particleEffect[1]->Update(dt);
+	for (int i = 1; i < numEmitters + 1; i++)
+	particleEffect[i]->Update(dt);
 }
 
 void CParticleSystem::Render()
 {
-
-	particleEffect[1]->Render();
+	for (int i = 1; i < numEmitters + 1; i++)
+	particleEffect[i]->Render();
 }
 
 
-void CParticleSystem::LoadEffect()
+void CParticleSystem::LoadEffect(std::string effectName)
 {
 	TiXmlDocument doc;
-	doc.LoadFile("Resources/XML/ParticleEffects/3.xml");
+	std::string filePath = "Resources/XML/ParticleEffects/";
+	filePath += effectName;
+
+	char * effectFile = new char[filePath.size() + 1];
+	std::copy(filePath.begin(), filePath.end(), effectFile);
+	effectFile[filePath.size()] = '\0';
+
+	doc.LoadFile(effectFile);
 	TiXmlElement* pRoot = doc.RootElement();
 	
-
+	int trash;
 	TiXmlElement* pEmittor = pRoot->FirstChildElement();
-	pEmittor->Attribute("Emittor", &numEmitters);
+	pEmittor->Attribute("Emittor", &trash);
 
 	int m_nNumParticles;
 	pEmittor->Attribute("NumOfParticles", &m_nNumParticles);
@@ -165,9 +176,9 @@ void CParticleSystem::LoadEffect()
 	m_fInertia,
 	m_fRotationSpeed);
 
-
+	numEmitters++;
 	
-	particleEffect[1] = new CEmitter(eData, emitterSize, m_nShape, emitterPosition, m_nNumParticles, m_fSpawnRate, m_fTimeFromLastSpawn, m_bEmitWay, m_fEmitTime);
+	particleEffect[numEmitters] = new CEmitter(eData, emitterSize, m_nShape, emitterPosition, m_nNumParticles, m_fSpawnRate, m_fTimeFromLastSpawn, m_bEmitWay, m_fEmitTime);
 	
 
 }
