@@ -23,7 +23,8 @@ class IGameState;
 #include "../SGD Wrappers/SGD_Declarations.h"
 #include "../SGD Wrappers/SGD_Geometry.h"
 #include "../SGD Wrappers/SGD_Handle.h"
-
+//#include <deque>
+#include <vector>
 
 /**************************************************************/
 // Game class
@@ -66,7 +67,10 @@ public:
 	/**********************************************************/
 	// Game State Machine:
 	//	- can ONLY be called by the state's Input, Update, or Render methods!!!
-	void ChangeState(IGameState* pNewState);
+	//void ChangeState(IGameState* pNewState);
+	//Stackbased - Needs Push and Pop
+	bool PushState(IGameState* newState);
+	void PopState();
 
 private:
 	/**********************************************************/
@@ -104,7 +108,7 @@ private:
 
 	/**********************************************************/
 	// Current Game State
-	IGameState*				m_pCurrState = nullptr;
+	std::vector<IGameState*>	m_qStates;
 
 
 	/**********************************************************/

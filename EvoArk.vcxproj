@@ -77,6 +77,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Entities\Asteroid.h" />
     <ClInclude Include="Entities\Barrier.h" />
     <ClInclude Include="Entities\Entity.h" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Event System\IListener.h" />
     <ClInclude Include="GameStates\CreditsState.h" />
     <ClInclude Include="GameStates\Game.h" />
+    <ClInclude Include="GameStates\GameplayState.h" />
     <ClInclude Include="GameStates\GameState.h" />
     <ClInclude Include="GameStates\IGameState.h" />
     <ClInclude Include="GameStates\LevelStates\FinalLevelState.h" />
@@ -154,6 +156,7 @@
     <ClInclude Include="WinMain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Entities\Asteroid.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\EntityManager.cpp" />
@@ -189,6 +192,7 @@
     <ClCompile Include="Event System\EventManager.cpp" />
     <ClCompile Include="GameStates\CreditsState.cpp" />
     <ClCompile Include="GameStates\Game.cpp" />
+    <ClCompile Include="GameStates\GameplayState.cpp" />
     <ClCompile Include="GameStates\GameState.cpp" />
     <ClCompile Include="GameStates\IGameState.cpp" />
     <ClCompile Include="GameStates\LevelStates\FinalLevelState.cpp" />

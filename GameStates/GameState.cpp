@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "GameState.h"
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../SGD Wrappers/SGD_InputManager.h"
 #include <ctime>
 #include <stdlib.h>
 #include "../TinyXML/tinyxml.h"
@@ -11,22 +12,22 @@
 #include "../Message System/CreateEntityMessage.h"
 #include "../Message System/CreateLaserMessage.h"
 
-CGameState::CGameState()
+CTestLevelState::CTestLevelState()
 {
 }
 
 
-CGameState::~CGameState()
+CTestLevelState::~CTestLevelState()
 {
 }
 
-CGameState* CGameState::GetInstance(void)
+CTestLevelState* CTestLevelState::GetInstance(void)
 {
-	static CGameState instance;
+	static CTestLevelState instance;
 	return &instance;
 }
 
-void	CGameState::Enter(void)
+void	CTestLevelState::Enter(void)
 {
 	srand((unsigned int)time(nullptr));
 	graphics = SGD::GraphicsManager::GetInstance();
@@ -56,19 +57,31 @@ void	CGameState::Enter(void)
 	
  } 
 
-void	CGameState::Exit(void)
+void	CTestLevelState::Exit(void)
 {
-
+	SGD::MessageManager::GetInstance()->Terminate();
+	SGD::MessageManager::GetInstance()->DeleteInstance();
 	delete EntityManager;
 	EntityManager = nullptr;
 }
 
-bool	CGameState::Input(void)
+bool	CTestLevelState::Input(void)
 {
+	SGD::InputManager* input = SGD::InputManager::GetInstance();
+	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::R))
+	{
+		Game::GetInstance()->PopState();
+	}
+	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::Q))
+	{
+		Game::GetInstance()->PopState();
+		Game::GetInstance()->PopState();
+		return false;
+	}
 	return true;
 }
 
-void	CGameState::Update(float dt)
+void	CTestLevelState::Update(float dt)
 {
 	EntityManager->Update(dt);
 
@@ -77,7 +90,7 @@ void	CGameState::Update(float dt)
 	SGD::MessageManager::GetInstance()->Update();
 }
 
-void	CGameState::Render(void)
+void	CTestLevelState::Render(void)
 {
 	graphics->DrawTexture(BackgroundImage, { 0, 0 });
 
@@ -96,7 +109,7 @@ void	CGameState::Render(void)
 	EntityManager->Render();
 }
 
-void	CGameState::Generate()
+void	CTestLevelState::Generate()
 {
 	if (LoadXMLLevel("Resources/XML/World/worldXML.xml"))
 	{
@@ -200,7 +213,7 @@ void	CGameState::Generate()
 	}
 
 
-bool CGameState::LoadXMLLevel(const char* pXMLFile)
+bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 {
 	TiXmlDocument doc(pXMLFile);
 	if (doc.LoadFile() == false)
@@ -272,7 +285,7 @@ bool CGameState::LoadXMLLevel(const char* pXMLFile)
 
 }
 
-void CGameState::MessageProc(const SGD::Message* msg)
+void CTestLevelState::MessageProc(const SGD::Message* msg)
 {
 	MessageID id = msg->GetMessageID();
 	switch (id)
@@ -289,7 +302,7 @@ void CGameState::MessageProc(const SGD::Message* msg)
 								   {
 									   tier = 3;
 								   }
-		CGameState::GetInstance()->EntityManager->SpawnProjectile(EntityType::Laser,lMsg->GetPosition(),lMsg->GetRotation(),lMsg->GetDamage(), tier);
+		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(EntityType::Laser,lMsg->GetPosition(),lMsg->GetRotation(),lMsg->GetDamage(), tier);
 	}
 	}
 }

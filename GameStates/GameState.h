@@ -15,11 +15,11 @@ class CEmitter;
 class CParticleSystem;
 
 
-class CGameState :
+class CTestLevelState :
 	public IGameState
 {
 public:
-	static CGameState* GetInstance(void);
+	static CTestLevelState* GetInstance(void);
 
 
 	virtual void	Enter(void)				override;
@@ -33,8 +33,8 @@ public:
 
 private:
 
-	CGameState();
-	virtual ~CGameState();
+	CTestLevelState();
+	virtual ~CTestLevelState();
 
 	int m_nScreenHeight = 0;
 	int m_nScreenWidth = 0;
