@@ -21,8 +21,7 @@ public:
 	void Init();
 	void Update(float dt);
 	void Render();
-	void LoadEffect();
-	void SaveEffect();
+	void LoadEffect(std::string effectName);
 
 };
 
