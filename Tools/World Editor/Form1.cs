@@ -285,6 +285,8 @@ namespace Editor
             quadSize = new Size(temp, quadSize.Height);
             numericUpDownX.Maximum = worldSize.Width * quadSize.Width;
             numericUpDownY.Maximum = worldSize.Height * quadSize.Height;
+            numericUpDownEventX.Maximum = quadSize.Width * worldSize.Width;
+            numericUpDownEventY.Maximum = quadSize.Height * worldSize.Height;
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
@@ -296,7 +298,8 @@ namespace Editor
             quadSize = new Size(quadSize.Width, temp);
             numericUpDownX.Maximum = worldSize.Width * quadSize.Width;
             numericUpDownY.Maximum = worldSize.Height * quadSize.Height;
-            panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
+            numericUpDownEventX.Maximum = quadSize.Width * worldSize.Width;
+            numericUpDownEventY.Maximum = quadSize.Height * worldSize.Height; panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
         }
@@ -321,6 +324,7 @@ namespace Editor
             worldSize = new Size(worldSize.Width, temp);
             world = newWorld;
             numericUpDownY.Maximum = quadSize.Height * temp;
+            numericUpDownEventY.Maximum = quadSize.Height * temp;
 
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
@@ -346,6 +350,7 @@ namespace Editor
             worldSize = new Size(temp, worldSize.Height);
             world = newWorld;
             numericUpDownX.Maximum = quadSize.Width * temp;
+            numericUpDownEventX.Maximum = quadSize.Width * temp;
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
@@ -1265,9 +1270,10 @@ namespace Editor
                                         worldObjects.Add(oSpawn.ObjectType);
                                     }
                                     read.ReadStartElement("Type");
-                                    read.ReadEndElement();
+                                    
                                 }
-
+                                if(numTypes > 0)
+                                    read.ReadEndElement();
                             }
 
                         for(int i = 0; i < numEvents; i++)
