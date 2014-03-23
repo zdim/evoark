@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Level>
+  <Details width="4" height="4" quadWidth="100" quadHeight="100" events="1" collision="0" background="">
+    <Quad x="0" y="0" possibleTypes="0" />
+    <Quad x="0" y="1" possibleTypes="0" />
+    <Quad x="0" y="2" possibleTypes="0" />
+    <Quad x="0" y="3" possibleTypes="0" />
+    <Quad x="1" y="0" possibleTypes="0" />
+    <Quad x="1" y="1" possibleTypes="0" />
+    <Quad x="1" y="2" possibleTypes="0" />
+    <Quad x="1" y="3" possibleTypes="0" />
+    <Quad x="2" y="0" possibleTypes="0" />
+    <Quad x="2" y="1" possibleTypes="0" />
+    <Quad x="2" y="2" possibleTypes="0" />
+    <Quad x="2" y="3" possibleTypes="0" />
+    <Quad x="3" y="0" possibleTypes="0" />
+    <Quad x="3" y="1" possibleTypes="0" />
+    <Quad x="3" y="2" possibleTypes="1">
+      <Type type="CUSTOM" amount="1" randomized="False" x="325" y="255" />
+    </Quad>
+    <Quad x="3" y="3" possibleTypes="0" />
+    <Event type="CCCC" x="59" y="157" width="149" height="178" />
+  </Details>
+</Level>

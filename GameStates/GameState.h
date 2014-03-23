@@ -47,7 +47,7 @@ private:
 	CCamera* cam;
 
 	// level creation
-	enum Objects { PLAYER, COPPERHEAD, COBRA, MAMBA, CORAL, MOCASSIN, ASTEROID, NONE, NUM_OBJECTS };
+	enum Objects { PLAYER, COPPERHEAD, COBRA, MAMBA, CORAL, MOCASSIN, ASTEROID, PLANET, HUMAN, NONE, NUM_OBJECTS };
 
 	struct Quadrant
 	{
@@ -56,6 +56,14 @@ private:
 		int possibleObjects;
 		Objects objType;
 		int objectAmount;
+		bool randomized;
+		SGD::Point pos = SGD::Point{ 0, 0 };
+	};
+
+	struct Event
+	{
+		SGD::Rectangle area = { 0, 0, 0, 0 };
+		std::string eType;
 	};
 
 	void		Generate();
@@ -69,8 +77,8 @@ private:
 	//QuadRow quadRow;
 	World world;
 	
-
-
+	std::vector<Event> events;
+	std::vector<SGD::Rectangle> collisionRects;
 
 	// xml test
 	bool	LoadXMLLevel(const char* pXMLFile);

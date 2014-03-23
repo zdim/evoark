@@ -33,7 +33,7 @@ void	CTestLevelState::Enter(void)
 {
 	srand((unsigned int)time(nullptr));
 	graphics = SGD::GraphicsManager::GetInstance();
-	BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
+	//BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
 
 	//JD's Test flock, ally and player
 	EntityManager = new CEntityManager();
@@ -124,41 +124,44 @@ void	CTestLevelState::Render(void)
 
 void	CTestLevelState::Generate()
 {
-	if (LoadXMLLevel("Resources/XML/World/worldXML.xml"))
+	if (LoadXMLLevel("Resources/XML/World/testEditor.xml"))
 	{
 		for (int i = 0; i < m_nNumQuadsWidth; i++)
 		{
 			QuadCol& col = world[i];
 			for (int j = 0; j < m_nNumQuadsHeight; j++)
 			{
-
-				float left = float(m_nQuadWidth * i + rand() % m_nQuadWidth);
-				float top = float(m_nQuadHeight * j + rand() % m_nQuadHeight);
-
+				
+				if (col[j].randomized)
+				{
+					col[j].pos.x = float(m_nQuadWidth * i + rand() % m_nQuadWidth);
+					col[j].pos.y = float(m_nQuadHeight * j + rand() % m_nQuadHeight);
+				}
 				switch (col[j].objType)
 				{
 				case PLAYER:
 					EntityManager->Spawn(EntityType::Player, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5))});
 					break;
 				case COPPERHEAD:
-					EntityManager->Spawn(EntityType::Copperhead, { left, top }, col[j].objectAmount);
+					EntityManager->Spawn(EntityType::Copperhead, col[j].pos, col[j].objectAmount);
 					break;
 				case COBRA:
-					EntityManager->Spawn(EntityType::Cobra, { left, top }, col[j].objectAmount);
+					EntityManager->Spawn(EntityType::Cobra, col[j].pos, col[j].objectAmount);
 					break;
 				case MAMBA:
-					EntityManager->Spawn(EntityType::Mamba, { left, top }, col[j].objectAmount);
+					EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount);
 					break;
 				case CORAL:
-					EntityManager->Spawn(EntityType::Coral, { left, top }, col[j].objectAmount);
+					//EntityManager->Spawn(EntityType::Coral, col[j].pos, col[j].objectAmount);
 					break;
 				case MOCASSIN:
-					EntityManager->Spawn(EntityType::Moccasin, { left, top }, col[j].objectAmount);
+					//EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, 1);
 					break;
 				case ASTEROID:
-					EntityManager->Spawn(EntityType::Asteroid, { left, top }, col[j].objectAmount);
+					EntityManager->Spawn(EntityType::Asteroid, col[j].pos, col[j].objectAmount);
 					break;
-
+				default:
+					break;
 				}
 			}
 		}
@@ -166,62 +169,6 @@ void	CTestLevelState::Generate()
 	else
 	{
 
-	//	//m_nQuadHeight = 300;
-	//	//m_nQuadWidth = 300;
-	//	// --------hardcoded for example----------
-	//	std::vector<std::string> tempNames;
-	//	std::string blue = "blue";
-	//	tempNames.push_back(blue);
-	//	std::string red = "red";
-	//	tempNames.push_back(red);
-	//	std::string white = "white";
-	//	tempNames.push_back(white);
-	//	std::string green = "green";
-	//	tempNames.push_back(green);
-	//	Quadrant grid[4][4];
-	//	for (int x = 0; x < 4; x++)
-	//	{
-	//		for (int y = 0; y < 4; y++)
-	//		{
-	//			Quadrant q;
-	//			q.x = x;
-	//			q.y = y;
-	//			q.objType = tempNames[rand() % 4];
-	//			q.objectAmount = rand() % 5;
-	//			grid[x][y] = q;
-	//		}
-	//	}
-	//	// --------------------------------------
-	//}
-	//for (int x = 0; x < 4; x++)
-	//{
-	//	for (int y = 0; y < 4; y++)
-	//	{
-	//		float left, top;
-	//		if (grid[x][y].objectType == white)
-	//		{
-	//			grid[x][y].objectAmount = 1;
-	//			left = float(m_nQuadWidth * x + (m_nQuadWidth * .5) - 10);
-	//			top = float(m_nQuadHeight * x + (m_nQuadHeight * .5) - 10);
-	//		}
-	//		else
-	//		{
-	//			left = float(m_nQuadWidth * x + rand() % m_nQuadWidth);
-	//			top = float(m_nQuadHeight * x + rand() % m_nQuadHeight);
-	//		}
-	//		enemy e;
-	//		e.pos = { left, top, left + 20, top + 20 };
-	//		e.type = grid[x][y].objectType;
-	//		if (grid[x][y].objectType == white)
-	//			e.col = { 255, 255, 255 };
-	//		if (grid[x][y].objectType == green)
-	//			e.col = { 0, 255, 0 };
-	//		if (grid[x][y].objectType == blue)
-	//			e.col = { 0, 0, 255 };
-	//		if (grid[x][y].objectType == red)
-	//			e.col = { 255, 0, 0 };
-
-	//		enemies.push_back(e);
 		}
 	}
 
@@ -241,57 +188,132 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 	pDetails->Attribute("height", &m_nNumQuadsHeight);
 	pDetails->Attribute("quadWidth", &m_nQuadWidth);
 	pDetails->Attribute("quadHeight", &m_nQuadHeight);
+
+	// get number of events
+	int numEvents;
+	pDetails->Attribute("events", &numEvents);
+	events.resize(numEvents);
+
+	// get number of collision rects
+	int numCollision;
+	pDetails->Attribute("collision", &numCollision);
+	collisionRects.resize(numCollision);
+
+	// get background image path
+	std::string background;
+	background = pDetails->Attribute("background");
+	if (background.length() > 0)
+	{
+		background = "Resources/Graphics/" + background;
+		BackgroundImage = graphics->LoadTexture(background.c_str());
+	}
+
 	world.resize(m_nNumQuadsWidth);
 	for (unsigned int size = 0; size < world.size(); size++)
 		world[size].resize(m_nNumQuadsHeight);
 
 	TiXmlElement* pQuad = pDetails->FirstChildElement("Quad");
 
-	while (pQuad != nullptr)
+	for (int quadCount = 0; quadCount < m_nNumQuadsHeight * m_nNumQuadsWidth; quadCount++)
 	{
 		Quadrant q;
 		pQuad->Attribute("x", &q.x);
 		pQuad->Attribute("y", &q.y);
 		pQuad->Attribute("possibleTypes", &q.possibleObjects);
-
-		// select random object
-		int randomObject = rand() % q.possibleObjects;
-		std::string type;
-		TiXmlElement* pType = pQuad->FirstChildElement("Type");
-
-		for (int i = 0; i < q.possibleObjects; i++)
+		if (q.possibleObjects > 0)
 		{
-			if (i < randomObject)
+			// select random object
+			int randomObject = rand() % q.possibleObjects;
+			std::string type;
+			TiXmlElement* pType = pQuad->FirstChildElement("Type");
+
+			for (int i = 0; i < q.possibleObjects; i++)
 			{
-				pType = pType->NextSiblingElement("Type");
-				continue;
+				if (i < randomObject)
+				{
+					pType = pType->NextSiblingElement("Type");
+					continue;
+				}
+
+				type = pType->Attribute("type");
+				pType->Attribute("amount", &q.objectAmount);
+				std::string random = pType->Attribute("randomized");
+				if (random == "True")
+					q.randomized = true;
+				else
+					q.randomized = false;
+
+				// create ints to store into the position
+				int _x, _y;
+				pType->Attribute("x", &_x);
+				pType->Attribute("y", &_y);
+				q.pos = { (float)_x, (float)_y };
+				break;
 			}
 
-			type = pType->Attribute("type");
-			pType->Attribute("amount", &q.objectAmount);
-			break;
+			if (type == "PLAYER")
+				q.objType = PLAYER;
+			else if (type == "COPPERHEAD")
+				q.objType = COPPERHEAD;
+			else if (type == "COBRA")
+				q.objType = COBRA;
+			else if (type == "MAMBA")
+				q.objType = MAMBA;
+			else if (type == "CORAL")
+				q.objType = CORAL;
+			else if (type == "MOCASSIN")
+				q.objType = MOCASSIN;
+			else if (type == "ASTEROID")
+				q.objType = ASTEROID;
+			else if (type == "PLANET")
+				q.objType = PLANET;
+			else if (type == "HUMAN")
+				q.objType = HUMAN;
+			else if (type == "NONE")
+				q.objType = NONE;
 		}
-		if (type == "PLAYER")
-			q.objType = PLAYER;
-		else if (type == "COPPERHEAD")
-			q.objType = COPPERHEAD;
-		else if (type == "COBRA")
-			q.objType = COBRA;
-		else if (type == "MAMBA")
-			q.objType = MAMBA;
-		else if (type == "CORAL")
-			q.objType = CORAL;
-		else if (type == "MOCASSIN")
-			q.objType = MOCASSIN;
-		else if (type == "ASTEROID")
-			q.objType = ASTEROID;
-		else if (type == "NONE")
+		else
+		{
+			q.objectAmount = 0;
 			q.objType = NONE;
-
+			q.pos = { 0, 0 };
+			q.randomized = false;
+		}
 		world[q.y][q.x] = q;
 
 
-		pQuad = pQuad->NextSiblingElement("Quad");
+		pQuad = pQuad->NextSiblingElement();
+	}
+
+	//TiXmlElement * pEvent = pQuad->NextSiblingElement();
+	for (int i = 0; i < numEvents; i++)
+	{
+		Event e;
+
+		// create ints to store into the event rect
+		int _left, _top, _width, _height;
+		e.eType = pQuad->Attribute("type");
+		pQuad->Attribute("x", &_left);
+		pQuad->Attribute("y", &_top);
+		pQuad->Attribute("width", &_width);
+		pQuad->Attribute("height", &_height);
+		e.area = { (float)_left, (float)_top, float(_left + _width), float(_top + _height) };
+		events.push_back(e);
+		pQuad = pQuad->NextSiblingElement();
+	}
+	
+	for (int i = 0; i < numCollision; i++)
+	{
+		SGD::Rectangle r = { 0, 0, 0, 0 };
+		int _left, _top, _width, _height;
+
+		pQuad->Attribute("x", &_left);
+		pQuad->Attribute("y", &_top);
+		pQuad->Attribute("width", &_width);
+		pQuad->Attribute("height", &_height);
+		r = { (float)_left, (float)_top, float(_left + _width), float(_top + _height) };
+		collisionRects.push_back(r);
+		pQuad = pQuad->NextSiblingElement();
 	}
 
 	return true;

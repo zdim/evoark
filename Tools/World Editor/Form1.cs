@@ -127,7 +127,6 @@ namespace Editor
             D3D.Clear(panel1, Color.Black);
             D3D.DeviceBegin();
             D3D.SpriteBegin();
-
             if(backgroundPath.Length > 0)
             {
                 TM.Draw(backgroundID, offset.X, offset.Y);
@@ -286,6 +285,8 @@ namespace Editor
             quadSize = new Size(temp, quadSize.Height);
             numericUpDownX.Maximum = worldSize.Width * quadSize.Width;
             numericUpDownY.Maximum = worldSize.Height * quadSize.Height;
+            numericUpDownEventX.Maximum = quadSize.Width * worldSize.Width;
+            numericUpDownEventY.Maximum = quadSize.Height * worldSize.Height;
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
@@ -297,7 +298,8 @@ namespace Editor
             quadSize = new Size(quadSize.Width, temp);
             numericUpDownX.Maximum = worldSize.Width * quadSize.Width;
             numericUpDownY.Maximum = worldSize.Height * quadSize.Height;
-            panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
+            numericUpDownEventX.Maximum = quadSize.Width * worldSize.Width;
+            numericUpDownEventY.Maximum = quadSize.Height * worldSize.Height; panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
         }
@@ -322,6 +324,7 @@ namespace Editor
             worldSize = new Size(worldSize.Width, temp);
             world = newWorld;
             numericUpDownY.Maximum = quadSize.Height * temp;
+            numericUpDownEventY.Maximum = quadSize.Height * temp;
 
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
@@ -347,6 +350,7 @@ namespace Editor
             worldSize = new Size(temp, worldSize.Height);
             world = newWorld;
             numericUpDownX.Maximum = quadSize.Width * temp;
+            numericUpDownEventX.Maximum = quadSize.Width * temp;
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
@@ -364,6 +368,10 @@ namespace Editor
             // Calculate the quad in which the mouse click occured.
             selected.X = (e.X - offset.X) / quadSize.Width;
             selected.Y = (e.Y - offset.Y) / quadSize.Height;
+
+            Point mouse = new Point(0, 0);
+            mouse.X = e.X - offset.X;
+            mouse.Y = e.Y - offset.Y;
 
             world[selected.X, selected.Y].X = selected.X;
             world[selected.X, selected.Y].Y = selected.Y;
@@ -385,7 +393,8 @@ namespace Editor
                                 world[selected.X, selected.Y].Spawns[i].Y,
                                 world[selected.X, selected.Y].Spawns[i].Width,
                                 world[selected.X, selected.Y].Spawns[i].Height);
-                            if (r.Contains(e.Location))
+                            
+                            if (r.Contains(mouse))
                             {
                                 listBox1.SelectedIndex = i;
                                 numericUpDownX.Value = world[selected.X, selected.Y].Spawns[i].X;
@@ -420,7 +429,7 @@ namespace Editor
                             Rectangle r = new Rectangle(
                                 events[i].X, events[i].Y,
                                 events[i].Width, events[i].Height);
-                            if(r.Contains(e.Location))
+                            if(r.Contains(mouse))
                             {
                                 listBox2.SelectedIndex = i;
                                 numericUpDownEventX.Value = r.X;
@@ -445,7 +454,7 @@ namespace Editor
                     bool success = false;
                     for (int i = 0; i < collisionRects.Count; i++)
                     {
-                        if (collisionRects[i].Contains(e.Location))
+                        if (collisionRects[i].Contains(mouse))
                         {
                             selectedCollisionRect = collisionRects[i];
                             numericUpDownX.Value = collisionRects[i].X;
@@ -1061,6 +1070,9 @@ namespace Editor
             quadSize = new Size(100, 100);
             selected = new Quad(0, 0);
 
+            backgroundPath = "";
+            backgroundID = new int();
+
             selectedSpawn = new Spawn();
             selectedCollisionRect = new Rectangle();
             collisionRects = new List<Rectangle>();
@@ -1083,7 +1095,7 @@ namespace Editor
             dlg.DefaultExt = "xml";
             dlg.Filter = "XML File (*.xml)|*.xml";
             dlg.FilterIndex = 0;
-
+            dlg.InitialDirectory = System.IO.Path.GetFullPath(System.IO.Directory.GetCurrentDirectory() + "//..//..//Resources//XML//World");
             if (DialogResult.OK == dlg.ShowDialog())
             {
                 XmlWriterSettings settings = new XmlWriterSettings();
@@ -1163,6 +1175,7 @@ namespace Editor
             dlg.DefaultExt = "xml";
             dlg.Filter = "XML Files (*.xml) | *.xml";
             dlg.FilterIndex = 0;
+            dlg.InitialDirectory = System.IO.Path.GetFullPath(System.IO.Directory.GetCurrentDirectory() + "//..//..//Resources//XML//World");
             if(DialogResult.OK == dlg.ShowDialog())
             {
                 selected = new Quad(0, 0);
@@ -1205,7 +1218,8 @@ namespace Editor
                         string p = "..//..//Resources//Graphics//";
                         backgroundPath = read.ReadContentAsString();
                         p += backgroundPath;
-                        backgroundID = TM.LoadTexture(p);
+                        if(backgroundPath.Length > 0)
+                            backgroundID = TM.LoadTexture(p);
 
                         world = new Quad[worldSize.Width, worldSize.Height];
                         read.ReadStartElement("Details");
@@ -1241,10 +1255,25 @@ namespace Editor
                                     oSpawn.Width = 20;
                                     oSpawn.Height = 20;
                                     world[i, j].Spawns.Add(oSpawn);
+                                    //worldObjects.
+                                    bool success = false;
+                                    foreach(string n in worldObjects)
+                                    {
+                                        if(n == oSpawn.ObjectType)
+                                        {
+                                            success = true;
+                                            break;
+                                        }
+                                    }
+                                    if(!success)
+                                    {
+                                        worldObjects.Add(oSpawn.ObjectType);
+                                    }
                                     read.ReadStartElement("Type");
-                                    read.ReadEndElement();
+                                    
                                 }
-
+                                if(numTypes > 0)
+                                    read.ReadEndElement();
                             }
 
                         for(int i = 0; i < numEvents; i++)
@@ -1261,6 +1290,19 @@ namespace Editor
                             read.MoveToNextAttribute();
                             eSpawn.Height = read.ReadContentAsInt();
                             events.Add(eSpawn);
+                            bool success = false;
+                            foreach (string n in worldEvents)
+                            {
+                                if (n == eSpawn.EventType)
+                                {
+                                    success = true;
+                                    break;
+                                }
+                            }
+                            if (!success)
+                            {
+                                worldEvents.Add(eSpawn.EventType);
+                            }
                             read.ReadStartElement();
                         }
 
@@ -1284,6 +1326,10 @@ namespace Editor
                         numericUpDownY.Maximum = quadSize.Height * worldSize.Height;
                         listBox2.DataSource = null;
                         listBox2.DataSource = events;
+                        comboBox1.DataSource = null;
+                        comboBox1.DataSource = worldObjects;
+                        comboBox2.DataSource = null;
+                        comboBox2.DataSource = worldEvents;
 
                         panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                             worldSize.Height * quadSize.Height);
