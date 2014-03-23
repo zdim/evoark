@@ -58,7 +58,7 @@ void CShip::Render()
 	if (hull < maxHull)
 		color = SGD::Color{ 255, 0, 0 };
 	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, position - size / 2, rotation, imageSize / 2, color, { scale, scale });
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
 }
 
 void CShip::AddGravity(SGD::Vector grav)

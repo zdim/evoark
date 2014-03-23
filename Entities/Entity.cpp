@@ -19,6 +19,11 @@ CEntity::~CEntity()
 
 }
 
+SGD::Point CEntity::offsetToCamera()
+{
+	return position - size / 2 + Game::GetInstance()->GetLevelState()->GetCam()->GetOffset();
+}
+
 void	CEntity::Update(float dt)
 {
 	position += (velocity) * dt;
@@ -40,7 +45,7 @@ void	CEntity::Render()
 	float scale = std::max(size.width/imageSize.width, size.height/imageSize.height);
 	CCamera* cam = Game::GetInstance()->GetLevelState()->GetCam();
 	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
-	SGD::Point renderPoint = position - size / 2 + cam->GetOffset();
+	SGD::Point renderPoint = offsetToCamera();
 	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, {}, { scale, scale });
 }
 

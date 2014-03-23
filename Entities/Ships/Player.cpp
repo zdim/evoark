@@ -5,6 +5,7 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include <algorithm>
 #include "../../Message System/CreateLaserMessage.h"
+#include "../../Camera.h"
 
 CPlayer::CPlayer()
 {
@@ -63,7 +64,7 @@ void CPlayer::Update(float dt)
 	}*/
 	velocity = dir * speed;
 	SGD::Point mousePos = input->GetMousePosition();
-	rotation = atan2(mousePos.y - position.y, mousePos.x - position.x) + SGD::PI / 2;
+	rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
 	CEntity::Update(dt);
 
 	//Abilities
@@ -174,5 +175,5 @@ void CPlayer::Render()
 	if (shield < maxShield)
 		color = SGD::Color{ 255, 0, 0 };
 	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, position - size / 2, rotation, imageSize / 2, color, { scale, scale });
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
 }
