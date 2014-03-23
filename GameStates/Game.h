@@ -26,6 +26,7 @@ class IGameState;
 //#include <deque>
 #include <vector>
 #include "../BitmapFont/BitmapFont.h"
+#include "LevelStates\ILevelState.h"
 
 /**************************************************************/
 // Game class
@@ -72,6 +73,8 @@ public:
 	//Stackbased - Needs Push and Pop
 	bool PushState(IGameState* newState);
 	void PopState();
+
+	ILevelState* GetLevelState();
 
 	/**********************************************************/
 	// Game Font

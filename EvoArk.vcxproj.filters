@@ -294,6 +294,9 @@
     <ClInclude Include="SGD Wrappers\SGD_MessageManager.h">
       <Filter>SGDWrappers</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -496,6 +499,9 @@
     </ClCompile>
     <ClCompile Include="SGD Wrappers\SGD_MessageManager.cpp">
       <Filter>SGDWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -50,6 +50,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		//throw
 		break;
 	case EntityType::Player:
+	{
 		if (player != nullptr)
 			return;
 
@@ -62,6 +63,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		ships.push_back(player);
 
 		break;
+	}
 	case EntityType::Human:
 	{
 							  IEntity* human = new CHuman();

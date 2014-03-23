@@ -2,6 +2,9 @@
 #include "Entity.h"
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
 #include <algorithm>
+#include "../Camera.h"
+#include "../GameStates/LevelStates/ILevelState.h"
+#include "../GameStates/Game.h"
 
 #define GRAVDECAY 0.025F
 
@@ -35,8 +38,10 @@ void	CEntity::Update(float dt)
 void	CEntity::Render()
 {
 	float scale = std::max(size.width/imageSize.width, size.height/imageSize.height);
+	CCamera* cam = Game::GetInstance()->GetLevelState()->GetCam();
 	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, position - size / 2, rotation, imageSize / 2, {}, { scale, scale });
+	SGD::Point renderPoint = position - size / 2 + cam->GetOffset();
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, {}, { scale, scale });
 }
 
 void	CEntity::HandleCollision(IEntity* other)

@@ -52,6 +52,8 @@ void	CTestLevelState::Enter(void)
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 
+	player = EntityManager->GetPlayer();
+	cam = new CCamera(player, SGD::Size{m_nScreenWidth,m_nScreenHeight});
 
 	pSystem.Init();
 
@@ -91,6 +93,7 @@ bool	CTestLevelState::Input(void)
 
 void	CTestLevelState::Update(float dt)
 {
+	cam->Update(dt);
 	EntityManager->Update(dt);
 
 	pSystem.Update(dt);
@@ -314,4 +317,9 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(EntityType::Laser,lMsg->GetPosition(),lMsg->GetRotation(),lMsg->GetDamage(), tier);
 	}
 	}
+}
+
+IEntity* CTestLevelState::GetPlayer()
+{
+	return player;
 }

@@ -3,7 +3,7 @@
 #include <vector>
 #include "Leader.h"
 #include "../SGD Wrappers/SGD_Handle.h"
-
+#include "Ships\Player.h"
 class CEntityManager
 {
 	std::vector<CLeader*> leaders;
@@ -21,6 +21,7 @@ class CEntityManager
 
 public:
 
+	CPlayer* GetPlayer() {return dynamic_cast<CPlayer*>(player);}
 	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.
 	void SpawnProjectile(EntityType type, SGD::Point position, float rotation, int damage, unsigned int tier = 1, float radius = -1.0f); //Spawns a projectile 
 	//int GetDamageFromEntity(IEntity* entity, EntityType projType);

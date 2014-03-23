@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BitmapFont\BitmapFont.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Entities\Asteroid.h" />
     <ClInclude Include="Entities\Barrier.h" />
     <ClInclude Include="Entities\Entity.h" />
@@ -158,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BitmapFont\BitmapFont.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entities\Asteroid.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\EntityManager.cpp" />
