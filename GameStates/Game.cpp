@@ -231,8 +231,8 @@ bool Game::PushState(IGameState* newState)
 	if (!newState)
 		//Why'd a null even get in here?? Account for everything.
 		return false;
-	newState->Enter();
 	m_qStates.push_back(newState);
+	newState->Enter();
 	return true;
 }
 
@@ -241,4 +241,16 @@ void Game::PopState()
 	m_qStates.back()->Exit();
 	m_qStates.pop_back();
 	//m_qStates.resize(m_qStates.size());
+}
+
+ILevelState* Game::GetLevelState()
+{
+	ILevelState* lState;
+	for (unsigned int i = 0; i < m_qStates.size(); i++)
+	{
+		lState = dynamic_cast<ILevelState*>(m_qStates[i]);
+		if (lState != nullptr)
+			return lState;
+	}
+	return nullptr;
 }

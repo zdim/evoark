@@ -9,6 +9,8 @@
 #include <string>
 #include "../Graphics/Particles/ParticleSystem.h"
 #include "../SGD Wrappers/SGD_Message.h"
+#include "LevelStates\ILevelState.h"
+#include "../Camera.h"
 
 class CFlyweight;
 class CEmitter;
@@ -16,7 +18,7 @@ class CParticleSystem;
 
 
 class CTestLevelState :
-	public IGameState
+	public ILevelState
 {
 public:
 	static CTestLevelState* GetInstance(void);
@@ -28,11 +30,10 @@ public:
 	virtual void	Update(float dt)	override;
 	virtual void	Render(void)				override;
 	static void MessageProc(const SGD::Message* msg);
-
-
+	IEntity* GetPlayer();
+	CCamera* GetCam() {return cam;}
 
 private:
-
 	CTestLevelState();
 	virtual ~CTestLevelState();
 
@@ -43,6 +44,7 @@ private:
 	SGD::GraphicsManager* graphics;
 
 	CEntity* player = nullptr;
+	CCamera* cam;
 
 	// level creation
 	enum Objects { PLAYER, COPPERHEAD, COBRA, MAMBA, CORAL, MOCASSIN, ASTEROID, PLANET, HUMAN, NONE, NUM_OBJECTS };
