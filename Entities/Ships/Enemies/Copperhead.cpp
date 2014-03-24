@@ -14,6 +14,8 @@ CCopperhead::~CCopperhead()
 void CCopperhead::Update(float dt)
 {
 	AI(dt);
+	//Rotation
+	CEnemy::Update(dt);
 	//Movement
 	CEntity::Update(dt);
 }

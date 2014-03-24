@@ -4,5 +4,5 @@
 class Listener
 {
 public:
-	virtual void HandleEvent(CCustomEvent* e);
+	virtual void HandleEvent(CCustomEvent* e) = 0;
 };

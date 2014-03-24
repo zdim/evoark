@@ -13,5 +13,7 @@ public:
 	void Queue();
 	void SendNow();
 	EventID GetID() {return type;}
+	void* GetData() {return data;}
+	IEntity* GetSender() {return sender;}
 };
 

@@ -11,6 +11,7 @@
 //#include "../Graphics/Particles/Flyweight.h"
 //#include "../Graphics/Particles/Emitter.h"
 #include "../SGD Wrappers/SGD_MessageManager.h"
+#include "../Event System/EventManager.h"
 #include "../Message System/CreateEntityMessage.h"
 #include "../Message System/CreateProjectile.h"
 #include "../Entities/Ships/Player.h"
@@ -99,6 +100,7 @@ void	CTestLevelState::Update(float dt)
 	pSystem.Update(dt);
 
 	SGD::MessageManager::GetInstance()->Update();
+	CEventManager::GetInstance().Update();
 }
 
 void	CTestLevelState::Render(void)

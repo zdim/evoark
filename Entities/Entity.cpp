@@ -24,6 +24,27 @@ SGD::Point CEntity::offsetToCamera()
 	return position - size / 2 + Game::GetInstance()->GetLevelState()->GetCam()->GetOffset();
 }
 
+void CEntity::rotateToward(SGD::Vector direction, float dt)
+{
+	SGD::Vector up = SGD::Vector{ 0, -1 };
+	SGD::Vector forward = up;
+	forward.Rotate(rotation);
+
+	float angleBetween = forward.ComputeAngle(direction);
+	if (angleBetween > rotSpeed * dt)
+		angleBetween = rotSpeed * dt;
+
+	if (forward.ComputeSteering(direction) < 0)
+		angleBetween = -angleBetween;
+
+	rotation += angleBetween;
+
+	if (rotation < 0)
+		rotation += SGD::PI * 2;
+	else if (rotation >= SGD::PI * 2)
+		rotation -= SGD::PI * 2;
+}
+
 void	CEntity::Update(float dt)
 {
 	if (position.x + velocity.x * dt > Game::GetInstance()->GetLevelState()->GetWorldSize().width ||

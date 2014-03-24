@@ -15,7 +15,7 @@ class CEventManager
 	~CEventManager() = default;
 
 public:
-	CEventManager& GetInstance();
+	static CEventManager& GetInstance();
 	void Queue(CCustomEvent* e);
 	void SendNow(CCustomEvent* e);
 	void Register(Listener* listener, EventID id);
