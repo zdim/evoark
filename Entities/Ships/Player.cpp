@@ -65,7 +65,6 @@ void CPlayer::Update(float dt)
 	velocity = dir * speed;
 	SGD::Point mousePos = input->GetMousePosition();
 	rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
-	CEntity::Update(dt);
 
 	//Abilities
 	if (input->IsKeyPressed(SGD::Key::LButton))
@@ -92,6 +91,8 @@ void CPlayer::Update(float dt)
 	// UI Toggle
 	if (input->IsKeyPressed(SGD::Key::Tab))
 		arrowsOn = !arrowsOn;
+
+	CEntity::Update(dt);
 }
 
 void CPlayer::AddGravity(SGD::Vector grav)

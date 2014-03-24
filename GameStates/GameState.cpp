@@ -42,15 +42,6 @@ void	CTestLevelState::Enter(void)
 	EntityManager = new CEntityManager();
 	//EntityManager->Spawn(EntityType::Player, SGD::Point{100,150});
 
-	// test player
-	//player = new CPlayer();
-	//player->SetImage(graphics->LoadTexture("Resources/Graphics/shipTmp.png"));
-	//player->SetPosition(SGD::Point{ 100, 100 });
-	//player->SetSize(SGD::Size{ 16, 16 });
-	//dynamic_cast<CShip*>(player)->setSpeed(200.0);
-
-
-	// commented out until all objects have sprites and proper initialization
 	Generate();
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
@@ -111,9 +102,8 @@ void	CTestLevelState::Update(float dt)
 
 void	CTestLevelState::Render(void)
 {
-	graphics->DrawTexture(BackgroundImage, { 0, 0 });
+	graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
 
-	UI((CPlayer*)player, EntityManager->GetAllies());
 
 	// draw grids
 	for (int i = 0; i < m_nNumQuadsWidth; i++)
@@ -129,6 +119,7 @@ void	CTestLevelState::Render(void)
 	pSystem.Render();
 
 	EntityManager->Render();
+	UI((CPlayer*)player, EntityManager->GetAllies());
 }
 
 void	CTestLevelState::Generate()
@@ -350,6 +341,10 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 									   tier = 3;
 								   }
 		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(EntityType::Laser,lMsg->GetPosition(),lMsg->GetRotation(),lMsg->GetDamage(), tier);
+	}
+	case MessageID::StargateEnter:
+	{
+
 	}
 	}
 }
