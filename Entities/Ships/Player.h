@@ -19,19 +19,21 @@ class CPlayer :
 	float shieldTimer;
 	float laserTimer;
 	float missileTimer;
-	float wellTimer;
-	float pushTimer;
+	float wellTimer = 0;
+	float pushTimer = 0;
 	float warpTimer = 0;
 
 	float shieldDelay;
 	float laserDelay;
 	float missileDelay;
-	float wellDelay;
-	float pushDelay;
-	float warpDelay = 1;
+	float wellDelay = 6.0f;
+	float pushDelay = 6.0f;
+	float warpDelay = 3.0f;
 
 	float warpSpeed;
 	float warpDuration = 1;
+
+	bool arrowsOn = false;
 
 public:
 	CPlayer();
@@ -41,6 +43,17 @@ public:
 	void Update(float dt) override;
 	void AddGravity(SGD::Vector grav) override;
 	void TakeDamage(int damage, bool collision = false) override;
+
+	int GetShield() { return shield; }
+	int GetMaxShield() { return maxShield; }
+	float GetWellDelay() { return wellDelay; }
+	float GetPushDelay() { return pushDelay; }
+	float GetWarpDelay() { return warpDelay; }
+	float GetWellTimer() { return wellTimer; }
+	float GetPushTimer() { return pushTimer; }
+	float GetWarpTimer() { return warpTimer; }
+	bool GetArrowsOn() { return arrowsOn; }
+
 	//void HandleCollision(IEntity* other) override;
 	//Coment out later:
 	void Render() override;

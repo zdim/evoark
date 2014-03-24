@@ -13,6 +13,7 @@
 #include "../SGD Wrappers/SGD_MessageManager.h"
 #include "../Message System/CreateEntityMessage.h"
 #include "../Message System/CreateLaserMessage.h"
+#include "../Entities/Ships/Player.h"
 
 CTestLevelState::CTestLevelState()
 {
@@ -34,6 +35,8 @@ void	CTestLevelState::Enter(void)
 	srand((unsigned int)time(nullptr));
 	graphics = SGD::GraphicsManager::GetInstance();
 	//BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
+
+	objArrow = graphics->LoadTexture("Resources/Graphics/Arrow.png");
 
 	//JD's Test flock, ally and player
 	EntityManager = new CEntityManager();
@@ -65,6 +68,10 @@ void	CTestLevelState::Enter(void)
 void	CTestLevelState::Exit(void)
 {
 	cam->Terminate();
+	if (BackgroundImage != SGD::INVALID_HANDLE)
+		graphics->UnloadTexture(BackgroundImage);
+	graphics->UnloadTexture(objArrow);
+
 	SGD::MessageManager::GetInstance()->Terminate();
 	SGD::MessageManager::GetInstance()->DeleteInstance();
 	delete EntityManager;
@@ -106,6 +113,8 @@ void	CTestLevelState::Update(float dt)
 void	CTestLevelState::Render(void)
 {
 	graphics->DrawTexture(BackgroundImage, { 0, 0 });
+
+	UI((CPlayer*)player, EntityManager->GetAllies());
 
 	// draw grids
 	for (int i = 0; i < m_nNumQuadsWidth; i++)
@@ -160,6 +169,9 @@ void	CTestLevelState::Generate()
 					break;
 				case ASTEROID:
 					EntityManager->Spawn(EntityType::Asteroid, col[j].pos, col[j].objectAmount);
+					break;
+				case HUMAN:
+					EntityManager->Spawn(EntityType::Human, col[j].pos, 1);
 					break;
 				default:
 					break;
@@ -346,4 +358,128 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 IEntity* CTestLevelState::GetPlayer()
 {
 	return player;
+}
+
+void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies)
+{
+	// set hullbar
+	SGD::Rectangle hullBox = {
+		m_nScreenWidth * .33f,
+		m_nScreenHeight * .92f,
+		m_nScreenWidth * .66f,
+		m_nScreenHeight * .95f
+	};
+
+	// display player's hull percentage
+	SGD::Rectangle hull = {
+		m_nScreenWidth * .33f,
+		m_nScreenHeight * .92f,
+		m_nScreenWidth * .66f * _player->getHull() / _player->getMaxHull(),
+		m_nScreenHeight * .95f
+	};
+
+	// set shield bar
+	SGD::Rectangle shieldBox = {
+		m_nScreenWidth * .33f,
+		m_nScreenHeight * .87f,
+		m_nScreenWidth * .66f,
+		m_nScreenHeight * .90f };
+
+	// display player's shield percentange
+	SGD::Rectangle shield = {
+		m_nScreenWidth * .33f,
+		m_nScreenHeight * .87f,
+		m_nScreenWidth * .66f * _player->GetShield() / _player->GetMaxShield(),
+		m_nScreenHeight * .90f };
+
+	// set gravity well box
+	SGD::Rectangle wellBox = {
+		m_nScreenWidth * .40f,
+		m_nScreenHeight * .8f,
+		m_nScreenWidth * .44f,
+		m_nScreenHeight * .85f };
+
+	// gravity well cooldown calculation
+	float wellCooldownPercentage = _player->GetWellTimer() / _player->GetWellDelay();
+
+	SGD::Rectangle wellCD = {
+		wellBox.left,
+		wellBox.top + m_nScreenHeight * .05f * wellCooldownPercentage,
+		wellBox.right,
+		wellBox.bottom};
+
+	// set gravity push box
+	SGD::Rectangle pushBox = {
+		m_nScreenWidth * .48f,
+		m_nScreenHeight * .8f,
+		m_nScreenWidth * .52f,
+		m_nScreenHeight * .85f };
+
+	// gravity push cooldown calculation
+	float pushCooldownPercentage = _player->GetPushTimer() / _player->GetPushDelay();
+
+	SGD::Rectangle pushCD = {
+		pushBox.left,
+		pushBox.top + m_nScreenHeight * .05f * pushCooldownPercentage,
+		pushBox.right,
+		pushBox.bottom };
+
+	// set warp box
+	SGD::Rectangle warpBox = {
+		m_nScreenWidth * .56f,
+		m_nScreenHeight * .8f,
+		m_nScreenWidth * .60f,
+		m_nScreenHeight * .85f };
+
+	// warp cooldown calculation
+	float warpCooldownPercentage = _player->GetWarpTimer() / _player->GetWarpDelay();
+
+	SGD::Rectangle warpCD = {
+		warpBox.left,
+		warpBox.top + m_nScreenHeight * .05f * warpCooldownPercentage,
+		warpBox.right,
+		warpBox.bottom };
+
+	// arrows
+	if (_player->GetArrowsOn())
+	{
+		// allies
+		for (int i = 0; i < _allies.size(); i++)
+		{
+			SGD::Vector toTarget = _allies[i]->GetPosition() - _player->GetPosition();
+			if (toTarget.ComputeLength() > 400)
+			{
+				toTarget.Normalize();
+
+				SGD::Point arrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
+				arrowPos += toTarget * 200;
+				float arrowRot = atan2(_allies[i]->GetPosition().y - _player->GetPosition().y, _allies[i]->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
+
+				graphics->DrawTexture(objArrow, arrowPos, arrowRot, {}, { 200, 0, 200, 150 }, { .15f, .15f });
+			}
+		}
+	}
+	// draw hull
+	graphics->DrawRectangle(hull, { 185, 150, 0 });
+	graphics->DrawRectangle(hullBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
+
+	// draw shield
+	graphics->DrawRectangle(shield, { 0, 150, 200 });
+	graphics->DrawRectangle(shieldBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
+
+	// draw well
+	if (_player->GetWellTimer() < _player->GetWellDelay())
+		graphics->DrawRectangle(wellCD, SGD::Color{ 150, 200, 0, 0 });
+	graphics->DrawRectangle(wellBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
+
+	// draw push
+	if (_player->GetPushTimer() < _player->GetPushDelay())
+		graphics->DrawRectangle(pushCD, SGD::Color{ 150, 200, 0, 0 });
+	graphics->DrawRectangle(pushBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
+
+	// draw warp
+	if (_player->GetWarpTimer() < _player->GetWarpDelay())
+		graphics->DrawRectangle(warpCD, SGD::Color{ 150, 200, 0, 0 });
+	graphics->DrawRectangle(warpBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
+
 }

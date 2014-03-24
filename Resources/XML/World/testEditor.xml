@@ -29,9 +29,8 @@
       <Type type="COPPERHEAD" amount="5" randomized="True" x="120" y="1302" />
       <Type type="COBRA" amount="4" randomized="True" x="64" y="1264" />
     </Quad>
-    <Quad x="0" y="7" possibleTypes="2">
-      <Type type="MAMBA" amount="4" randomized="False" x="70" y="1523" />
-      <Type type="COBRA" amount="4" randomized="False" x="116" y="1456" />
+    <Quad x="0" y="7" possibleTypes="1">
+      <Type type="HUMAN" amount="1" randomized="False" x="116" y="1539" />
     </Quad>
     <Quad x="1" y="0" possibleTypes="2">
       <Type type="COPPERHEAD" amount="5" randomized="True" x="276" y="122" />
@@ -223,7 +222,7 @@
       <Type type="COPPERHEAD" amount="5" randomized="True" x="1234" y="1487" />
     </Quad>
     <Quad x="7" y="0" possibleTypes="1">
-      <Type type="MAMBA" amount="5" randomized="True" x="1476" y="105" />
+      <Type type="HUMAN" amount="1" randomized="False" x="1467" y="68" />
     </Quad>
     <Quad x="7" y="1" possibleTypes="1">
       <Type type="COPPERHEAD" amount="5" randomized="True" x="1500" y="310" />
