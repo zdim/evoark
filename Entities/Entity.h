@@ -12,11 +12,13 @@ protected:
 	SGD::Vector velocity = SGD::Vector{0,0};
 	SGD::Vector gravVec = SGD::Vector{ 0, 0 };
 	float rotation = 0.0f;
+	float rotSpeed = SGD::PI / 8;
 	SGD::Size size = SGD::Size{ 16, 16 };
 	SGD::Size imageSize = SGD::Size{0, 0};
 	unsigned int refCount = 1;
 
 	SGD::Point offsetToCamera();
+	void rotateToward(SGD::Vector direction, float dt);
 
 public:
 	CEntity();
@@ -48,6 +50,7 @@ public:
 	virtual void AddGravity(SGD::Vector grav) override {}
 
 	virtual void HandleCollision(IEntity* other) override;
+	//virtual void HandleEvent(CCustomEvent* e) override {};
 
 	virtual void AddRef() final;
 	virtual void Release() final;

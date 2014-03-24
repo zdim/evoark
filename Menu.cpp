@@ -44,10 +44,16 @@ CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _labe
 
 	box = SGD::Rectangle(menuTL, menuSize);
 	SGD::Point buttonTL;
+	buttonTL.x = menuTL.x + buttonSpacing.width;
+	buttonTL.y = menuTL.y + buttonSpacing.height;
+
+	SGD::Rectangle labelBox = SGD::Rectangle(buttonTL,buttonSize);
+	labelPoint.x = (labelBox.ComputeWidth() -labelSize.width)/2 + labelBox.left;
+	labelPoint.y = (labelBox.ComputeHeight() - labelSize.height) / 2 + labelBox.top;
+	buttonTL.y += buttonSize.height;
+
 	if (horizontal)
 	{
-		buttonTL.y = menuTL.y + buttonSpacing.height * 2 + labelSize.height;
-		buttonTL.x = menuTL.x + buttonSpacing.width;
 		for (unsigned int i = 0; i < buttons.size(); i++)
 		{
 			buttons[i].box = SGD::Rectangle(buttonTL, buttonSize);
@@ -56,8 +62,6 @@ CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _labe
 	}
 	else
 	{
-		buttonTL.x = menuTL.x + buttonSpacing.width;
-		buttonTL.y = menuTL.y + buttonSpacing.height * 2 + labelSize.height;
 		for (unsigned int i = 0; i < buttons.size(); i++)
 		{
 			buttons[i].box = SGD::Rectangle(buttonTL, buttonSize);
@@ -125,6 +129,7 @@ void CMenu::Render()
 {
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
 	graphics->DrawRectangle(box, SGD::Color{0,0,0});
+	font->Write(labelPoint, label);
 	for (unsigned int i = 0; i < buttons.size(); i++)
 	{
 		graphics->DrawRectangle(buttons[i].box, SGD::Color{1,1,1});

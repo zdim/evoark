@@ -2,6 +2,9 @@
 
 #include "../SGD Wrappers/SGD_Handle.h"
 #include "../SGD Wrappers/SGD_Declarations.h"
+//#include "../Event System/CustomEvent.h"
+
+class CCustomEvent;
 
 //Entity, GravityProjectile, and Ship should all return BaseClass to let us know that the entity SHOULD have a more specific type.
 //Order IS significant here. All ships are lumped together so we can say if(type > Player && type < Asteroid) or something similar
@@ -48,6 +51,7 @@ public:
 	virtual void AddGravity(SGD::Vector grav) = 0;
 
 	virtual void HandleCollision(IEntity* other) = 0;
+	//virtual void HandleEvent(CCustomEvent* e) = 0;
 	
 	virtual void AddRef() = 0;
 	virtual void Release() = 0;

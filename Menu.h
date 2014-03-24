@@ -16,6 +16,7 @@ class CMenu
 	SGD::Rectangle box;
 	std::vector<CButton> buttons;
 	std::string label;
+	SGD::Point labelPoint;
 	Fnt* font;
 	int cursor;
 public:

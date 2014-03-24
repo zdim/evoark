@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "../../Message System/CreateProjectile.h"
 #include "../../Camera.h"
+#include "../../Event System/CustomEvent.h"
 
 CPlayer::CPlayer()
 {
@@ -93,6 +94,10 @@ void CPlayer::Update(float dt)
 	// UI Toggle
 	if (input->IsKeyPressed(SGD::Key::Tab))
 		arrowsOn = !arrowsOn;
+
+	// Position event
+	CCustomEvent* e = new CCustomEvent(EventID::position, nullptr, this);
+	e->Queue();
 }
 
 void CPlayer::AddGravity(SGD::Vector grav)
