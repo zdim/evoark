@@ -176,7 +176,6 @@ void	CTestLevelState::Generate()
 		}
 	}
 
-
 bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 {
 	TiXmlDocument doc(pXMLFile);
