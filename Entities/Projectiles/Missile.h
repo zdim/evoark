@@ -10,8 +10,11 @@ public:
 	virtual ~CMissile();
 
 	const CShip* GetTarget() {return target;}
-	void SetTarget(CShip* newTarget) {target = newTarget;}
+	void SetTarget(CShip* newTarget);
 
-	void HandleCollision(IEntity* other) override;
+	//stub it for now. We can ^^^ hardcode a target to test tracking, then implement a search
+	void FindTarget(){};
+
+	//void HandleCollision(IEntity* other) override;
 };
 

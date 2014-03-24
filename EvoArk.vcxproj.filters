@@ -264,9 +264,6 @@
     <ClInclude Include="Message System\CreateEntityMessage.h">
       <Filter>Message System</Filter>
     </ClInclude>
-    <ClInclude Include="Message System\CreateLaserMessage.h">
-      <Filter>Message System</Filter>
-    </ClInclude>
     <ClInclude Include="Message System\DestroyEntityMessage.h">
       <Filter>Message System</Filter>
     </ClInclude>
@@ -296,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Message System\CreateProjectile.h">
+      <Filter>Message System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -479,9 +479,6 @@
     <ClCompile Include="Message System\CreateEntityMessage.cpp">
       <Filter>Message System</Filter>
     </ClCompile>
-    <ClCompile Include="Message System\CreateLaserMessage.cpp">
-      <Filter>Message System</Filter>
-    </ClCompile>
     <ClCompile Include="Message System\DestroyEntityMessage.cpp">
       <Filter>Message System</Filter>
     </ClCompile>
@@ -502,6 +499,9 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Message System\CreateProjectile.cpp">
+      <Filter>Message System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
