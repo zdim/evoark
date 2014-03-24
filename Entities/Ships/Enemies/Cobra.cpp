@@ -14,6 +14,7 @@ CCobra::~CCobra()
 void CCobra::Update(float dt)
 {
 	SGD::Vector dir = CCopperhead::AI(dt);
+	CEnemy::Update(dt);
 	CEntity::Update(dt);
 }
 
