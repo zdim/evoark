@@ -12,7 +12,7 @@
 //#include "../Graphics/Particles/Emitter.h"
 #include "../SGD Wrappers/SGD_MessageManager.h"
 #include "../Message System/CreateEntityMessage.h"
-#include "../Message System/CreateLaserMessage.h"
+#include "../Message System/CreateProjectile.h"
 #include "../Entities/Ships/Player.h"
 
 CTestLevelState::CTestLevelState()
@@ -58,6 +58,7 @@ void	CTestLevelState::Enter(void)
 
 void	CTestLevelState::Exit(void)
 {
+	cam->Terminate();
 	if (BackgroundImage != SGD::INVALID_HANDLE)
 		graphics->UnloadTexture(BackgroundImage);
 	graphics->UnloadTexture(objArrow);
@@ -332,15 +333,10 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	{
 		break;
 	}
-	case MessageID::CreateLaser:
+	case MessageID::CreateProjectile:
 	{
-								   const CreateLaserMessage* lMsg = dynamic_cast<const CreateLaserMessage*>(msg);
-								   unsigned int tier = 1;
-								   if (lMsg->GetBoost())
-								   {
-									   tier = 3;
-								   }
-		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(EntityType::Laser,lMsg->GetPosition(),lMsg->GetRotation(),lMsg->GetDamage(), tier);
+								   const CreateProjectileMessage* lMsg = dynamic_cast<const CreateProjectileMessage*>(msg);
+		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(lMsg->GetProjType(),lMsg->GetPosition(),lMsg->GetOwnerSize(),lMsg->GetRotation(),lMsg->GetDamage(), lMsg->GetTier());
 	}
 	case MessageID::StargateEnter:
 	{

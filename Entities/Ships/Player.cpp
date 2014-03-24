@@ -4,7 +4,7 @@
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include <algorithm>
-#include "../../Message System/CreateLaserMessage.h"
+#include "../../Message System/CreateProjectile.h"
 #include "../../Camera.h"
 
 CPlayer::CPlayer()
@@ -15,6 +15,7 @@ CPlayer::CPlayer()
 	shieldDelay = 2;
 	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 0;
 	laserDelay = 0.25f;
+	missileDelay = 2.0f;
 }
 
 
@@ -67,11 +68,11 @@ void CPlayer::Update(float dt)
 	rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
 
 	//Abilities
-	if (input->IsKeyPressed(SGD::Key::LButton))
+	if (input->IsKeyDown(SGD::Key::LButton))
 	{
 		CreateLaser();
 	}
-	if (input->IsKeyPressed(SGD::Key::RButton))
+	if (input->IsKeyDown(SGD::Key::RButton))
 	{
 		CreateMissile();
 	}
@@ -111,7 +112,7 @@ void CPlayer::CreateLaser()
 	if (laserLevel >= 1)
 		damage += 15;
 
-	CreateLaserMessage* msg = new CreateLaserMessage(position,rotation,damage, (laserLevel >= 3));
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, size, rotation, damage, laserLevel);
 	msg->QueueMessage();
 }
 
@@ -121,7 +122,10 @@ void CPlayer::CreateMissile()
 		return;
 	missileTimer = 0;
 	//TODO: Send CreateMissile message
-
+	int damage = 75;
+	damage *= (1.5f * missileLevel);
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, size, rotation, damage, missileLevel );
+	msg->QueueMessage();
 }
 
 void CPlayer::CreateWell()

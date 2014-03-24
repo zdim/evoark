@@ -25,6 +25,7 @@ CEntityManager::CEntityManager()
 	images[(int)EntityType::Coral] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
 	images[(int)EntityType::Moccasin] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
 	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Laser.png");
+	images[(int)EntityType::Missile] = graphics->LoadTexture("Resources/Graphics/Missile.png");
 
 }
 
@@ -154,21 +155,21 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	}
 	case EntityType::Coral:
 	{
-							  CLeader* leader = new CLeader();
-							  EntityGroup corals;
-							  corals.resize(amount);
-							  for (unsigned int i = 0; i < corals.size(); i++)
-							  {
-								  corals[i] = new CCoral();
-								  corals[i]->SetImage(images[(int)EntityType::Coral]);
-								  corals[i]->SetImageSize({ 96, 78 });
-								  corals[i]->SetSize({ 16, 16 });
-								  bigEnemies.push_back(corals[i]);
-								  ships.push_back(corals[i]);
-							  }
-							  leader->SetHome(position);
-							  leader->Assign(corals);
-							  break;
+							  //CLeader* leader = new CLeader();
+							  //EntityGroup corals;
+							  //corals.resize(amount);
+							  //for (unsigned int i = 0; i < corals.size(); i++)
+							  //{
+								 // corals[i] = new CCoral();
+								 // corals[i]->SetImage(images[(int)EntityType::Coral]);
+								 // corals[i]->SetImageSize({ 96, 78 });
+								 // corals[i]->SetSize({ 16, 16 });
+								 // bigEnemies.push_back(corals[i]);
+								 // ships.push_back(corals[i]);
+							  //}
+							  //leader->SetHome(position);
+							  //leader->Assign(corals);
+							  //break;
 	}
 	case EntityType::Moccasin:
 	{
@@ -177,26 +178,59 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	}
 }
 
-void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, float rotation, int damage, unsigned int tier, float radius)
+void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier, float radius)
 {
 	switch (type)
 	{
 	case EntityType::Laser:
 	{
 							  CLaser* laser = new CLaser();
+							  laser->SetImage(images[(int)EntityType::Laser]);
+							  laser->SetSize({ 2, 8 });
+							  laser->SetImageSize({ 74, 290 });
+
+							  SGD::Vector offset = {0.0,-1.0};
+							  offset.Rotate(rotation);
+							  offset *= (ownerSize.height + laser->GetSize().height)*0.75f;
+							  position+=offset;
 							  laser->SetPosition(position);
 							  laser->SetRotation(rotation);
 							  laser->SetDamage(damage);
-							  SGD::Vector vel = {400, 0};
+							  SGD::Vector vel = { 0, -400 };
 							  vel.Rotate(rotation);
 							  laser->SetVelocity(vel);
 
-							  laser->SetImage(images[(int)EntityType::Laser]);
-							  laser->SetSize({ 4, 16 });
-							  laser->SetImageSize({ 74, 290 });
 
 							  projectiles.push_back(laser);
 							  break;
+	}
+	case EntityType::Missile:
+	{
+								CMissile* missile = new CMissile();
+								missile->SetImage(images[(int)EntityType::Missile]);
+								missile->SetSize({ 4, 16 });
+								missile->SetImageSize({ 8, 32 });
+
+								SGD::Vector offset = {0.0,-1.0};
+								offset.Rotate(rotation);
+								offset *= (ownerSize.height + missile->GetSize().height) *0.6f;
+								position += offset;
+								
+								missile->SetPosition(position);
+								missile->SetRotation(rotation);
+								missile->SetDamage(damage);
+
+								SGD::Vector vel = {0, -400};
+								vel.Rotate(rotation);
+								missile->SetVelocity(vel);
+
+								if (tier >= 3)
+								{
+									missile->FindTarget();
+								}
+
+								projectiles.push_back(missile);
+								break;
 	}
 	}
 }

@@ -135,7 +135,7 @@
     <ClInclude Include="Graphics\Particles\ParticleSystem.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Message System\CreateEntityMessage.h" />
-    <ClInclude Include="Message System\CreateLaserMessage.h" />
+    <ClInclude Include="Message System\CreateProjectile.h" />
     <ClInclude Include="Message System\DestroyEntityMessage.h" />
     <ClInclude Include="Message System\MessageID.h" />
     <ClInclude Include="Resource.h" />
@@ -213,7 +213,7 @@
     <ClCompile Include="Graphics\Particles\ParticleSystem.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Message System\CreateEntityMessage.cpp" />
-    <ClCompile Include="Message System\CreateLaserMessage.cpp" />
+    <ClCompile Include="Message System\CreateProjectile.cpp" />
     <ClCompile Include="Message System\DestroyEntityMessage.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_Geometry.cpp" />

@@ -1,3 +1,3 @@
 #pragma once
 
-enum class MessageID {Invalid, CreateEntity, CreateLaser, DestroyEntity, StargateEnter};
+enum class MessageID {Invalid, CreateEntity, CreateProjectile, DestroyEntity, StargateEnter};
