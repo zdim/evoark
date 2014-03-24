@@ -13,7 +13,7 @@ public:
 
 	CShip* GetTarget() {return target;}
 	void SetTarget(CShip* newTarget);
-
+	float GetTurnRate() { return turnRate; }
 	void DetectShip(CShip* other);
 	void Update(float dt) override;
 

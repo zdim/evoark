@@ -17,6 +17,8 @@ public:
 	void AddGrav(SGD::Vector grav) { gravVec += grav; }
 	//void CCopperhead::TakeDamage(int damage) override;
 
+	void CCopperhead::CreateLaser();
+
 	SGD::Vector AI(float dt); //Everything in the update, except move -- To simplify CCobra
 };
 

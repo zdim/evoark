@@ -179,6 +179,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	if (hull <= 0)
 	{
 		//Send gameOver message
+
 	}
 }
 
