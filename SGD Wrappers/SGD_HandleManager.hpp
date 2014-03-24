@@ -214,6 +214,10 @@ namespace SGD
 			// Verify the handle still corresponds to the stored data
 			const DataPair& info = m_vData[ index ];
 			assert( info.first != SGD::INVALID_HANDLE && "HandleManager::GetData - handle has been removed" );
+			if (info.first != handle)
+			{
+				handle = handle;
+			}
 			assert( info.first == handle && "HandleManager::GetData - handle has expired (another asset is using the location)" );
 			if( info.first != handle )
 				return nullptr;
