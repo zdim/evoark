@@ -87,6 +87,10 @@ void CPlayer::Update(float dt)
 	{
 		Warp();
 	}
+
+	// UI Toggle
+	if (input->IsKeyPressed(SGD::Key::Tab))
+		arrowsOn = !arrowsOn;
 }
 
 void CPlayer::AddGravity(SGD::Vector grav)

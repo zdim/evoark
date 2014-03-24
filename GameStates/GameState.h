@@ -15,7 +15,7 @@
 class CFlyweight;
 class CEmitter;
 class CParticleSystem;
-
+class CPlayer;
 
 class CTestLevelState :
 	public ILevelState
@@ -88,5 +88,8 @@ private:
 	CParticleSystem pSystem;
 
 
+	// UI rendering
+	void UI(CPlayer* _player, std::vector<IEntity*> _allies);
+	SGD::HTexture objArrow = SGD::INVALID_HANDLE;
 };
 
