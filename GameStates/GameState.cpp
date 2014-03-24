@@ -446,13 +446,16 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies)
 		for (int i = 0; i < _allies.size(); i++)
 		{
 			SGD::Vector toTarget = _allies[i]->GetPosition() - _player->GetPosition();
-			toTarget.Normalize();
+			if (toTarget.ComputeLength() > 400)
+			{
+				toTarget.Normalize();
 
-			SGD::Point arrowPos = _player->GetPosition();
-			arrowPos += toTarget * 200;
-			float arrowRot = atan2(_allies[i]->GetPosition().y - _player->GetPosition().y, _allies[i]->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
+				SGD::Point arrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
+				arrowPos += toTarget * 200;
+				float arrowRot = atan2(_allies[i]->GetPosition().y - _player->GetPosition().y, _allies[i]->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
 
-			graphics->DrawTexture(objArrow, arrowPos, arrowRot, {}, {}, { .2f, .2f });
+				graphics->DrawTexture(objArrow, arrowPos, arrowRot, {}, { 200, 0, 200, 150 }, { .15f, .15f });
+			}
 		}
 	}
 	// draw hull
