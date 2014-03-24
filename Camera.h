@@ -3,13 +3,21 @@
 #include "Entities\IEntity.h"
 class CCamera
 {
+	enum camState {unitiallized, initiallized, terminated};
+	camState state;
 	SGD::Point pos;
 	SGD::Size screenSize;
 	IEntity* target;
 	float speed = 250;
-public:
+
 	CCamera(IEntity* t, SGD::Size screen);
 	~CCamera();
+public:
+
+	static CCamera* GetInstance();
+	bool Initiallize(IEntity* t, SGD::Size screen);
+	bool Terminate();
+	void DeleteInstance();
 
 	void Update(float dt);
 	SGD::Rectangle GetBoxInWorld() { return SGD::Rectangle(pos, screenSize); }

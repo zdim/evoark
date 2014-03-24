@@ -16,6 +16,8 @@ protected:
 	SGD::Size imageSize = SGD::Size{0, 0};
 	unsigned int refCount = 1;
 
+	SGD::Point offsetToCamera();
+
 public:
 	CEntity();
 	virtual ~CEntity();

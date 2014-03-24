@@ -56,7 +56,8 @@ void	CTestLevelState::Enter(void)
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 
 	player = EntityManager->GetPlayer();
-	cam = new CCamera(player, SGD::Size{m_nScreenWidth,m_nScreenHeight});
+	cam = CCamera::GetInstance();
+	cam->Initiallize(player, SGD::Size{m_nScreenWidth,m_nScreenHeight});
 
 	pSystem.Init();
 

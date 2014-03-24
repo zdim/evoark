@@ -405,15 +405,16 @@ void CEntityManager::Render()
 	//SGD::Rectangle test = { SGD::Point{ 0, 0 }, SGD::Size{ 400, 400 } }; // rect. for testing culling
 	for (unsigned int i = 0; i < ships.size(); i++)
 	{
-		if (ships[i]->GetRect().IsIntersecting(screen))
+		if (ships[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
 			ships[i]->Render();
 	}
 	for (unsigned int i = 0; i < projectiles.size(); i++)
 	{
-		if (projectiles[i]->GetRect().IsIntersecting(screen))
+		if (projectiles[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
 			projectiles[i]->Render();
 	}
-	if (player)
-	if (player->GetRect().IsIntersecting(screen))
-		player->Render();
+	//If player exists, he SHOULD be in the EntityGroup "ships"
+	//if (player)
+	//if (player->GetRect().IsIntersecting(screen))
+	//	player->Render();
 }
