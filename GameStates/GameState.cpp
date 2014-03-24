@@ -64,6 +64,7 @@ void	CTestLevelState::Enter(void)
 
 void	CTestLevelState::Exit(void)
 {
+	cam->Terminate();
 	SGD::MessageManager::GetInstance()->Terminate();
 	SGD::MessageManager::GetInstance()->DeleteInstance();
 	delete EntityManager;

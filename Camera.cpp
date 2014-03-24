@@ -64,7 +64,7 @@ void CCamera::Update(float dt)
 	dir.Normalize();
 	dir *= speed;
 	SGD::Point newPos = pos + dir*dt;
-	if ((newPos - pos).ComputeLength() > (dest - pos).ComputeLength())
+	if ((newPos - pos).ComputeLength() >= (dest - pos).ComputeLength())
 	{
 		pos = dest;
 	}
