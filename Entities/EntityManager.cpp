@@ -177,23 +177,28 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	}
 }
 
-void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, float rotation, int damage, unsigned int tier, float radius)
+void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier, float radius)
 {
 	switch (type)
 	{
 	case EntityType::Laser:
 	{
 							  CLaser* laser = new CLaser();
+							  laser->SetImage(images[(int)EntityType::Laser]);
+							  laser->SetSize({ 2, 8 });
+							  laser->SetImageSize({ 74, 290 });
+
+							  SGD::Vector offset = {0.0,-1.0};
+							  offset.Rotate(rotation);
+							  offset *= (ownerSize.height + laser->GetSize().height)*0.6f;
+							  position+=offset;
 							  laser->SetPosition(position);
 							  laser->SetRotation(rotation);
 							  laser->SetDamage(damage);
-							  SGD::Vector vel = {400, 0};
+							  SGD::Vector vel = { 0, -400 };
 							  vel.Rotate(rotation);
 							  laser->SetVelocity(vel);
 
-							  laser->SetImage(images[(int)EntityType::Laser]);
-							  laser->SetSize({ 4, 16 });
-							  laser->SetImageSize({ 74, 290 });
 
 							  projectiles.push_back(laser);
 							  break;

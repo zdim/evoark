@@ -350,7 +350,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 								   {
 									   tier = 3;
 								   }
-		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(EntityType::Laser,lMsg->GetPosition(),lMsg->GetRotation(),lMsg->GetDamage(), tier);
+		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(EntityType::Laser,lMsg->GetPosition(),lMsg->GetOwnerSize(),lMsg->GetRotation(),lMsg->GetDamage(), tier);
 	}
 	}
 }

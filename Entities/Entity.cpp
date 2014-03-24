@@ -33,7 +33,7 @@ void	CEntity::Update(float dt)
 	if (gravVec != SGD::Vector{ 0, 0 })
 	{
 		gravVec -= (gravVec * GRAVDECAY);
-		if (gravVec.ComputeLength() <= 2)
+		if (gravVec.ComputeLength() <= 5)
 		{
 			gravVec = SGD::Vector{0,0};
 		}

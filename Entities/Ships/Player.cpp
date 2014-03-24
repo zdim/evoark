@@ -110,7 +110,7 @@ void CPlayer::CreateLaser()
 	if (laserLevel >= 1)
 		damage += 15;
 
-	CreateLaserMessage* msg = new CreateLaserMessage(position,rotation,damage, (laserLevel >= 3));
+	CreateLaserMessage* msg = new CreateLaserMessage(position, size, rotation,damage, (laserLevel >= 3));
 	msg->QueueMessage();
 }
 
