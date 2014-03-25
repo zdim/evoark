@@ -176,8 +176,8 @@ namespace EvoArk_Particles_Editor
                 writer.WriteAttributeString("Radius", EmittorRadius.Value.ToString());
                 writer.WriteAttributeString("EmitBool", BoolLoopBox.Checked.ToString());
                 writer.WriteAttributeString("EmitTime", EmissionTime.Value.ToString());
-                writer.WriteAttributeString("PosX", EmittorPosX.Value.ToString());
-                writer.WriteAttributeString("PosY", EmittorPosY.Value.ToString());
+                writer.WriteAttributeString("PosX", emittor.EmitterPosition.X.ToString());
+                writer.WriteAttributeString("PosY", emittor.EmitterPosition.Y.ToString());
                 writer.WriteAttributeString("Width", EmittorWidth.Value.ToString());
                 writer.WriteAttributeString("Height", EmittorHeight.Value.ToString());
                 writer.WriteEndElement();
@@ -276,9 +276,6 @@ namespace EvoArk_Particles_Editor
 
         public void ResetEmittor()
         {
-            emitterPos = new Point((float)EmittorPosX.Value, (float)EmittorPosY.Value);
-            emitterSize = new Point((float)EmittorWidth.Value, (float)EmittorHeight.Value);
-
             emittor = new Emitter(particleData, emittorShape, emitterSize, emitterPos, (int)NumParticles.Value,
                 (float)SpawnRate.Value, (float)EmissionRate.Value, BoolLoopBox.Checked, (float)EmissionTime.Value);
             emittor.FRadius = (float)EmittorRadius.Value;
@@ -320,8 +317,7 @@ namespace EvoArk_Particles_Editor
             EmittorHeight.Value = (int)emittor.EmitterSize.Y;
             EmittorRadius.Value = (decimal)emittor.FRadius;
             EmissionTime.Value = (decimal)emittor.EmitterTime;
-            EmittorPosX.Value = (int)emitterPos.X;
-            EmittorPosY.Value = (int)emitterPos.Y;
+      
 
 
         }
@@ -379,20 +375,7 @@ namespace EvoArk_Particles_Editor
         }
 
 
-        private void EmittorPosX_ValueChanged(object sender, EventArgs e)
-        {
-            emittor.EmitterPosition.X = (int)EmittorPosX.Value;
-            Point EmitterPosition = new Point((float)EmittorPosX.Value, emittor.EmitterPosition.Y);
-            emittor.EmitterPosition = EmitterPosition;
-        }
-
-        private void EmittorPosY_ValueChanged(object sender, EventArgs e)
-        {
-            emittor.EmitterPosition.Y = (int)EmittorPosY.Value;
-            Point EmitterPosition = new Point(emittor.EmitterPosition.X, (float)EmittorPosY.Value);
-            emittor.EmitterPosition = EmitterPosition;
-        }
-
+   
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ResetEmittor();
@@ -539,6 +522,8 @@ namespace EvoArk_Particles_Editor
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
+            emitterPos.X = MousePosition.X;
+            emitterPos.Y = MousePosition.Y;
             ResetFlyweight();
             ResetEmittor();
         }
@@ -592,11 +577,11 @@ namespace EvoArk_Particles_Editor
                        
                         reader.MoveToNextAttribute();
 
-                        EmittorPosX.Value = reader.ReadContentAsInt();
+                        emittor.EmitterPosition.X = reader.ReadContentAsInt();
                       
                         reader.MoveToNextAttribute();
 
-                        EmittorPosY.Value = reader.ReadContentAsInt();
+                        emittor.EmitterPosition.Y = reader.ReadContentAsInt();
 
                         reader.MoveToNextAttribute();
 
@@ -693,6 +678,7 @@ namespace EvoArk_Particles_Editor
             }
         }
 
+       
 
 
 

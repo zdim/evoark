@@ -48,6 +48,13 @@ void CEntity::rotateToward(SGD::Vector direction, float dt)
 
 void	CEntity::Update(float dt)
 {
+	if (GetType() == (int)EntityType::Player &&
+		(position.x + velocity.x * dt > Game::GetInstance()->GetLevelState()->GetWorldSize().width ||
+		position.x + velocity.x * dt < 0 ||
+		position.y + velocity.y * dt > Game::GetInstance()->GetLevelState()->GetWorldSize().height ||
+		position.y + velocity.y * dt < 0))
+		return; 
+
 	position += (velocity) * dt;
 	position += gravVec * dt;
 	float gravSpeed = gravVec.ComputeLength();

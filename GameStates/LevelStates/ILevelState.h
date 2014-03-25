@@ -10,5 +10,6 @@ public:
 	virtual ~ILevelState();
 	virtual IEntity* GetPlayer() = 0;
 	virtual CCamera* GetCam() = 0;
+	virtual SGD::Size GetWorldSize() = 0;
 };
 

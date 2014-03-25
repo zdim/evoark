@@ -61,7 +61,6 @@ void CPlayer::Update(float dt)
 	velocity = dir * speed;
 	SGD::Point mousePos = input->GetMousePosition();
 	rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
-	CEntity::Update(dt);
 
 	
 
@@ -94,6 +93,10 @@ void CPlayer::Update(float dt)
 	// Position event
 	CCustomEvent* e = new CCustomEvent(EventID::position, nullptr, this);
 	e->Queue();
+
+	CEntity::Update(dt);
+
+	
 }
 
 void CPlayer::AddGravity(SGD::Vector grav)

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.changeImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,11 +50,6 @@
             this.EmittorShapeBox = new System.Windows.Forms.GroupBox();
             this.EmittorRadius = new System.Windows.Forms.NumericUpDown();
             this.RadiusLabel = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.EmittorPosX = new System.Windows.Forms.NumericUpDown();
-            this.EmittorPosY = new System.Windows.Forms.NumericUpDown();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.EmittorWidth = new System.Windows.Forms.NumericUpDown();
             this.EmittorHeight = new System.Windows.Forms.NumericUpDown();
@@ -111,7 +107,6 @@
             this.label24 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.changeImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.EmittorPanel.SuspendLayout();
@@ -123,9 +118,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.EmissionTime)).BeginInit();
             this.EmittorShapeBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EmittorRadius)).BeginInit();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EmittorPosX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EmittorPosY)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EmittorWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EmittorHeight)).BeginInit();
@@ -176,6 +168,13 @@
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // changeImageToolStripMenuItem
+            // 
+            this.changeImageToolStripMenuItem.Name = "changeImageToolStripMenuItem";
+            this.changeImageToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.changeImageToolStripMenuItem.Text = "Change Image";
+            this.changeImageToolStripMenuItem.Click += new System.EventHandler(this.changeImageToolStripMenuItem_Click);
+            // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
@@ -205,6 +204,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(652, 584);
             this.panel1.TabIndex = 0;
+            
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             // 
             // tabControl1
@@ -242,7 +242,7 @@
             this.groupBox4.Controls.Add(this.SpawnRate);
             this.groupBox4.Controls.Add(this.label5);
             this.groupBox4.Controls.Add(this.EmissionRate);
-            this.groupBox4.Location = new System.Drawing.Point(6, 239);
+            this.groupBox4.Location = new System.Drawing.Point(8, 252);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(295, 173);
             this.groupBox4.TabIndex = 12;
@@ -342,7 +342,7 @@
             this.groupBox3.Controls.Add(this.BoolLoopBox);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.EmissionTime);
-            this.groupBox3.Location = new System.Drawing.Point(4, 418);
+            this.groupBox3.Location = new System.Drawing.Point(6, 431);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(297, 100);
             this.groupBox3.TabIndex = 11;
@@ -391,17 +391,16 @@
             // 
             this.EmittorShapeBox.Controls.Add(this.EmittorRadius);
             this.EmittorShapeBox.Controls.Add(this.RadiusLabel);
-            this.EmittorShapeBox.Controls.Add(this.groupBox2);
             this.EmittorShapeBox.Controls.Add(this.groupBox1);
             this.EmittorShapeBox.Controls.Add(this.EmittorShapeButtonCircle);
             this.EmittorShapeBox.Controls.Add(this.EmittorShapeButtonRect);
             this.EmittorShapeBox.Controls.Add(this.EmittorShapeButtonLine);
             this.EmittorShapeBox.Controls.Add(this.EmittorShapeButtonPoint);
-            this.EmittorShapeBox.Location = new System.Drawing.Point(4, 4);
+            this.EmittorShapeBox.Location = new System.Drawing.Point(8, 31);
             this.EmittorShapeBox.Margin = new System.Windows.Forms.Padding(2);
             this.EmittorShapeBox.Name = "EmittorShapeBox";
             this.EmittorShapeBox.Padding = new System.Windows.Forms.Padding(2);
-            this.EmittorShapeBox.Size = new System.Drawing.Size(296, 230);
+            this.EmittorShapeBox.Size = new System.Drawing.Size(295, 205);
             this.EmittorShapeBox.TabIndex = 0;
             this.EmittorShapeBox.TabStop = false;
             this.EmittorShapeBox.Text = "Shape";
@@ -414,7 +413,7 @@
             0,
             0,
             131072});
-            this.EmittorRadius.Location = new System.Drawing.Point(128, 195);
+            this.EmittorRadius.Location = new System.Drawing.Point(156, 154);
             this.EmittorRadius.Margin = new System.Windows.Forms.Padding(2);
             this.EmittorRadius.Name = "EmittorRadius";
             this.EmittorRadius.Size = new System.Drawing.Size(80, 20);
@@ -425,73 +424,12 @@
             // RadiusLabel
             // 
             this.RadiusLabel.AutoSize = true;
-            this.RadiusLabel.Location = new System.Drawing.Point(60, 197);
+            this.RadiusLabel.Location = new System.Drawing.Point(60, 156);
             this.RadiusLabel.Name = "RadiusLabel";
             this.RadiusLabel.Size = new System.Drawing.Size(40, 13);
             this.RadiusLabel.TabIndex = 13;
             this.RadiusLabel.Text = "Radius";
             this.RadiusLabel.Visible = false;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.EmittorPosX);
-            this.groupBox2.Controls.Add(this.EmittorPosY);
-            this.groupBox2.Controls.Add(this.label21);
-            this.groupBox2.Controls.Add(this.label22);
-            this.groupBox2.Location = new System.Drawing.Point(5, 136);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(281, 48);
-            this.groupBox2.TabIndex = 12;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Position";
-            // 
-            // EmittorPosX
-            // 
-            this.EmittorPosX.Location = new System.Drawing.Point(58, 18);
-            this.EmittorPosX.Margin = new System.Windows.Forms.Padding(2);
-            this.EmittorPosX.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.EmittorPosX.Name = "EmittorPosX";
-            this.EmittorPosX.Size = new System.Drawing.Size(80, 20);
-            this.EmittorPosX.TabIndex = 8;
-            this.EmittorPosX.ValueChanged += new System.EventHandler(this.EmittorPosX_ValueChanged);
-            // 
-            // EmittorPosY
-            // 
-            this.EmittorPosY.Location = new System.Drawing.Point(193, 18);
-            this.EmittorPosY.Margin = new System.Windows.Forms.Padding(2);
-            this.EmittorPosY.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.EmittorPosY.Name = "EmittorPosY";
-            this.EmittorPosY.Size = new System.Drawing.Size(80, 20);
-            this.EmittorPosY.TabIndex = 9;
-            this.EmittorPosY.ValueChanged += new System.EventHandler(this.EmittorPosY_ValueChanged);
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(19, 20);
-            this.label21.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(14, 13);
-            this.label21.TabIndex = 6;
-            this.label21.Text = "X";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(151, 20);
-            this.label22.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(14, 13);
-            this.label22.TabIndex = 7;
-            this.label22.Text = "Y";
             // 
             // groupBox1
             // 
@@ -1295,13 +1233,6 @@
             this.splitContainer1.SplitterDistance = 656;
             this.splitContainer1.TabIndex = 3;
             // 
-            // changeImageToolStripMenuItem
-            // 
-            this.changeImageToolStripMenuItem.Name = "changeImageToolStripMenuItem";
-            this.changeImageToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.changeImageToolStripMenuItem.Text = "Change Image";
-            this.changeImageToolStripMenuItem.Click += new System.EventHandler(this.changeImageToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1329,10 +1260,6 @@
             this.EmittorShapeBox.ResumeLayout(false);
             this.EmittorShapeBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EmittorRadius)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EmittorPosX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EmittorPosY)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EmittorWidth)).EndInit();
@@ -1402,11 +1329,6 @@
         private System.Windows.Forms.GroupBox EmittorShapeBox;
         private System.Windows.Forms.NumericUpDown EmittorRadius;
         private System.Windows.Forms.Label RadiusLabel;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.NumericUpDown EmittorPosX;
-        private System.Windows.Forms.NumericUpDown EmittorPosY;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NumericUpDown EmittorWidth;
         private System.Windows.Forms.NumericUpDown EmittorHeight;
