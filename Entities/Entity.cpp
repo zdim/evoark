@@ -5,6 +5,7 @@
 #include "../Camera.h"
 #include "../GameStates/LevelStates/ILevelState.h"
 #include "../GameStates/Game.h"
+#include "../Message System/DestroyEntityMessage.h"
 
 #define GRAVDECAY 0.025F
 
@@ -103,4 +104,14 @@ void	CEntity::Release()
 	{
 		delete this;
 	}
+}
+
+void CEntity::SelfDestruct()
+{
+	if (destroying)
+		return;
+
+	DestroyEntityMessage* msg = new DestroyEntityMessage(this);
+	msg->QueueMessage();
+	destroying = true;
 }

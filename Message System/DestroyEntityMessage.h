@@ -5,9 +5,9 @@
 
 class DestroyEntityMessage : public SGD::Message
 {
-	IEntity* sender;
+	IEntity* sender = nullptr;
 public:
-	IEntity* GetEntity() {return sender;}
+	IEntity* GetEntity() const {return sender;}
 	DestroyEntityMessage(IEntity* toDestroy);
 	~DestroyEntityMessage();
 };

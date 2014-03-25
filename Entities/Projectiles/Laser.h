@@ -11,6 +11,7 @@ public:
 	CLaser();
 	~CLaser();
 
+	int GetType() { return (int)EntityType::Laser; }
 	void Update(float dt) override;
 	int GetDamage() {return damage;}
 	void SetDamage(int newDam) {damage = newDam;}

@@ -342,7 +342,10 @@ void CEntityManager::RemoveFromGroup(EntityGroup& group, IEntity* entity)
 	for (unsigned int i = 0; i < group.size(); i++)
 	{
 		if (group[i] == entity)
+		{
 			group.erase(group.begin()+i);
+			return;
+		}
 	}
 }
 

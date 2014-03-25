@@ -13,6 +13,7 @@
 #include "../SGD Wrappers/SGD_MessageManager.h"
 #include "../Event System/EventManager.h"
 #include "../Message System/CreateEntityMessage.h"
+#include "../Message System/DestroyEntityMessage.h"
 #include "../Message System/CreateProjectile.h"
 #include "../Entities/Ships/Player.h"
 
@@ -350,6 +351,14 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	{
 								   const CreateProjectileMessage* lMsg = dynamic_cast<const CreateProjectileMessage*>(msg);
 		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(lMsg->GetProjType(),lMsg->GetPosition(),lMsg->GetOwnerSize(),lMsg->GetRotation(),lMsg->GetDamage(), lMsg->GetTier());
+		break;
+	}
+	case MessageID::DestroyEntity:
+	{
+									 const DestroyEntityMessage* dMsg = dynamic_cast<const DestroyEntityMessage*>(msg);
+
+									 CTestLevelState::GetInstance()->EntityManager->Destroy(dMsg->GetEntity());
+									 break;
 	}
 	}
 }

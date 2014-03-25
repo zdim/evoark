@@ -20,6 +20,8 @@ protected:
 	SGD::Point offsetToCamera();
 	void rotateToward(SGD::Vector direction, float dt);
 
+	bool destroying = false;
+
 public:
 	CEntity();
 	virtual ~CEntity();
@@ -54,5 +56,6 @@ public:
 
 	virtual void AddRef() final;
 	virtual void Release() final;
+	virtual void SelfDestruct() override;
 };
 
