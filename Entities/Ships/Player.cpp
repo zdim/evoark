@@ -38,8 +38,8 @@ void CPlayer::Update(float dt)
 	pushTimer += dt;
 	warpTimer += dt;
 
-	CParticleSystem::GetInstance()->GetParticleEffect(2)->SetEmitterPosition(position - size / 2 + CCamera::GetInstance()->GetOffset());
-	CParticleSystem::GetInstance()->GetParticleEffect(2)->Update(dt);
+	CParticleSystem::GetInstance()->GetParticleEffect(1)->SetEmitterPosition(position);
+	CParticleSystem::GetInstance()->GetParticleEffect(1)->Update(dt);
 
 
 
@@ -188,15 +188,16 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	hull -= damage;
 	if (hull <= 0)
 	{
-		/*CCreateGameOverMessage* msg = new CCreateGameOverMessage();
-		msg->QueueMessage();*/
+		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
+		msg->QueueMessage();
 	}
 }
 
 void CPlayer::Render()
 {
 	if (shield > 0)
-		CParticleSystem::GetInstance()->GetParticleEffect(2)->Render();
+		CParticleSystem::GetInstance()->GetParticleEffect(1)->Render();
+
 	SGD::Color color = {};
 	if (shield < maxShield)
 		color = SGD::Color{ 255, 0, 0 };
