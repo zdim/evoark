@@ -99,6 +99,16 @@ bool	CTestLevelState::Input(void)
 		Game::GetInstance()->PushState(CPauseState::GetInstance());
 		return true;
 	}
+	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::C))
+	{
+		cam->SetTarget(EntityManager->GetStargate());
+		return true;
+	}
+	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::P))
+	{
+		cam->SetTarget(EntityManager->GetPlayer());
+		return true;
+	}
 	return true;
 }
 
