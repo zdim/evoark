@@ -4,7 +4,7 @@ class CHuman :
 	public CShip
 {
 private:
-	CShip target;
+	CShip* target = nullptr;
 	bool godMode;
 
 	float laserTimer;
@@ -20,7 +20,7 @@ public:
 	void AddGrav(SGD::Vector grav) {gravVec += grav;}
 
 	//stubbing for now
-	IEntity* GetTarget() {return nullptr;}
+	IEntity* GetTarget() {return target;}
 	void SetTarget(IEntity* newTarget) {}
 };
 

@@ -363,24 +363,28 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		player = nullptr;
 		break;
 	case EntityType::Human:
+		dynamic_cast<CHuman*>(entity)->SetTarget(nullptr);
 		RemoveFromGroup(ships, entity);
 		RemoveFromGroup(allies, entity);
 		break;
 	case EntityType::Copperhead:
 	case EntityType::Cobra:
 	case EntityType::Mamba:
+		dynamic_cast<CEnemy*>(entity)->SetTarget(nullptr);
 		RemoveFromGroup(smallEnemies, entity);
 		RemoveFromGroup(ships, entity);
 		RemoveFromLeader(entity);
 		break;
 	case EntityType::Coral:
 	case EntityType::Moccasin:
+		dynamic_cast<CEnemy*>(entity)->SetTarget(nullptr);
 		RemoveFromGroup(bigEnemies, entity);
 		RemoveFromGroup(ships, entity);
 		RemoveFromLeader(entity);
 		break;
-	case EntityType::Laser:
 	case EntityType::Missile:
+		dynamic_cast<CMissile*>(entity)->SetTarget(nullptr);
+	case EntityType::Laser:
 		RemoveFromGroup(projectiles, entity);
 		break;
 	}
