@@ -115,7 +115,18 @@ namespace Editor
 
         public new void Update()
         {
-
+            //if (panel1.VerticalScroll.Visible == true && panel1.HorizontalScroll.Visible == true)
+            //{
+            //    D3D.Resize(panel1, panel1.Size.Width - SystemInformation.VerticalScrollBarWidth, panel1.Size.Height - SystemInformation.HorizontalScrollBarHeight, false);
+            //}
+            //else if(panel1.HorizontalScroll.Visible == true)
+            //{
+            //    D3D.Resize(panel1, panel1.Size.Width, panel1.Size.Height - SystemInformation.HorizontalScrollBarHeight, false);
+            //}
+            //else if(panel1.VerticalScroll.Visible == true)
+            //{
+            //    D3D.Resize(panel1, panel1.Size.Width - SystemInformation.VerticalScrollBarWidth, panel1.Size.Height, false);
+            //}
         }
 
         public void Render()
@@ -290,6 +301,23 @@ namespace Editor
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
+
+            if (panel1.VerticalScroll.Visible == true && panel1.HorizontalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width - SystemInformation.VerticalScrollBarWidth, panel1.Size.Height - SystemInformation.HorizontalScrollBarHeight, false);
+            }
+            else if (panel1.HorizontalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width, panel1.Size.Height - SystemInformation.HorizontalScrollBarHeight, false);
+            }
+            else if (panel1.VerticalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width - SystemInformation.VerticalScrollBarWidth, panel1.Size.Height, false);
+            }
+            else
+            {
+                D3D.Resize(panel1, false);
+            }
         }
 
         private void quadHeight_ValueChanged(object sender, EventArgs e)
@@ -302,6 +330,23 @@ namespace Editor
             numericUpDownEventY.Maximum = quadSize.Height * worldSize.Height; panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
+
+            if (panel1.VerticalScroll.Visible == true && panel1.HorizontalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width - SystemInformation.VerticalScrollBarWidth, panel1.Size.Height - SystemInformation.HorizontalScrollBarHeight, false);
+            }
+            else if (panel1.HorizontalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width, panel1.Size.Height - SystemInformation.HorizontalScrollBarHeight, false);
+            }
+            else if (panel1.VerticalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width - SystemInformation.VerticalScrollBarWidth, panel1.Size.Height, false);
+            }
+            else
+            {
+                D3D.Resize(panel1, false);
+            }
         }
 
         private void numRows_ValueChanged(object sender, EventArgs e)
@@ -329,6 +374,23 @@ namespace Editor
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
+
+            if (panel1.VerticalScroll.Visible == true && panel1.HorizontalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width - SystemInformation.VerticalScrollBarWidth, panel1.Size.Height - SystemInformation.HorizontalScrollBarHeight, false);
+            }
+            else if (panel1.HorizontalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width, panel1.Size.Height - SystemInformation.HorizontalScrollBarHeight, false);
+            }
+            else if (panel1.VerticalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width - SystemInformation.VerticalScrollBarWidth, panel1.Size.Height, false);
+            }
+            else
+            {
+                D3D.Resize(panel1, false);
+            }
         }
 
         private void numCols_ValueChanged(object sender, EventArgs e)
@@ -354,6 +416,23 @@ namespace Editor
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
+
+            if (panel1.VerticalScroll.Visible == true && panel1.HorizontalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width - SystemInformation.VerticalScrollBarWidth, panel1.Size.Height - SystemInformation.HorizontalScrollBarHeight, false);
+            }
+            else if (panel1.HorizontalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width, panel1.Size.Height - SystemInformation.HorizontalScrollBarHeight, false);
+            }
+            else if (panel1.VerticalScroll.Visible == true)
+            {
+                D3D.Resize(panel1, panel1.Size.Width - SystemInformation.VerticalScrollBarWidth, panel1.Size.Height, false);
+            }
+            else
+            {
+                D3D.Resize(panel1, false);
+            }
         }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)

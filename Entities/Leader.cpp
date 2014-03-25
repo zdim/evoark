@@ -76,10 +76,11 @@ int CLeader::FindInFlock(IEntity* entity)
 
 void CLeader::Remove(IEntity* entity)
 {
+	entity->Release();
 	int i = FindInFlock(entity);
 	if (i < 0)
 		return;
-	members[i]->Release();
+	//members[i]->Release();
 	members.erase(members.begin()+i);
 }
 

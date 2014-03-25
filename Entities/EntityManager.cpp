@@ -111,6 +111,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 									   if (0 == i && coord && !coordinator)
 									   {
 										   copperheads[i] = new CCopperheadCoord();
+										   coord = copperheads[i];
 									   }
 									   else
 									   {
@@ -137,6 +138,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  if (0 == i && coord && !coordinator)
 								  {
 									  cobras[i] = new CCobraCoord();
+									  coord = cobras[i];
 								  }
 								  else
 								  {
@@ -164,6 +166,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  if (0 == i && coord && !coordinator)
 								  {
 									  mambas[i] = new CMambaCoord();
+									  coord = mambas[i];
 								  }
 								  else
 								  {
@@ -363,24 +366,28 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		player = nullptr;
 		break;
 	case EntityType::Human:
+		dynamic_cast<CHuman*>(entity)->SetTarget(nullptr);
 		RemoveFromGroup(ships, entity);
 		RemoveFromGroup(allies, entity);
 		break;
 	case EntityType::Copperhead:
 	case EntityType::Cobra:
 	case EntityType::Mamba:
+		dynamic_cast<CEnemy*>(entity)->SetTarget(nullptr);
 		RemoveFromGroup(smallEnemies, entity);
 		RemoveFromGroup(ships, entity);
 		RemoveFromLeader(entity);
 		break;
 	case EntityType::Coral:
 	case EntityType::Moccasin:
+		dynamic_cast<CEnemy*>(entity)->SetTarget(nullptr);
 		RemoveFromGroup(bigEnemies, entity);
 		RemoveFromGroup(ships, entity);
 		RemoveFromLeader(entity);
 		break;
-	case EntityType::Laser:
 	case EntityType::Missile:
+		dynamic_cast<CMissile*>(entity)->SetTarget(nullptr);
+	case EntityType::Laser:
 		RemoveFromGroup(projectiles, entity);
 		break;
 	}
