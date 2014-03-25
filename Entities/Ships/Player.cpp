@@ -1,9 +1,9 @@
 //
 #include "Player.h"
 #include <math.h>
+#include <algorithm>
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
-#include <algorithm>
 #include "../../Message System/CreateProjectile.h"
 #include "../../Camera.h"
 #include "../../Event System/CustomEvent.h"
@@ -38,8 +38,8 @@ void CPlayer::Update(float dt)
 	pushTimer += dt;
 	warpTimer += dt;
 
-	CParticleSystem::GetInstance()->GetParticleEffect(1)->SetEmitterPosition(position);
-	CParticleSystem::GetInstance()->GetParticleEffect(1)->Update(dt);
+	CParticleSystem::GetInstance()->GetParticleEffect(2)->SetEmitterPosition(position - size / 2 + CCamera::GetInstance()->GetOffset());
+	CParticleSystem::GetInstance()->GetParticleEffect(2)->Update(dt);
 
 
 
@@ -196,10 +196,10 @@ void CPlayer::TakeDamage(int damage, bool collision)
 void CPlayer::Render()
 {
 	if (shield > 0)
-		CParticleSystem::GetInstance()->GetParticleEffect(1)->Render();
+		CParticleSystem::GetInstance()->GetParticleEffect(2)->Render();
 	SGD::Color color = {};
 	if (shield < maxShield)
 		color = SGD::Color{ 255, 0, 0 };
-	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { 1.0, 1.0 });
+	float scale = max(size.width / imageSize.width, size.height / imageSize.height);
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
 }
