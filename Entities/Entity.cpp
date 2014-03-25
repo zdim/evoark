@@ -109,6 +109,8 @@ void	CEntity::Release()
 	refCount--;
 	if (refCount <= 0)
 		delete this;
+	else
+		refCount = refCount;
 }
 
 void CEntity::SelfDestruct()

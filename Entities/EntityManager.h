@@ -14,9 +14,10 @@ class CEntityManager
 	EntityGroup ships;
 	EntityGroup projectiles;
 	EntityGroup asteroids;
-	EntityGroup barriers;
+	EntityGroup stationaries;
 	EntityGroup gravObjects;
 	Coordinator* coordinator;
+	CEntity* stargate = nullptr;
 	std::vector<SGD::HTexture> images;
 
 	CEntityManager();

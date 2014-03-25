@@ -99,6 +99,8 @@ void CCoral::DestroyModule(CModule* mod)
 {
 	if (mod == nullptr)
 		return;
+	mod->SetOwner(nullptr);
+	mod->Release();
 	if (mod == engine)
 	{
 		engine = nullptr;
@@ -119,17 +121,15 @@ void CCoral::DestroyModule(CModule* mod)
 	{
 		ability = nullptr;
 	}
-	mod->Release();
 }
 
-void CCoral::SelfDestruct(void)
+void CCoral::DestroyAllModules()
 {
-	engine->Release();
-	cockpit->Release();
-	shieldMod->Release();
-	laser->Release();
-	ability->Release();
-	//Send a destroy message
+	DestroyModule(engine);
+	DestroyModule(cockpit);
+	DestroyModule(shieldMod);
+	DestroyModule(laser);
+	DestroyModule(ability);
 }
 
 void CCoral::SetImages(std::vector<SGD::HTexture>& images)

@@ -1,3 +1,4 @@
+#pragma
 #include "../Entity.h"
 
 class Stationary : public CEntity
