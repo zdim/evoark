@@ -3,6 +3,8 @@
 #include "../../SGD Wrappers/SGD_HandleManager.h"
 #include "../../TinyXML/tinyxml.h"
 #include <string>
+CParticleSystem* CParticleSystem::s_Instance;
+
 
 CParticleSystem::CParticleSystem()
 {
@@ -13,6 +15,29 @@ CParticleSystem::CParticleSystem()
 CParticleSystem::~CParticleSystem()
 {
 }
+
+
+
+/*static*/ CParticleSystem* CParticleSystem::GetInstance()
+{
+	
+	if (s_Instance == nullptr)
+		s_Instance = new CParticleSystem;
+
+	// Return the singleton
+	return s_Instance;
+}
+
+// Singleton destructor
+/*static*/ void CParticleSystem::DeleteInstance()
+{
+	// Deallocate singleton
+	delete s_Instance;
+	s_Instance = nullptr;
+}
+
+
+
 
 void CParticleSystem::Init()
 {

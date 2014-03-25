@@ -35,6 +35,7 @@ class CPlayer :
 
 	bool arrowsOn = false;
 
+
 public:
 	CPlayer();
 	virtual ~CPlayer();

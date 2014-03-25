@@ -114,9 +114,6 @@
     <ClInclude Include="Entities\Ships\Player.h">
       <Filter>Entities\Ships</Filter>
     </ClInclude>
-    <ClInclude Include="Entities\Ships\Ship.h">
-      <Filter>Entities\Ships</Filter>
-    </ClInclude>
     <ClInclude Include="Entities\Ships\Enemies\Cobra.h">
       <Filter>Entities\Ships\Enemies</Filter>
     </ClInclude>
@@ -302,6 +299,9 @@
     </ClInclude>
     <ClInclude Include="Entities\Projectiles\Laser.h">
       <Filter>Entities\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Ships\Ship.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

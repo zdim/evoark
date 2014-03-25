@@ -522,8 +522,8 @@ namespace EvoArk_Particles_Editor
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
-            emitterPos.X = MousePosition.X;
-            emitterPos.Y = MousePosition.Y;
+            emitterPos.X = e.X;
+            emitterPos.Y = e.Y;
             ResetFlyweight();
             ResetEmittor();
         }
@@ -678,8 +678,14 @@ namespace EvoArk_Particles_Editor
             }
         }
 
-       
+        private void panel1_Resize(object sender, EventArgs e)
+        {
+            if(m_D3D != null )
+            m_D3D.Resize(DirectXPanel, DirectXPanel.ClientSize.Width, DirectXPanel.ClientSize.Height, false);
+        }
 
+       
+        
 
 
 
