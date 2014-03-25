@@ -19,7 +19,7 @@ void CLaser::Update(float dt)
 	velocity += gravVec;
 	gravVec = SGD::Vector{0,0};
 	CEntity::Update(dt);
-	if (position.IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
+	if (!position.IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
 		SelfDestruct();
 }
 
