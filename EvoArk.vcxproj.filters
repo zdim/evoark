@@ -312,6 +312,12 @@
     <ClInclude Include="Entities\Collidables\Trigger.h">
       <Filter>Entities\Collidables</Filter>
     </ClInclude>
+    <ClInclude Include="Entities\Collidables\InvisibleTrigger.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="Message System\VictoryMessage.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -523,9 +529,6 @@
     </ClCompile>
     <ClCompile Include="Message System\CreateGameOverMessage.cpp">
       <Filter>Message System</Filter>
-    </ClCompile>
-    <ClCompile Include="Entities\Collidables\Trigger.cpp">
-      <Filter>Entities\Collidables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

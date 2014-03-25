@@ -5,6 +5,7 @@
 #include "Ships\Enemies\Cobra.h"	//Also includes Copperhead indirectly
 #include "Ships\Enemies\Mamba.h"
 #include "Ships\Enemies\Moccasin.h"	//Also includes Coral indirectly
+#include "Collidables\Trigger.h"
 #include "Projectiles\Missile.h"	//Also includes Laser indirectly
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
@@ -48,6 +49,8 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::ShieldModule] = graphics->LoadTexture("Resources/Graphics/Ship1.png");
 	images[(int)EntityType::LaserModule] = graphics->LoadTexture("Resources/Graphics/Ship3.png");
 	images[(int)EntityType::MissileModule] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
+
+	images[(int)EntityType::Stargate] = graphics->LoadTexture("Resources/Graphics/Stargate.png");
 }											  	
 											  
 void CEntityManager::Terminate()			  	
@@ -63,6 +66,7 @@ void CEntityManager::Terminate()
 			images[i] = SGD::INVALID_HANDLE;
 		}
 	}
+	images.clear();
 }
 
 
@@ -207,6 +211,12 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	{
 								
 	}
+	case EntityType::Stargate:
+		stargate = new Trigger();
+		stargate->SetImage(images[(int)EntityType::Stargate]);
+		stargate->SetSize({64, 64});
+		stationaries.push_back(stargate);
+
 	}
 }
 
@@ -381,6 +391,7 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 	case EntityType::Coral:
 	case EntityType::Moccasin:
 		dynamic_cast<CEnemy*>(entity)->SetTarget(nullptr);
+		dynamic_cast<CCoral*>(entity)->DestroyAllModules();
 		RemoveFromGroup(bigEnemies, entity);
 		RemoveFromGroup(ships, entity);
 		RemoveFromLeader(entity);
@@ -396,9 +407,9 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 
 void CEntityManager::DestroyGroup(EntityGroup& group)	//Iterates through every entity in a group, calling Destroy()
 {
-	for (unsigned int i = 0; i < group.size(); i++)
+	while(group.size())
 	{
-		Destroy(group[i]);
+		Destroy(group[0]);
 	}
 }
 
@@ -407,7 +418,7 @@ void CEntityManager::DestroyAll()	//Calls DestroyGroup on all groups
 	DestroyGroup(ships);
 	DestroyGroup(projectiles);
 	DestroyGroup(asteroids);
-	DestroyGroup(barriers);
+	DestroyGroup(stationaries);
 	DestroyGroup(gravObjects);
 }
 

@@ -14,6 +14,7 @@
 #include "../Event System/EventManager.h"
 #include "../Message System/CreateEntityMessage.h"
 #include "../Message System/DestroyEntityMessage.h"
+#include "LevelStates\GameOverState.h"
 #include "../Message System/CreateProjectile.h"
 #include "../Entities/Ships/Player.h"
 
@@ -46,6 +47,9 @@ void	CTestLevelState::Enter(void)
 	//EntityManager->Spawn(EntityType::Player, SGD::Point{100,150});
 
 	Generate();
+	//EntityManager->Spawn(EntityType::Player, { 150, 150 });
+	//EntityManager->Spawn(EntityType::Copperhead, { 200, 200 });
+	//EntityManager->Spawn(EntityType::Coral, { 200, 200 });
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 
@@ -66,11 +70,14 @@ void	CTestLevelState::Exit(void)
 		graphics->UnloadTexture(BackgroundImage);
 	graphics->UnloadTexture(objArrow);
 
+
+	//Terminating Messages or events before Entity manager will BREAK it on the NEXT level.
+	//Terminate EntityManager FIRST :3
+	EntityManager->Terminate();
 	SGD::MessageManager::GetInstance()->Terminate();
 	SGD::MessageManager::GetInstance()->DeleteInstance();
 	CEventManager::GetInstance().ClearEvents();
 	CEventManager::GetInstance().ClearListeners();
-	EntityManager->Terminate();
 }
 
 bool	CTestLevelState::Input(void)
@@ -349,6 +356,10 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 
 									 CTestLevelState::GetInstance()->EntityManager->Destroy(dMsg->GetEntity());
 									 break;
+	}
+	case MessageID::GameOver:
+	{
+								Game::GetInstance()->PushState(CGameOverState::GetInstance());
 	}
 	}
 }
