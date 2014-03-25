@@ -40,7 +40,8 @@ void	CTestLevelState::Enter(void)
 	objArrow = graphics->LoadTexture("Resources/Graphics/Arrow.png");
 
 	//JD's Test flock, ally and player
-	EntityManager = new CEntityManager();
+	EntityManager = CEntityManager::GetInstance();
+	EntityManager->Initialize();
 	//EntityManager->Spawn(EntityType::Player, SGD::Point{100,150});
 
 	// test player
@@ -75,8 +76,9 @@ void	CTestLevelState::Exit(void)
 
 	SGD::MessageManager::GetInstance()->Terminate();
 	SGD::MessageManager::GetInstance()->DeleteInstance();
-	delete EntityManager;
-	EntityManager = nullptr;
+	CEventManager::GetInstance().ClearListeners();
+	CEventManager::GetInstance().ClearEvents();
+	EntityManager->Terminate();
 }
 
 bool	CTestLevelState::Input(void)
@@ -161,10 +163,10 @@ void	CTestLevelState::Generate()
 					EntityManager->Spawn(EntityType::Cobra, col[j].pos, col[j].objectAmount);
 					break;
 				case MAMBA:
-					EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount);
+				EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount);
 					break;
 				case CORAL:
-					//EntityManager->Spawn(EntityType::Coral, col[j].pos, col[j].objectAmount);
+					EntityManager->Spawn(EntityType::Coral, col[j].pos, col[j].objectAmount);
 					break;
 				case MOCASSIN:
 					//EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, 1);

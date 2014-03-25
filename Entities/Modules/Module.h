@@ -6,6 +6,7 @@ class CModule :
 protected:
 	IEntity* owner;
 	SGD::Vector posOffset; //Offset by owner's position
+	float rotOffset = 0;
 	float cooldown;		//For any abilities and shield delay
 	float timer = 0;	//For cooldown
 	int hull = 50;		//For destruction
@@ -22,7 +23,7 @@ public:
 	int			GetHull() { return hull; }		//For destruction
 	int			GetHullMax() { return hullMax; }
 
-	void SetOwner (IEntity*	newVal) { owner = newVal; }
+	void SetOwner (IEntity*	newVal);// { owner = newVal; owner->AddRef(); }
 	void SetOffset(SGD::Vector newVal) {posOffset = newVal; }
 	void SetCooldown (float newVal) { cooldown = newVal; }		//For any abilities and shield delay
 	void SetTimer (float newVal) { timer = newVal; }	//For cooldown
@@ -33,5 +34,7 @@ public:
 
 	virtual void TakeDamage(int damage, bool collision = false);
 	virtual void Activate();
+
+	void ReleaseOwner();
 };
 

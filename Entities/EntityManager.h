@@ -19,17 +19,28 @@ class CEntityManager
 	Coordinator* coordinator;
 	std::vector<SGD::HTexture> images;
 
+	CEntityManager();
+	~CEntityManager();
 public:
+
+	static CEntityManager* GetInstance();
+	void Initialize();
+	void Terminate();
 
 	CPlayer* GetPlayer() {return dynamic_cast<CPlayer*>(player);}
 	std::vector<IEntity*> GetAllies() { return allies; }
 	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.
 	void SpawnProjectile(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier = 1, float radius = -1.0f); //Spawns a projectile 
 	//int GetDamageFromEntity(IEntity* entity, EntityType projType);
-	void ClearTargeted(CEntity* entity);	//Iterates through the groups that could potentially have this entity targeted, and tells them to untarget it.
-	void Destroy(CEntity* entity);	//Calls ClearTargeted() on the given entity, then entity->release, and erases the pointer from the list.
-	void DestroyGroup(EntityType group);	//Iterates through every entity in a group, calling Destroy()
+	void ClearTargeted(IEntity* entity);	//Iterates through the groups that could potentially have this entity targeted, and tells them to untarget it.
+	int FindLeaderIndex(IEntity* entity);
+	void RemoveFromLeader(IEntity* entity);
+	void RemoveFromGroup(EntityGroup& group, IEntity* entity);
+	void Destroy(IEntity* entity);	//Calls ClearTargeted() on the given entity, then entity->release, and erases the pointer from the list.
+	void DestroyGroup(EntityGroup& group);	//Iterates through every entity in a group, calling Destroy()
 	void DestroyAll();	//Calls DestroyGroup on all groups
+	void DestroyLeader(CLeader* l);
+	void DestroyAllLeaders();
 	void CheckCollision(EntityGroup& group1, EntityGroup& group2);
 	bool ShapedCollisions(IEntity* thing1, IEntity* thing2);
 	float circleLineInterection(SGD::Point circlePos, float radius, SGD::Point p1, SGD::Point p2);	// < 0 means no intersection. == 0 means one intersction point. > 0 means 2 intersection points.
@@ -39,7 +50,5 @@ public:
 
 	void Update(float dt);
 	void Render();
-	CEntityManager();
-	~CEntityManager();
 };
 

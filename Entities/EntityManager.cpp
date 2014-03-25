@@ -11,29 +11,51 @@
 
 CEntityManager::CEntityManager()
 {
+}
+
+
+CEntityManager::~CEntityManager()
+{
+}
+
+CEntityManager* CEntityManager::GetInstance()
+{
+	static CEntityManager instance;
+	return &instance;
+}
+
+void CEntityManager::Initialize()
+{
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
 	images.resize((int)EntityType::Count);
 	for (unsigned int i = 0; i < images.size(); i++)
 	{
 		images[i] = SGD::INVALID_HANDLE;
 	}
-	images[(int)EntityType::Player] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
-	images[(int)EntityType::Human] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	images[(int)EntityType::Player]		= graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	images[(int)EntityType::Human]		= graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 	images[(int)EntityType::Copperhead] = graphics->LoadTexture("Resources/Graphics/Ship1.png");
-	images[(int)EntityType::Cobra] = graphics->LoadTexture("Resources/Graphics/Ship3.png");
-	images[(int)EntityType::Mamba] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
-	images[(int)EntityType::Coral] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
-	images[(int)EntityType::Moccasin] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
-	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Laser.png");
-	images[(int)EntityType::Missile] = graphics->LoadTexture("Resources/Graphics/Missile.png");
+	images[(int)EntityType::Cobra]		= graphics->LoadTexture("Resources/Graphics/Ship3.png");
+	images[(int)EntityType::Mamba]		= graphics->LoadTexture("Resources/Graphics/Ship2.png");
+	images[(int)EntityType::Coral]		= graphics->LoadTexture("Resources/Graphics/Ship4.png");
+	images[(int)EntityType::Moccasin]	= graphics->LoadTexture("Resources/Graphics/Ship6.png");
+	images[(int)EntityType::Laser]		= graphics->LoadTexture("Resources/Graphics/Laser.png");
+	images[(int)EntityType::Missile]	= graphics->LoadTexture("Resources/Graphics/Missile.png");
 
-}
-
-
-CEntityManager::~CEntityManager()
-{
+	//Change this when we have module assets
+	images[(int)EntityType::BaseModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	images[(int)EntityType::EngineModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	images[(int)EntityType::ShieldModule] = graphics->LoadTexture("Resources/Graphics/Ship1.png");
+	images[(int)EntityType::LaserModule] = graphics->LoadTexture("Resources/Graphics/Ship3.png");
+	images[(int)EntityType::MissileModule] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
+}											  	
+											  
+void CEntityManager::Terminate()			  	
+{											  
+	DestroyAll();
+	DestroyAllLeaders();
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
-	for (unsigned int i = 0; i < images.size(); i++)
+	for (unsigned int i = 0; i < (unsigned int)EntityType::Count; i++)
 	{
 		if (images[i] != SGD::INVALID_HANDLE)
 		{
@@ -42,6 +64,7 @@ CEntityManager::~CEntityManager()
 		}
 	}
 }
+
 
 void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int amount, bool coord) //Spawns either one entity, or a flock of enemies, making the leader object in the process
 {
@@ -101,6 +124,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								   }
 								   leader->SetHome(position);
 								   leader->Assign(copperheads); //Leader repositions entities
+								   leaders.push_back(leader);
 								   break;
 	}
 	case EntityType::Cobra:
@@ -126,11 +150,13 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  }
 							  leader->SetHome(position);
 							  leader->Assign(cobras);
+							  leaders.push_back(leader);
 							  break;
 	}
 	case EntityType::Mamba:
 	{
-							  CLeader* leader = new CLeader();
+							  CLeader* leader = nullptr;
+							  leader = new CLeader;
 							  EntityGroup mambas;
 							  mambas.resize(amount);
 							  for (unsigned int i = 0; i < mambas.size(); i++)
@@ -151,25 +177,28 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  }
 							  leader->SetHome(position);
 							  leader->Assign(mambas);
+							  leaders.push_back(leader);
 							  break;
 	}
 	case EntityType::Coral:
 	{
-							  //CLeader* leader = new CLeader();
-							  //EntityGroup corals;
-							  //corals.resize(amount);
-							  //for (unsigned int i = 0; i < corals.size(); i++)
-							  //{
-								 // corals[i] = new CCoral();
-								 // corals[i]->SetImage(images[(int)EntityType::Coral]);
-								 // corals[i]->SetImageSize({ 96, 78 });
-								 // corals[i]->SetSize({ 16, 16 });
-								 // bigEnemies.push_back(corals[i]);
-								 // ships.push_back(corals[i]);
-							  //}
-							  //leader->SetHome(position);
-							  //leader->Assign(corals);
-							  //break;
+							  CLeader* leader = new CLeader();
+							  EntityGroup corals;
+							  corals.resize(amount);
+							  for (unsigned int i = 0; i < corals.size(); i++)
+							  {
+								  corals[i] = new CCoral();
+								  corals[i]->SetImage(images[(int)EntityType::Coral]);
+								  //corals[i]->SetImageSize({ 96, 78 });
+								  corals[i]->SetSize({ 64, 64 });
+								  dynamic_cast<CCoral*>(corals[i])->SetImages(images);
+								  bigEnemies.push_back(corals[i]);
+								  ships.push_back(corals[i]);
+							  }
+							  leader->SetHome(position);
+							  leader->Assign(corals);
+							  leaders.push_back(leader);
+							  break;
 	}
 	case EntityType::Moccasin:
 	{
@@ -265,24 +294,133 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 //	}
 //}
 
-void CEntityManager::ClearTargeted(CEntity* entity)	//Iterates through the groups that could potentially have this entity targeted, and tells them to untarget it.
+void CEntityManager::ClearTargeted(IEntity* entity)	//Iterates through the groups that could potentially have this entity targeted, and tells them to untarget it.
 {
+	if (!entity)
+		return;
 
+	for (unsigned int i = 0; i < smallEnemies.size(); i++)
+	{
+		CEnemy* enemy = dynamic_cast<CEnemy*>(smallEnemies[i]);
+		if (enemy->GetTarget() == entity)
+			enemy->SetTarget(nullptr);
+	}
+	for (unsigned int i = 0; i < bigEnemies.size(); i++)
+	{
+		CEnemy* enemy = dynamic_cast<CEnemy*>(bigEnemies[i]);
+		if (enemy->GetTarget() == entity)
+			enemy->SetTarget(nullptr);
+	}
+	for (unsigned int i = 0; i < allies.size(); i++)
+	{
+		CHuman* ally = dynamic_cast<CHuman*>(allies[i]);
+		if (ally->GetTarget() == entity)
+			ally->SetTarget(nullptr);
+	}
 }
 
-void CEntityManager::Destroy(CEntity* entity)	//Calls ClearTargeted() on the given entity, then entity->release, and erases the pointer from the list.
+int CEntityManager::FindLeaderIndex(IEntity* entity)
 {
-
+	for (unsigned int i = 0; i < leaders.size(); i++)
+	{
+		if (leaders[i]->FindInFlock(entity) >= 0)
+			return i;
+	}
+	return -1;
 }
 
-void CEntityManager::DestroyGroup(EntityType group)	//Iterates through every entity in a group, calling Destroy()
+void CEntityManager::RemoveFromLeader(IEntity* entity)
 {
+	int l = FindLeaderIndex(entity);
+	if (l < 0)
+		return;
+	leaders[l]->Remove(entity);
+}
 
+void CEntityManager::RemoveFromGroup(EntityGroup& group, IEntity* entity)
+{
+	for (unsigned int i = 0; i < group.size(); i++)
+	{
+		if (group[i] == entity)
+			group.erase(group.begin()+i);
+	}
+}
+
+void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the given entity, then entity->release, and erases the pointer from the list.
+{
+	if (!entity)
+		return;
+
+	ClearTargeted(entity);
+	switch ((EntityType)entity->GetType())
+	{
+	case EntityType::Player:
+		RemoveFromGroup(ships, entity);
+		//player->Release();
+		player = nullptr;
+		break;
+	case EntityType::Human:
+		RemoveFromGroup(ships, entity);
+		RemoveFromGroup(allies, entity);
+		break;
+	case EntityType::Copperhead:
+	case EntityType::Cobra:
+	case EntityType::Mamba:
+		RemoveFromGroup(smallEnemies, entity);
+		RemoveFromGroup(ships, entity);
+		RemoveFromLeader(entity);
+		break;
+	case EntityType::Coral:
+	case EntityType::Moccasin:
+		RemoveFromGroup(bigEnemies, entity);
+		RemoveFromGroup(ships, entity);
+		RemoveFromLeader(entity);
+		break;
+	case EntityType::Laser:
+	case EntityType::Missile:
+		RemoveFromGroup(projectiles, entity);
+		break;
+	}
+	entity->Release();
+}
+
+void CEntityManager::DestroyGroup(EntityGroup& group)	//Iterates through every entity in a group, calling Destroy()
+{
+	for (unsigned int i = 0; i < group.size(); i++)
+	{
+		Destroy(group[i]);
+	}
 }
 
 void CEntityManager::DestroyAll()	//Calls DestroyGroup on all groups
 {
+	DestroyGroup(ships);
+	DestroyGroup(projectiles);
+	DestroyGroup(asteroids);
+	DestroyGroup(barriers);
+	DestroyGroup(gravObjects);
+}
 
+void CEntityManager::DestroyLeader(CLeader* l)
+{
+	for (unsigned int i = 0; i < leaders.size(); i++)
+	{
+		if (leaders[i] == l)
+		{
+			leaders.erase(leaders.begin()+i);
+			delete l;
+			return;
+		}
+	}
+}
+
+void CEntityManager::DestroyAllLeaders()
+{
+	for (unsigned int i = 0; i < leaders.size(); i++)
+	{
+		delete leaders[i];
+	}
+	leaders.resize(0);
 }
 
 void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
@@ -339,6 +477,9 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 bool CEntityManager::ShapedCollisions(IEntity* thing1, IEntity* thing2)
 {
 	if (thing1 == thing2)
+		return false;
+
+	if (!thing1 || !thing2)
 		return false;
 
 	if (thing1->IsCircle())

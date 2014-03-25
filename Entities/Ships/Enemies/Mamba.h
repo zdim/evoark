@@ -5,9 +5,7 @@ class CMamba :
 	public CCopperhead
 {
 private:
-	float m_fMissileDelay;
-	float m_fMissileTimer;
-	int   m_nMissileDamage; 
+	
 
 public:
 	CMamba();

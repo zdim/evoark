@@ -23,6 +23,7 @@ bool CLeader::Assign(const EntityGroup& flock)
 	{
 		members[i] = flock[i];
 		//members[i]->SetPosition(destinations[i]);
+		members[i]->AddRef();
 	}
 	CalculateDestinations();
 	for (unsigned int i = 0; i < members.size(); i++)
@@ -61,6 +62,25 @@ void CLeader::CalculateDestinations()
 void CLeader::Update(float dt)
 {
 	//AI not in this user story. Just need a stub to build
+}
+
+int CLeader::FindInFlock(IEntity* entity)
+{
+	for (unsigned int i = 0; i < members.size(); i++)
+	{
+		if (members[i] == entity)
+			return i;
+	}
+	return -1;
+}
+
+void CLeader::Remove(IEntity* entity)
+{
+	int i = FindInFlock(entity);
+	if (i < 0)
+		return;
+	members[i]->Release();
+	members.erase(members.begin()+i);
 }
 
 void CLeader::SetTarget(CShip* newTarget)
