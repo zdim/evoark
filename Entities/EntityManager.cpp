@@ -111,6 +111,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 									   if (0 == i && coord && !coordinator)
 									   {
 										   copperheads[i] = new CCopperheadCoord();
+										   coord = copperheads[i];
 									   }
 									   else
 									   {
@@ -137,6 +138,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  if (0 == i && coord && !coordinator)
 								  {
 									  cobras[i] = new CCobraCoord();
+									  coord = cobras[i];
 								  }
 								  else
 								  {
@@ -164,6 +166,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  if (0 == i && coord && !coordinator)
 								  {
 									  mambas[i] = new CMambaCoord();
+									  coord = mambas[i];
 								  }
 								  else
 								  {

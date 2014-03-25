@@ -58,6 +58,9 @@
     <Filter Include="Menu">
       <UniqueIdentifier>{66008d1c-0100-41d2-925a-78bd38c61614}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Collidables">
+      <UniqueIdentifier>{425eada1-c208-49e3-bfbe-f004b886d49b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -303,6 +306,12 @@
     <ClInclude Include="Entities\Projectiles\Laser.h">
       <Filter>Entities\Projectiles</Filter>
     </ClInclude>
+    <ClInclude Include="Entities\Collidables\Stationary.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Collidables\Trigger.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -514,6 +523,9 @@
     </ClCompile>
     <ClCompile Include="Message System\CreateGameOverMessage.cpp">
       <Filter>Message System</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Collidables\Trigger.cpp">
+      <Filter>Entities\Collidables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
