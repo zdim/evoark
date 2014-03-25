@@ -56,6 +56,13 @@ SGD::Vector CCopperhead::AI(float dt)
 			}
 		}
 
+		if (vToTarget.ComputeLength() <= 800)
+		{		
+			if (GetType() == 8)
+			{
+			
+			}
+		}
 		
 
 	}
