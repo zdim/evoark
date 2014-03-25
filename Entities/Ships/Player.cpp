@@ -99,6 +99,8 @@ void CPlayer::Update(float dt)
 	e->Queue();
 
 	CEntity::Update(dt);
+
+	
 }
 
 void CPlayer::AddGravity(SGD::Vector grav)
