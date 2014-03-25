@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Level>
+  <Details width="10" height="10" quadWidth="300" quadHeight="300" events="1" collision="0" background="starfield.jpg">
+    <Quad x="0" y="0" possibleTypes="0" />
+    <Quad x="0" y="1" possibleTypes="0" />
+    <Quad x="0" y="2" possibleTypes="0" />
+    <Quad x="0" y="3" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="186" y="1017" />
+      <Type type="NONE" amount="5" randomized="True" x="78" y="999" />
+    </Quad>
+    <Quad x="0" y="4" possibleTypes="0" />
+    <Quad x="0" y="5" possibleTypes="1">
+      <Type type="MAMBA" amount="2" randomized="True" x="153" y="1647" />
+    </Quad>
+    <Quad x="0" y="6" possibleTypes="0" />
+    <Quad x="0" y="7" possibleTypes="0" />
+    <Quad x="0" y="8" possibleTypes="0" />
+    <Quad x="0" y="9" possibleTypes="0" />
+    <Quad x="1" y="0" possibleTypes="0" />
+    <Quad x="1" y="1" possibleTypes="1">
+      <Type type="PLAYER" amount="1" randomized="False" x="448" y="432" />
+    </Quad>
+    <Quad x="1" y="2" possibleTypes="0" />
+    <Quad x="1" y="3" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="470" y="1010" />
+      <Type type="NONE" amount="5" randomized="True" x="372" y="1026" />
+    </Quad>
+    <Quad x="1" y="4" possibleTypes="0" />
+    <Quad x="1" y="5" possibleTypes="0" />
+    <Quad x="1" y="6" possibleTypes="0" />
+    <Quad x="1" y="7" possibleTypes="0" />
+    <Quad x="1" y="8" possibleTypes="1">
+      <Type type="HUMAN" amount="1" randomized="True" x="440" y="2549" />
+    </Quad>
+    <Quad x="1" y="9" possibleTypes="0" />
+    <Quad x="2" y="0" possibleTypes="0" />
+    <Quad x="2" y="1" possibleTypes="0" />
+    <Quad x="2" y="2" possibleTypes="0" />
+    <Quad x="2" y="3" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="703" y="1017" />
+      <Type type="NONE" amount="5" randomized="True" x="788" y="1059" />
+    </Quad>
+    <Quad x="2" y="4" possibleTypes="0" />
+    <Quad x="2" y="5" possibleTypes="1">
+      <Type type="MAMBA" amount="2" randomized="True" x="741" y="1642" />
+    </Quad>
+    <Quad x="2" y="6" possibleTypes="3">
+      <Type type="COPPERHEAD" amount="3" randomized="True" x="758" y="1935" />
+      <Type type="NONE" amount="2" randomized="True" x="685" y="1943" />
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="668" y="2043" />
+    </Quad>
+    <Quad x="2" y="7" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="760" y="2263" />
+      <Type type="NONE" amount="5" randomized="True" x="690" y="2230" />
+    </Quad>
+    <Quad x="2" y="8" possibleTypes="0" />
+    <Quad x="2" y="9" possibleTypes="0" />
+    <Quad x="3" y="0" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1026" y="139" />
+      <Type type="NONE" amount="5" randomized="True" x="978" y="203" />
+    </Quad>
+    <Quad x="3" y="1" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1039" y="440" />
+      <Type type="NONE" amount="5" randomized="True" x="962" y="455" />
+    </Quad>
+    <Quad x="3" y="2" possibleTypes="1">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1054" y="741" />
+    </Quad>
+    <Quad x="3" y="3" possibleTypes="1">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1043" y="1034" />
+    </Quad>
+    <Quad x="3" y="4" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1049" y="1318" />
+      <Type type="NONE" amount="5" randomized="True" x="1061" y="1418" />
+    </Quad>
+    <Quad x="3" y="5" possibleTypes="3">
+      <Type type="COPPERHEAD" amount="3" randomized="True" x="1058" y="1638" />
+      <Type type="NONE" amount="2" randomized="True" x="1020" y="1699" />
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1014" y="1605" />
+    </Quad>
+    <Quad x="3" y="6" possibleTypes="1">
+      <Type type="CORAL" amount="1" randomized="True" x="1046" y="1924" />
+    </Quad>
+    <Quad x="3" y="7" possibleTypes="2">
+      <Type type="MAMBA" amount="2" randomized="True" x="1062" y="2193" />
+      <Type type="NONE" amount="2" randomized="True" x="982" y="2201" />
+    </Quad>
+    <Quad x="3" y="8" possibleTypes="1">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1047" y="2535" />
+    </Quad>
+    <Quad x="3" y="9" possibleTypes="0" />
+    <Quad x="4" y="0" possibleTypes="0" />
+    <Quad x="4" y="1" possibleTypes="0" />
+    <Quad x="4" y="2" possibleTypes="0" />
+    <Quad x="4" y="3" possibleTypes="1">
+      <Type type="COBRA" amount="3" randomized="True" x="1353" y="1044" />
+    </Quad>
+    <Quad x="4" y="4" possibleTypes="0" />
+    <Quad x="4" y="5" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1335" y="1648" />
+      <Type type="NONE" amount="5" randomized="True" x="1376" y="1569" />
+    </Quad>
+    <Quad x="4" y="6" possibleTypes="2">
+      <Type type="MAMBA" amount="2" randomized="True" x="1361" y="1955" />
+      <Type type="NONE" amount="2" randomized="True" x="1324" y="1916" />
+    </Quad>
+    <Quad x="4" y="7" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1341" y="2245" />
+      <Type type="NONE" amount="5" randomized="True" x="1290" y="2192" />
+    </Quad>
+    <Quad x="4" y="8" possibleTypes="2">
+      <Type type="MAMBA" amount="3" randomized="True" x="1350" y="2544" />
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1275" y="2590" />
+    </Quad>
+    <Quad x="4" y="9" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="4" randomized="True" x="1365" y="2849" />
+      <Type type="MAMBA" amount="3" randomized="True" x="1353" y="2831" />
+    </Quad>
+    <Quad x="5" y="0" possibleTypes="0" />
+    <Quad x="5" y="1" possibleTypes="2">
+      <Type type="COBRA" amount="3" randomized="True" x="1651" y="452" />
+      <Type type="MAMBA" amount="4" randomized="True" x="1623" y="521" />
+    </Quad>
+    <Quad x="5" y="2" possibleTypes="0" />
+    <Quad x="5" y="3" possibleTypes="0" />
+    <Quad x="5" y="4" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1645" y="1353" />
+      <Type type="NONE" amount="5" randomized="True" x="1571" y="1350" />
+    </Quad>
+    <Quad x="5" y="5" possibleTypes="0" />
+    <Quad x="5" y="6" possibleTypes="0" />
+    <Quad x="5" y="7" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1637" y="2232" />
+      <Type type="COBRA" amount="3" randomized="True" x="1631" y="2313" />
+    </Quad>
+    <Quad x="5" y="8" possibleTypes="1">
+      <Type type="CORAL" amount="1" randomized="True" x="1638" y="2525" />
+    </Quad>
+    <Quad x="5" y="9" possibleTypes="0" />
+    <Quad x="6" y="0" possibleTypes="0" />
+    <Quad x="6" y="1" possibleTypes="0" />
+    <Quad x="6" y="2" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1966" y="755" />
+      <Type type="COBRA" amount="3" randomized="True" x="1907" y="693" />
+    </Quad>
+    <Quad x="6" y="3" possibleTypes="2">
+      <Type type="MAMBA" amount="4" randomized="True" x="1957" y="1044" />
+      <Type type="NONE" amount="5" randomized="True" x="1970" y="1139" />
+    </Quad>
+    <Quad x="6" y="4" possibleTypes="0" />
+    <Quad x="6" y="5" possibleTypes="1">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="1986" y="1645" />
+    </Quad>
+    <Quad x="6" y="6" possibleTypes="0" />
+    <Quad x="6" y="7" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="4" randomized="True" x="1944" y="2245" />
+      <Type type="MAMBA" amount="3" randomized="True" x="1928" y="2250" />
+    </Quad>
+    <Quad x="6" y="8" possibleTypes="0" />
+    <Quad x="6" y="9" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="4" randomized="True" x="1933" y="2870" />
+      <Type type="MAMBA" amount="3" randomized="True" x="1895" y="2886" />
+    </Quad>
+    <Quad x="7" y="0" possibleTypes="2">
+      <Type type="COBRA" amount="3" randomized="True" x="2240" y="143" />
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="2146" y="177" />
+    </Quad>
+    <Quad x="7" y="1" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="2252" y="439" />
+      <Type type="NONE" amount="5" randomized="True" x="2226" y="462" />
+    </Quad>
+    <Quad x="7" y="2" possibleTypes="3">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="2234" y="739" />
+      <Type type="NONE" amount="5" randomized="True" x="2362" y="676" />
+      <Type type="NONE" amount="5" randomized="True" x="2164" y="806" />
+    </Quad>
+    <Quad x="7" y="3" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="2261" y="1062" />
+      <Type type="COBRA" amount="3" randomized="True" x="2209" y="1041" />
+    </Quad>
+    <Quad x="7" y="4" possibleTypes="0" />
+    <Quad x="7" y="5" possibleTypes="0" />
+    <Quad x="7" y="6" possibleTypes="1">
+      <Type type="COBRA" amount="3" randomized="True" x="2248" y="1943" />
+    </Quad>
+    <Quad x="7" y="7" possibleTypes="0" />
+    <Quad x="7" y="8" possibleTypes="0" />
+    <Quad x="7" y="9" possibleTypes="3">
+      <Type type="COBRA" amount="3" randomized="True" x="2247" y="2855" />
+      <Type type="MAMBA" amount="3" randomized="True" x="2180" y="2891" />
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="2188" y="2753" />
+    </Quad>
+    <Quad x="8" y="0" possibleTypes="0" />
+    <Quad x="8" y="1" possibleTypes="1">
+      <Type type="HUMAN" amount="1" randomized="True" x="2538" y="449" />
+    </Quad>
+    <Quad x="8" y="2" possibleTypes="2">
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="2539" y="727" />
+      <Type type="NONE" amount="5" randomized="True" x="2495" y="722" />
+    </Quad>
+    <Quad x="8" y="3" possibleTypes="0" />
+    <Quad x="8" y="4" possibleTypes="2">
+      <Type type="MAMBA" amount="4" randomized="True" x="2566" y="1331" />
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="2522" y="1392" />
+    </Quad>
+    <Quad x="8" y="5" possibleTypes="1">
+      <Type type="CORAL" amount="1" randomized="True" x="2546" y="1657" />
+    </Quad>
+    <Quad x="8" y="6" possibleTypes="0" />
+    <Quad x="8" y="7" possibleTypes="0" />
+    <Quad x="8" y="8" possibleTypes="1">
+      <Type type="MOCCASIN" amount="1" randomized="True" x="2531" y="2532" />
+    </Quad>
+    <Quad x="8" y="9" possibleTypes="0" />
+    <Quad x="9" y="0" possibleTypes="0" />
+    <Quad x="9" y="1" possibleTypes="0" />
+    <Quad x="9" y="2" possibleTypes="2">
+      <Type type="COBRA" amount="3" randomized="True" x="2856" y="746" />
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="2860" y="782" />
+    </Quad>
+    <Quad x="9" y="3" possibleTypes="0" />
+    <Quad x="9" y="4" possibleTypes="0" />
+    <Quad x="9" y="5" possibleTypes="0" />
+    <Quad x="9" y="6" possibleTypes="0" />
+    <Quad x="9" y="7" possibleTypes="3">
+      <Type type="COBRA" amount="3" randomized="True" x="2864" y="2226" />
+      <Type type="MAMBA" amount="3" randomized="True" x="2804" y="2220" />
+      <Type type="COPPERHEAD" amount="5" randomized="True" x="2785" y="2178" />
+    </Quad>
+    <Quad x="9" y="8" possibleTypes="0" />
+    <Quad x="9" y="9" possibleTypes="0" />
+    <Event type="STARGATE" x="2566" y="2588" width="305" height="293" />
+  </Details>
+</Level>

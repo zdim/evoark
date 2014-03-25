@@ -112,25 +112,25 @@ void	CTestLevelState::Render(void)
 
 
 	// draw grids
-	for (int i = 0; i < m_nNumQuadsWidth; i++)
-	{
-		for (int j = 0; j < m_nNumQuadsHeight; j++)
-		{
-			SGD::Rectangle r = { SGD::Point{ float(m_nQuadWidth * i), float(m_nQuadHeight * j) }, SGD::Size{ float(m_nQuadWidth), float(m_nQuadHeight) } };
-			graphics->DrawRectangle(r, SGD::Color{ 0, 0, 0, 0 }, { 255, 255, 255 });
-		}
-	}
+	//for (int i = 0; i < m_nNumQuadsWidth; i++)
+	//{
+	//	for (int j = 0; j < m_nNumQuadsHeight; j++)
+	//	{
+	//		SGD::Rectangle r = { SGD::Point{ float(m_nQuadWidth * i), float(m_nQuadHeight * j) }, SGD::Size{ float(m_nQuadWidth), float(m_nQuadHeight) } };
+	//		graphics->DrawRectangle(r, SGD::Color{ 0, 0, 0, 0 }, { 255, 255, 255 });
+	//	}
+	//}
 
 	Game::GetInstance()->Font.Write(SGD::Point{150,150},"testing");
 	pSystem.Render();
 
 	EntityManager->Render();
-	UI((CPlayer*)player, EntityManager->GetAllies());
+	UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator());
 }
 
 void	CTestLevelState::Generate()
 {
-	if (LoadXMLLevel("Resources/XML/World/testEditor.xml"))
+	if (LoadXMLLevel("Resources/XML/World/testWorld2.xml"))
 	{
 		for (int i = 0; i < m_nNumQuadsWidth; i++)
 		{
@@ -149,13 +149,13 @@ void	CTestLevelState::Generate()
 					EntityManager->Spawn(EntityType::Player, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5))});
 					break;
 				case COPPERHEAD:
-					EntityManager->Spawn(EntityType::Copperhead, col[j].pos, col[j].objectAmount);
+					EntityManager->Spawn(EntityType::Copperhead, col[j].pos, col[j].objectAmount, true);
 					break;
 				case COBRA:
-					EntityManager->Spawn(EntityType::Cobra, col[j].pos, col[j].objectAmount);
+					EntityManager->Spawn(EntityType::Cobra, col[j].pos, col[j].objectAmount, true);
 					break;
 				case MAMBA:
-				EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount);
+				EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount, true);
 					break;
 				case CORAL:
 					EntityManager->Spawn(EntityType::Coral, col[j].pos, col[j].objectAmount);
@@ -358,7 +358,7 @@ IEntity* CTestLevelState::GetPlayer()
 	return player;
 }
 
-void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies)
+void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntity* _coordinator)
 {
 	// set hullbar
 	SGD::Rectangle hullBox = {
@@ -389,6 +389,21 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies)
 		m_nScreenHeight * .87f,
 		m_nScreenWidth * .66f * _player->GetShield() / _player->GetMaxShield(),
 		m_nScreenHeight * .90f };
+
+	// experience bar
+	SGD::Rectangle expBox = {
+		m_nScreenWidth * .25f,
+		m_nScreenHeight * .97f,
+		m_nScreenWidth * .74f,
+		m_nScreenHeight * .98f
+	};
+
+	SGD::Rectangle exp = {
+		m_nScreenWidth * .25f,
+		m_nScreenWidth * .97f,
+		m_nScreenWidth * .74f * _player->GetExp() / _player->GetReqExp(),
+		m_nScreenHeight * .98f
+	};
 
 	// set gravity well box
 	SGD::Rectangle wellBox = {
@@ -456,7 +471,23 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies)
 				graphics->DrawTexture(objArrow, arrowPos, arrowRot, {}, { 200, 0, 200, 150 }, { .15f, .15f });
 			}
 		}
+
+		// commented out until coordinator is fixed
+		/*SGD::Vector toCoordinator = _coordinator->GetPosition() - _player->GetPosition();
+		if (toCoordinator.ComputeLength() > 400)
+		{
+			toCoordinator.Normalize();
+			SGD::Point coordArrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
+			coordArrowPos += toCoordinator * 200;
+			float coordArrowRot = atan2(_coordinator->GetPosition().y - _player->GetPosition().y, _coordinator->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
+
+			graphics->DrawTexture(objArrow, coordArrowPos, coordArrowRot, {}, { 200, 200, 50, 0 }, { .15f, .15f });
+		}*/
 	}
+	// draw exp
+	graphics->DrawRectangle(exp, { 0, 250, 50 });
+	graphics->DrawRectangle(expBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
+
 	// draw hull
 	graphics->DrawRectangle(hull, { 185, 150, 0 });
 	graphics->DrawRectangle(hullBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);

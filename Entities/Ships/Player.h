@@ -46,6 +46,8 @@ public:
 
 	int GetShield() { return shield; }
 	int GetMaxShield() { return maxShield; }
+	int GetExp() { return this->exp; }
+	int GetReqExp() { return expRequired; }
 	float GetWellDelay() { return wellDelay; }
 	float GetPushDelay() { return pushDelay; }
 	float GetWarpDelay() { return warpDelay; }
