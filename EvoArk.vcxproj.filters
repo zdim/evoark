@@ -58,6 +58,9 @@
     <Filter Include="Menu">
       <UniqueIdentifier>{66008d1c-0100-41d2-925a-78bd38c61614}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Collidables">
+      <UniqueIdentifier>{9784b80c-c729-439b-ae49-0fa4a314cba2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -303,11 +306,17 @@
     <ClInclude Include="Entities\Ships\Ship.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Message System\VictoryMessage.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Collidables\Stationary.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
     <ClInclude Include="Entities\Collidables\InvisibleTrigger.h">
       <Filter>Entities\Collidables</Filter>
     </ClInclude>
-    <ClInclude Include="Message System\VictoryMessage.h">
-      <Filter>Message System</Filter>
+    <ClInclude Include="Entities\Collidables\Trigger.h">
+      <Filter>Entities\Collidables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

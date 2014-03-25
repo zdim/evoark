@@ -50,6 +50,7 @@ void	CTestLevelState::Enter(void)
 	//EntityManager->Spawn(EntityType::Player, { 150, 150 });
 	//EntityManager->Spawn(EntityType::Copperhead, { 200, 200 });
 	//EntityManager->Spawn(EntityType::Coral, { 200, 200 });
+	EntityManager->Spawn(EntityType::Stargate, {200,200});
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 

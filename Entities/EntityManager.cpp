@@ -590,9 +590,14 @@ void CEntityManager::Update(float dt)
 	{
 		projectiles[i]->Update(dt);
 	}
+	for (unsigned int i = 0; i < stationaries.size(); i++)
+	{
+		stationaries[i]->Update(dt);
+	}
 
 	CheckCollision(ships, ships);
 	CheckCollision(projectiles, ships);
+	CheckCollision(ships, stationaries);
 }
 
 void CEntityManager::Render()
@@ -608,6 +613,11 @@ void CEntityManager::Render()
 	{
 		if (projectiles[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
 			projectiles[i]->Render();
+	}
+	for (unsigned int i = 0; i < stationaries.size(); i++)
+	{
+		if (stationaries[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
+			stationaries[i]->Render();
 	}
 	//If player exists, he SHOULD be in the EntityGroup "ships"
 	//if (player)
