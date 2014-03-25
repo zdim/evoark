@@ -12,6 +12,7 @@
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../SGD Wrappers/SGD_InputManager.h"
 #include "../SGD Wrappers/SGD_String.h"
+#include "../Graphics/Particles/ParticleSystem.h"
 
 //#include "BitmapFont.h"
 #include "GameState.h"
@@ -73,10 +74,11 @@ bool Game::Initialize( int width, int height )
 	m_nScreenHeight = height;
 
 	// Store the SGD singletons
-	m_pAudio	= SGD::AudioManager::GetInstance();
-	m_pGraphics	= SGD::GraphicsManager::GetInstance();
-	m_pInput	= SGD::InputManager::GetInstance();
-	
+	m_pAudio	      = SGD::AudioManager::GetInstance();
+	m_pGraphics	      = SGD::GraphicsManager::GetInstance();
+	m_pInput	      = SGD::InputManager::GetInstance();
+	m_pParticleSystem = CParticleSystem::GetInstance();
+
 	// Initialize each singleton
 	if(   m_pAudio->Initialize() == false 
 	   || m_pGraphics->Initialize( false ) == false 
@@ -84,6 +86,8 @@ bool Game::Initialize( int width, int height )
 	{
 		return false;
 	}
+
+	m_pParticleSystem->Init();
 
 	ifstream fin("options.txt");
 	if (fin.is_open())

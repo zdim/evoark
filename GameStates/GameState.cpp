@@ -57,7 +57,6 @@ void	CTestLevelState::Enter(void)
 	cam = CCamera::GetInstance();
 	cam->Initiallize(player, SGD::Size{m_nScreenWidth,m_nScreenHeight});
 
-	pSystem.Init();
 
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
 	
@@ -107,7 +106,7 @@ void	CTestLevelState::Update(float dt)
 	cam->Update(dt);
 	EntityManager->Update(dt);
 
-	pSystem.Update(dt);
+
 
 	SGD::MessageManager::GetInstance()->Update();
 	CEventManager::GetInstance().Update();
@@ -129,7 +128,7 @@ void	CTestLevelState::Render(void)
 	}
 
 	Game::GetInstance()->Font.Write(SGD::Point{150,150},"testing");
-	pSystem.Render();
+	
 
 	EntityManager->Render();
 	UI((CPlayer*)player, EntityManager->GetAllies());

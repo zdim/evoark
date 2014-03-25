@@ -39,6 +39,8 @@ namespace SGD
 	class EventManager;
 	class Listener;
 
+	
+
 }	// namespace SGD
 
 #endif	//SGD_DECLARATIONS_H

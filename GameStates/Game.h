@@ -28,6 +28,8 @@ class IGameState;
 #include "../BitmapFont/BitmapFont.h"
 #include "LevelStates\ILevelState.h"
 
+class CParticleSystem;
+
 /**************************************************************/
 // Game class
 //	- runs the game logic
@@ -96,6 +98,9 @@ private:
 	SGD::AudioManager*		m_pAudio = nullptr;
 	SGD::GraphicsManager*	m_pGraphics = nullptr;
 	SGD::InputManager*		m_pInput = nullptr;
+    CParticleSystem*        m_pParticleSystem = nullptr;
+
+
 
 	/**********************************************************/
 	// options.txt
