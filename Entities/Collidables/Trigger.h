@@ -11,6 +11,6 @@ public:
 	~Trigger(){if(Message) delete Message;}
 	int GetType() { return (int)EntityType::Stargate; }
 	virtual MessageID GetID() {return Message->GetMessageID();}
-	void HandleCollision(IEntity* other) { if (other->GetType() == (int)EntityType::Player) {Message->QueueMessage(); Message = nullptr; }}
+	void HandleCollision(IEntity* other) { if (other->GetType() == (int)EntityType::Player && Message) {Message->QueueMessage(); Message = nullptr; }}
 	void Assign(SGD::Message* msg) {Message = msg;}
 };
