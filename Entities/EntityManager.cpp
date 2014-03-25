@@ -7,8 +7,10 @@
 #include "Ships\Enemies\Moccasin.h"	//Also includes Coral indirectly
 #include "Collidables\Trigger.h"
 #include "Projectiles\Missile.h"	//Also includes Laser indirectly
+#include "Collidables\InvisibleTrigger.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
+#include "..\Message System\VictoryMessage.h"
 
 CEntityManager::CEntityManager()
 {
@@ -215,8 +217,9 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		stargate = new Trigger();
 		stargate->SetImage(images[(int)EntityType::Stargate]);
 		stargate->SetSize({64, 64});
+		CVictoryMessage* msg = new CVictoryMessage;
+		dynamic_cast<Trigger*>(stargate)->Assign(msg);
 		stationaries.push_back(stargate);
-
 	}
 }
 
@@ -400,6 +403,9 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		dynamic_cast<CMissile*>(entity)->SetTarget(nullptr);
 	case EntityType::Laser:
 		RemoveFromGroup(projectiles, entity);
+		break;
+	case EntityType::Stargate:
+		RemoveFromGroup(stationaries, entity);
 		break;
 	}
 	entity->Release();

@@ -188,8 +188,8 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	hull -= damage;
 	if (hull <= 0)
 	{
-		/*CCreateGameOverMessage* msg = new CCreateGameOverMessage();
-		msg->QueueMessage();*/
+		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
+		msg->QueueMessage();
 	}
 }
 
