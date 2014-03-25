@@ -44,7 +44,14 @@ CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _labe
 
 	box = SGD::Rectangle(menuTL, menuSize);
 	SGD::Point buttonTL;
-	buttonTL.x = menuTL.x + buttonSpacing.width;
+	if (horizontal)
+	{
+		buttonTL.x = menuTL.x + buttonSpacing.width;
+	}
+	else
+	{
+		buttonTL.x = (menuSize.width - buttonSize.width) / 2 + menuTL.x + buttonSpacing.width;
+	}
 	buttonTL.y = menuTL.y + buttonSpacing.height;
 
 	SGD::Rectangle labelBox = SGD::Rectangle(buttonTL,buttonSize);

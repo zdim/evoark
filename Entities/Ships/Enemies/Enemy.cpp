@@ -14,6 +14,7 @@ CEnemy::CEnemy()
 
 CEnemy::~CEnemy()
 {
+	CEventManager::GetInstance().Unregister(dynamic_cast<Listener*>(this), EventID::position);
 }
 
 void CEnemy::Update(float dt)

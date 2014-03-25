@@ -77,8 +77,8 @@ void	CTestLevelState::Exit(void)
 
 	SGD::MessageManager::GetInstance()->Terminate();
 	SGD::MessageManager::GetInstance()->DeleteInstance();
-	CEventManager::GetInstance().ClearListeners();
 	CEventManager::GetInstance().ClearEvents();
+	CEventManager::GetInstance().ClearListeners();
 	EntityManager->Terminate();
 }
 
