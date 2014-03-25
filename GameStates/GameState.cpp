@@ -350,10 +350,6 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 									 CTestLevelState::GetInstance()->EntityManager->Destroy(dMsg->GetEntity());
 									 break;
 	}
-	case MessageID::StargateEnter:
-	{
-
-	}
 	}
 }
 
