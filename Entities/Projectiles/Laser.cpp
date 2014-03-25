@@ -36,6 +36,10 @@ void CLaser::HandleCollision(IEntity* other)
 		//Throw a message to destroy this
 		SelfDestruct();
 	}
+	else if (otherType >= EntityType::BaseModule && otherType <= EntityType::EngineModule)
+	{
+
+	}
 
 	//Is other an asteroid?
 	if (otherType == EntityType::Asteroid)

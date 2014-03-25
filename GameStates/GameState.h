@@ -33,7 +33,7 @@ public:
 	IEntity* GetPlayer();
 	CCamera* GetCam() {return cam;}
 
-	SGD::Size GetWorldSize() { return SGD::Size{ m_nNumQuadsWidth * m_nQuadWidth, m_nNumQuadsHeight * m_nQuadHeight }; }
+	SGD::Size GetWorldSize() { return SGD::Size{ float(m_nNumQuadsWidth * m_nQuadWidth), float(m_nNumQuadsHeight * m_nQuadHeight) }; }
 
 private:
 	CTestLevelState();

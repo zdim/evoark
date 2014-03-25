@@ -50,13 +50,13 @@ void	CTestLevelState::Enter(void)
 	//EntityManager->Spawn(EntityType::Player, { 150, 150 });
 	//EntityManager->Spawn(EntityType::Copperhead, { 200, 200 });
 	//EntityManager->Spawn(EntityType::Coral, { 200, 200 });
-	EntityManager->Spawn(EntityType::Stargate, {200,200});
+	//EntityManager->Spawn(EntityType::Stargate, {200,200});
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 
 	player = EntityManager->GetPlayer();
 	cam = CCamera::GetInstance();
-	cam->Initiallize(player, SGD::Size{m_nScreenWidth,m_nScreenHeight});
+	cam->Initiallize(player, SGD::Size{(float)m_nScreenWidth,(float)m_nScreenHeight});
 
 
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
@@ -115,7 +115,7 @@ void	CTestLevelState::Update(float dt)
 
 void	CTestLevelState::Render(void)
 {
-	graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
+	//graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
 
 
 	// draw grids
@@ -453,7 +453,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies)
 	if (_player->GetArrowsOn())
 	{
 		// allies
-		for (int i = 0; i < _allies.size(); i++)
+		for (unsigned int i = 0; i < _allies.size(); i++)
 		{
 			SGD::Vector toTarget = _allies[i]->GetPosition() - _player->GetPosition();
 			if (toTarget.ComputeLength() > 400)
