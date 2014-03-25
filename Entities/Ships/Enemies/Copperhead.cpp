@@ -9,10 +9,9 @@ CCopperhead::CCopperhead()
 	damage = 25;
 	laserTimer = 0;
 	laserDelay = 1;
-
-	float m_fMissileDelay = 2;
-	float m_fMissileTimer = 0;
-	int   m_nMissileDamage = 75;
+    m_fMissileDelay = 2;
+    m_fMissileTimer = 0;
+    m_nMissileDamage = 75;
 }
 
 
@@ -43,21 +42,21 @@ SGD::Vector CCopperhead::AI(float dt)
 			GetTarget()->GetPosition().y - this->GetPosition().y,
 		};
 
-		SGD::Vector forward = { 0, -1 };
-		forward.Rotate(rotation);
-		float angle = forward.ComputeAngle(vToTarget);
+		SGD::Vector direction = { 0, -1 };
+		direction.Rotate(rotation);
+		float angle = direction.ComputeAngle(vToTarget);
 		
-		if (vToTarget.ComputeLength() <= 400 )
+		if (vToTarget.ComputeLength() <= 400 && angle < SGD::PI / 4.0f )
 		{
 			CreateLaser();
+			
+		}
+		if (vToTarget.ComputeLength() <= 800 && angle < SGD::PI / 4.0f )
+		{	
 			if (GetType() == 9)
 			{
 				CreateMissile();
 			}
-		}
-
-		if (vToTarget.ComputeLength() <= 800)
-		{		
 			if (GetType() == 8)
 			{
 			
@@ -111,6 +110,6 @@ void CCopperhead::CreateMissile()
 		return;
 	m_fMissileTimer = 0;
 
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, size, rotation, damage);
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, size, rotation, m_nMissileDamage);
 	msg->QueueMessage();
 }

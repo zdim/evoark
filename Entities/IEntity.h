@@ -14,7 +14,7 @@ enum class EntityType {
 	Player, Human, Copperhead, Cobra, Mamba, Coordinator,
 	Coral, Moccasin,
 	BaseModule, LaserModule, MissileModule, WellModule, PushModule, WarpModule, ShieldModule, EngineModule,
-	Asteroid, Planet, Barrier, Trigger,
+	Asteroid, Planet, Barrier, Trigger, Stargate,
 	Count
 };
 

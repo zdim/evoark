@@ -81,6 +81,9 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Entities\Asteroid.h" />
     <ClInclude Include="Entities\Barrier.h" />
+    <ClInclude Include="Entities\Collidables\InvisibleTrigger.h" />
+    <ClInclude Include="Entities\Collidables\Stationary.h" />
+    <ClInclude Include="Entities\Collidables\Trigger.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\EntityManager.h" />
     <ClInclude Include="Entities\IEntity.h" />
@@ -140,6 +143,7 @@
     <ClInclude Include="Message System\CreateProjectile.h" />
     <ClInclude Include="Message System\DestroyEntityMessage.h" />
     <ClInclude Include="Message System\MessageID.h" />
+    <ClInclude Include="Message System\VictoryMessage.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SGD Wrappers\SGD_AudioManager.h" />
     <ClInclude Include="SGD Wrappers\SGD_Color.h" />

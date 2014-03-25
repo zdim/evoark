@@ -5,9 +5,12 @@
 #include "Ships\Enemies\Cobra.h"	//Also includes Copperhead indirectly
 #include "Ships\Enemies\Mamba.h"
 #include "Ships\Enemies\Moccasin.h"	//Also includes Coral indirectly
+#include "Collidables\Trigger.h"
 #include "Projectiles\Missile.h"	//Also includes Laser indirectly
+#include "Collidables\InvisibleTrigger.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
+#include "..\Message System\VictoryMessage.h"
 
 CEntityManager::CEntityManager()
 {
@@ -48,6 +51,8 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::ShieldModule] = graphics->LoadTexture("Resources/Graphics/Ship1.png");
 	images[(int)EntityType::LaserModule] = graphics->LoadTexture("Resources/Graphics/Ship3.png");
 	images[(int)EntityType::MissileModule] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
+
+	images[(int)EntityType::Stargate] = graphics->LoadTexture("Resources/Graphics/Stargate.png");
 }											  	
 											  
 void CEntityManager::Terminate()			  	
@@ -63,6 +68,7 @@ void CEntityManager::Terminate()
 			images[i] = SGD::INVALID_HANDLE;
 		}
 	}
+	images.clear();
 }
 
 
@@ -111,6 +117,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 									   if (0 == i && coord && !coordinator)
 									   {
 										   copperheads[i] = new CCopperheadCoord();
+										   coord = copperheads[i];
 									   }
 									   else
 									   {
@@ -137,6 +144,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  if (0 == i && coord && !coordinator)
 								  {
 									  cobras[i] = new CCobraCoord();
+									  coord = cobras[i];
 								  }
 								  else
 								  {
@@ -164,6 +172,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  if (0 == i && coord && !coordinator)
 								  {
 									  mambas[i] = new CMambaCoord();
+									  coord = mambas[i];
 								  }
 								  else
 								  {
@@ -204,6 +213,13 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	{
 								
 	}
+	case EntityType::Stargate:
+		stargate = new Trigger();
+		stargate->SetImage(images[(int)EntityType::Stargate]);
+		stargate->SetSize({64, 64});
+		CVictoryMessage* msg = new CVictoryMessage;
+		dynamic_cast<Trigger*>(stargate)->Assign(msg);
+		stationaries.push_back(stargate);
 	}
 }
 
@@ -378,6 +394,7 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 	case EntityType::Coral:
 	case EntityType::Moccasin:
 		dynamic_cast<CEnemy*>(entity)->SetTarget(nullptr);
+		dynamic_cast<CCoral*>(entity)->DestroyAllModules();
 		RemoveFromGroup(bigEnemies, entity);
 		RemoveFromGroup(ships, entity);
 		RemoveFromLeader(entity);
@@ -387,15 +404,18 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 	case EntityType::Laser:
 		RemoveFromGroup(projectiles, entity);
 		break;
+	case EntityType::Stargate:
+		RemoveFromGroup(stationaries, entity);
+		break;
 	}
 	entity->Release();
 }
 
 void CEntityManager::DestroyGroup(EntityGroup& group)	//Iterates through every entity in a group, calling Destroy()
 {
-	for (unsigned int i = 0; i < group.size(); i++)
+	while(group.size())
 	{
-		Destroy(group[i]);
+		Destroy(group[0]);
 	}
 }
 
@@ -404,7 +424,7 @@ void CEntityManager::DestroyAll()	//Calls DestroyGroup on all groups
 	DestroyGroup(ships);
 	DestroyGroup(projectiles);
 	DestroyGroup(asteroids);
-	DestroyGroup(barriers);
+	DestroyGroup(stationaries);
 	DestroyGroup(gravObjects);
 }
 
@@ -576,9 +596,14 @@ void CEntityManager::Update(float dt)
 	{
 		projectiles[i]->Update(dt);
 	}
+	for (unsigned int i = 0; i < stationaries.size(); i++)
+	{
+		stationaries[i]->Update(dt);
+	}
 
 	CheckCollision(ships, ships);
 	CheckCollision(projectiles, ships);
+	CheckCollision(ships, stationaries);
 }
 
 void CEntityManager::Render()
@@ -594,6 +619,11 @@ void CEntityManager::Render()
 	{
 		if (projectiles[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
 			projectiles[i]->Render();
+	}
+	for (unsigned int i = 0; i < stationaries.size(); i++)
+	{
+		if (stationaries[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
+			stationaries[i]->Render();
 	}
 	//If player exists, he SHOULD be in the EntityGroup "ships"
 	//if (player)

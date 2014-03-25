@@ -38,7 +38,7 @@ public:
 
 
 	SGD::Point GetEmitterPosition() { return emitterPosition; }
-	
+	void       SetEmitterPosition(SGD::Point p) { emitterPosition = p; }
 
 
 

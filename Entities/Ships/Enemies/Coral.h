@@ -26,12 +26,15 @@ public:
 	CCoral();
 	virtual ~CCoral();
 
+	virtual int GetType() override { return (int)EntityType::Coral; }
+
 	virtual void Update(float dt)					override;
 	virtual void Render()							override;
 	virtual void HandleCollision(IEntity* other)	override;
 
 	virtual void DestroyModule(CModule* mod);
-	virtual void SelfDestruct(void);
+	virtual void DestroyAllModules();
+	//virtual void SelfDestruct(void);
 
 	virtual void SetImages(std::vector<SGD::HTexture>&images);
 };

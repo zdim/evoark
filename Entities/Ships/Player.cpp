@@ -1,13 +1,14 @@
 //
 #include "Player.h"
 #include <math.h>
+#include <algorithm>
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
-#include <algorithm>
 #include "../../Message System/CreateProjectile.h"
 #include "../../Camera.h"
 #include "../../Event System/CustomEvent.h"
 #include "../../Message System/CreateGameOverMessage.h"
+#include "../../Graphics/Particles/ParticleSystem.h"
 
 CPlayer::CPlayer()
 {
@@ -18,6 +19,8 @@ CPlayer::CPlayer()
 	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 0;
 	laserDelay = 0.25f;
 	missileDelay = 2.0f;
+
+	
 }
 
 
@@ -34,6 +37,12 @@ void CPlayer::Update(float dt)
 	wellTimer += dt;
 	pushTimer += dt;
 	warpTimer += dt;
+
+	CParticleSystem::GetInstance()->GetParticleEffect(2)->SetEmitterPosition(position - size / 2 + CCamera::GetInstance()->GetOffset());
+	CParticleSystem::GetInstance()->GetParticleEffect(2)->Update(dt);
+
+
+
 
 	if (shieldTimer >= shieldDelay)
 	{
@@ -186,9 +195,11 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 void CPlayer::Render()
 {
+	if (shield > 0)
+		CParticleSystem::GetInstance()->GetParticleEffect(2)->Render();
 	SGD::Color color = {};
 	if (shield < maxShield)
 		color = SGD::Color{ 255, 0, 0 };
-	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
+	float scale = max(size.width / imageSize.width, size.height / imageSize.height);
 	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
 }
