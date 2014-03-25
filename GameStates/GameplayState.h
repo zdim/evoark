@@ -4,7 +4,7 @@
 #include "../Entities/Ships/Player.h"
 #include "GameState.h"
 
-enum class Level { Tutorial, Gen1, Gen2, Waves, Final, TestGen };
+enum class Level { Tutorial, Gen1, Gen2, Waves, Final, TestGen, GameOver };
 struct playerData
 {
 	unsigned int exp;

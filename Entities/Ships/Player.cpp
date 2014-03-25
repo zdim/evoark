@@ -7,6 +7,7 @@
 #include "../../Message System/CreateProjectile.h"
 #include "../../Camera.h"
 #include "../../Event System/CustomEvent.h"
+#include "../../Message System/CreateGameOverMessage.h"
 
 CPlayer::CPlayer()
 {
@@ -55,19 +56,14 @@ void CPlayer::Update(float dt)
 		dir.x += 1;
 	if (dir != SGD::Vector{0, 0})
 		dir.Normalize();
-	// commented out until finished implementing - was messing up standard input
-	/*if (warpTimer <= warpDuration)
-	{
-		velocity = dir * (speed + warpSpeed);
-	}
-	else
-	{
-		velocity = dir *speed;
-	}*/
+	 //commented out until finished implementing - was messing up standard input
+	
 	velocity = dir * speed;
 	SGD::Point mousePos = input->GetMousePosition();
 	rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
 	CEntity::Update(dt);
+
+	
 
 	//Abilities
 	if (input->IsKeyDown(SGD::Key::LButton))
@@ -147,13 +143,15 @@ void CPlayer::CreatePush()
 		return;
 	pushTimer = 0;
 	//TODO: Send CreatePush message
-
+	
 }
 
 void CPlayer::Warp()
 {
 	if (warpTimer <= warpDelay)
 		return;
+
+
 	warpTimer = 0;
 }
 
@@ -178,8 +176,8 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	hull -= damage;
 	if (hull <= 0)
 	{
-		//Send gameOver message
-
+		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
+		msg->QueueMessage();
 	}
 }
 

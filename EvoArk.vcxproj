@@ -121,6 +121,7 @@
     <ClInclude Include="GameStates\GameState.h" />
     <ClInclude Include="GameStates\IGameState.h" />
     <ClInclude Include="GameStates\LevelStates\FinalLevelState.h" />
+    <ClInclude Include="GameStates\LevelStates\GameOverState.h" />
     <ClInclude Include="GameStates\LevelStates\ILevelState.h" />
     <ClInclude Include="GameStates\LevelStates\MainLevelState.h" />
     <ClInclude Include="GameStates\LevelStates\TutorialState.h" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Graphics\Particles\ParticleSystem.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Message System\CreateEntityMessage.h" />
+    <ClInclude Include="Message System\CreateGameOverMessage.h" />
     <ClInclude Include="Message System\CreateProjectile.h" />
     <ClInclude Include="Message System\DestroyEntityMessage.h" />
     <ClInclude Include="Message System\MessageID.h" />
@@ -199,6 +201,7 @@
     <ClCompile Include="GameStates\GameState.cpp" />
     <ClCompile Include="GameStates\IGameState.cpp" />
     <ClCompile Include="GameStates\LevelStates\FinalLevelState.cpp" />
+    <ClCompile Include="GameStates\LevelStates\GameOverState.cpp" />
     <ClCompile Include="GameStates\LevelStates\ILevelState.cpp" />
     <ClCompile Include="GameStates\LevelStates\MainLevelState.cpp" />
     <ClCompile Include="GameStates\LevelStates\TutorialState.cpp" />
@@ -213,6 +216,7 @@
     <ClCompile Include="Graphics\Particles\ParticleSystem.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Message System\CreateEntityMessage.cpp" />
+    <ClCompile Include="Message System\CreateGameOverMessage.cpp" />
     <ClCompile Include="Message System\CreateProjectile.cpp" />
     <ClCompile Include="Message System\DestroyEntityMessage.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp" />
