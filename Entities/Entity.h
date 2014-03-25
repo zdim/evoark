@@ -20,6 +20,8 @@ protected:
 	SGD::Point offsetToCamera();
 	void rotateToward(SGD::Vector direction, float dt);
 
+	bool destroying = false;
+
 public:
 	CEntity();
 	virtual ~CEntity();
@@ -38,10 +40,10 @@ public:
 	virtual bool			IsCircle() override {return false;}
 
 	//Simplify rect collision
-	virtual SGD::Rectangle	GetRect() { return SGD::Rectangle{position - size / 2, position + size}; }
+	virtual SGD::Rectangle	GetRect() { return SGD::Rectangle{SGD::Point(position - size / 2), SGD::Point(position + size/2)}; }
 
 	//Mutators
-	virtual void SetImage(SGD::HTexture newImage)override {image = newImage;}
+	virtual void SetImage(SGD::HTexture newImage)override;// {image = newImage;}
 	virtual void SetPosition(SGD::Point newPos)	override {position = newPos;}
 	virtual void SetVelocity(SGD::Vector newVel)override {velocity = newVel;}
 	virtual void SetRotation(float newRot)		override {rotation = newRot;}
@@ -54,5 +56,6 @@ public:
 
 	virtual void AddRef() final;
 	virtual void Release() final;
+	virtual void SelfDestruct() override;
 };
 

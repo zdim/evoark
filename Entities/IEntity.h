@@ -52,7 +52,8 @@ public:
 
 	virtual void HandleCollision(IEntity* other) = 0;
 	//virtual void HandleEvent(CCustomEvent* e) = 0;
-	
+
 	virtual void AddRef() = 0;
 	virtual void Release() = 0;
+	virtual void SelfDestruct() = 0;
 };

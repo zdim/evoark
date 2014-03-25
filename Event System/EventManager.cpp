@@ -39,6 +39,11 @@ void CEventManager::ClearEvents()
 	}
 }
 
+void CEventManager::ClearListeners()
+{
+	listenerMap.clear();
+}
+
 void CEventManager::Update()
 {
 	while (!events.empty())

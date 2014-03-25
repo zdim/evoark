@@ -18,5 +18,9 @@ public:
 	int GetType() override { return (int)EntityType::Human; }
 	void Update(float dt);
 	void AddGrav(SGD::Vector grav) {gravVec += grav;}
+
+	//stubbing for now
+	IEntity* GetTarget() {return nullptr;}
+	void SetTarget(IEntity* newTarget) {}
 };
 

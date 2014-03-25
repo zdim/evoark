@@ -4,6 +4,7 @@
 #include "../../../Event System/CustomEvent.h"
 #include "../../../GameStates/Game.h"
 #include "../../../Event System/EventManager.h"
+#include "../../../Message System/CreateProjectile.h"
 
 CEnemy::CEnemy()
 {

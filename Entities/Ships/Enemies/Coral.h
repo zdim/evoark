@@ -11,14 +11,16 @@
 class CCoral :
 	public CEnemy
 {
-	CEngine* engine;
-	CModule* cockpit;
-	CShieldModule* shieldMod;
-	CLaserModule* laser;
-	CModule* ability;
+	CEngine* engine				= nullptr;
+	CModule* cockpit			= nullptr;
+	CShieldModule* shieldMod	= nullptr;
+	CLaserModule* laser			= nullptr;
+	CModule* ability			= nullptr;
 
 	int shield;
 	int shieldMax;
+	float shieldDelay;
+	float shieldTimer;
 
 public:
 	CCoral();
@@ -30,4 +32,6 @@ public:
 
 	virtual void DestroyModule(CModule* mod);
 	virtual void SelfDestruct(void);
+
+	virtual void SetImages(std::vector<SGD::HTexture>&images);
 };

@@ -276,9 +276,6 @@
     <ClInclude Include="Event System\IListener.h">
       <Filter>Event System</Filter>
     </ClInclude>
-    <ClInclude Include="Entities\Projectiles\Laser.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Message System\MessageID.h">
       <Filter>Message System</Filter>
     </ClInclude>
@@ -296,6 +293,15 @@
     </ClInclude>
     <ClInclude Include="Message System\CreateProjectile.h">
       <Filter>Message System</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStates\LevelStates\GameOverState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Message System\CreateGameOverMessage.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Projectiles\Laser.h">
+      <Filter>Entities\Projectiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -501,6 +507,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Message System\CreateProjectile.cpp">
+      <Filter>Message System</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStates\LevelStates\GameOverState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Message System\CreateGameOverMessage.cpp">
       <Filter>Message System</Filter>
     </ClCompile>
   </ItemGroup>

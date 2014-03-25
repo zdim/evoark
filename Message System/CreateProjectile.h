@@ -15,7 +15,7 @@ class CreateProjectileMessage : public SGD::Message
 	
 
 public:
-	CreateProjectileMessage(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier, float radius = -1.0f);
+	CreateProjectileMessage(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier = 0, float radius = -1.0f);
 	~CreateProjectileMessage(){}
 
 	EntityType GetProjType() const {return m_type;}

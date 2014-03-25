@@ -5,6 +5,7 @@
 #include "../Camera.h"
 #include "../GameStates/LevelStates/ILevelState.h"
 #include "../GameStates/Game.h"
+#include "../Message System/DestroyEntityMessage.h"
 
 #define GRAVDECAY 0.025F
 
@@ -21,7 +22,7 @@ CEntity::~CEntity()
 
 SGD::Point CEntity::offsetToCamera()
 {
-	return position - size / 2 + Game::GetInstance()->GetLevelState()->GetCam()->GetOffset();
+	return position - size / 2 + CCamera::GetInstance()->GetOffset();
 }
 
 void CEntity::rotateToward(SGD::Vector direction, float dt)
@@ -69,11 +70,26 @@ void	CEntity::Update(float dt)
 
 void	CEntity::Render()
 {
-	float scale = std::max(size.width/imageSize.width, size.height/imageSize.height);
-	CCamera* cam = Game::GetInstance()->GetLevelState()->GetCam();
+	//Paint rect
+	SGD::Rectangle colRect = GetRect();
+	colRect.Offset(CCamera::GetInstance()->GetOffset());
+	SGD::GraphicsManager::GetInstance()->DrawRectangle(colRect, SGD::Color(255, 0, 0));
+
+	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
+	//CCamera* cam = Game::GetInstance()->GetLevelState()->GetCam();
 	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
 	SGD::Point renderPoint = offsetToCamera();
 	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, {}, { scale, scale });
+
+}
+
+void CEntity::SetImage(SGD::HTexture newImage)// {image = newImage;}
+{
+	image = newImage;
+	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
+	//Why is this a vector?
+	SGD::Vector texData = graphics->GetTextureData(image);
+	imageSize = {texData.x, texData.y};
 }
 
 void	CEntity::HandleCollision(IEntity* other)
@@ -94,4 +110,14 @@ void	CEntity::Release()
 	{
 		delete this;
 	}
+}
+
+void CEntity::SelfDestruct()
+{
+	if (destroying)
+		return;
+
+	DestroyEntityMessage* msg = new DestroyEntityMessage(this);
+	msg->QueueMessage();
+	destroying = true;
 }

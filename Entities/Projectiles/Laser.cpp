@@ -2,6 +2,7 @@
 #include "../Ships/Ship.h"
 #include "../Asteroid.h"
 #include "../../Message System/DestroyEntityMessage.h"
+#include "../../Camera.h"
 
 CLaser::CLaser()
 {
@@ -18,6 +19,8 @@ void CLaser::Update(float dt)
 	velocity += gravVec;
 	gravVec = SGD::Vector{0,0};
 	CEntity::Update(dt);
+	if (!position.IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
+		SelfDestruct();
 }
 
 void CLaser::HandleCollision(IEntity* other)
@@ -31,8 +34,7 @@ void CLaser::HandleCollision(IEntity* other)
 		ship->TakeDamage(damage);
 
 		//Throw a message to destroy this
-		DestroyEntityMessage* msg = new DestroyEntityMessage(this);
-		msg->QueueMessage();
+		SelfDestruct();
 	}
 
 	//Is other an asteroid?

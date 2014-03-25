@@ -3,7 +3,6 @@
 class CLaserModule :
 	public CTurretModule
 {
-	int damage;
 public:
 	CLaserModule();
 	virtual ~CLaserModule();
