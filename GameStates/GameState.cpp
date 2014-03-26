@@ -6,6 +6,7 @@
 #include "../SGD Wrappers/SGD_InputManager.h"
 #include <ctime>
 #include <stdlib.h>
+#include <sstream>
 #include "../TinyXML/tinyxml.h"
 //#include "../TinyXML/tinystr.h"
 //#include "../Graphics/Particles/Flyweight.h"
@@ -50,7 +51,7 @@ void	CTestLevelState::Enter(void)
 	//EntityManager->Spawn(EntityType::Player, { 150, 150 });
 	//EntityManager->Spawn(EntityType::Copperhead, { 200, 200 });
 	//EntityManager->Spawn(EntityType::Coral, { 200, 200 });
-	EntityManager->Spawn(EntityType::Stargate, {200,200});
+	//EntityManager->Spawn(EntityType::Stargate, {200,200});
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 
@@ -132,7 +133,7 @@ void	CTestLevelState::Render(void)
 	
 
 	EntityManager->Render();
-	UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator());
+	UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator(), EntityManager->GetStargate());
 }
 
 void	CTestLevelState::Generate()
@@ -179,6 +180,14 @@ void	CTestLevelState::Generate()
 				default:
 					break;
 				}
+			}
+		}
+
+		for (int i = 0; i < events.size(); i++)
+		{
+			if (events[i].eType == "STARGATE")
+			{
+				EntityManager->Spawn(EntityType::Stargate, { events[i].area.left, events[i].area.top }, 1, false);
 			}
 		}
 	}
@@ -369,7 +378,7 @@ IEntity* CTestLevelState::GetPlayer()
 	return player;
 }
 
-void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntity* _coordinator)
+void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntity* _coordinator, IEntity* _stargate)
 {
 	// set hullbar
 	SGD::Rectangle hullBox = {
@@ -471,15 +480,19 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 		for (int i = 0; i < _allies.size(); i++)
 		{
 			SGD::Vector toTarget = _allies[i]->GetPosition() - _player->GetPosition();
-			if (toTarget.ComputeLength() > 400)
+			float allyDistance = toTarget.ComputeLength();
+			//std::ostringstream oss;
+			//oss << allyDistance;
+			if (allyDistance > 400)
 			{
 				toTarget.Normalize();
 
 				SGD::Point arrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
 				arrowPos += toTarget * 200;
-				float arrowRot = atan2(_allies[i]->GetPosition().y - _player->GetPosition().y, _allies[i]->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
+				float arrowRot = atan2(_allies[i]->GetPosition().y - _player->GetPosition().y, _allies[i]->GetPosition().x - _player->GetPosition().x) + SGD::PI * .5f;
 
 				graphics->DrawTexture(objArrow, arrowPos, arrowRot, {}, { 200, 0, 200, 150 }, { .15f, .15f });
+				//graphics->DrawString(oss.str().c_str(), { arrowPos.x, arrowPos.y + 20 });
 			}
 		}
 
@@ -487,13 +500,24 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 		/*SGD::Vector toCoordinator = _coordinator->GetPosition() - _player->GetPosition();
 		if (toCoordinator.ComputeLength() > 400)
 		{
-			toCoordinator.Normalize();
-			SGD::Point coordArrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
-			coordArrowPos += toCoordinator * 200;
-			float coordArrowRot = atan2(_coordinator->GetPosition().y - _player->GetPosition().y, _coordinator->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
+		toCoordinator.Normalize();
+		SGD::Point coordArrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
+		coordArrowPos += toCoordinator * 200;
+		float coordArrowRot = atan2(_coordinator->GetPosition().y - _player->GetPosition().y, _coordinator->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
 
-			graphics->DrawTexture(objArrow, coordArrowPos, coordArrowRot, {}, { 200, 200, 50, 0 }, { .15f, .15f });
+		graphics->DrawTexture(objArrow, coordArrowPos, coordArrowRot, {}, { 200, 200, 50, 0 }, { .15f, .15f });
 		}*/
+
+		SGD::Vector toStargate = _stargate->GetPosition() - _player->GetPosition();
+		if (toStargate.ComputeLength() > 400)
+		{
+			toStargate.Normalize();
+			SGD::Point stargateArrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
+			stargateArrowPos += toStargate * 200;
+			float stargateArrowRot = atan2(_stargate->GetPosition().y - _player->GetPosition().y, _stargate->GetPosition().x - _player->GetPosition().x) + SGD::PI * .5f;
+
+			graphics->DrawTexture(objArrow, stargateArrowPos, stargateArrowRot, {}, { 200, 150, 150, 20 }, { .15f, .15f });
+		}
 	}
 	// draw exp
 	graphics->DrawRectangle(exp, { 0, 250, 50 });
@@ -508,16 +532,19 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	graphics->DrawRectangle(shieldBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
 
 	// draw well
+	graphics->DrawTexture(_player->GetWellIcon(), { wellBox.left, wellBox.top }, 0, {}, {}, { .6f, .6f });
 	if (_player->GetWellTimer() < _player->GetWellDelay())
 		graphics->DrawRectangle(wellCD, SGD::Color{ 150, 200, 0, 0 });
 	graphics->DrawRectangle(wellBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
 
 	// draw push
+	graphics->DrawTexture(_player->GetPushIcon(), { pushBox.left, pushBox.top }, 0, {}, {}, { .6f, .6f });
 	if (_player->GetPushTimer() < _player->GetPushDelay())
 		graphics->DrawRectangle(pushCD, SGD::Color{ 150, 200, 0, 0 });
 	graphics->DrawRectangle(pushBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
 
 	// draw warp
+	graphics->DrawTexture(_player->GetWarpIcon(), { warpBox.left, warpBox.top }, 0, {}, {}, { .6f, .6f });
 	if (_player->GetWarpTimer() < _player->GetWarpDelay())
 		graphics->DrawRectangle(warpCD, SGD::Color{ 150, 200, 0, 0 });
 	graphics->DrawRectangle(warpBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
