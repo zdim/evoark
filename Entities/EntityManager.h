@@ -4,6 +4,7 @@
 #include "Leader.h"
 #include "../SGD Wrappers/SGD_Handle.h"
 #include "Ships\Player.h"
+class CMoccasin;
 class CEntityManager
 {
 	std::vector<CLeader*> leaders;
@@ -18,6 +19,7 @@ class CEntityManager
 	EntityGroup gravObjects;
 	Coordinator* coordinator;
 	CEntity* stargate = nullptr;
+	CMoccasin* boss = nullptr;
 	std::vector<SGD::HTexture> images;
 
 	CEntityManager();
@@ -30,6 +32,7 @@ public:
 
 	CPlayer* GetPlayer() { return dynamic_cast<CPlayer*>(player); }
 	CEntity* GetStargate() { return dynamic_cast<CEntity*>(stargate); }
+	CMoccasin* GetBoss() {return boss;}
 	std::vector<IEntity*> GetAllies() { return allies; }
 	IEntity* GetCoordinator() { return (IEntity*)coordinator; }
 	//IEntity* GetStargate() { return (IEntity*)stargate; }	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.

@@ -215,6 +215,8 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	}
 	case EntityType::Moccasin:
 	{
+								 if (boss)
+									 return;
 								 CMoccasin* moccasin = new CMoccasin;
 								 amount--;
 								 for (amount = amount; amount > 0; amount--)
@@ -411,8 +413,9 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		RemoveFromGroup(ships, entity);
 		RemoveFromLeader(entity);
 		break;
-	case EntityType::Coral:
 	case EntityType::Moccasin:
+		boss = nullptr;
+	case EntityType::Coral:
 		dynamic_cast<CEnemy*>(entity)->SetTarget(nullptr);
 		dynamic_cast<CCoral*>(entity)->DestroyAllModules();
 		RemoveFromGroup(bigEnemies, entity);
@@ -425,6 +428,7 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		RemoveFromGroup(projectiles, entity);
 		break;
 	case EntityType::Stargate:
+		stargate = nullptr;
 		RemoveFromGroup(stationaries, entity);
 		break;
 	}
