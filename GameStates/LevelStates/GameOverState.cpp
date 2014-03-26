@@ -38,6 +38,7 @@ bool CGameOverState::Input()
 			return true;
 		}
 	}
+	return true;
 }
 
 void CGameOverState::Update(float dt)
