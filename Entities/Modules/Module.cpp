@@ -28,6 +28,7 @@ void CModule::SetOwner(CCoral* newVal)
 
 void CModule::Update(float dt)
 {
+	timer += dt;
 	SGD::Vector rotatedOffset = posOffset;
 	rotatedOffset.Rotate(owner->GetRotation());
 	position = owner->GetPosition() + rotatedOffset;
@@ -37,6 +38,7 @@ void CModule::Update(float dt)
 
 void CModule::TakeDamage(int damage, bool collision)
 {
+	damage -= owner->RequestShield(damage);
 	if (collision)
 		damage *= COLLISION_MODIFIER;
 	hull -= damage;

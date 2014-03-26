@@ -31,8 +31,8 @@ CCoral::CCoral()
 	modulePositions[engine] = SGD::Vector{ 0, 40 };
 	modulePositions[cockpit] = SGD::Vector{ 0, 0 };
 	modulePositions[shieldModule] = SGD::Vector{ 40, 0 };
-	modulePositions[laser] = SGD::Vector{ -40, 0 };
-	modulePositions[ability] = SGD::Vector{0,-40};
+	modulePositions[laser] = SGD::Vector{ 0, -40 };
+	modulePositions[ability] = SGD::Vector{ -40, 0 };
 
 	for (unsigned int i = 0; i < modules.size(); i++)
 	{
@@ -53,7 +53,11 @@ void CCoral::Update(float dt)
 	for (unsigned int i = 0; i < modules.size(); i++)
 	{
 		if (modules[i])
+		{
 			modules[i]->Update(dt);
+			if (i == laser && target)
+				modules[i]->Activate();
+		}
 	}
 	if (!modules[cockpit])
 		SelfDestruct();
@@ -118,4 +122,21 @@ void CCoral::SetImages(std::vector<SGD::HTexture>& images)
 			modules[i]->SetSize({32,32});
 		}
 	}
+}
+
+void CCoral::SetTarget(CShip* newTarget)
+{
+	CEnemy::SetTarget(newTarget);
+	for (unsigned int i = 0; i < modules.size(); i++)
+	{
+		if (modules[i] && modules[i]->IsTurret())
+		{
+			dynamic_cast<CTurretModule*>(modules[i])->SetTarget(newTarget);
+		}
+	}
+}
+
+int CCoral::RequestShield(int damage)
+{
+	return dynamic_cast<CShieldModule*>(modules[shieldModule])->RequestShield(damage);
 }

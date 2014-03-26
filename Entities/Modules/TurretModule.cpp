@@ -1,9 +1,11 @@
 //
 #include "TurretModule.h"
 #include "../../Message System/CreateProjectile.h"
+#include "../Ships/Enemies/Coral.h"
 
 CTurretModule::CTurretModule()
 {
+	rotSpeed = SGD::PI;
 	target = nullptr;
 }
 
@@ -28,14 +30,13 @@ void CTurretModule::SetTarget(CShip* newTarget)
 
 void  CTurretModule::Update(float dt)
 {
-	CModule::Update(dt);
 	//Rotate toward target
 	if (target)
 	{
 		SGD::Vector toTarget = target->GetPosition() - position;
 		CEntity::rotateToward(toTarget, dt);
 
-		SGD::Vector forward = {0,-1};
-		forward.Rotate(rotation);
+		rotOffset = rotation - owner->GetRotation();
 	}
+	CModule::Update(dt);
 }

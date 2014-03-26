@@ -16,11 +16,6 @@ protected:
 	std::vector<SGD::Vector>modulePositions;
 	std::vector<CModule*>modules;
 
-	int shield;
-	int shieldMax;
-	float shieldDelay;
-	float shieldTimer;
-
 public:
 	CCoral();
 	virtual ~CCoral();
@@ -36,4 +31,6 @@ public:
 	//virtual void SelfDestruct(void);
 
 	virtual void SetImages(std::vector<SGD::HTexture>&images);
+	void SetTarget(CShip* newTarget) override;
+	int RequestShield(int damage);
 };

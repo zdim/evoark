@@ -18,6 +18,7 @@ public:
 	CModule();
 	virtual ~CModule();
 
+	virtual bool IsTurret() {return false;}
 	int GetType() { return (int)EntityType::BaseModule; }
 	CCoral*	GetOwner() { return owner; }
 	SGD::Vector GetOffset() {return posOffset;}

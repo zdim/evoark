@@ -6,14 +6,15 @@ class CTurretModule :
 {
 protected:
 	CShip* target;
-	int damage;
+	int damage = 25;
 
-	float delay;
-	float timer;
+	//float delay;
+	//float timer;
 public:
 	CTurretModule();
 	virtual ~CTurretModule();
 
+	bool IsTurret() override {return true;}
 	int GetType() { return (int)EntityType::BaseClass; }
 	const CShip* GetTarget() {return target;}
 	void SetTarget(CShip* newTarget); //{ target = newTarget; }
