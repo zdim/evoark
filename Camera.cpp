@@ -29,8 +29,8 @@ bool		CCamera::Initiallize(IEntity* t, SGD::Size screen)
 
 	if (screen == SGD::Size())
 	{
-		screen.width = Game::GetInstance()->GetScreenWidth();
-		screen.height = Game::GetInstance()->GetScreenHeight();
+		screen.width = (float)Game::GetInstance()->GetScreenWidth();
+		screen.height = (float)Game::GetInstance()->GetScreenHeight();
 	}
 	screenSize = screen;
 	pos = target->GetPosition();

@@ -15,7 +15,7 @@ public:
 	void HandleCollision(IEntity* other) override;
 
 	//Comment this out later?
-	void Render() override;
+	//void Render() override;
 
 
 	virtual int getHull() {return hull;}

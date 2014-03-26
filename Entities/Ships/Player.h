@@ -67,7 +67,7 @@ public:
 
 	//void HandleCollision(IEntity* other) override;
 	//Coment out later:
-	void Render() override;
+	//void Render() override;
 
 	void CreateLaser();
 	void CreateMissile();
