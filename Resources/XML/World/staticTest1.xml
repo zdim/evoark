@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Level>
-  <Details width="14" height="4" quadWidth="300" quadHeight="300" events="1" collision="0" background="starfield.jpg">
+  <Details width="14" height="4" quadWidth="300" quadHeight="300" events="2" collision="0" background="starfield.jpg">
     <Quad x="0" y="0" possibleTypes="0" />
     <Quad x="0" y="1" possibleTypes="1">
       <Type type="PLAYER" amount="1" randomized="False" x="174" y="451" />
@@ -23,7 +23,9 @@
     <Quad x="4" y="1" possibleTypes="1">
       <Type type="COPPERHEAD" amount="5" randomized="False" x="1356" y="446" />
     </Quad>
-    <Quad x="4" y="2" possibleTypes="0" />
+    <Quad x="4" y="2" possibleTypes="1">
+      <Type type="PLANET" amount="1" randomized="False" x="1342" y="753" />
+    </Quad>
     <Quad x="4" y="3" possibleTypes="0" />
     <Quad x="5" y="0" possibleTypes="1">
       <Type type="COPPERHEAD" amount="3" randomized="False" x="1649" y="147" />
@@ -33,7 +35,9 @@
       <Type type="COPPERHEAD" amount="3" randomized="False" x="1657" y="752" />
     </Quad>
     <Quad x="5" y="3" possibleTypes="0" />
-    <Quad x="6" y="0" possibleTypes="0" />
+    <Quad x="6" y="0" possibleTypes="1">
+      <Type type="ASTEROID" amount="1" randomized="False" x="1935" y="188" />
+    </Quad>
     <Quad x="6" y="1" possibleTypes="1">
       <Type type="MAMBA" amount="4" randomized="False" x="2059" y="445" />
     </Quad>
@@ -51,7 +55,9 @@
     <Quad x="7" y="3" possibleTypes="0" />
     <Quad x="8" y="0" possibleTypes="0" />
     <Quad x="8" y="1" possibleTypes="0" />
-    <Quad x="8" y="2" possibleTypes="0" />
+    <Quad x="8" y="2" possibleTypes="1">
+      <Type type="ASTEROID" amount="1" randomized="False" x="2535" y="736" />
+    </Quad>
     <Quad x="8" y="3" possibleTypes="0" />
     <Quad x="9" y="0" possibleTypes="1">
       <Type type="COPPERHEAD" amount="4" randomized="False" x="2819" y="210" />
@@ -63,7 +69,9 @@
       <Type type="COPPERHEAD" amount="4" randomized="False" x="2786" y="653" />
     </Quad>
     <Quad x="9" y="3" possibleTypes="0" />
-    <Quad x="10" y="0" possibleTypes="0" />
+    <Quad x="10" y="0" possibleTypes="1">
+      <Type type="ASTEROID" amount="1" randomized="False" x="3138" y="192" />
+    </Quad>
     <Quad x="10" y="1" possibleTypes="0" />
     <Quad x="10" y="2" possibleTypes="0" />
     <Quad x="10" y="3" possibleTypes="0" />
@@ -88,5 +96,6 @@
     <Quad x="13" y="2" possibleTypes="0" />
     <Quad x="13" y="3" possibleTypes="0" />
     <Event type="STARGATE" x="3920" y="335" width="259" height="235" />
+    <Event type="TUTORIAL.MOVEMENT" x="303" y="311" width="288" height="271" />
   </Details>
 </Level>
