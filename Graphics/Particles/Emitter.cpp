@@ -3,6 +3,7 @@
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
+#include "../../Camera.h"
 //#include <stdlib.h>
 
 CEmitter::CEmitter()
@@ -155,7 +156,12 @@ void CEmitter::Render()
 {
 	for (std::list<CParticle*>::iterator it = m_lAliveParticles.begin(); it != m_lAliveParticles.end(); ++it)
 	{
-		SGD::GraphicsManager::GetInstance()->DrawTexture(particleData->GetImage(), (*it)->GetCurPos(), (*it)->GetCurRotation(),
+		SGD::Point tPoint = { (*it)->GetCurPos().x - (particleData->GetRotationOffset().x * (*it)->GetCurScale().width),
+			(*it)->GetCurPos().y - particleData->GetRotationOffset().y * (*it)->GetCurScale().height };
+
+		tPoint += CCamera::GetInstance()->GetOffset();
+
+		SGD::GraphicsManager::GetInstance()->DrawTexture(particleData->GetImage(), tPoint, (*it)->GetCurRotation(),
 			particleData->GetRotationOffset(), (*it)->GetCurColor(), (*it)->GetCurScale());
 	}
 }

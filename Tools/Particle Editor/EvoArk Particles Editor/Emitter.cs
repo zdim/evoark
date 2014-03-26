@@ -259,7 +259,7 @@ namespace EvoArk_Particles_Editor
             {
                 TM.Draw(particleData.ParticleImage,
                     (int)m_lAliveParticles[i].ParticlePositon.X - (int)(particleData.ParticleOffset.X * m_lAliveParticles[i].ParticleScale.Width),
-                    (int)m_lAliveParticles[i].ParticlePositon.Y -(int)(particleData.ParticleOffset.Y * m_lAliveParticles[i].ParticleScale.Height),
+                    (int)m_lAliveParticles[i].ParticlePositon.Y - (int)(particleData.ParticleOffset.Y * m_lAliveParticles[i].ParticleScale.Height),
                     m_lAliveParticles[i].ParticleScale.Width,
                     m_lAliveParticles[i].ParticleScale.Height,
                     Rectangle.Empty,
