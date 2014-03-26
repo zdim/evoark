@@ -35,6 +35,9 @@ class CPlayer :
 
 	bool arrowsOn = false;
 
+	SGD::HTexture wellIcon = SGD::INVALID_HANDLE;
+	SGD::HTexture pushIcon = SGD::INVALID_HANDLE;
+	SGD::HTexture warpIcon = SGD::INVALID_HANDLE;
 
 public:
 	CPlayer();
@@ -47,6 +50,8 @@ public:
 
 	int GetShield() { return shield; }
 	int GetMaxShield() { return maxShield; }
+	int GetExp() { return this->exp; }
+	int GetReqExp() { return expRequired; }
 	float GetWellDelay() { return wellDelay; }
 	float GetPushDelay() { return pushDelay; }
 	float GetWarpDelay() { return warpDelay; }
@@ -54,6 +59,11 @@ public:
 	float GetPushTimer() { return pushTimer; }
 	float GetWarpTimer() { return warpTimer; }
 	bool GetArrowsOn() { return arrowsOn; }
+
+	// get textures for icons
+	SGD::HTexture GetWellIcon() { return wellIcon; }
+	SGD::HTexture GetPushIcon() { return pushIcon; }
+	SGD::HTexture GetWarpIcon() { return warpIcon; }
 
 	//void HandleCollision(IEntity* other) override;
 	//Coment out later:

@@ -302,6 +302,8 @@ namespace Editor
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
 
+            
+
             if (panel1.VerticalScroll.Visible == true && panel1.HorizontalScroll.Visible == true)
             {
                 D3D.Resize(panel1, panel1.Size.Width - SystemInformation.VerticalScrollBarWidth, panel1.Size.Height - SystemInformation.HorizontalScrollBarHeight, false);
@@ -355,6 +357,18 @@ namespace Editor
 
             Quad[,] newWorld = new Quad[worldSize.Width, temp];
 
+            if (temp < worldSize.Height)
+                for (int i = 0; i < worldSize.Width; i++)
+                {
+                    world[i, worldSize.Height - 1].Spawns.Clear();
+                    if (selected.Y >= temp)
+                    {
+                        selected = new Quad();
+                        selectedSpawn = new Spawn();
+                        listBox1.DataSource = null;
+                    }
+                }
+
             for (int i = 0; i < worldSize.Width; i++)
                 for (int j = 0; j < temp; j++)
                 {
@@ -374,6 +388,8 @@ namespace Editor
             panel1.AutoScrollMinSize = new Size(worldSize.Width * quadSize.Width,
                 worldSize.Height * quadSize.Height);
             labelWorldSize.Text = "World Size: " + (worldSize.Width * quadSize.Width).ToString() + ", " + (worldSize.Height * quadSize.Height).ToString();
+
+            
 
             if (panel1.VerticalScroll.Visible == true && panel1.HorizontalScroll.Visible == true)
             {
@@ -398,6 +414,18 @@ namespace Editor
             int temp = Int32.Parse(numCols.Value.ToString());
 
             Quad[,] newWorld = new Quad[temp, worldSize.Height];
+
+            if(temp < worldSize.Width)
+                for(int i = 0; i < worldSize.Height; i++)
+                {
+                    world[worldSize.Width - 1, i].Spawns.Clear();
+                    if (selected.X >= temp)
+                    {
+                        selected = new Quad();
+                        selectedSpawn = new Spawn();
+                        listBox1.DataSource = null;
+                    }
+                }
 
             for (int i = 0; i < temp; i++)
                 for (int j = 0; j < worldSize.Height; j++)
@@ -768,8 +796,8 @@ namespace Editor
                 //removeEntity.Enabled = false;
                 radioButtonEvent.Enabled = false;
                 radioButtonObject.Enabled = false;
-                numericUpDownWidth.Maximum = 1000;
-                numericUpDownHeight.Maximum = 1000;
+                numericUpDownWidth.Maximum = 10000;
+                numericUpDownHeight.Maximum = 10000;
                 groupBoxSize.Enabled = true;
             }
             else
@@ -842,7 +870,7 @@ namespace Editor
             }
             else
             {
-                if (selectedSpawn != null)
+                if (selectedSpawn != null && (selectedSpawn.X > 0 || selectedSpawn.Y > 0))
                 {
                     for (int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
                     {
@@ -1072,7 +1100,7 @@ namespace Editor
                             oSpawn.Y = selectedSpawn.Y;
                             oSpawn.Width = selectedSpawn.Width;
                             oSpawn.Height = selectedSpawn.Height;
-                            oSpawn.ObjectType = comboBox1.SelectedItem.ToString();
+                            oSpawn.ObjectType = world[selected.X, selected.Y].Spawns[i].ObjectType;
                             oSpawn.Randomized = randomizeCheck.Checked;
                             selectedSpawn = oSpawn;
                             world[selected.X, selected.Y].Spawns[i] = (ObjectSpawn)selectedSpawn;
@@ -1096,29 +1124,7 @@ namespace Editor
 
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
-            if(selectedSpawn != null)
-            {
-                for (int i = 0; i < world[selected.X, selected.Y].Spawns.Count; i++)
-                {
-                    if (world[selected.X, selected.Y].Spawns[i] == selectedSpawn)
-                    {
-                        ObjectSpawn oSpawn = new ObjectSpawn();
-                        oSpawn.Amount = (int)numericUpDown1.Value;
-                        oSpawn.X = selectedSpawn.X;
-                        oSpawn.Y = selectedSpawn.Y;
-                        oSpawn.Width = selectedSpawn.Width;
-                        oSpawn.Height = selectedSpawn.Height;
-                        oSpawn.ObjectType = comboBox1.SelectedItem.ToString();
-                        oSpawn.Randomized = randomizeCheck.Checked;
-                        selectedSpawn = oSpawn;
-                        world[selected.X, selected.Y].Spawns[i] = (ObjectSpawn)selectedSpawn;
-                        listBox1.DataSource = null;
-                        listBox1.DataSource = world[selected.X, selected.Y].Spawns;
-                        listBox1.SelectedIndex = i;
-                        break;
-                    }
-                }
-            }
+           
         }
 
         public void newWorldToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1166,6 +1172,11 @@ namespace Editor
                     world[i, j].Y = j;
                     world[i, j].Spawns.Clear();
                 }
+
+            numCols.Value = 4;
+            numRows.Value = 4;
+            quadHeight.Value = 4;
+            quadWidth.Value = 4;
         }
 
         public void saveWorldToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1437,7 +1448,17 @@ namespace Editor
             }
         }
 
+        private void panel1_MouseEnter(object sender, EventArgs e)
+        {
+            panel1.Focus();
+        }
 
-
+        private void helpToolStripButton_Click(object sender, EventArgs e)
+        {
+            string help;
+            help = "EvoArk World Editor\n\n";
+            MessageBox.Show(help);
+            
+        }
     }
 }

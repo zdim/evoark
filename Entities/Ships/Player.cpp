@@ -20,12 +20,17 @@ CPlayer::CPlayer()
 	laserDelay = 0.25f;
 	missileDelay = 2.0f;
 
-	
+	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravWellIcon.png");
+	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravPushIcon.png");
+	warpIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/WarpIcon.png");
 }
 
 
 CPlayer::~CPlayer()
 {
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(wellIcon);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushIcon);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(warpIcon);
 }
 
 void CPlayer::Update(float dt)

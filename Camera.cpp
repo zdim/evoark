@@ -57,6 +57,12 @@ void CCamera::Update(float dt)
 	SGD::Vector mOffset = SGD::Vector{ screenSize.width, screenSize.height } / -2;
 	SGD::Point dest = tPos + mOffset;//target->GetPosition() + GetOffset();
 
+	//if (target->GetPosition().x < Game::GetInstance()->GetScreenWidth() * .5f ||
+	//	target->GetPosition().x > Game::GetInstance()->GetLevelState()->GetWorldSize().width - Game::GetInstance()->GetScreenWidth() * .5f ||
+	//	target->GetPosition().y < Game::GetInstance()->GetScreenHeight() * .5f ||
+	//	target->GetPosition().y > Game::GetInstance()->GetLevelState()->GetWorldSize().height - Game::GetInstance()->GetScreenHeight() * .5f)
+	//	return;
+
 	if (pos == dest)
 		return;
 	
