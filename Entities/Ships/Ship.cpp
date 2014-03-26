@@ -26,7 +26,8 @@ void CShip::TakeDamage(int damage, bool collision)
 	//{
 	//	return;
 	//}
-
+	if (collision)
+		damage *= COLLISION_MODIFIER;
 	hull -= damage;
 	if (hull <= 0)
 	{

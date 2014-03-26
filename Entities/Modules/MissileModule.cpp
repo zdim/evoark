@@ -4,6 +4,7 @@
 
 CMissileModule::CMissileModule()
 {
+	cooldown = 15;
 }
 
 

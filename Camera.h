@@ -9,9 +9,11 @@ class CCamera
 	SGD::Size screenSize;
 	IEntity* target;
 	float speed = 250;
+	bool locked;
 
 	CCamera(IEntity* t, SGD::Size screen);
 	~CCamera();
+	void clamp();
 public:
 
 	static CCamera* GetInstance();

@@ -51,7 +51,6 @@ void CPlayer::Update(float dt)
 
 	if (shieldTimer >= shieldDelay)
 	{
-
 		shield += int(shieldRegen * dt);
 		if (shield > maxShield)
 			shield = maxShield;
@@ -178,11 +177,17 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	{
 		return;
 	}
+	if (collision)
+		damage *= COLLISION_MODIFIER;
 	shieldTimer = 0;
 	if (shield > 0)
 	{
 		shield -= damage;
 		damage -= shield;
+	}
+	else
+	{
+		shield = 0;
 	}
 
 	if (damage <= 0)

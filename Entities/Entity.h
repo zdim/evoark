@@ -2,6 +2,9 @@
 #include "IEntity.h"
 #include "../SGD Wrappers/SGD_Geometry.h"
 
+#define GRAVDECAY 0.025F
+#define COLLISION_MODIFIER 0.05F
+
 
 class CEntity :
 	public IEntity

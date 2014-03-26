@@ -47,10 +47,43 @@ bool		CCamera::Terminate()
 	return true;
 }
 
+void CCamera::clamp()
+{
+	SGD::Size world = Game::GetInstance()->GetLevelState()->GetWorldSize();
+	SGD::Rectangle box = GetBoxInWorld();
+	
+	if (box.left < 0)
+	{
+		pos.x = 0;
+	}
+
+	if (box.top < 0)
+	{
+		pos.y = 0;
+	}
+
+	if (box.right > world.width)
+	{
+		pos.x = world.width - screenSize.width;
+	}
+
+	if (box.bottom > world.height)
+	{
+		pos.y = world.height - screenSize.height;
+	}
+}
+
 void CCamera::Update(float dt)
 {
 	if (state != camState::initiallized )
 		return;
+
+	if (locked)
+	{
+		pos = target->GetPosition() - screenSize/2;
+		clamp();
+		return;
+	}
 
 	SGD::Point tPos = target->GetPosition();
 	//SGD::Vector mOffset = GetOffset();
@@ -61,9 +94,7 @@ void CCamera::Update(float dt)
 	//	target->GetPosition().x > Game::GetInstance()->GetLevelState()->GetWorldSize().width - Game::GetInstance()->GetScreenWidth() * .5f ||
 	//	target->GetPosition().y < Game::GetInstance()->GetScreenHeight() * .5f ||
 	//	target->GetPosition().y > Game::GetInstance()->GetLevelState()->GetWorldSize().height - Game::GetInstance()->GetScreenHeight() * .5f)
-	//	return;
-
-	
+	//	return;	
 
 	if (pos == dest)
 		return;
@@ -75,40 +106,17 @@ void CCamera::Update(float dt)
 
 	float val = (newPos - dest).ComputeLength();
 
-	if (target->GetPosition().x < screenSize.width * .5f &&
-		target->GetPosition().y < screenSize.height * .5f)
-	{
-		return;
-	}
-
-	else if (target->GetPosition().x > Game::GetInstance()->GetLevelState()->GetWorldSize().width - screenSize.width * .5f &&
-		target->GetPosition().y > Game::GetInstance()->GetLevelState()->GetWorldSize().height - screenSize.height * .5f)
-	{
-		return;
-	}
-
-	else if (target->GetPosition().x < screenSize.width * .5f ||
-		target->GetPosition().x > Game::GetInstance()->GetLevelState()->GetWorldSize().width - screenSize.width * .5f)
-	{
-		pos.y = dest.y;
-		return;
-	}
-
-	else if (target->GetPosition().y < screenSize.height * .5f ||
-		target->GetPosition().y > Game::GetInstance()->GetLevelState()->GetWorldSize().height - screenSize.height * .5f)
-	{
-		pos.x = dest.x;
-		return;
-	}
-
 	if (abs(val) <= 5.0f)
 	{
 		pos = dest;
+		locked = true;
 	}
 	else
 	{
 		pos = newPos;
 	}
+
+	clamp();
 }
 
 
@@ -123,5 +131,5 @@ void  CCamera::SetTarget(IEntity* t)
 	target->Release();
 	target = t;
 
-	//locked = false;
+	locked = false;
 }

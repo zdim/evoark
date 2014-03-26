@@ -4,6 +4,7 @@
 
 CPushModule::CPushModule()
 {
+	cooldown = 25;
 }
 
 

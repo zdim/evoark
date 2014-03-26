@@ -7,8 +7,6 @@
 #include "../GameStates/Game.h"
 #include "../Message System/DestroyEntityMessage.h"
 
-#define GRAVDECAY 0.025F
-
 CEntity::CEntity()
 {
 

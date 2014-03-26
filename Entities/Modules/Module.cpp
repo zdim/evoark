@@ -37,6 +37,8 @@ void CModule::Update(float dt)
 
 void CModule::TakeDamage(int damage, bool collision)
 {
+	if (collision)
+		damage *= COLLISION_MODIFIER;
 	hull -= damage;
 	if (hull <= 0)
 	{

@@ -48,14 +48,15 @@ void	CTestLevelState::Enter(void)
 	//EntityManager->Spawn(EntityType::Player, SGD::Point{100,150});
 
 	Generate();
-	//EntityManager->Spawn(EntityType::Player, { 150, 150 });
-	//EntityManager->Spawn(EntityType::Copperhead, { 200, 200 });
-	//EntityManager->Spawn(EntityType::Coral, { 200, 200 });
 	//EntityManager->Spawn(EntityType::Stargate, {200,200});
-	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
-	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 
 	player = EntityManager->GetPlayer();
+	//Spawn Coral near the player
+	EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
+	
+	
+	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
+	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 	cam = CCamera::GetInstance();
 	cam->Initiallize(player, SGD::Size{(float)m_nScreenWidth,(float)m_nScreenHeight});
 
@@ -115,8 +116,8 @@ bool	CTestLevelState::Input(void)
 
 void	CTestLevelState::Update(float dt)
 {
-	cam->Update(dt);
 	EntityManager->Update(dt);
+	cam->Update(dt);
 
 
 
@@ -148,6 +149,7 @@ void	CTestLevelState::Render(void)
 
 void	CTestLevelState::Generate()
 {
+	//if (LoadXMLLevel("Resources/XML/World/staticTest1.xml"))
 	if (LoadXMLLevel("Resources/XML/World/testWorld2.xml"))
 	{
 		for (int i = 0; i < m_nNumQuadsWidth; i++)
