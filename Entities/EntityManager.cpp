@@ -215,7 +215,20 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	}
 	case EntityType::Moccasin:
 	{
-								
+								 CMoccasin* moccasin = new CMoccasin;
+								 amount--;
+								 for (amount = amount; amount > 0; amount--)
+								 {
+									 moccasin->AddModule();
+								 }
+								 moccasin->SetImage(images[(int)EntityType::Moccasin]);
+								 moccasin->SetSize({256,256});
+								 dynamic_cast<CCoral*>(moccasin)->SetImages(images);
+								 bigEnemies.push_back(moccasin);
+								 ships.push_back(moccasin);
+
+								 moccasin->SetPosition(position);
+								 break;
 	}
 	case EntityType::Stargate:
 		if (stargate)

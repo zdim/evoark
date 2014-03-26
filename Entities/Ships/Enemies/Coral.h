@@ -11,6 +11,7 @@
 class CCoral :
 	public CEnemy
 {
+protected:
 	enum moduleSlot{cockpit, shieldModule, engine, laser, ability, count};
 	std::vector<SGD::Vector>modulePositions;
 	std::vector<CModule*>modules;

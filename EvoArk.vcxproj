@@ -138,6 +138,7 @@
     <ClInclude Include="Graphics\Particles\Particle.h" />
     <ClInclude Include="Graphics\Particles\ParticleSystem.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Message System\BossKilledMessage.h" />
     <ClInclude Include="Message System\CreateEntityMessage.h" />
     <ClInclude Include="Message System\CreateGameOverMessage.h" />
     <ClInclude Include="Message System\CreateProjectile.h" />

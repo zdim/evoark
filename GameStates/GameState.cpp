@@ -52,8 +52,9 @@ void	CTestLevelState::Enter(void)
 
 	player = EntityManager->GetPlayer();
 	//Spawn Coral near the player
-	EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
-	
+	//EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
+	//Spawn Moccasin near the player
+	EntityManager->Spawn(EntityType::Moccasin, player->GetPosition() + SGD::Vector{ 200,200 });
 	
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
@@ -71,6 +72,7 @@ void	CTestLevelState::Exit(void)
 	if (BackgroundImage != SGD::INVALID_HANDLE)
 		graphics->UnloadTexture(BackgroundImage);
 	graphics->UnloadTexture(objArrow);
+	graphics->UnloadTexture(backgroundBlack);
 
 
 	//Terminating Messages or events before Entity manager will BREAK it on the NEXT level.
@@ -181,7 +183,7 @@ void	CTestLevelState::Generate()
 					EntityManager->Spawn(EntityType::Coral, col[j].pos, col[j].objectAmount);
 					break;
 				case MOCASSIN:
-					//EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, 1);
+					EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, 1);
 					break;
 				case ASTEROID:
 					EntityManager->Spawn(EntityType::Asteroid, col[j].pos, col[j].objectAmount);
@@ -380,6 +382,11 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::GameOver:
 	{
 								Game::GetInstance()->PushState(CGameOverState::GetInstance());
+								break;
+	}
+	case MessageID::BossKilled:
+	{
+//								  CTestLevelState::GetInstance()->player = CTestLevelState::GetInstance()->player;
 	}
 	}
 }

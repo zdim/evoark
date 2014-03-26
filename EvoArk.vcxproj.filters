@@ -318,6 +318,9 @@
     <ClInclude Include="Entities\Ships\Ship.h">
       <Filter>Entities\Ships</Filter>
     </ClInclude>
+    <ClInclude Include="Message System\BossKilledMessage.h">
+      <Filter>Message System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
