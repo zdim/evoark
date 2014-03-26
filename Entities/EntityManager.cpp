@@ -91,7 +91,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		player->SetImage(images[(int)EntityType::Player]);
 		player->SetPosition(position);
 		player->SetSize({ 16, 16 });
-		player->SetImageSize({ 384, 415 });
+		//player->SetImageSize({ 384, 415 });
 		dynamic_cast<CShip*>(player)->setSpeed(200);
 		ships.push_back(player);
 
@@ -120,7 +120,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 									   if (0 == i && coord && !coordinator)
 									   {
 										   copperheads[i] = new CCopperheadCoord();
-										   coord = copperheads[i];
+										   coordinator = dynamic_cast<Coordinator*>(copperheads[i]);
 									   }
 									   else
 									   {
@@ -128,7 +128,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 									   }
 									   copperheads[i]->SetImage(images[(int)EntityType::Copperhead]);
 									   copperheads[i]->SetSize({ 16, 16 });
-									   copperheads[i]->SetImageSize({ 70, 94 });
+									   //copperheads[i]->SetImageSize({ 70, 94 });
 									   smallEnemies.push_back(copperheads[i]);
 									   ships.push_back(copperheads[i]);
 								   }
@@ -147,14 +147,14 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  if (0 == i && coord && !coordinator)
 								  {
 									  cobras[i] = new CCobraCoord();
-									  coord = cobras[i];
+									  coordinator = dynamic_cast<Coordinator*>(cobras[i]);
 								  }
 								  else
 								  {
 									  cobras[i] = new CCobra();
 								  }
 								  cobras[i]->SetImage(images[(int)EntityType::Cobra]);
-								  cobras[i]->SetImageSize({ 77, 93 });
+								  //cobras[i]->SetImageSize({ 77, 93 });
 								  cobras[i]->SetSize({ 16, 16 });
 								  smallEnemies.push_back(cobras[i]);
 								  ships.push_back(cobras[i]);
@@ -175,14 +175,14 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  if (0 == i && coord && !coordinator)
 								  {
 									  mambas[i] = new CMambaCoord();
-									  coord = mambas[i];
+									  coordinator = dynamic_cast<Coordinator*>(mambas[i]);
 								  }
 								  else
 								  {
 									  mambas[i] = new CMamba();
 								  }
 								  mambas[i]->SetImage(images[(int)EntityType::Mamba]);
-								  mambas[i]->SetImageSize({ 96, 78 });
+								  //mambas[i]->SetImageSize({ 96, 78 });
 								  mambas[i]->SetSize({ 16, 16 });
 								  smallEnemies.push_back(mambas[i]);
 								  ships.push_back(mambas[i]);
@@ -238,7 +238,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 							  CLaser* laser = new CLaser();
 							  laser->SetImage(images[(int)EntityType::Laser]);
 							  laser->SetSize({ 2, 8 });
-							  laser->SetImageSize({ 74, 290 });
+							  //laser->SetImageSize({ 74, 290 });
 
 							  SGD::Vector offset = {0.0,-1.0};
 							  offset.Rotate(rotation);
@@ -260,7 +260,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 								CMissile* missile = new CMissile();
 								missile->SetImage(images[(int)EntityType::Missile]);
 								missile->SetSize({ 4, 16 });
-								missile->SetImageSize({ 8, 32 });
+								//missile->SetImageSize({ 8, 32 });
 
 								SGD::Vector offset = {0.0,-1.0};
 								offset.Rotate(rotation);
@@ -614,7 +614,7 @@ void CEntityManager::Update(float dt)
 
 void CEntityManager::Render()
 {
-	SGD::Rectangle screen = { SGD::Point{ 0, 0 }, SGD::Size{Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } };
+	SGD::Rectangle screen = { SGD::Point{ 0, 0 }, SGD::Size{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() } };
 	//SGD::Rectangle test = { SGD::Point{ 0, 0 }, SGD::Size{ 400, 400 } }; // rect. for testing culling
 	for (unsigned int i = 0; i < ships.size(); i++)
 	{

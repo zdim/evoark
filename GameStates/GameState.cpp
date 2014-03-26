@@ -193,7 +193,7 @@ void	CTestLevelState::Generate()
 			}
 		}
 
-		for (int i = 0; i < events.size(); i++)
+		for (unsigned int i = 0; i < events.size(); i++)
 		{
 			if (events[i].eType == "STARGATE")
 			{

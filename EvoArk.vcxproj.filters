@@ -303,9 +303,6 @@
     <ClInclude Include="Entities\Projectiles\Laser.h">
       <Filter>Entities\Projectiles</Filter>
     </ClInclude>
-    <ClInclude Include="Entities\Ships\Ship.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Message System\VictoryMessage.h">
       <Filter>Message System</Filter>
     </ClInclude>
@@ -317,6 +314,9 @@
     </ClInclude>
     <ClInclude Include="Entities\Collidables\Trigger.h">
       <Filter>Entities\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Ships\Ship.h">
+      <Filter>Entities\Ships</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

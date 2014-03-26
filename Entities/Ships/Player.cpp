@@ -198,13 +198,13 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	}
 }
 
-void CPlayer::Render()
-{
-	if (shield > 0)
-		CParticleSystem::GetInstance()->GetParticleEffect(2)->Render();
-	SGD::Color color = {};
-	if (shield < maxShield)
-		color = SGD::Color{ 255, 0, 0 };
-	float scale = max(size.width / imageSize.width, size.height / imageSize.height);
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
-}
+//void CPlayer::Render()
+//{
+//	if (shield > 0)
+//		CParticleSystem::GetInstance()->GetParticleEffect(2)->Render();
+//	SGD::Color color = {};
+//	if (shield < maxShield)
+//		color = SGD::Color{ 255, 0, 0 };
+//	float scale = max(size.width / imageSize.width, size.height / imageSize.height);
+//	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
+//}

@@ -22,7 +22,7 @@ CEntity::~CEntity()
 
 SGD::Point CEntity::offsetToCamera()
 {
-	return position - size / 2 + CCamera::GetInstance()->GetOffset();
+	return (position - (size/2)) + CCamera::GetInstance()->GetOffset();
 }
 
 void CEntity::rotateToward(SGD::Vector direction, float dt)
@@ -71,17 +71,18 @@ void	CEntity::Update(float dt)
 
 void	CEntity::Render()
 {
-	//Paint rect
-	SGD::Rectangle colRect = GetRect();
-	colRect.Offset(CCamera::GetInstance()->GetOffset());
-	SGD::GraphicsManager::GetInstance()->DrawRectangle(colRect, SGD::Color(255, 0, 0));
 
-	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
+	SGD::Size scale = SGD::Size{size.width / imageSize.width, size.height / imageSize.height};
 	//CCamera* cam = Game::GetInstance()->GetLevelState()->GetCam();
 	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
 	SGD::Point renderPoint = offsetToCamera();
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, {}, { scale, scale });
+	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint,SGD::Rectangle{SGD::Point{0,0}, imageSize}, rotation, imageSize/2, {}, scale);
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize/2, {}, scale);
 
+	//Paint rect
+	//SGD::Rectangle colRect = GetRect();
+	//colRect.Offset(CCamera::GetInstance()->GetOffset());
+	//SGD::GraphicsManager::GetInstance()->DrawRectangle(colRect, SGD::Color(255, 0, 0));
 }
 
 void CEntity::SetImage(SGD::HTexture newImage)// {image = newImage;}
