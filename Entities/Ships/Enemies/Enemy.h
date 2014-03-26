@@ -5,6 +5,7 @@
 class CEnemy :
 	public CShip, public Listener
 {
+protected:
 	float turnRate;
 	CShip* target = nullptr;
 public:

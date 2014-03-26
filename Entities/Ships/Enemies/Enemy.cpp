@@ -25,6 +25,22 @@ void CEnemy::Update(float dt)
 		tarDir.Normalize();
 		rotateToward(tarDir, dt);
 	}
+
+	//Comment out later:
+	if (target)
+	{
+		SGD::Vector dir = target->GetPosition() - position;
+		if (dir.ComputeLength() > 100)
+		{
+			dir.Normalize();
+			velocity = dir * speed;
+		}
+		else velocity = {0,0};
+	}
+	else
+	{
+		velocity = { 0, 0 };
+	}
 }
 
 void CEnemy::SetTarget(CShip* newTarget)
