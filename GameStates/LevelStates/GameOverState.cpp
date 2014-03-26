@@ -3,6 +3,8 @@
 
 CGameOverState::CGameOverState()
 {
+	m_fTimer = 0;
+	m_fDelay = 4;
 }
 
 
@@ -19,28 +21,37 @@ CGameOverState* CGameOverState::GetInstance()
 
 bool CGameOverState::Input()
 {
-	int ret = menu->Input();
-	switch (ret)
+	if (m_fTimer > m_fDelay)
 	{
-	case menuReturn::play:
-		Game::GetInstance()->PopState();
-		Game::GetInstance()->PopState();	
-		return true;
-	case menuReturn::exit:
-		Game::GetInstance()->PopState();
-		return false;
-	default:
-		return true;
+
+		int ret = menu->Input();
+		switch (ret)
+		{
+		case menuReturn::play:
+			Game::GetInstance()->PopState();
+			Game::GetInstance()->PopState();
+			return true;
+		case menuReturn::exit:
+			Game::GetInstance()->PopState();
+			return false;
+		default:
+			return true;
+		}
 	}
 }
 
 void CGameOverState::Update(float dt)
 {
-	
+	m_fTimer += dt;
+	if (m_fTimer < m_fDelay)
+	{
+		Game::GetInstance()->GetLevelState()->Update(dt);
+	}
 }
 
 void CGameOverState::Render()
 {
+	if (m_fTimer > m_fDelay )
 	menu->Render();
 }
 

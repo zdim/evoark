@@ -9,6 +9,9 @@ class CGameOverState : public IGameState
 	CGameOverState();
 	~CGameOverState();
 
+	float m_fTimer;
+	float m_fDelay;
+
 	enum menuReturn { play, exit, count };
 	CMenu* menu;
 

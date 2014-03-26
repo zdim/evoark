@@ -20,7 +20,8 @@ CPlayer::CPlayer()
 	laserDelay = 0.25f;
 	missileDelay = 2.0f;
 
-	
+	explosionTimer = 0;
+	explosionTime  = 1.3;
 }
 
 
@@ -37,9 +38,17 @@ void CPlayer::Update(float dt)
 	wellTimer += dt;
 	pushTimer += dt;
 	warpTimer += dt;
+	if (hull < 0)
+		explosionTimer += dt;
 
 	CParticleSystem::GetInstance()->GetParticleEffect(1)->SetEmitterPosition(position);
+	CParticleSystem::GetInstance()->GetParticleEffect(2)->SetEmitterPosition(position);
+
 	CParticleSystem::GetInstance()->GetParticleEffect(1)->Update(dt);
+
+	if (hull < 0 && explosionTime > explosionTimer )
+	CParticleSystem::GetInstance()->GetParticleEffect(2)->Update(dt);
+		
 
 
 
@@ -186,10 +195,11 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	}
 
 	hull -= damage;
-	if (hull <= 0)
+    if (hull < 0 && explosionTime <= explosionTimer)
 	{
 		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
 		msg->QueueMessage();
+		SelfDestruct();
 	}
 }
 
@@ -198,9 +208,13 @@ void CPlayer::Render()
 	if (shield > 0)
 		CParticleSystem::GetInstance()->GetParticleEffect(1)->Render();
 
+	if (hull < 0 && explosionTime > explosionTimer)
+	CParticleSystem::GetInstance()->GetParticleEffect(2)->Render();
+
 	SGD::Color color = {};
 	if (shield < maxShield)
 		color = SGD::Color{ 255, 0, 0 };
 	float scale = max(size.width / imageSize.width, size.height / imageSize.height);
+	if ( hull > 0 )
 	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
 }

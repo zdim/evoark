@@ -7,7 +7,7 @@ class CVictoryMessage : public SGD::Message
 {
 
 public:
-	CVictoryMessage() : SGD::Message(MessageID::Victory);
-	~CVictoryMessage();
+	CVictoryMessage() : SGD::Message(MessageID::Victory){}
+	~CVictoryMessage(){}
 };
 

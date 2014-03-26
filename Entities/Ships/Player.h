@@ -35,6 +35,9 @@ class CPlayer :
 
 	bool arrowsOn = false;
 
+	float explosionTimer;
+	float explosionTime; 
+
 
 public:
 	CPlayer();
