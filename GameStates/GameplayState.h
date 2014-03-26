@@ -4,7 +4,7 @@
 #include "../Entities/Ships/Player.h"
 #include "GameState.h"
 
-enum class Level { Tutorial, Gen1, Gen2, Waves, Final, TestGen, GameOver };
+enum class Level { Tutorial, Gen1, Gen2, Waves, Final, LoadedLevel, TestStatic, TestGen };
 struct playerData
 {
 	unsigned int exp;
@@ -33,7 +33,7 @@ struct saveData
 class CGameplayState : public IGameState
 {
 	saveData save;
-	friend CTestLevelState;
+	friend ILevelState;
 public:
 	static CGameplayState* GetInstance();
 	virtual bool Input() override;

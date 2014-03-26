@@ -4,6 +4,7 @@
 
 CWellModule::CWellModule()
 {
+	cooldown = 35;
 }
 
 

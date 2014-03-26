@@ -4,6 +4,7 @@
 
 CWarpModule::CWarpModule()
 {
+	cooldown = 20;
 }
 
 

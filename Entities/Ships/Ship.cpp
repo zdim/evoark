@@ -26,7 +26,8 @@ void CShip::TakeDamage(int damage, bool collision)
 	//{
 	//	return;
 	//}
-
+	if (collision)
+		damage *= COLLISION_MODIFIER;
 	hull -= damage;
 	if (hull <= 0)
 	{
@@ -49,18 +50,18 @@ void CShip::HandleCollision(IEntity* other)
 		//Have the other ship take damage based on our mass and speed (not necessarily our current speed/velocity)
 		//We will probably rebalance this later.
 		float mass = size.width * size.height/100;
-		dynamic_cast<CShip*>(other)->TakeDamage(mass*speed, true);
+		dynamic_cast<CShip*>(other)->TakeDamage(int(mass*speed), true);
 	}
 }
 
-void CShip::Render()
-{
-	SGD::Color color = {};
-	if (hull < maxHull)
-		color = SGD::Color{ 255, 0, 0 };
-	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
-}
+//void CShip::Render()
+//{
+//	SGD::Color color = {};
+//	if (hull < maxHull)
+//		color = SGD::Color{ 255, 0, 0 };
+//	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
+//	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
+//}
 
 void CShip::AddGravity(SGD::Vector grav)
 {

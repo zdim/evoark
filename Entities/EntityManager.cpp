@@ -51,6 +51,9 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::ShieldModule] = graphics->LoadTexture("Resources/Graphics/Ship1.png");
 	images[(int)EntityType::LaserModule] = graphics->LoadTexture("Resources/Graphics/Ship3.png");
 	images[(int)EntityType::MissileModule] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
+	images[(int)EntityType::WellModule] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
+	images[(int)EntityType::PushModule] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
+	images[(int)EntityType::WarpModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 
 	images[(int)EntityType::Stargate] = graphics->LoadTexture("Resources/Graphics/Stargate.png");
 }											  	
@@ -87,8 +90,8 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		player = new CPlayer();
 		player->SetImage(images[(int)EntityType::Player]);
 		player->SetPosition(position);
-		player->SetSize({ 16, 16 });
-		player->SetImageSize({ 384, 415 });
+		player->SetSize({ 32, 32 });
+		//player->SetImageSize({ 384, 415 });
 		dynamic_cast<CShip*>(player)->setSpeed(200);
 		ships.push_back(player);
 
@@ -99,6 +102,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  IEntity* human = new CHuman();
 							  human->SetPosition(position);
 							  human->SetImage(images[(int)EntityType::Human]);
+							  human->SetSize({32,32});
 							  allies.push_back(human);
 							  ships.push_back(human);
 							  type = (EntityType)amount;
@@ -117,15 +121,15 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 									   if (0 == i && coord && !coordinator)
 									   {
 										   copperheads[i] = new CCopperheadCoord();
-										   coord = copperheads[i];
+										   coordinator = dynamic_cast<Coordinator*>(copperheads[i]);
 									   }
 									   else
 									   {
 										   copperheads[i] = new CCopperhead();
 									   }
 									   copperheads[i]->SetImage(images[(int)EntityType::Copperhead]);
-									   copperheads[i]->SetSize({ 16, 16 });
-									   copperheads[i]->SetImageSize({ 70, 94 });
+									   copperheads[i]->SetSize({ 32, 32 });
+									   //copperheads[i]->SetImageSize({ 70, 94 });
 									   smallEnemies.push_back(copperheads[i]);
 									   ships.push_back(copperheads[i]);
 								   }
@@ -144,15 +148,15 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  if (0 == i && coord && !coordinator)
 								  {
 									  cobras[i] = new CCobraCoord();
-									  coord = cobras[i];
+									  coordinator = dynamic_cast<Coordinator*>(cobras[i]);
 								  }
 								  else
 								  {
 									  cobras[i] = new CCobra();
 								  }
 								  cobras[i]->SetImage(images[(int)EntityType::Cobra]);
-								  cobras[i]->SetImageSize({ 77, 93 });
-								  cobras[i]->SetSize({ 16, 16 });
+								  //cobras[i]->SetImageSize({ 77, 93 });
+								  cobras[i]->SetSize({ 32, 32 });
 								  smallEnemies.push_back(cobras[i]);
 								  ships.push_back(cobras[i]);
 							  }
@@ -172,15 +176,15 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  if (0 == i && coord && !coordinator)
 								  {
 									  mambas[i] = new CMambaCoord();
-									  coord = mambas[i];
+									  coordinator = dynamic_cast<Coordinator*>(mambas[i]);
 								  }
 								  else
 								  {
 									  mambas[i] = new CMamba();
 								  }
 								  mambas[i]->SetImage(images[(int)EntityType::Mamba]);
-								  mambas[i]->SetImageSize({ 96, 78 });
-								  mambas[i]->SetSize({ 16, 16 });
+								  //mambas[i]->SetImageSize({ 96, 78 });
+								  mambas[i]->SetSize({ 32, 32 });
 								  smallEnemies.push_back(mambas[i]);
 								  ships.push_back(mambas[i]);
 							  }
@@ -199,7 +203,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  corals[i] = new CCoral();
 								  corals[i]->SetImage(images[(int)EntityType::Coral]);
 								  //corals[i]->SetImageSize({ 96, 78 });
-								  corals[i]->SetSize({ 64, 64 });
+								  corals[i]->SetSize({ 128, 128 });
 								  dynamic_cast<CCoral*>(corals[i])->SetImages(images);
 								  bigEnemies.push_back(corals[i]);
 								  ships.push_back(corals[i]);
@@ -211,12 +215,28 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	}
 	case EntityType::Moccasin:
 	{
-								
+								 CMoccasin* moccasin = new CMoccasin;
+								 amount--;
+								 for (amount = amount; amount > 0; amount--)
+								 {
+									 moccasin->AddModule();
+								 }
+								 moccasin->SetImage(images[(int)EntityType::Moccasin]);
+								 moccasin->SetSize({256,256});
+								 dynamic_cast<CCoral*>(moccasin)->SetImages(images);
+								 bigEnemies.push_back(moccasin);
+								 ships.push_back(moccasin);
+
+								 moccasin->SetPosition(position);
+								 break;
 	}
 	case EntityType::Stargate:
+		if (stargate)
+			return;
 		stargate = new Trigger();
 		stargate->SetImage(images[(int)EntityType::Stargate]);
 		stargate->SetSize({64, 64});
+		stargate->SetPosition(position);
 		CVictoryMessage* msg = new CVictoryMessage;
 		dynamic_cast<Trigger*>(stargate)->Assign(msg);
 		stationaries.push_back(stargate);
@@ -232,7 +252,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 							  CLaser* laser = new CLaser();
 							  laser->SetImage(images[(int)EntityType::Laser]);
 							  laser->SetSize({ 2, 8 });
-							  laser->SetImageSize({ 74, 290 });
+							  //laser->SetImageSize({ 74, 290 });
 
 							  SGD::Vector offset = {0.0,-1.0};
 							  offset.Rotate(rotation);
@@ -254,7 +274,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 								CMissile* missile = new CMissile();
 								missile->SetImage(images[(int)EntityType::Missile]);
 								missile->SetSize({ 4, 16 });
-								missile->SetImageSize({ 8, 32 });
+								//missile->SetImageSize({ 8, 32 });
 
 								SGD::Vector offset = {0.0,-1.0};
 								offset.Rotate(rotation);
@@ -608,7 +628,7 @@ void CEntityManager::Update(float dt)
 
 void CEntityManager::Render()
 {
-	SGD::Rectangle screen = { SGD::Point{ 0, 0 }, SGD::Size{Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } };
+	SGD::Rectangle screen = { SGD::Point{ 0, 0 }, SGD::Size{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() } };
 	//SGD::Rectangle test = { SGD::Point{ 0, 0 }, SGD::Size{ 400, 400 } }; // rect. for testing culling
 	for (unsigned int i = 0; i < ships.size(); i++)
 	{

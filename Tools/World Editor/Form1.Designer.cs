@@ -83,9 +83,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.numericUpDownEventHeight = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownEventWidth = new System.Windows.Forms.NumericUpDown();
-            this.groupBoxWorldType = new System.Windows.Forms.GroupBox();
-            this.radioButtonStatic = new System.Windows.Forms.RadioButton();
-            this.radioButtonGenerated = new System.Windows.Forms.RadioButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,7 +122,6 @@
             this.groupBoxEventSize.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventWidth)).BeginInit();
-            this.groupBoxWorldType.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -143,7 +139,7 @@
             this.quadGroupBox.Controls.Add(this.comboBox1);
             this.quadGroupBox.Controls.Add(this.possibleEntities);
             this.quadGroupBox.Controls.Add(this.listBox1);
-            this.quadGroupBox.Location = new System.Drawing.Point(4, 206);
+            this.quadGroupBox.Location = new System.Drawing.Point(3, 153);
             this.quadGroupBox.Name = "quadGroupBox";
             this.quadGroupBox.Size = new System.Drawing.Size(287, 304);
             this.quadGroupBox.TabIndex = 2;
@@ -513,7 +509,7 @@
             // 
             this.numRows.Location = new System.Drawing.Point(211, 19);
             this.numRows.Minimum = new decimal(new int[] {
-            4,
+            2,
             0,
             0,
             0});
@@ -555,10 +551,11 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1006, 770);
+            this.panel1.Size = new System.Drawing.Size(1006, 748);
             this.panel1.TabIndex = 0;
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
+            this.panel1.MouseEnter += new System.EventHandler(this.panel1_MouseEnter);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
             this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
             // 
@@ -576,24 +573,23 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
-            this.splitContainer1.Size = new System.Drawing.Size(1307, 770);
+            this.splitContainer1.Size = new System.Drawing.Size(1307, 748);
             this.splitContainer1.SplitterDistance = 297;
             this.splitContainer1.TabIndex = 5;
             // 
             // panelleft
             // 
             this.panelleft.AutoScroll = true;
-            this.panelleft.AutoScrollMinSize = new System.Drawing.Size(295, 765);
+            this.panelleft.AutoScrollMinSize = new System.Drawing.Size(295, 746);
             this.panelleft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelleft.Controls.Add(this.groupBoxEditMode);
             this.panelleft.Controls.Add(this.groupBoxEvents);
-            this.panelleft.Controls.Add(this.groupBoxWorldType);
             this.panelleft.Controls.Add(this.quadGroupBox);
             this.panelleft.Controls.Add(this.worldGroupBox);
             this.panelleft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelleft.Location = new System.Drawing.Point(0, 0);
             this.panelleft.Name = "panelleft";
-            this.panelleft.Size = new System.Drawing.Size(297, 770);
+            this.panelleft.Size = new System.Drawing.Size(297, 748);
             this.panelleft.TabIndex = 0;
             // 
             // groupBoxEditMode
@@ -601,7 +597,7 @@
             this.groupBoxEditMode.Controls.Add(this.collisionCheck);
             this.groupBoxEditMode.Controls.Add(this.radioButtonObject);
             this.groupBoxEditMode.Controls.Add(this.radioButtonEvent);
-            this.groupBoxEditMode.Location = new System.Drawing.Point(4, 155);
+            this.groupBoxEditMode.Location = new System.Drawing.Point(4, 102);
             this.groupBoxEditMode.Name = "groupBoxEditMode";
             this.groupBoxEditMode.Size = new System.Drawing.Size(286, 45);
             this.groupBoxEditMode.TabIndex = 5;
@@ -618,7 +614,7 @@
             this.groupBoxEvents.Controls.Add(this.comboBox2);
             this.groupBoxEvents.Controls.Add(this.groupBoxEventPosition);
             this.groupBoxEvents.Controls.Add(this.groupBoxEventSize);
-            this.groupBoxEvents.Location = new System.Drawing.Point(4, 516);
+            this.groupBoxEvents.Location = new System.Drawing.Point(3, 463);
             this.groupBoxEvents.Name = "groupBoxEvents";
             this.groupBoxEvents.Size = new System.Drawing.Size(286, 249);
             this.groupBoxEvents.TabIndex = 0;
@@ -803,41 +799,6 @@
             0});
             this.numericUpDownEventWidth.ValueChanged += new System.EventHandler(this.numericUpDownEventWidth_ValueChanged);
             // 
-            // groupBoxWorldType
-            // 
-            this.groupBoxWorldType.Controls.Add(this.radioButtonStatic);
-            this.groupBoxWorldType.Controls.Add(this.radioButtonGenerated);
-            this.groupBoxWorldType.Location = new System.Drawing.Point(5, 102);
-            this.groupBoxWorldType.Name = "groupBoxWorldType";
-            this.groupBoxWorldType.Size = new System.Drawing.Size(286, 47);
-            this.groupBoxWorldType.TabIndex = 4;
-            this.groupBoxWorldType.TabStop = false;
-            this.groupBoxWorldType.Text = "World Type";
-            // 
-            // radioButtonStatic
-            // 
-            this.radioButtonStatic.AutoSize = true;
-            this.radioButtonStatic.Location = new System.Drawing.Point(149, 19);
-            this.radioButtonStatic.Name = "radioButtonStatic";
-            this.radioButtonStatic.Size = new System.Drawing.Size(52, 17);
-            this.radioButtonStatic.TabIndex = 9;
-            this.radioButtonStatic.Text = "Static";
-            this.radioButtonStatic.UseVisualStyleBackColor = true;
-            this.radioButtonStatic.Click += new System.EventHandler(this.radioButtonStatic_Click);
-            // 
-            // radioButtonGenerated
-            // 
-            this.radioButtonGenerated.AutoSize = true;
-            this.radioButtonGenerated.Checked = true;
-            this.radioButtonGenerated.Location = new System.Drawing.Point(43, 19);
-            this.radioButtonGenerated.Name = "radioButtonGenerated";
-            this.radioButtonGenerated.Size = new System.Drawing.Size(75, 17);
-            this.radioButtonGenerated.TabIndex = 8;
-            this.radioButtonGenerated.TabStop = true;
-            this.radioButtonGenerated.Text = "Generated";
-            this.radioButtonGenerated.UseVisualStyleBackColor = true;
-            this.radioButtonGenerated.Click += new System.EventHandler(this.radioButtonGenerated_Click);
-            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -951,12 +912,13 @@
             this.helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.helpToolStripButton.Name = "helpToolStripButton";
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.helpToolStripButton.Click += new System.EventHandler(this.helpToolStripButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1307, 819);
+            this.ClientSize = new System.Drawing.Size(1307, 797);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -999,8 +961,6 @@
             this.groupBoxEventSize.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEventWidth)).EndInit();
-            this.groupBoxWorldType.ResumeLayout(false);
-            this.groupBoxWorldType.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -1073,9 +1033,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.NumericUpDown numericUpDownEventHeight;
         private System.Windows.Forms.NumericUpDown numericUpDownEventWidth;
-        private System.Windows.Forms.GroupBox groupBoxWorldType;
-        private System.Windows.Forms.RadioButton radioButtonStatic;
-        private System.Windows.Forms.RadioButton radioButtonGenerated;
         private System.Windows.Forms.ToolStripMenuItem newWorldToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openWorldToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveWorldToolStripMenuItem;

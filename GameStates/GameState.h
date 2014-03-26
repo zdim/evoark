@@ -33,7 +33,7 @@ public:
 	IEntity* GetPlayer();
 	CCamera* GetCam() {return cam;}
 
-	SGD::Size GetWorldSize() { return SGD::Size{ m_nNumQuadsWidth * m_nQuadWidth, m_nNumQuadsHeight * m_nQuadHeight }; }
+	SGD::Size GetWorldSize() { return SGD::Size{ float(m_nNumQuadsWidth * m_nQuadWidth), float(m_nNumQuadsHeight * m_nQuadHeight) }; }
 
 private:
 	CTestLevelState();
@@ -42,6 +42,7 @@ private:
 	int m_nScreenHeight = 0;
 	int m_nScreenWidth = 0;
 	SGD::HTexture BackgroundImage;
+	SGD::HTexture backgroundBlack;
 	CEntityManager* EntityManager;
 	SGD::GraphicsManager* graphics;
 
@@ -91,7 +92,7 @@ private:
 
 
 	// UI rendering
-	void UI(CPlayer* _player, std::vector<IEntity*> _allies);
+	void UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntity* _coordinator, IEntity* _stargate);
 	SGD::HTexture objArrow = SGD::INVALID_HANDLE;
 };
 

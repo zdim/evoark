@@ -28,10 +28,13 @@ public:
 	void Initialize();
 	void Terminate();
 
-	CPlayer* GetPlayer() {return dynamic_cast<CPlayer*>(player);}
+	CPlayer* GetPlayer() { return dynamic_cast<CPlayer*>(player); }
+	CEntity* GetStargate() { return dynamic_cast<CEntity*>(stargate); }
 	std::vector<IEntity*> GetAllies() { return allies; }
-	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.
+	IEntity* GetCoordinator() { return (IEntity*)coordinator; }
+	//IEntity* GetStargate() { return (IEntity*)stargate; }	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.
 	void SpawnProjectile(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier = 1, float radius = -1.0f); //Spawns a projectile 
+	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.
 	//int GetDamageFromEntity(IEntity* entity, EntityType projType);
 	void ClearTargeted(IEntity* entity);	//Iterates through the groups that could potentially have this entity targeted, and tells them to untarget it.
 	int FindLeaderIndex(IEntity* entity);

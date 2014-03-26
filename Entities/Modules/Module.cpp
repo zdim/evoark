@@ -1,6 +1,6 @@
 //
 #include "Module.h"
-
+#include "../Ships/Enemies/Coral.h"
 
 CModule::CModule()
 {
@@ -12,7 +12,7 @@ CModule::~CModule()
 {
 }
 
-void CModule::SetOwner(IEntity* newVal)
+void CModule::SetOwner(CCoral* newVal)
 {
 	if (owner == newVal)
 		return;
@@ -37,12 +37,13 @@ void CModule::Update(float dt)
 
 void CModule::TakeDamage(int damage, bool collision)
 {
+	if (collision)
+		damage *= COLLISION_MODIFIER;
 	hull -= damage;
 	if (hull <= 0)
 	{
-		//Destroy thing
+		SelfDestruct();
 	}
-
 }
 
 void CModule::Activate()
@@ -55,4 +56,9 @@ void CModule::ReleaseOwner()
 	if (!owner)
 		return;
 	owner->Release();
+}
+
+void CModule::SelfDestruct()
+{
+	owner->DestroyModule(this);
 }

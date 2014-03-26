@@ -4,6 +4,7 @@ class CWarpModule :
 	public CModule
 {
 public:
+	int GetType() { return (int)EntityType::WarpModule; }
 	CWarpModule();
 	virtual ~CWarpModule();
 };

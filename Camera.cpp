@@ -29,8 +29,8 @@ bool		CCamera::Initiallize(IEntity* t, SGD::Size screen)
 
 	if (screen == SGD::Size())
 	{
-		screen.width = Game::GetInstance()->GetScreenWidth();
-		screen.height = Game::GetInstance()->GetScreenHeight();
+		screen.width = (float)Game::GetInstance()->GetScreenWidth();
+		screen.height = (float)Game::GetInstance()->GetScreenHeight();
 	}
 	screenSize = screen;
 	pos = target->GetPosition();
@@ -47,15 +47,54 @@ bool		CCamera::Terminate()
 	return true;
 }
 
+void CCamera::clamp()
+{
+	SGD::Size world = Game::GetInstance()->GetLevelState()->GetWorldSize();
+	SGD::Rectangle box = GetBoxInWorld();
+	
+	if (box.left < 0)
+	{
+		pos.x = 0;
+	}
+
+	if (box.top < 0)
+	{
+		pos.y = 0;
+	}
+
+	if (box.right > world.width)
+	{
+		pos.x = world.width - screenSize.width;
+	}
+
+	if (box.bottom > world.height)
+	{
+		pos.y = world.height - screenSize.height;
+	}
+}
+
 void CCamera::Update(float dt)
 {
 	if (state != camState::initiallized )
 		return;
 
+	if (locked)
+	{
+		pos = target->GetPosition() - screenSize/2;
+		clamp();
+		return;
+	}
+
 	SGD::Point tPos = target->GetPosition();
 	//SGD::Vector mOffset = GetOffset();
 	SGD::Vector mOffset = SGD::Vector{ screenSize.width, screenSize.height } / -2;
 	SGD::Point dest = tPos + mOffset;//target->GetPosition() + GetOffset();
+
+	//if (target->GetPosition().x < Game::GetInstance()->GetScreenWidth() * .5f ||
+	//	target->GetPosition().x > Game::GetInstance()->GetLevelState()->GetWorldSize().width - Game::GetInstance()->GetScreenWidth() * .5f ||
+	//	target->GetPosition().y < Game::GetInstance()->GetScreenHeight() * .5f ||
+	//	target->GetPosition().y > Game::GetInstance()->GetLevelState()->GetWorldSize().height - Game::GetInstance()->GetScreenHeight() * .5f)
+	//	return;	
 
 	if (pos == dest)
 		return;
@@ -70,11 +109,14 @@ void CCamera::Update(float dt)
 	if (abs(val) <= 5.0f)
 	{
 		pos = dest;
+		locked = true;
 	}
 	else
 	{
 		pos = newPos;
 	}
+
+	clamp();
 }
 
 
@@ -88,4 +130,6 @@ void  CCamera::SetTarget(IEntity* t)
 	t->AddRef();
 	target->Release();
 	target = t;
+
+	locked = false;
 }

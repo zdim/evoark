@@ -80,8 +80,8 @@ CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _labe
 	{
 		box.left = 0;
 		box.top = 0;
-		box.right = Game::GetInstance()->GetScreenWidth();
-		box.bottom = Game::GetInstance()->GetScreenHeight();
+		box.right = (float)Game::GetInstance()->GetScreenWidth();
+		box.bottom = (float)Game::GetInstance()->GetScreenHeight();
 	}
 	else
 	{
@@ -101,7 +101,7 @@ int CMenu::Input()
 
 	if (input->IsKeyPressed(SGD::Key::Down)) // || input->controllerstuff
 	{
-		if (cursor >= buttons.size() - 1)
+		if (cursor >= (int)buttons.size() - 1)
 			cursor = 0;
 		else
 			cursor++;

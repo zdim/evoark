@@ -25,6 +25,22 @@ void CEnemy::Update(float dt)
 		tarDir.Normalize();
 		rotateToward(tarDir, dt);
 	}
+
+	//Comment out later:
+	if (target)
+	{
+		SGD::Vector dir = target->GetPosition() - position;
+		if (dir.ComputeLength() > 100)
+		{
+			dir.Normalize();
+			velocity = dir * speed;
+		}
+		else velocity = {0,0};
+	}
+	else
+	{
+		velocity = { 0, 0 };
+	}
 }
 
 void CEnemy::SetTarget(CShip* newTarget)
@@ -72,7 +88,7 @@ void CEnemy::DetectShip(CShip* other)
 		return;
 
 	float distance = toTarget.ComputeLength();
-	if (distance >= SGD::Vector{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() }.ComputeLength() * 0.25f)
+	if (distance >= SGD::Vector{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() }.ComputeLength() * 0.25f)
 		return;
 
 	SetTarget(other);

@@ -2,6 +2,9 @@
 #include "IEntity.h"
 #include "../SGD Wrappers/SGD_Geometry.h"
 
+#define GRAVDECAY 0.025F
+#define COLLISION_MODIFIER 0.05F
+
 
 class CEntity :
 	public IEntity
@@ -40,7 +43,7 @@ public:
 	virtual bool			IsCircle() override {return false;}
 
 	//Simplify rect collision
-	virtual SGD::Rectangle	GetRect() { return SGD::Rectangle{SGD::Point(position - size / 2), SGD::Point(position + size/2)}; }
+	virtual SGD::Rectangle	GetRect() { return SGD::Rectangle{position - size/2, size}; }
 
 	//Mutators
 	virtual void SetImage(SGD::HTexture newImage)override;// {image = newImage;}

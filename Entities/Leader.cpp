@@ -43,7 +43,7 @@ void CLeader::CalculateDestinations()
 		for (unsigned int i = 1; i < destinations.size(); i++)
 		{
 			// sloppy, but it works for now. adjusted because it was always giving cos = 1 and sin = 0
-			float size = members.size();
+			float size = (float)members.size();
 			float a = i / size;
 			float toCos = a * 2.0f * SGD::PI;
 			float cos = cosf(toCos);

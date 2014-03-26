@@ -11,11 +11,10 @@
 class CCoral :
 	public CEnemy
 {
-	CEngine* engine				= nullptr;
-	CModule* cockpit			= nullptr;
-	CShieldModule* shieldMod	= nullptr;
-	CLaserModule* laser			= nullptr;
-	CModule* ability			= nullptr;
+protected:
+	enum moduleSlot{cockpit, shieldModule, engine, laser, ability, count};
+	std::vector<SGD::Vector>modulePositions;
+	std::vector<CModule*>modules;
 
 	int shield;
 	int shieldMax;

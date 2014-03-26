@@ -6,6 +6,7 @@
 #include "../SGD Wrappers/SGD_InputManager.h"
 #include <ctime>
 #include <stdlib.h>
+#include <sstream>
 #include "../TinyXML/tinyxml.h"
 //#include "../TinyXML/tinystr.h"
 //#include "../Graphics/Particles/Flyweight.h"
@@ -40,23 +41,25 @@ void	CTestLevelState::Enter(void)
 	//BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
 
 	objArrow = graphics->LoadTexture("Resources/Graphics/Arrow.png");
+	backgroundBlack = graphics->LoadTexture("Resources/Graphics/backgroundBlack3.png", { 50, 255, 255, 255 });
 
-	//JD's Test flock, ally and player
+
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
-	//EntityManager->Spawn(EntityType::Player, SGD::Point{100,150});
 
 	Generate();
-	//EntityManager->Spawn(EntityType::Player, { 150, 150 });
-	//EntityManager->Spawn(EntityType::Copperhead, { 200, 200 });
-	//EntityManager->Spawn(EntityType::Coral, { 200, 200 });
-	EntityManager->Spawn(EntityType::Stargate, {200,200});
-	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
-	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
+	//EntityManager->Spawn(EntityType::Stargate, {200,200});
 
 	player = EntityManager->GetPlayer();
+	//Spawn Coral near the player
+	//EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
+	//Spawn Moccasin near the player
+	EntityManager->Spawn(EntityType::Moccasin, player->GetPosition() + SGD::Vector{ 200,200 }, 4);
+	
+	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
+	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 	cam = CCamera::GetInstance();
-	cam->Initiallize(player, SGD::Size{m_nScreenWidth,m_nScreenHeight});
+	cam->Initiallize(player, SGD::Size{(float)m_nScreenWidth,(float)m_nScreenHeight});
 
 
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
@@ -68,7 +71,9 @@ void	CTestLevelState::Exit(void)
 	cam->Terminate();
 	if (BackgroundImage != SGD::INVALID_HANDLE)
 		graphics->UnloadTexture(BackgroundImage);
+	graphics->UnloadTexture(backgroundBlack);
 	graphics->UnloadTexture(objArrow);
+	graphics->UnloadTexture(backgroundBlack);
 
 
 	//Terminating Messages or events before Entity manager will BREAK it on the NEXT level.
@@ -99,13 +104,23 @@ bool	CTestLevelState::Input(void)
 		Game::GetInstance()->PushState(CPauseState::GetInstance());
 		return true;
 	}
+	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::C))
+	{
+		cam->SetTarget(EntityManager->GetStargate());
+		return true;
+	}
+	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::P))
+	{
+		cam->SetTarget(EntityManager->GetPlayer());
+		return true;
+	}
 	return true;
 }
 
 void	CTestLevelState::Update(float dt)
 {
-	cam->Update(dt);
 	EntityManager->Update(dt);
+	cam->Update(dt);
 
 
 
@@ -116,28 +131,30 @@ void	CTestLevelState::Update(float dt)
 void	CTestLevelState::Render(void)
 {
 	graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
-
+	graphics->DrawTexture(backgroundBlack, { 0, 0 });
+	graphics->DrawRectangle({ 0, 0, 2000, 2000 }, { 150, 0, 0, 0 });
 
 	// draw grids
-	for (int i = 0; i < m_nNumQuadsWidth; i++)
-	{
-		for (int j = 0; j < m_nNumQuadsHeight; j++)
-		{
-			SGD::Rectangle r = { SGD::Point{ float(m_nQuadWidth * i), float(m_nQuadHeight * j) }, SGD::Size{ float(m_nQuadWidth), float(m_nQuadHeight) } };
-			graphics->DrawRectangle(r, SGD::Color{ 0, 0, 0, 0 }, { 255, 255, 255 });
-		}
-	}
+	//for (int i = 0; i < m_nNumQuadsWidth; i++)
+	//{
+	//	for (int j = 0; j < m_nNumQuadsHeight; j++)
+	//	{
+	//		SGD::Rectangle r = { SGD::Point{ float(m_nQuadWidth * i), float(m_nQuadHeight * j) }, SGD::Size{ float(m_nQuadWidth), float(m_nQuadHeight) } };
+	//		graphics->DrawRectangle(r, SGD::Color{ 0, 0, 0, 0 }, { 255, 255, 255 });
+	//	}
+	//}
 
 	Game::GetInstance()->Font.Write(SGD::Point{150,150},"testing");
 	
 
 	EntityManager->Render();
-	UI((CPlayer*)player, EntityManager->GetAllies());
+	UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator(), EntityManager->GetStargate());
 }
 
 void	CTestLevelState::Generate()
 {
-	if (LoadXMLLevel("Resources/XML/World/testEditor.xml"))
+	//if (LoadXMLLevel("Resources/XML/World/staticTest1.xml"))
+	if (LoadXMLLevel("Resources/XML/World/testWorld2.xml"))
 	{
 		for (int i = 0; i < m_nNumQuadsWidth; i++)
 		{
@@ -156,19 +173,19 @@ void	CTestLevelState::Generate()
 					EntityManager->Spawn(EntityType::Player, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5))});
 					break;
 				case COPPERHEAD:
-					EntityManager->Spawn(EntityType::Copperhead, col[j].pos, col[j].objectAmount);
+					EntityManager->Spawn(EntityType::Copperhead, col[j].pos, col[j].objectAmount, true);
 					break;
 				case COBRA:
-					EntityManager->Spawn(EntityType::Cobra, col[j].pos, col[j].objectAmount);
+					EntityManager->Spawn(EntityType::Cobra, col[j].pos, col[j].objectAmount, true);
 					break;
 				case MAMBA:
-				EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount);
+				EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount, true);
 					break;
 				case CORAL:
 					EntityManager->Spawn(EntityType::Coral, col[j].pos, col[j].objectAmount);
 					break;
 				case MOCASSIN:
-					//EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, 1);
+					EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, 1);
 					break;
 				case ASTEROID:
 					EntityManager->Spawn(EntityType::Asteroid, col[j].pos, col[j].objectAmount);
@@ -179,6 +196,14 @@ void	CTestLevelState::Generate()
 				default:
 					break;
 				}
+			}
+		}
+
+		for (unsigned int i = 0; i < events.size(); i++)
+		{
+			if (events[i].eType == "STARGATE")
+			{
+				EntityManager->Spawn(EntityType::Stargate, { events[i].area.left, events[i].area.top }, 1, false);
 			}
 		}
 	}
@@ -294,8 +319,7 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 			q.pos = { 0, 0 };
 			q.randomized = false;
 		}
-		world[q.y][q.x] = q;
-
+		world[q.x][q.y] = q;
 
 		pQuad = pQuad->NextSiblingElement();
 	}
@@ -360,6 +384,11 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::GameOver:
 	{
 								Game::GetInstance()->PushState(CGameOverState::GetInstance());
+								break;
+	}
+	case MessageID::BossKilled:
+	{
+//								  CTestLevelState::GetInstance()->player = CTestLevelState::GetInstance()->player;
 	}
 	}
 }
@@ -369,7 +398,7 @@ IEntity* CTestLevelState::GetPlayer()
 	return player;
 }
 
-void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies)
+void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntity* _coordinator, IEntity* _stargate)
 {
 	// set hullbar
 	SGD::Rectangle hullBox = {
@@ -400,6 +429,21 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies)
 		m_nScreenHeight * .87f,
 		m_nScreenWidth * .66f * _player->GetShield() / _player->GetMaxShield(),
 		m_nScreenHeight * .90f };
+
+	// experience bar
+	SGD::Rectangle expBox = {
+		m_nScreenWidth * .25f,
+		m_nScreenHeight * .97f,
+		m_nScreenWidth * .74f,
+		m_nScreenHeight * .98f
+	};
+
+	SGD::Rectangle exp = {
+		m_nScreenWidth * .25f,
+		m_nScreenWidth * .97f,
+		m_nScreenWidth * .74f * _player->GetExp() / _player->GetReqExp(),
+		m_nScreenHeight * .98f
+	};
 
 	// set gravity well box
 	SGD::Rectangle wellBox = {
@@ -453,21 +497,52 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies)
 	if (_player->GetArrowsOn())
 	{
 		// allies
-		for (int i = 0; i < _allies.size(); i++)
+		for (unsigned int i = 0; i < _allies.size(); i++)
 		{
 			SGD::Vector toTarget = _allies[i]->GetPosition() - _player->GetPosition();
-			if (toTarget.ComputeLength() > 400)
+			float allyDistance = toTarget.ComputeLength();
+			//std::ostringstream oss;
+			//oss << allyDistance;
+			if (allyDistance > 400)
 			{
 				toTarget.Normalize();
 
 				SGD::Point arrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
 				arrowPos += toTarget * 200;
-				float arrowRot = atan2(_allies[i]->GetPosition().y - _player->GetPosition().y, _allies[i]->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
+				float arrowRot = atan2(_allies[i]->GetPosition().y - _player->GetPosition().y, _allies[i]->GetPosition().x - _player->GetPosition().x) + SGD::PI * .5f;
 
 				graphics->DrawTexture(objArrow, arrowPos, arrowRot, {}, { 200, 0, 200, 150 }, { .15f, .15f });
+				//graphics->DrawString(oss.str().c_str(), { arrowPos.x, arrowPos.y + 20 });
 			}
 		}
+
+		// commented out until coordinator is fixed
+		/*SGD::Vector toCoordinator = _coordinator->GetPosition() - _player->GetPosition();
+		if (toCoordinator.ComputeLength() > 400)
+		{
+		toCoordinator.Normalize();
+		SGD::Point coordArrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
+		coordArrowPos += toCoordinator * 200;
+		float coordArrowRot = atan2(_coordinator->GetPosition().y - _player->GetPosition().y, _coordinator->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
+
+		graphics->DrawTexture(objArrow, coordArrowPos, coordArrowRot, {}, { 200, 200, 50, 0 }, { .15f, .15f });
+		}*/
+
+		SGD::Vector toStargate = _stargate->GetPosition() - _player->GetPosition();
+		if (toStargate.ComputeLength() > 400)
+		{
+			toStargate.Normalize();
+			SGD::Point stargateArrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
+			stargateArrowPos += toStargate * 200;
+			float stargateArrowRot = atan2(_stargate->GetPosition().y - _player->GetPosition().y, _stargate->GetPosition().x - _player->GetPosition().x) + SGD::PI * .5f;
+
+			graphics->DrawTexture(objArrow, stargateArrowPos, stargateArrowRot, {}, { 200, 150, 150, 20 }, { .15f, .15f });
+		}
 	}
+	// draw exp
+	graphics->DrawRectangle(exp, { 0, 250, 50 });
+	graphics->DrawRectangle(expBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
+
 	// draw hull
 	graphics->DrawRectangle(hull, { 185, 150, 0 });
 	graphics->DrawRectangle(hullBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
@@ -477,16 +552,19 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies)
 	graphics->DrawRectangle(shieldBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
 
 	// draw well
+	graphics->DrawTexture(_player->GetWellIcon(), { wellBox.left, wellBox.top }, 0, {}, {}, { .6f, .6f });
 	if (_player->GetWellTimer() < _player->GetWellDelay())
 		graphics->DrawRectangle(wellCD, SGD::Color{ 150, 200, 0, 0 });
 	graphics->DrawRectangle(wellBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
 
 	// draw push
+	graphics->DrawTexture(_player->GetPushIcon(), { pushBox.left, pushBox.top }, 0, {}, {}, { .6f, .6f });
 	if (_player->GetPushTimer() < _player->GetPushDelay())
 		graphics->DrawRectangle(pushCD, SGD::Color{ 150, 200, 0, 0 });
 	graphics->DrawRectangle(pushBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
 
 	// draw warp
+	graphics->DrawTexture(_player->GetWarpIcon(), { warpBox.left, warpBox.top }, 0, {}, {}, { .6f, .6f });
 	if (_player->GetWarpTimer() < _player->GetWarpDelay())
 		graphics->DrawRectangle(warpCD, SGD::Color{ 150, 200, 0, 0 });
 	graphics->DrawRectangle(warpBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);

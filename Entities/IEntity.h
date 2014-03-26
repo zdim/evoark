@@ -10,11 +10,14 @@ class CCustomEvent;
 //Order IS significant here. All ships are lumped together so we can say if(type > Player && type < Asteroid) or something similar
 enum class EntityType {
 	BaseClass,
-	Laser, Missile, Push, Well,
-	Player, Human, Copperhead, Cobra, Mamba, Coordinator,
-	Coral, Moccasin,
-	BaseModule, LaserModule, MissileModule, WellModule, PushModule, WarpModule, ShieldModule, EngineModule,
-	Asteroid, Planet, Barrier, Trigger, Stargate,
+	Laser, Missile, Push, Well,	//Projectiles
+	Player, Human, Copperhead, Cobra, Mamba, Coordinator,	//Small ships
+	Coral, Moccasin,	//Big Ships
+	BaseModule, ShieldModule, EngineModule, LaserModule,  //Basic Modules
+	MissileModule, WellModule, PushModule, WarpModule,	//Ability Modules
+	Trigger, Stargate, //LevelEvents
+	Barrier, Planet, //Stationary Collidables
+	Asteroid,	//Mobile Collidables
 	Count
 };
 
