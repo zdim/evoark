@@ -40,7 +40,6 @@ void CModule::TakeDamage(int damage, bool collision)
 	hull -= damage;
 	if (hull <= 0)
 	{
-		//Destroy thing
 		SelfDestruct();
 	}
 }

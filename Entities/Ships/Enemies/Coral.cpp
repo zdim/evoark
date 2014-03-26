@@ -4,22 +4,41 @@
 #include "../../EntityManager.h"
 CCoral::CCoral()
 {
-	engine = new CEngine();
-	cockpit = new CModule();
-	shieldMod = new CShieldModule();
-	laser = new CLaserModule();
+	modules.resize(count);
+	modules[engine] = new CEngine();
+	modules[cockpit] = new CModule();
+	modules[shieldModule] = new CShieldModule();
+	modules[laser] = new CLaserModule();
 
-	engine->SetOffset(SGD::Vector{ 0, 20 });
-	cockpit->SetOffset(SGD::Vector{ 0, -20 });
-	shieldMod->SetOffset(SGD::Vector{ 20, 0 });
-	laser->SetOffset(SGD::Vector{ -20, 0 });
+	EntityType abilityMod = (EntityType)(rand()%4 + (int)EntityType::MissileModule);
+	switch (abilityMod)
+	{
+	case EntityType::MissileModule:
+		modules[ability] = new CMissileModule;
+		break;
+	case EntityType::WellModule:
+		modules[ability] = new CWellModule;
+		break;
+	case EntityType::PushModule:
+		modules[ability] = new CPushModule;
+		break;
+	case EntityType::WarpModule:
+		modules[ability] = new CWarpModule;
+		break;
+	}
 
-	engine->SetOwner(this);
-	cockpit->SetOwner(this);
-	shieldMod->SetOwner(this);
-	laser->SetOwner(this);
+	modulePositions.resize(count);
+	modulePositions[engine] = SGD::Vector{ 0, 20 };
+	modulePositions[cockpit] = SGD::Vector{ 0, 0 };
+	modulePositions[shieldModule] = SGD::Vector{ 20, 0 };
+	modulePositions[laser] = SGD::Vector{ -20, 0 };
+	modulePositions[ability] = SGD::Vector{0,-20};
 
-	//Randomly pick an ability when all projectiles are made.
+	for (unsigned int i = 0; i < modules.size(); i++)
+	{
+		modules[i]->SetOffset(modulePositions[i]);
+		modules[i]->SetOwner(this);
+	}
 }
 
 
@@ -30,69 +49,37 @@ CCoral::~CCoral()
 void CCoral::Update(float dt)
 {
 	CEnemy::Update(dt);
-	if (engine)
+
+	for (unsigned int i = 0; i < modules.size(); i++)
 	{
-		engine->Update(dt);
+		if (modules[i])
+			modules[i]->Update(dt);
 	}
-	if (cockpit)
-	{
-		cockpit->Update(dt);
-	}
-	else
-	{
+	if (!modules[cockpit])
 		SelfDestruct();
-	}
-	if (shieldMod)
-	{
-		shieldMod->Update(dt);
-	}
-	if (laser)
-	{
-		laser->Update(dt);
-	}
-	if (ability)
-	{
-		ability->Update(dt);
-	}	
 }
 
 void CCoral::Render()
 {
 	CEntity::Render();
-	if (engine)
+	for (unsigned int i = 0; i < modules.size(); i++)
 	{
-		engine->Render();
-	}
-	if (cockpit)
-	{
-		cockpit->Render();
-	}
-	//else
-	//{
-	//	SelfDestruct();
-	//}
-	if (shieldMod)
-	{
-		shieldMod->Render();
-	}
-	if (laser)
-	{
-		laser->Render();
-	}
-	if (ability)
-	{
-		ability->Render();
+		if (modules[i])
+			modules[i]->Render();
 	}
 }
 
 void CCoral::HandleCollision(IEntity* other)
 {
 	CEntityManager* EM = CEntityManager::GetInstance();
-	EM->ShapedCollisions(engine, other);
-	EM->ShapedCollisions(cockpit, other);
-	EM->ShapedCollisions(shieldMod,other);
-	EM->ShapedCollisions(laser, other);
-	EM->ShapedCollisions(ability, other);
+	for (unsigned int i = 0; i < modules.size(); i++)
+	{
+		if (EM->ShapedCollisions(modules[i], other))
+		{
+			modules[i]->HandleCollision(other);
+			other->HandleCollision(modules[i]);
+		}
+	}
 }
 
 void CCoral::DestroyModule(CModule* mod)
@@ -101,48 +88,34 @@ void CCoral::DestroyModule(CModule* mod)
 		return;
 	mod->SetOwner(nullptr);
 	mod->Release();
-	if (mod == engine)
+	for (unsigned int i = 0; i < modules.size(); i++)
 	{
-		engine = nullptr;
-	}
-	else if (mod == cockpit)
-	{
-		SelfDestruct();
-	}
-	else if (mod == shieldMod)
-	{
-		shieldMod = nullptr;
-	}
-	else if (mod == laser)
-	{
-		laser = nullptr;
-	}
-	else if (mod == ability)
-	{
-		ability = nullptr;
+		if (mod == modules[i])
+		{
+			modules[i] = nullptr;
+			if (i == cockpit)
+				SelfDestruct();
+			break;
+		}
 	}
 }
 
 void CCoral::DestroyAllModules()
 {
-	DestroyModule(engine);
-	DestroyModule(cockpit);
-	DestroyModule(shieldMod);
-	DestroyModule(laser);
-	DestroyModule(ability);
+	for (unsigned int i = 0; i < modules.size(); i++)
+	{
+		DestroyModule(modules[i]);
+	}
 }
 
 void CCoral::SetImages(std::vector<SGD::HTexture>& images)
 {
-	engine->SetImage(images[(int)EntityType::EngineModule]);
-	cockpit->SetImage(images[(int)EntityType::BaseModule]);
-	shieldMod->SetImage(images[(int)EntityType::ShieldModule]);
-	laser->SetImage(images[(int)EntityType::LaserModule]);
-	if(ability)ability->SetImage(images[ability->GetType()]);
-
-	engine->				SetSize({8,8});
-	cockpit->				SetSize({8,8});
-	shieldMod->				SetSize({8,8});
-	laser->					SetSize({8,8});
-	if (ability)ability->	SetSize({8,8});
+	for (unsigned int i = 0; i < modules.size(); i++)
+	{
+		if (modules[i])
+		{
+			modules[i]->SetImage(images[modules[i]->GetType()]);
+			modules[i]->SetSize({16,16});
+		}
+	}
 }

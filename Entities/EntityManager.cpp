@@ -51,6 +51,9 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::ShieldModule] = graphics->LoadTexture("Resources/Graphics/Ship1.png");
 	images[(int)EntityType::LaserModule] = graphics->LoadTexture("Resources/Graphics/Ship3.png");
 	images[(int)EntityType::MissileModule] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
+	images[(int)EntityType::WellModule] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
+	images[(int)EntityType::PushModule] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
+	images[(int)EntityType::WarpModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 
 	images[(int)EntityType::Stargate] = graphics->LoadTexture("Resources/Graphics/Stargate.png");
 }											  	

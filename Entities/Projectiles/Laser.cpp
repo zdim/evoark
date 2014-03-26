@@ -1,5 +1,6 @@
 #include "Laser.h"
 #include "../Ships/Ship.h"
+#include "../Modules/Module.h"
 #include "../Asteroid.h"
 #include "../../Message System/DestroyEntityMessage.h"
 #include "../../Camera.h"
@@ -36,9 +37,12 @@ void CLaser::HandleCollision(IEntity* other)
 		//Throw a message to destroy this
 		SelfDestruct();
 	}
-	else if (otherType >= EntityType::BaseModule && otherType <= EntityType::EngineModule)
+	else if (otherType >= EntityType::BaseModule && otherType <= EntityType::WarpModule)
 	{
+		CModule* mod = dynamic_cast<CModule*>(other);
+		mod->TakeDamage(damage);
 
+		SelfDestruct();
 	}
 
 	//Is other an asteroid?
