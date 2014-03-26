@@ -41,11 +41,11 @@ void	CTestLevelState::Enter(void)
 	//BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
 
 	objArrow = graphics->LoadTexture("Resources/Graphics/Arrow.png");
-	backgroundBlack = graphics->LoadTexture("Resources/Graphics/backgroundBlack3.png", { 255, 255, 255 });
-	//JD's Test flock, ally and player
+	backgroundBlack = graphics->LoadTexture("Resources/Graphics/backgroundBlack3.png", { 50, 255, 255, 255 });
+
+
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
-	//EntityManager->Spawn(EntityType::Player, SGD::Point{100,150});
 
 	Generate();
 	//EntityManager->Spawn(EntityType::Stargate, {200,200});
@@ -54,7 +54,7 @@ void	CTestLevelState::Enter(void)
 	//Spawn Coral near the player
 	//EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
 	//Spawn Moccasin near the player
-	EntityManager->Spawn(EntityType::Moccasin, player->GetPosition() + SGD::Vector{ 200,200 });
+	EntityManager->Spawn(EntityType::Moccasin, player->GetPosition() + SGD::Vector{ 200,200 }, 4);
 	
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
@@ -71,6 +71,7 @@ void	CTestLevelState::Exit(void)
 	cam->Terminate();
 	if (BackgroundImage != SGD::INVALID_HANDLE)
 		graphics->UnloadTexture(BackgroundImage);
+	graphics->UnloadTexture(backgroundBlack);
 	graphics->UnloadTexture(objArrow);
 	graphics->UnloadTexture(backgroundBlack);
 
@@ -131,6 +132,7 @@ void	CTestLevelState::Render(void)
 {
 	graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
 	graphics->DrawTexture(backgroundBlack, { 0, 0 });
+	graphics->DrawRectangle({ 0, 0, 2000, 2000 }, { 150, 0, 0, 0 });
 
 	// draw grids
 	//for (int i = 0; i < m_nNumQuadsWidth; i++)

@@ -4,6 +4,9 @@
 
 CMoccasin::CMoccasin()
 {
+	modulePositions.push_back({ -40, -40 });
+	modulePositions.push_back({ 40, -40 });
+	modulePositions.push_back({ 40, 40 });
 }
 
 
@@ -20,7 +23,7 @@ void CMoccasin::SelfDestruct()
 
 void CMoccasin::AddModule()
 {
-	if (modules.size() >= (unsigned int)EntityType::WarpModule - (unsigned int)EntityType::BaseModule)
+	if (modules.size() > (unsigned int)EntityType::WarpModule - (unsigned int)EntityType::BaseModule)
 		return;
 
 	std::vector<EntityType> available;
@@ -39,31 +42,36 @@ void CMoccasin::AddModule()
 	}
 
 	EntityType newModType = available[rand() % available.size()];
+	CModule* newMod = nullptr;
 	switch (newModType)
 	{
 	case EntityType::BaseModule:
-		modules.push_back(new CModule);
+		newMod = new CModule;
 		break;
 	case EntityType::EngineModule:
-		modules.push_back(new CEngine);
+		newMod = new CEngine;
 		break;
 	case EntityType::ShieldModule:
-		modules.push_back(new CShieldModule);
+		newMod = new CShieldModule;
 		break;
 	case EntityType::LaserModule:
-		modules.push_back(new CLaserModule);
+		newMod = new CLaserModule;
 		break;
 	case EntityType::MissileModule:
-		modules.push_back(new CMissileModule);
+		newMod = new CMissileModule;
 		break;
 	case EntityType::WellModule:
-		modules.push_back(new CWellModule);
+		newMod = new CWellModule;
 		break;
 	case EntityType::PushModule:
-		modules.push_back(new CPushModule);
+		newMod = new CPushModule;
 		break;
 	case EntityType::WarpModule:
-		modules.push_back(new CWarpModule);
+		newMod = new CWarpModule;
 		break;
 	}
+
+	newMod->SetOffset(modulePositions[modules.size()]);
+	newMod->SetOwner(this);
+	modules.push_back(newMod);
 }
