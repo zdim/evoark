@@ -28,11 +28,11 @@ CCoral::CCoral()
 	}
 
 	modulePositions.resize(count);
-	modulePositions[engine] = SGD::Vector{ 0, 20 };
+	modulePositions[engine] = SGD::Vector{ 0, 40 };
 	modulePositions[cockpit] = SGD::Vector{ 0, 0 };
-	modulePositions[shieldModule] = SGD::Vector{ 20, 0 };
-	modulePositions[laser] = SGD::Vector{ -20, 0 };
-	modulePositions[ability] = SGD::Vector{0,-20};
+	modulePositions[shieldModule] = SGD::Vector{ 40, 0 };
+	modulePositions[laser] = SGD::Vector{ -40, 0 };
+	modulePositions[ability] = SGD::Vector{0,-40};
 
 	for (unsigned int i = 0; i < modules.size(); i++)
 	{
@@ -115,7 +115,7 @@ void CCoral::SetImages(std::vector<SGD::HTexture>& images)
 		if (modules[i])
 		{
 			modules[i]->SetImage(images[modules[i]->GetType()]);
-			modules[i]->SetSize({16,16});
+			modules[i]->SetSize({32,32});
 		}
 	}
 }

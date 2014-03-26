@@ -90,7 +90,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		player = new CPlayer();
 		player->SetImage(images[(int)EntityType::Player]);
 		player->SetPosition(position);
-		player->SetSize({ 16, 16 });
+		player->SetSize({ 32, 32 });
 		//player->SetImageSize({ 384, 415 });
 		dynamic_cast<CShip*>(player)->setSpeed(200);
 		ships.push_back(player);
@@ -102,6 +102,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  IEntity* human = new CHuman();
 							  human->SetPosition(position);
 							  human->SetImage(images[(int)EntityType::Human]);
+							  human->SetSize({32,32});
 							  allies.push_back(human);
 							  ships.push_back(human);
 							  type = (EntityType)amount;
@@ -127,7 +128,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 										   copperheads[i] = new CCopperhead();
 									   }
 									   copperheads[i]->SetImage(images[(int)EntityType::Copperhead]);
-									   copperheads[i]->SetSize({ 16, 16 });
+									   copperheads[i]->SetSize({ 32, 32 });
 									   //copperheads[i]->SetImageSize({ 70, 94 });
 									   smallEnemies.push_back(copperheads[i]);
 									   ships.push_back(copperheads[i]);
@@ -155,7 +156,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  }
 								  cobras[i]->SetImage(images[(int)EntityType::Cobra]);
 								  //cobras[i]->SetImageSize({ 77, 93 });
-								  cobras[i]->SetSize({ 16, 16 });
+								  cobras[i]->SetSize({ 32, 32 });
 								  smallEnemies.push_back(cobras[i]);
 								  ships.push_back(cobras[i]);
 							  }
@@ -183,7 +184,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  }
 								  mambas[i]->SetImage(images[(int)EntityType::Mamba]);
 								  //mambas[i]->SetImageSize({ 96, 78 });
-								  mambas[i]->SetSize({ 16, 16 });
+								  mambas[i]->SetSize({ 32, 32 });
 								  smallEnemies.push_back(mambas[i]);
 								  ships.push_back(mambas[i]);
 							  }
@@ -202,7 +203,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								  corals[i] = new CCoral();
 								  corals[i]->SetImage(images[(int)EntityType::Coral]);
 								  //corals[i]->SetImageSize({ 96, 78 });
-								  corals[i]->SetSize({ 64, 64 });
+								  corals[i]->SetSize({ 128, 128 });
 								  dynamic_cast<CCoral*>(corals[i])->SetImages(images);
 								  bigEnemies.push_back(corals[i]);
 								  ships.push_back(corals[i]);
