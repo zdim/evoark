@@ -41,7 +41,7 @@ void	CTestLevelState::Enter(void)
 	//BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
 
 	objArrow = graphics->LoadTexture("Resources/Graphics/Arrow.png");
-
+	backgroundBlack = graphics->LoadTexture("Resources/Graphics/backgroundBlack3.png", { 255, 255, 255 });
 	//JD's Test flock, ally and player
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
@@ -128,7 +128,7 @@ void	CTestLevelState::Update(float dt)
 void	CTestLevelState::Render(void)
 {
 	graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
-
+	graphics->DrawTexture(backgroundBlack, { 0, 0 });
 
 	// draw grids
 	//for (int i = 0; i < m_nNumQuadsWidth; i++)

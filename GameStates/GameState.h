@@ -42,6 +42,7 @@ private:
 	int m_nScreenHeight = 0;
 	int m_nScreenWidth = 0;
 	SGD::HTexture BackgroundImage;
+	SGD::HTexture backgroundBlack;
 	CEntityManager* EntityManager;
 	SGD::GraphicsManager* graphics;
 
