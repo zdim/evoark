@@ -126,7 +126,7 @@ void	CTestLevelState::Update(float dt)
 
 void	CTestLevelState::Render(void)
 {
-	//graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
+	graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
 
 
 	// draw grids
@@ -314,7 +314,6 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 			q.randomized = false;
 		}
 		world[q.y][q.x] = q;
-
 
 		pQuad = pQuad->NextSiblingElement();
 	}

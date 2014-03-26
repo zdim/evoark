@@ -63,6 +63,8 @@ void CCamera::Update(float dt)
 	//	target->GetPosition().y > Game::GetInstance()->GetLevelState()->GetWorldSize().height - Game::GetInstance()->GetScreenHeight() * .5f)
 	//	return;
 
+	
+
 	if (pos == dest)
 		return;
 	
@@ -72,6 +74,32 @@ void CCamera::Update(float dt)
 	SGD::Point newPos = pos + dir*dt;
 
 	float val = (newPos - dest).ComputeLength();
+
+	if (target->GetPosition().x < screenSize.width * .5f &&
+		target->GetPosition().y < screenSize.height * .5f)
+	{
+		return;
+	}
+
+	else if (target->GetPosition().x > Game::GetInstance()->GetLevelState()->GetWorldSize().width - screenSize.width * .5f &&
+		target->GetPosition().y > Game::GetInstance()->GetLevelState()->GetWorldSize().height - screenSize.height * .5f)
+	{
+		return;
+	}
+
+	else if (target->GetPosition().x < screenSize.width * .5f ||
+		target->GetPosition().x > Game::GetInstance()->GetLevelState()->GetWorldSize().width - screenSize.width * .5f)
+	{
+		pos.y = dest.y;
+		return;
+	}
+
+	else if (target->GetPosition().y < screenSize.height * .5f ||
+		target->GetPosition().y > Game::GetInstance()->GetLevelState()->GetWorldSize().height - screenSize.height * .5f)
+	{
+		pos.x = dest.x;
+		return;
+	}
 
 	if (abs(val) <= 5.0f)
 	{
