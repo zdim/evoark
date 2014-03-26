@@ -313,7 +313,7 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 			q.pos = { 0, 0 };
 			q.randomized = false;
 		}
-		world[q.y][q.x] = q;
+		world[q.x][q.y] = q;
 
 		pQuad = pQuad->NextSiblingElement();
 	}
