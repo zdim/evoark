@@ -1,10 +1,13 @@
 #pragma once
 #include "../Entity.h"
+//#include "../Ships/Enemies/Coral.h"
+class CCoral;
+
 class CModule :
 	public CEntity
 {
 protected:
-	IEntity* owner;
+	CCoral* owner;
 	SGD::Vector posOffset; //Offset by owner's position
 	float rotOffset = 0;
 	float cooldown;		//For any abilities and shield delay
@@ -16,14 +19,14 @@ public:
 	virtual ~CModule();
 
 	int GetType() { return (int)EntityType::BaseModule; }
-	IEntity*	GetOwner() { return owner; }
+	CCoral*	GetOwner() { return owner; }
 	SGD::Vector GetOffset() {return posOffset;}
 	float		GetCooldown() { return cooldown; }		//For any abilities and shield delay
 	float		GetTimer() { return timer; }	//For cooldown
 	int			GetHull() { return hull; }		//For destruction
 	int			GetHullMax() { return hullMax; }
 
-	void SetOwner (IEntity*	newVal);// { owner = newVal; owner->AddRef(); }
+	void SetOwner (CCoral* newVal);// { owner = newVal; owner->AddRef(); }
 	void SetOffset(SGD::Vector newVal) {posOffset = newVal; }
 	void SetCooldown (float newVal) { cooldown = newVal; }		//For any abilities and shield delay
 	void SetTimer (float newVal) { timer = newVal; }	//For cooldown
@@ -34,6 +37,7 @@ public:
 
 	virtual void TakeDamage(int damage, bool collision = false);
 	virtual void Activate();
+	virtual void SelfDestruct() override;
 
 	void ReleaseOwner();
 };

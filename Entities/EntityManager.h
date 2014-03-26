@@ -28,7 +28,8 @@ public:
 	void Initialize();
 	void Terminate();
 
-	CPlayer* GetPlayer() {return dynamic_cast<CPlayer*>(player);}
+	CPlayer* GetPlayer() { return dynamic_cast<CPlayer*>(player); }
+	CEntity* GetStargate() { return dynamic_cast<CEntity*>(stargate); }
 	std::vector<IEntity*> GetAllies() { return allies; }
 	IEntity* GetCoordinator() { return (IEntity*)coordinator; }
 	IEntity* GetStargate() { return (IEntity*)stargate; }

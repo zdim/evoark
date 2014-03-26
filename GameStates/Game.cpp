@@ -161,7 +161,7 @@ int Game::Main( void )
 
 	// Update & render the current state
 	m_qStates[m_qStates.size()-1]->Update( elapsedTime );
-	for (int i = 0; i < m_qStates.size(); i++)
+	for (unsigned int i = 0; i < m_qStates.size(); i++)
 	{
 		m_qStates[i]->Render();
 	}

@@ -214,9 +214,12 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								
 	}
 	case EntityType::Stargate:
+		if (stargate)
+			return;
 		stargate = new Trigger();
 		stargate->SetImage(images[(int)EntityType::Stargate]);
 		stargate->SetSize({64, 64});
+		stargate->SetPosition(position);
 		CVictoryMessage* msg = new CVictoryMessage;
 		dynamic_cast<Trigger*>(stargate)->Assign(msg);
 		stationaries.push_back(stargate);

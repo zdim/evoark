@@ -94,4 +94,6 @@ void  CCamera::SetTarget(IEntity* t)
 	t->AddRef();
 	target->Release();
 	target = t;
+
+	//locked = false;
 }

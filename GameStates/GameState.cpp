@@ -57,7 +57,7 @@ void	CTestLevelState::Enter(void)
 
 	player = EntityManager->GetPlayer();
 	cam = CCamera::GetInstance();
-	cam->Initiallize(player, SGD::Size{m_nScreenWidth,m_nScreenHeight});
+	cam->Initiallize(player, SGD::Size{(float)m_nScreenWidth,(float)m_nScreenHeight});
 
 
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
@@ -100,6 +100,16 @@ bool	CTestLevelState::Input(void)
 		Game::GetInstance()->PushState(CPauseState::GetInstance());
 		return true;
 	}
+	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::C))
+	{
+		cam->SetTarget(EntityManager->GetStargate());
+		return true;
+	}
+	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::P))
+	{
+		cam->SetTarget(EntityManager->GetPlayer());
+		return true;
+	}
 	return true;
 }
 
@@ -116,7 +126,7 @@ void	CTestLevelState::Update(float dt)
 
 void	CTestLevelState::Render(void)
 {
-	graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
+	//graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
 
 
 	// draw grids
@@ -477,7 +487,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	if (_player->GetArrowsOn())
 	{
 		// allies
-		for (int i = 0; i < _allies.size(); i++)
+		for (unsigned int i = 0; i < _allies.size(); i++)
 		{
 			SGD::Vector toTarget = _allies[i]->GetPosition() - _player->GetPosition();
 			float allyDistance = toTarget.ComputeLength();
