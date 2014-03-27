@@ -436,6 +436,10 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		RemoveFromGroup(smallEnemies, entity);
 		RemoveFromGroup(ships, entity);
 		RemoveFromLeader(entity);
+		if (GetCoordinator() == entity)
+		{
+			coordinator = nullptr;
+		}
 		break;
 	case EntityType::Moccasin:
 		boss = nullptr;
