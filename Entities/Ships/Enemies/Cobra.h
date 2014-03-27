@@ -20,5 +20,5 @@ public:
 
 class CCobraCoord : public CCobra, public Coordinator
 {
-
+	virtual ~CCobraCoord(){}
 };

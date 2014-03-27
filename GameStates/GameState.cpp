@@ -209,6 +209,10 @@ void	CTestLevelState::Generate()
 			{
 				EntityManager->Spawn(EntityType::Stargate, { events[i].area.left, events[i].area.top }, 1, false);
 			}
+			else
+			{
+				
+			}
 		}
 	}
 	else
@@ -543,6 +547,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 		}
 
 		// commented out until coordinator is fixed
+
 		/*SGD::Vector toCoordinator = _coordinator->GetPosition() - _player->GetPosition();
 		if (toCoordinator.ComputeLength() > 400)
 		{

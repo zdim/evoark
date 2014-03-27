@@ -40,6 +40,7 @@ class Coordinator
 	std::vector<CLeader*> leaders;
 	
 public:
+	virtual ~Coordinator(){}
 	CLeader* GetClosestLeader(CLeader* leader); //Returns the a CLeader that is closest to the one passed in without being the same one.
 	void HandleEvent(); //Fill in when event system is ready.
 };

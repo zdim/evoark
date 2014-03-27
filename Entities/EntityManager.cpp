@@ -74,6 +74,14 @@ void CEntityManager::Terminate()
 	images.clear();
 }
 
+IEntity* CEntityManager::GetCoordinator()
+{
+	if (dynamic_cast<CCobraCoord*>(coordinator)) return dynamic_cast<CCobraCoord*>(coordinator);
+	if (dynamic_cast<CCopperheadCoord*>(coordinator)) return dynamic_cast<CCopperheadCoord*>(coordinator);
+	if (dynamic_cast<CMambaCoord*>(coordinator)) return dynamic_cast<CMambaCoord*>(coordinator);
+	return nullptr;
+
+}
 
 void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int amount, bool coord) //Spawns either one entity, or a flock of enemies, making the leader object in the process
 {
