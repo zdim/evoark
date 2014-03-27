@@ -70,8 +70,10 @@ void CPlayer::Update(float dt)
 	if (dir != SGD::Vector{0, 0})
 		dir.Normalize();
 	 //commented out until finished implementing - was messing up standard input
-	
-	velocity = dir * speed;
+	if (warpTimer < warpDuration)
+		velocity = dir * (speed + warpSpeed);
+	else
+		velocity = dir * speed;
 	SGD::Point mousePos = input->GetMousePosition();
 	rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
 
@@ -196,7 +198,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	}
 
 	hull -= damage;
-	if (hull <= 0)
+	if (hull <= 0 && !destroying)
 	{
 		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
 		msg->QueueMessage();
