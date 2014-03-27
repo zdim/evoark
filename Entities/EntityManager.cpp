@@ -7,6 +7,8 @@
 #include "Ships\Enemies\Moccasin.h"	//Also includes Coral indirectly
 #include "Collidables\Trigger.h"
 #include "Projectiles\Missile.h"	//Also includes Laser indirectly
+#include "Projectiles\Well.h"
+#include "Projectiles\Push.h"
 #include "Collidables\InvisibleTrigger.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
@@ -55,6 +57,9 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::WellModule] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
 	images[(int)EntityType::PushModule] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
 	images[(int)EntityType::WarpModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+
+	images[(int)EntityType::Well] = graphics->LoadTexture("Resources/Graphics/GravWellIcon.png");
+	images[(int)EntityType::Push] = graphics->LoadTexture("Resources/Graphics/GravPushIcon.png");
 
 	images[(int)EntityType::Stargate] = graphics->LoadTexture("Resources/Graphics/Stargate.png");
 }											  	
@@ -237,7 +242,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								 }
 								 moccasin->SetImage(images[(int)EntityType::Moccasin]);
 								 moccasin->SetSize({256,256});
-								 dynamic_cast<CCoral*>(moccasin)->SetImages(images);
+								 moccasin->SetImages(images);
 								 bigEnemies.push_back(moccasin);
 								 ships.push_back(moccasin);
 
@@ -328,7 +333,39 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 	}
 	case EntityType::Well:
 	{
+							 CWell* well = new CWell;
+							 well->SetImage(images[(int)EntityType::Well]);
+							 well->SetRadius(radius);
+							 well->SetVelocity({0,0});
+							 
+							 //SGD::Vector offset = { 0.0, -1.0 };
+							 //offset.Rotate(rotation);
+							 //offset *= (ownerSize.height + well->GetSize().height) *0.6f;
+							 //position += offset;
 
+							 well->SetPosition(position);
+							 well->SetRotation(rotation);
+							 well->SetStrength(damage);
+							 gravObjects.push_back(well);
+							 break;
+	}
+	case EntityType::Push:
+	{
+							 CPush* push = new CPush;
+							 push->SetImage(images[(int)EntityType::Push]);
+							 push->SetRadius(radius);
+							 push->SetVelocity({ 0, 0 });
+							 
+							 SGD::Vector offset = { 0.0, -1.0 };
+							 offset.Rotate(rotation);
+							 offset *= (ownerSize.height + push->GetSize().height) *0.8f;
+							 position += offset;
+
+							 push->SetPosition(position);
+							 push->SetRotation(rotation);
+							 push->SetStrength(damage);
+							 gravObjects.push_back(push);
+							 break;
 	}
 	}
 }
@@ -425,6 +462,7 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 	if (entity == player)
 		entity = player;
 	ClearTargeted(entity);
+
 	switch ((EntityType)entity->GetType())
 	{
 	case EntityType::Player:
@@ -462,6 +500,10 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		dynamic_cast<CMissile*>(entity)->SetTarget(nullptr);
 	case EntityType::Laser:
 		RemoveFromGroup(projectiles, entity);
+		break;
+	case EntityType::Well:
+	case EntityType::Push:
+		RemoveFromGroup(gravObjects, entity);
 		break;
 	case EntityType::Stargate:
 		stargate = nullptr;
@@ -629,10 +671,10 @@ bool CEntityManager::circleRectCollision(IEntity* circle, IEntity* rect)
 	SGD::Point C = SGD::Point{ rect->GetRect().right, rect->GetRect().bottom };
 	SGD::Point D = SGD::Point{ rect->GetRect().left, rect->GetRect().bottom };
 	return circle->GetPosition().IsWithinRectangle(rect->GetRect()) ||
-		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, A, B) ||
-		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, B, C) ||
-		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, C, D) ||
-		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, D, A);
+		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, A, B) >= 0 ||
+		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, B, C) >= 0 ||
+		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, C, D) >= 0 ||
+		circleLineInterection(circle->GetPosition(), circle->GetSize().width / 2.0f, D, A) >= 0;
 }
 
 bool CEntityManager::rectCollision(IEntity* rect1, IEntity* rect2)
@@ -660,10 +702,19 @@ void CEntityManager::Update(float dt)
 	{
 		stationaries[i]->Update(dt);
 	}
+	for (unsigned int i = 0; i < gravObjects.size(); i++)
+	{
+		gravObjects[i]->Update(dt);
+	}
 
 	CheckCollision(ships, ships);
 	CheckCollision(projectiles, ships);
 	CheckCollision(ships, stationaries);
+	if (gravObjects.size())
+	{
+	CheckCollision(ships, gravObjects);
+	CheckCollision(projectiles, gravObjects);
+	}
 }
 
 void CEntityManager::Render()
@@ -679,6 +730,11 @@ void CEntityManager::Render()
 	{
 		if (projectiles[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
 			projectiles[i]->Render();
+	}
+	for (unsigned int i = 0; i < gravObjects.size(); i++)
+	{
+		if (gravObjects[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
+			gravObjects[i]->Render();
 	}
 	for (unsigned int i = 0; i < stationaries.size(); i++)
 	{

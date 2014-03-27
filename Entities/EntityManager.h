@@ -4,7 +4,8 @@
 #include "Leader.h"
 #include "../SGD Wrappers/SGD_Handle.h"
 #include "Ships\Player.h"
-class CMoccasin;
+#include "Ships\Enemies\Moccasin.h"
+//class CMoccasin;
 class CEntityManager
 {
 	std::vector<CLeader*> leaders;

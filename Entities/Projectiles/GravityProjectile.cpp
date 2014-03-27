@@ -1,9 +1,10 @@
 //
 #include "GravityProjectile.h"
-
+#include "../../Message System/DestroyEntityMessage.h"
 
 CGravityProjectile::CGravityProjectile()
 {
+	timer = 0;
 }
 
 
@@ -17,5 +18,7 @@ void CGravityProjectile::Update(float dt)
 	if (timer >= duration)
 	{
 		//Send destroy message
+		DestroyEntityMessage* msg = new DestroyEntityMessage(this);
+		msg->QueueMessage();
 	}
 }

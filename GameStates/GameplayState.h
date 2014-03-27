@@ -1,8 +1,8 @@
 #pragma once
 #include "IGameState.h"
-
-#include "../Entities/Ships/Player.h"
-#include "GameState.h"
+#include "LevelStates\ILevelState.h"
+//#include "../Entities/Ships/Player.h"
+//#include "GameState.h"
 
 enum class Level { Tutorial, Gen1, Gen2, Waves, Final, LoadedLevel, TestStatic, TestGen };
 struct playerData
@@ -27,13 +27,12 @@ struct saveData
 {
 	playerData playerStat;
 	waveData waveStat;
-	Level currLevel;
+	Level currLevel = Level::TestStatic;
 };
 
 class CGameplayState : public IGameState
 {
 	saveData save;
-	friend ILevelState;
 public:
 	static CGameplayState* GetInstance();
 	virtual bool Input() override;
@@ -41,4 +40,8 @@ public:
 	virtual void Render() override;
 	virtual void Exit() override;
 	virtual void Enter() override;
+
+	Level GetLevel() {return save.currLevel;}
+	void SetLevel(Level l) {save.currLevel = l;}
+	//friend ILevelState;
 };
