@@ -11,6 +11,7 @@
 #include "../SGD Wrappers/SGD_Message.h"
 #include "LevelStates\ILevelState.h"
 #include "../Camera.h"
+#include "../SoundBox.h"
 
 class CFlyweight;
 class CEmitter;
@@ -45,6 +46,7 @@ private:
 	SGD::HTexture backgroundBlack;
 	CEntityManager* EntityManager;
 	SGD::GraphicsManager* graphics;
+	CSoundBox* soundBox = nullptr;
 
 	CEntity* player = nullptr;
 	CCamera* cam;

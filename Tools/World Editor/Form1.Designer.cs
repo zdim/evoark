@@ -461,6 +461,11 @@
             // 
             // quadHeight
             // 
+            this.quadHeight.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
             this.quadHeight.Location = new System.Drawing.Point(86, 45);
             this.quadHeight.Maximum = new decimal(new int[] {
             500,
@@ -484,6 +489,11 @@
             // 
             // quadWidth
             // 
+            this.quadWidth.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
             this.quadWidth.Location = new System.Drawing.Point(86, 19);
             this.quadWidth.Maximum = new decimal(new int[] {
             500,

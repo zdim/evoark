@@ -18,6 +18,7 @@
 #include "LevelStates\GameOverState.h"
 #include "../Message System/CreateProjectile.h"
 #include "../Entities/Ships/Player.h"
+#include "../SoundBox.h"
 
 CTestLevelState::CTestLevelState()
 {
@@ -46,6 +47,8 @@ void	CTestLevelState::Enter(void)
 
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
+	soundBox = CSoundBox::GetInstance();
+	soundBox->Enter();
 
 	Generate();
 	//EntityManager->Spawn(EntityType::Stargate, {200,200});
@@ -75,6 +78,7 @@ void	CTestLevelState::Exit(void)
 	graphics->UnloadTexture(objArrow);
 	graphics->UnloadTexture(backgroundBlack);
 
+	soundBox->Exit();
 
 	//Terminating Messages or events before Entity manager will BREAK it on the NEXT level.
 	//Terminate EntityManager FIRST :3
@@ -301,7 +305,7 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 				q.objType = MAMBA;
 			else if (type == "CORAL")
 				q.objType = CORAL;
-			else if (type == "MOCASSIN")
+			else if (type == "MOCCASIN")
 				q.objType = MOCASSIN;
 			else if (type == "ASTEROID")
 				q.objType = ASTEROID;
@@ -372,6 +376,15 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	{
 								   const CreateProjectileMessage* lMsg = dynamic_cast<const CreateProjectileMessage*>(msg);
 		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(lMsg->GetProjType(),lMsg->GetPosition(),lMsg->GetOwnerSize(),lMsg->GetRotation(),lMsg->GetDamage(), lMsg->GetTier());
+		switch (lMsg->GetProjType())
+		{
+		case EntityType::Laser:
+			CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser);
+			break;
+			
+		default:
+			break;
+		};
 		break;
 	}
 	case MessageID::DestroyEntity:
