@@ -548,8 +548,9 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 		}
 
 		// commented out until coordinator is fixed
-
-		/*SGD::Vector toCoordinator = _coordinator->GetPosition() - _player->GetPosition();
+		if (_coordinator)
+		{
+		SGD::Vector toCoordinator = _coordinator->GetPosition() - _player->GetPosition();
 		if (toCoordinator.ComputeLength() > 400)
 		{
 		toCoordinator.Normalize();
@@ -558,8 +559,8 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 		float coordArrowRot = atan2(_coordinator->GetPosition().y - _player->GetPosition().y, _coordinator->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
 
 		graphics->DrawTexture(objArrow, coordArrowPos, coordArrowRot, {}, { 200, 200, 50, 0 }, { .15f, .15f });
-		}*/
-
+		}
+		}
 		SGD::Vector toStargate = _stargate->GetPosition() - _player->GetPosition();
 		if (toStargate.ComputeLength() > 400)
 		{
