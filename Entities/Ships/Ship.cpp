@@ -65,5 +65,5 @@ void CShip::HandleCollision(IEntity* other)
 
 void CShip::AddGravity(SGD::Vector grav)
 {
-	gravVec += grav;
+	gravVec = grav;
 }

@@ -19,6 +19,10 @@
 #include "../Message System/CreateProjectile.h"
 #include "../Entities/Ships/Player.h"
 #include "../SoundBox.h"
+#include "../GameStates/GameplayState.h"
+
+//comment out
+#include "../Entities/Ships/Enemies/Moccasin.h"
 
 CTestLevelState::CTestLevelState()
 {
@@ -72,6 +76,8 @@ void	CTestLevelState::Enter(void)
 
 void	CTestLevelState::Exit(void)
 {
+	m_bBossKilled = false;
+
 	cam->Terminate();
 	if (BackgroundImage != SGD::INVALID_HANDLE)
 		graphics->UnloadTexture(BackgroundImage);
@@ -119,6 +125,11 @@ bool	CTestLevelState::Input(void)
 		cam->SetTarget(EntityManager->GetPlayer());
 		return true;
 	}
+	//if (input->IsKeyDown(SGD::Key::K))
+	//{
+	//	CMoccasin* boss = dynamic_cast<CMoccasin*>(EntityManager->GetBoss());
+	//	boss->TakeDamage(10000);
+	//}
 	return true;
 }
 
@@ -158,8 +169,17 @@ void	CTestLevelState::Render(void)
 
 void	CTestLevelState::Generate()
 {
-	//if (LoadXMLLevel("Resources/XML/World/staticTest1.xml"))
-	if (LoadXMLLevel("Resources/XML/World/testWorld2.xml"))
+	bool loadSuccess = false;
+	switch (CGameplayState::GetInstance()->GetLevel())
+	{
+	case Level::TestStatic:
+		loadSuccess = LoadXMLLevel("Resources/XML/World/staticTest2.xml");
+		break;
+	case Level::TestGen:
+		loadSuccess = LoadXMLLevel("Resources/XML/World/testWorld2.xml");
+		break;
+	}
+	if(loadSuccess)
 	{
 		for (int i = 0; i < m_nNumQuadsWidth; i++)
 		{
@@ -380,7 +400,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::CreateProjectile:
 	{
 								   const CreateProjectileMessage* lMsg = dynamic_cast<const CreateProjectileMessage*>(msg);
-		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(lMsg->GetProjType(),lMsg->GetPosition(),lMsg->GetOwnerSize(),lMsg->GetRotation(),lMsg->GetDamage(), lMsg->GetTier());
+		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(lMsg->GetProjType(),lMsg->GetPosition(),lMsg->GetOwnerSize(),lMsg->GetRotation(),lMsg->GetDamage(), lMsg->GetTier(), lMsg->GetRadius());
 		switch (lMsg->GetProjType())
 		{
 		case EntityType::Laser:
@@ -414,7 +434,11 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	 {
 							   if (GetInstance()->m_bBossKilled == true)
 							   {
-								   CGameOverState::GetInstance()->SetWin(true);
+								   if (CGameplayState::GetInstance()->GetLevel() == Level::TestStatic)
+									   CGameplayState::GetInstance()->SetLevel(Level::TestGen);
+								   else if (CGameplayState::GetInstance()->GetLevel() == Level::TestGen)
+									   CGameplayState::GetInstance()->SetLevel(Level::TestStatic);
+									CGameOverState::GetInstance()->SetWin(true);
 								   Game::GetInstance()->PushState(CGameOverState::GetInstance());
 								   
 								   break;

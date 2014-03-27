@@ -19,7 +19,7 @@ CPlayer::CPlayer()
 	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 20;
 	laserDelay = 0.25f;
 	missileDelay = 2.0f;
-	wellDelay = 20;
+	wellDelay = 5;
 	pushDelay = 10;
 	warpDelay = 10;
 	warpSpeed = 500;
@@ -156,7 +156,8 @@ void CPlayer::CreateWell()
 		return;
 	wellTimer = 0;
 	//TODO: Send CreateWell message
-	
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, SGD::InputManager::GetInstance()->GetMousePosition() - CCamera::GetInstance()->GetOffset(), size, rotation, 150, wellLevel, 128);
+	msg->QueueMessage();
 }
 
 void CPlayer::CreatePush()
@@ -165,7 +166,8 @@ void CPlayer::CreatePush()
 		return;
 	pushTimer = 0;
 	//TODO: Send CreatePush message
-	
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 500, pushLevel, SGD::PI / 4);
+	msg->QueueMessage();
 }
 
 void CPlayer::Warp()

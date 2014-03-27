@@ -1,6 +1,6 @@
 #include "GameplayState.h"
 #include "Game.h"
-
+#include "GameState.h"
 CGameplayState* CGameplayState::GetInstance()
 {
 	static CGameplayState instance;
@@ -31,6 +31,7 @@ void			CGameplayState::Update(float dt)
 	//Player beat the level
 		//Skipp credits for now.
 	CTestLevelState* l = CTestLevelState::GetInstance();
+	Level lvl = save.currLevel;
 	//l->Enter();
 	Game::GetInstance()->PushState(l);
 }
@@ -50,7 +51,7 @@ void			CGameplayState::Enter()
 	//grab the selected profile from Game, then load save data
 	
 	//For now: default the save data, and start the test level
-	save.currLevel = Level::TestGen;
+	save.currLevel = Level::TestStatic;
 	save.playerStat.exp = 0;
 	save.playerStat.laserLevel = 0;
 	save.playerStat.missileLevel = 0;

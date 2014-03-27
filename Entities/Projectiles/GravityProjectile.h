@@ -16,13 +16,13 @@ public:
 	float GetStrength() { return strength; }
 	float GetDuraion() { return duration; }
 	float GetTimer() { return timer; }
-	void SetRadius	(float newVal) { radius		= newVal; }
+	virtual void SetRadius	(float newVal) { radius		= newVal; }
 	void SetStrength(float newVal) { strength	= newVal; }
 	void SetDuraion	(float newVal) { duration	= newVal; }
 	void SetTimer	(float newVal) { timer		= newVal; }
 
 	bool IsCircle() override { return true; }
 
-	void Update(float dt);
+	virtual void Update(float dt);
 };
 
