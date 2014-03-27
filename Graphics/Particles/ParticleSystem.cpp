@@ -207,3 +207,8 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	
 
 }
+
+void CParticleSystem::ResetEffect(int num)
+{
+	particleEffect[num]->Reset();
+}

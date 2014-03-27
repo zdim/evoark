@@ -202,7 +202,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 		msg->QueueMessage();
 	}
 }
-
+//
 //void CPlayer::Render()
 //{
 //	if (shield > 0)

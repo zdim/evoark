@@ -1,10 +1,13 @@
 #include "GameOverState.h"
 #include "../GameplayState.h"
+#include "../Game.h"
+#include "../GameState.h"
 
 CGameOverState::CGameOverState()
 {
 	m_fTimer = 0;
-	m_fDelay = 4;
+	m_fDelay = 2;
+	win = false;
 }
 
 
@@ -32,6 +35,8 @@ bool CGameOverState::Input()
 			Game::GetInstance()->PopState();
 			return true;
 		case menuReturn::exit:
+			Game::GetInstance()->PopState();
+			Game::GetInstance()->PopState();
 			Game::GetInstance()->PopState();
 			return false;
 		default:
@@ -62,7 +67,11 @@ void CGameOverState::Enter()
 	buttons.resize(menuReturn::count);
 	buttons[menuReturn::play] = "Again";
 	buttons[menuReturn::exit] = "Exit";
+
+	if ( win == false )
 	menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Lost!!", true);
+	if (win == true)
+		menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Win!!", true);
 }
 
 void CGameOverState::Exit()
