@@ -142,4 +142,5 @@ int CCoral::RequestShield(int damage)
 		return dynamic_cast<CShieldModule*>(modules[shieldModule])->RequestShield(damage);
 	else
 		return 0;
+
 }

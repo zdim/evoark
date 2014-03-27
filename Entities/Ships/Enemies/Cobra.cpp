@@ -4,10 +4,10 @@
 
 CCobra::CCobra()
 {
-	warpTimer = 0;
 	warpDelay = 4;
+	warpTimer = warpDelay;
 	warpDuration = 1;
-	warpSpeed = 45;
+	warpSpeed = 300;
 }
 
 
@@ -20,16 +20,23 @@ void CCobra::Update(float dt)
 	warpTimer += dt; 
 	SGD::Vector dir = CCopperhead::AI(dt);
 
+	
+
+	if (target != nullptr )
 	Warp();
+
+	CEnemy::Update(dt);
 
 	if (warpTimer <= warpDuration)
 	{
-		velocity = dir * (speed + warpSpeed);
+		SGD::Vector forward = { 0, -1 };
+		forward.Rotate(rotation);
+		velocity += forward * warpSpeed;
 	}
-	else
-		velocity = dir * speed; 
+	
+		
 
-	CEnemy::Update(dt);
+	
 	CEntity::Update(dt);
 }
 
