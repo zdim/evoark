@@ -14,6 +14,9 @@ class CGameOverState : public IGameState
 
 	enum menuReturn { play, exit, count };
 	CMenu* menu;
+	bool win; 
+
+
 
 public:
 	
@@ -26,5 +29,7 @@ public:
 
 	void Enter();
 	void Exit();
+
+	void SetWin(bool s) { win = s; }
 };
 

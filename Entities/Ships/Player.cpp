@@ -150,7 +150,7 @@ void CPlayer::CreateWell()
 		return;
 	wellTimer = 0;
 	//TODO: Send CreateWell message
-
+	
 }
 
 void CPlayer::CreatePush()
@@ -200,9 +200,10 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	{
 		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
 		msg->QueueMessage();
+		SelfDestruct();
 	}
 }
-
+//
 //void CPlayer::Render()
 //{
 //	if (shield > 0)

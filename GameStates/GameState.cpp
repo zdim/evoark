@@ -401,8 +401,21 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	}
 	case MessageID::BossKilled:
 	{
-//								  CTestLevelState::GetInstance()->player = CTestLevelState::GetInstance()->player;
+		GetInstance()->m_bBossKilled = true; 
+		break;
+
 	}
+	case MessageID::Victory:
+	 {
+							   if (GetInstance()->m_bBossKilled == true)
+							   {
+								   CGameOverState::GetInstance()->SetWin(true);
+								   Game::GetInstance()->PushState(CGameOverState::GetInstance());
+								   
+								   break;
+							   }
+							   break; 
+	 }
 	}
 }
 
