@@ -230,6 +230,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								 ships.push_back(moccasin);
 
 								 moccasin->SetPosition(position);
+								 boss = moccasin;
 								 break;
 	}
 	case EntityType::Stargate:
@@ -298,6 +299,10 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 
 								projectiles.push_back(missile);
 								break;
+	}
+	case EntityType::Well:
+	{
+
 	}
 	}
 }
@@ -391,7 +396,8 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 {
 	if (!entity)
 		return;
-
+	if (entity == player)
+		entity = player;
 	ClearTargeted(entity);
 	switch ((EntityType)entity->GetType())
 	{

@@ -301,7 +301,7 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 				q.objType = MAMBA;
 			else if (type == "CORAL")
 				q.objType = CORAL;
-			else if (type == "MOCASSIN")
+			else if (type == "MOCCASIN")
 				q.objType = MOCASSIN;
 			else if (type == "ASTEROID")
 				q.objType = ASTEROID;
@@ -440,7 +440,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	SGD::Rectangle shield = {
 		m_nScreenWidth * .33f,
 		m_nScreenHeight * .87f,
-		m_nScreenWidth * .66f * _player->GetShield() / _player->GetMaxShield(),
+		m_nScreenWidth * .33f * _player->GetShield() / _player->GetMaxShield() + m_nScreenWidth * .33f,
 		m_nScreenHeight * .90f };
 
 	// experience bar
