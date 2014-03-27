@@ -138,5 +138,8 @@ void CCoral::SetTarget(CShip* newTarget)
 
 int CCoral::RequestShield(int damage)
 {
-	return dynamic_cast<CShieldModule*>(modules[shieldModule])->RequestShield(damage);
+	if (modules[shieldModule])
+		return dynamic_cast<CShieldModule*>(modules[shieldModule])->RequestShield(damage);
+	else
+		return 0;
 }

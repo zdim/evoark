@@ -15,7 +15,7 @@ protected:
 	SGD::Vector velocity = SGD::Vector{0,0};
 	SGD::Vector gravVec = SGD::Vector{ 0, 0 };
 	float rotation = 0.0f;
-	float rotSpeed = SGD::PI / 8;
+	float rotSpeed = SGD::PI;
 	SGD::Size size = SGD::Size{ 16, 16 };
 	SGD::Size imageSize = SGD::Size{0, 0};
 	unsigned int refCount = 1;

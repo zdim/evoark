@@ -150,7 +150,7 @@ void CPlayer::CreateWell()
 		return;
 	wellTimer = 0;
 	//TODO: Send CreateWell message
-
+	
 }
 
 void CPlayer::CreatePush()
