@@ -18,6 +18,6 @@ public:
 
 class CMambaCoord : public CMamba, public Coordinator
 {
-
+	virtual ~CMambaCoord(){}
 };
 

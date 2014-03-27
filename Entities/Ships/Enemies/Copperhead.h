@@ -29,5 +29,5 @@ public:
 
 class CCopperheadCoord : public CCopperhead, public Coordinator
 {
-	
+	virtual ~CCopperheadCoord(){}
 };

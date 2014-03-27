@@ -11,6 +11,7 @@
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
 #include "..\Message System\VictoryMessage.h"
+#include "../Message System/CreateEntityMessage.h"
 
 CEntityManager::CEntityManager()
 {
@@ -74,6 +75,14 @@ void CEntityManager::Terminate()
 	images.clear();
 }
 
+IEntity* CEntityManager::GetCoordinator()
+{
+	if (dynamic_cast<CCobraCoord*>(coordinator)) return dynamic_cast<CCobraCoord*>(coordinator);
+	if (dynamic_cast<CCopperheadCoord*>(coordinator)) return dynamic_cast<CCopperheadCoord*>(coordinator);
+	if (dynamic_cast<CMambaCoord*>(coordinator)) return dynamic_cast<CMambaCoord*>(coordinator);
+	return nullptr;
+
+}
 
 void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int amount, bool coord) //Spawns either one entity, or a flock of enemies, making the leader object in the process
 {
@@ -120,8 +129,9 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								   {
 									   if (0 == i && coord && !coordinator)
 									   {
-										   copperheads[i] = new CCopperheadCoord();
-										   coordinator = dynamic_cast<Coordinator*>(copperheads[i]);
+										   CCopperheadCoord* C = new CCopperheadCoord();
+										   copperheads[i] = C;
+										   coordinator = C;
 									   }
 									   else
 									   {
@@ -147,8 +157,9 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  {
 								  if (0 == i && coord && !coordinator)
 								  {
-									  cobras[i] = new CCobraCoord();
-									  coordinator = dynamic_cast<Coordinator*>(cobras[i]);
+									  CCobraCoord* C = new CCobraCoord;
+									  cobras[i] = C;
+									  coordinator = C;
 								  }
 								  else
 								  {
@@ -175,8 +186,9 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  {
 								  if (0 == i && coord && !coordinator)
 								  {
-									  mambas[i] = new CMambaCoord();
-									  coordinator = dynamic_cast<Coordinator*>(mambas[i]);
+									  CMambaCoord* C = new CMambaCoord;
+									  mambas[i] = C;
+									  coordinator = C;
 								  }
 								  else
 								  {
@@ -230,9 +242,11 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								 ships.push_back(moccasin);
 
 								 moccasin->SetPosition(position);
+								 boss = moccasin;
 								 break;
 	}
 	case EntityType::Stargate:
+	{
 		if (stargate)
 			return;
 		stargate = new Trigger();
@@ -242,6 +256,19 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		CVictoryMessage* msg = new CVictoryMessage;
 		dynamic_cast<Trigger*>(stargate)->Assign(msg);
 		stationaries.push_back(stargate);
+		break;
+	}
+	case EntityType::InvisTrigger:
+	{
+								InvisTrigger* trig = new InvisTrigger;
+								trig->SetPosition(position);
+								trig->SetSize({512,512});
+								CreateEntityMessage* msg = new CreateEntityMessage(trig, (EntityType)amount);
+								trig->Assign(msg);
+								stationaries.push_back(trig);
+								break;
+	}
+
 	}
 }
 
@@ -298,6 +325,10 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 
 								projectiles.push_back(missile);
 								break;
+	}
+	case EntityType::Well:
+	{
+
 	}
 	}
 }
@@ -391,7 +422,8 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 {
 	if (!entity)
 		return;
-
+	if (entity == player)
+		entity = player;
 	ClearTargeted(entity);
 	switch ((EntityType)entity->GetType())
 	{
@@ -412,6 +444,10 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		RemoveFromGroup(smallEnemies, entity);
 		RemoveFromGroup(ships, entity);
 		RemoveFromLeader(entity);
+		if (GetCoordinator() == entity)
+		{
+			coordinator = nullptr;
+		}
 		break;
 	case EntityType::Moccasin:
 		boss = nullptr;

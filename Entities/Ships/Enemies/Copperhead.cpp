@@ -4,6 +4,7 @@
 #include "../../../Message System/CreateProjectile.h"
 
 
+
 CCopperhead::CCopperhead()
 {
 	damage = 25;
@@ -34,7 +35,7 @@ SGD::Vector CCopperhead::AI(float dt)
 	m_fMissileTimer += dt;
 	//Determine rotation and dir, but NOT velocity
 
-	if (GetTarget() != nullptr)
+	if (target)
 	{
 		SGD::Vector vToTarget =
 		{
@@ -53,7 +54,7 @@ SGD::Vector CCopperhead::AI(float dt)
 		}
 		if (vToTarget.ComputeLength() <= 800 && angle < SGD::PI / 4.0f )
 		{	
-			if (GetType() == 9)
+			if (GetType() == (int)EntityType::Mamba)
 			{
 				CreateMissile();
 			}

@@ -16,9 +16,13 @@ CPlayer::CPlayer()
 	shield = maxShield;
 	shieldRegen = 500;
 	shieldDelay = 2;
-	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 0;
+	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 20;
 	laserDelay = 0.25f;
 	missileDelay = 2.0f;
+	wellDelay = 20;
+	pushDelay = 10;
+	warpDelay = 10;
+	warpSpeed = 500;
 
 	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravWellIcon.png");
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravPushIcon.png");
@@ -71,8 +75,10 @@ void CPlayer::Update(float dt)
 	if (dir != SGD::Vector{0, 0})
 		dir.Normalize();
 	 //commented out until finished implementing - was messing up standard input
-	
-	velocity = dir * speed;
+	if (warpTimer < warpDuration)
+		velocity = dir * (speed + warpSpeed);
+	else
+		velocity = dir * speed;
 	SGD::Point mousePos = input->GetMousePosition();
 	rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
 
@@ -197,7 +203,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	}
 
 	hull -= damage;
-	if (hull <= 0)
+	if (hull <= 0 && !destroying)
 	{
 		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
 		msg->QueueMessage();

@@ -11,6 +11,7 @@
 #include "../SGD Wrappers/SGD_Message.h"
 #include "LevelStates\ILevelState.h"
 #include "../Camera.h"
+#include "../SoundBox.h"
 
 class CFlyweight;
 class CEmitter;
@@ -47,6 +48,7 @@ private:
 	CEntityManager* EntityManager;
 	SGD::GraphicsManager* graphics;
 	bool m_bBossKilled = false; 
+	CSoundBox* soundBox = nullptr;
 
 
 	CEntity* player = nullptr;

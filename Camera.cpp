@@ -78,12 +78,12 @@ void CCamera::Update(float dt)
 	if (state != camState::initiallized )
 		return;
 
-	if (locked)
-	{
-		pos = target->GetPosition() - screenSize/2;
-		clamp();
-		return;
-	}
+	//if (locked)
+	//{
+	//	pos = target->GetPosition() - screenSize/2;
+	//	clamp();
+	//	return;
+	//}
 
 	SGD::Point tPos = target->GetPosition();
 	//SGD::Vector mOffset = GetOffset();
@@ -109,7 +109,7 @@ void CCamera::Update(float dt)
 	if (abs(val) <= 5.0f)
 	{
 		pos = dest;
-		locked = true;
+		//locked = true;
 	}
 	else
 	{

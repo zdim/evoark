@@ -480,11 +480,13 @@ namespace Editor
             mouse.X = e.X - offset.X;
             mouse.Y = e.Y - offset.Y;
 
-            world[selected.X, selected.Y].X = selected.X;
-            world[selected.X, selected.Y].Y = selected.Y;
-
-            listBox1.DataSource = null;
-            listBox1.DataSource = world[selected.X, selected.Y].Spawns;
+            if (collisionCheck.Checked == false)
+            {
+                world[selected.X, selected.Y].X = selected.X;
+                world[selected.X, selected.Y].Y = selected.Y;
+                listBox1.DataSource = null;
+                listBox1.DataSource = world[selected.X, selected.Y].Spawns;
+            }
 
             if (e.Button == MouseButtons.Left)
             {
@@ -674,6 +676,8 @@ namespace Editor
                 var r = getRectangle();
                 if (r.Width > 0 && r.Height > 0)
                 {
+                    if (r.X < 0) r.X = 0;
+                    if (r.Y < 0) r.Y = 0;
                     if (collisionCheck.Checked == true) collisionRects.Add(r);
                     else if (radioButtonEvent.Checked == true)
                     {
