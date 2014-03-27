@@ -236,6 +236,7 @@ namespace EvoArk_Particles_Editor
             emittorShape = 1;
             EmittorWidth.Value = 1;
             EmittorHeight.Value = 1;
+            emitterSize = new Point(1, 1);
             EmittorRadius.Visible = false;
             RadiusLabel.Visible = false;
             ResetEmittor();
@@ -246,7 +247,7 @@ namespace EvoArk_Particles_Editor
             emittorShape = 2;
             EmittorWidth.Value = 100;
             EmittorHeight.Value = 1;
-           
+            emitterSize = new Point(100, 1);
             EmittorRadius.Visible = false;
             RadiusLabel.Visible = false;
             ResetEmittor();
@@ -257,6 +258,7 @@ namespace EvoArk_Particles_Editor
             emittorShape = 3;
             EmittorWidth.Value = 100;
             EmittorHeight.Value = 100;
+            emitterSize = new Point(100, 100);
             EmittorRadius.Visible = false;
             RadiusLabel.Visible = false;
             ResetEmittor();
@@ -268,6 +270,7 @@ namespace EvoArk_Particles_Editor
 
             EmittorWidth.Value = 100;
             EmittorHeight.Value = 200;
+            emitterSize = new Point(100, 200);
             EmittorRadius.Value = (decimal)((float)EmittorWidth.Value / 2);
             EmittorRadius.Visible = true;
             RadiusLabel.Visible = true;

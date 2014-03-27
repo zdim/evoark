@@ -8,7 +8,7 @@ CShip::CShip()
 {
 	maxHull = 100;
 	hull = maxHull;
-	expT = 0;
+
 }
 
 
@@ -33,8 +33,7 @@ void CShip::TakeDamage(int damage, bool collision)
 	hull -= damage;
 	if (hull <= 0)
 	{
-		
-		if (expT > expD + 1)
+	
 		SelfDestruct();
 	}
 }
