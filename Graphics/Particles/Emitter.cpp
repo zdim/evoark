@@ -22,7 +22,7 @@ CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, int s, SGD::Point ePosi
 	m_fTimeFromLastSpawn = 0;
 	m_bLoop = emway;
 	m_fEmitTime = emitTime;
-
+	m_fSavedEmitTime = m_fEmitTime;
 }
 
 CEmitter::~CEmitter()
@@ -216,4 +216,13 @@ CParticle CEmitter::CreateParticle()
 
 	return tempParticle;
 
+}
+
+
+void CEmitter::Reset()
+{
+	if (m_bLoop == false)
+	{
+		m_fEmitTime = m_fSavedEmitTime;
+	}
 }

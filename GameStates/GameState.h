@@ -34,6 +34,7 @@ public:
 	CCamera* GetCam() {return cam;}
 
 	SGD::Size GetWorldSize() { return SGD::Size{ float(m_nNumQuadsWidth * m_nQuadWidth), float(m_nNumQuadsHeight * m_nQuadHeight) }; }
+	bool GetBossStatus() override { return m_bBossKilled; }
 
 private:
 	CTestLevelState();
@@ -45,6 +46,8 @@ private:
 	SGD::HTexture backgroundBlack;
 	CEntityManager* EntityManager;
 	SGD::GraphicsManager* graphics;
+	bool m_bBossKilled = false; 
+
 
 	CEntity* player = nullptr;
 	CCamera* cam;

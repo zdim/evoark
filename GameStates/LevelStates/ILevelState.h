@@ -11,5 +11,6 @@ public:
 	virtual IEntity* GetPlayer() = 0;
 	virtual CCamera* GetCam() = 0;
 	virtual SGD::Size GetWorldSize() = 0;
+	virtual bool GetBossStatus() = 0; 
 };
 
