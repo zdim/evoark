@@ -200,6 +200,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	{
 		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
 		msg->QueueMessage();
+		SelfDestruct();
 	}
 }
 //
