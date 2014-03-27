@@ -15,7 +15,7 @@ enum class EntityType {
 	Coral, Moccasin,	//Big Ships
 	BaseModule, ShieldModule, EngineModule, LaserModule,  //Basic Modules
 	MissileModule, WellModule, PushModule, WarpModule,	//Ability Modules
-	Trigger, Stargate, //LevelEvents
+	Trigger, InvisTrigger, Stargate, //LevelEvents
 	Barrier, Planet, //Stationary Collidables
 	Asteroid,	//Mobile Collidables
 	Count

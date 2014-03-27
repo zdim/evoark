@@ -16,9 +16,13 @@ CPlayer::CPlayer()
 	shield = maxShield;
 	shieldRegen = 500;
 	shieldDelay = 2;
-	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 0;
+	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 20;
 	laserDelay = 0.25f;
 	missileDelay = 2.0f;
+	wellDelay = 20;
+	pushDelay = 10;
+	warpDelay = 10;
+	warpSpeed = 500;
 
 	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravWellIcon.png");
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravPushIcon.png");
