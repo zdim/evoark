@@ -1,6 +1,6 @@
 //
 #include "Missile.h"
-
+#include "../../Graphics/Particles/ParticleSystem.h"
 
 CMissile::CMissile()
 {
@@ -34,3 +34,17 @@ void CMissile::SetTarget(CShip* t)
 //
 //	}
 //}
+
+void CMissile::Update(float dt)
+{
+	CParticleSystem::GetInstance()->GetParticleEffect(2)->SetEmitterPosition(position);
+	CParticleSystem::GetInstance()->GetParticleEffect(2)->Update(dt);
+	CEntity::Update(dt);
+}
+
+void  CMissile::Render()
+{
+	CParticleSystem::GetInstance()->GetParticleEffect(2)->Render();
+	CEntity::Render();
+
+}

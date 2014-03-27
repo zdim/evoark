@@ -232,7 +232,7 @@ void	CTestLevelState::Generate()
 			}
 			else
 			{
-				
+				EntityManager->Spawn(EntityType::InvisTrigger, { events[i].area.left, events[i].area.top }, (unsigned int)EntityType::Coral);
 			}
 		}
 	}

@@ -2,11 +2,13 @@
 #include "Ship.h"
 #include <algorithm>
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../Graphics/Particles/ParticleSystem.h"
 
 CShip::CShip()
 {
 	maxHull = 100;
 	hull = maxHull;
+	expT = 0;
 }
 
 
@@ -31,10 +33,14 @@ void CShip::TakeDamage(int damage, bool collision)
 	hull -= damage;
 	if (hull <= 0)
 	{
-		//Destroy thing
+		
+		if (expT > expD + 1)
 		SelfDestruct();
 	}
 }
+
+
+
 
 void CShip::HandleCollision(IEntity* other)
 {
@@ -54,14 +60,6 @@ void CShip::HandleCollision(IEntity* other)
 	}
 }
 
-//void CShip::Render()
-//{
-//	SGD::Color color = {};
-//	if (hull < maxHull)
-//		color = SGD::Color{ 255, 0, 0 };
-//	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
-//	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
-//}
 
 void CShip::AddGravity(SGD::Vector grav)
 {

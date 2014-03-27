@@ -16,6 +16,7 @@ public:
 	int GetType() override { return (int)EntityType::Cobra; }
 	void Update(float dt);
 	void AddGrav(SGD::Vector);
+	void Warp();
 };
 
 class CCobraCoord : public CCobra, public Coordinator

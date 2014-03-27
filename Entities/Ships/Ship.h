@@ -7,15 +7,14 @@ protected:
 	int hull = 100;
 	int maxHull = 100;
 	float speed = 200;
+
 public:
 	CShip();
 	virtual ~CShip();
 
+
 	virtual void TakeDamage(int damage, bool collision = false);
 	void HandleCollision(IEntity* other) override;
-
-	//Comment this out later?
-	//void Render() override;
 
 
 	virtual int getHull() {return hull;}

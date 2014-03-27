@@ -48,8 +48,9 @@ void CPlayer::Update(float dt)
 	warpTimer += dt;
 
 	CParticleSystem::GetInstance()->GetParticleEffect(2)->SetEmitterPosition(position - size / 2 + CCamera::GetInstance()->GetOffset());
+	CParticleSystem::GetInstance()->GetParticleEffect(1)->SetEmitterPosition(position);
 	CParticleSystem::GetInstance()->GetParticleEffect(2)->Update(dt);
-
+	CParticleSystem::GetInstance()->GetParticleEffect(1)->Update(dt);
 
 
 
@@ -211,14 +212,14 @@ void CPlayer::TakeDamage(int damage, bool collision)
 		SelfDestruct();
 	}
 }
-//
-//void CPlayer::Render()
-//{
-//	if (shield > 0)
-//		CParticleSystem::GetInstance()->GetParticleEffect(2)->Render();
-//	SGD::Color color = {};
-//	if (shield < maxShield)
-//		color = SGD::Color{ 255, 0, 0 };
-//	float scale = max(size.width / imageSize.width, size.height / imageSize.height);
-//	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
-//}
+
+void CPlayer::Render()
+{
+	if (shield > 0)
+		CParticleSystem::GetInstance()->GetParticleEffect(1)->Render();
+	SGD::Color color = {};
+	if (shield < maxShield)
+		color = SGD::Color{ 255, 0, 0 };
+	float scale = max(size.width / imageSize.width, size.height / imageSize.height);
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
+}
