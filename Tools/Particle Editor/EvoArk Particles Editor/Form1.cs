@@ -144,6 +144,7 @@ namespace EvoArk_Particles_Editor
                 SaveFileDialog save = new SaveFileDialog();
                 save.DefaultExt = "xml";
                 save.Filter = "Xml Files (*.xml)|*.xml|All Files (*.*)|*.*";
+                save.InitialDirectory = System.IO.Path.GetFullPath(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\..\\Resources\\XML\\ParticleEffects");
                 save.FilterIndex = 1;
 
                 if (DialogResult.OK == save.ShowDialog())
