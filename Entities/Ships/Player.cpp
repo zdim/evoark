@@ -220,6 +220,6 @@ void CPlayer::Render()
 	SGD::Color color = {};
 	if (shield < maxShield)
 		color = SGD::Color{ 255, 0, 0 };
-	float scale = max(size.width / imageSize.width, size.height / imageSize.height);
+	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
 	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
 }

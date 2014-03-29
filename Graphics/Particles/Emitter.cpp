@@ -132,6 +132,7 @@ void CEmitter::Update(float deltaTime)
 		// Partical Scale Change 
 		float curWidth = particleData->GetEndScale().width * fLifeCycle * (particleData->GetStartScale().width - particleData->GetEndScale().width);
 		float curHeight = particleData->GetEndScale().height * fLifeCycle * (particleData->GetStartScale().height - particleData->GetEndScale().height);
+
 		SGD::Size curSize{ curWidth, curHeight };
 
 		if (particleData->GetStartScale() != particleData->GetEndScale())
@@ -184,6 +185,8 @@ CParticle CEmitter::CreateParticle()
 	SGD::Point ppositionn{ emitterPosition.x + (rand() % (int)emitterSize.width),
 		emitterPosition.y + (rand() % (int)emitterSize.height) };
 
+	SGD::Size tScale = particleData->GetStartScale();
+
 
 	if (shape == 3 || shape == 4)
 		ppositionn = { emitterPosition.x + (rand() % (int)emitterSize.width),
@@ -212,7 +215,7 @@ CParticle CEmitter::CreateParticle()
 
 	}
 
-	CParticle tempParticle(tempColor, ppositionn, randLife, randSpeed, particleData->GetStartScale(), 0);
+	CParticle tempParticle(tempColor, ppositionn, randLife, randSpeed, tScale, 0);
 
 	return tempParticle;
 

@@ -1,7 +1,6 @@
 #pragma once
-#define WINDOWS_LEAN_AND_MEAN
+
 #include "Flyweight.h"
-#include <Windows.h>
 #include "../../SGD Wrappers/SGD_Color.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 

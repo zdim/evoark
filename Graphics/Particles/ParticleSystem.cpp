@@ -160,6 +160,7 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	double m_fSpeedMinY;
 	double m_fSpeedMaxX;
 	double m_fSpeedMaxY;
+
 	pFlyweight->Attribute("SpeedMinX", &m_fSpeedMinX);
 	pFlyweight->Attribute("SpeedMinY", &m_fSpeedMinY);
 	pFlyweight->Attribute("SpeedMaxX", &m_fSpeedMaxX);
