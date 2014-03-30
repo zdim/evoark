@@ -89,16 +89,27 @@ bool Game::Initialize( int width, int height )
 
 	m_pParticleSystem->Init();
 
-	ifstream fin("options.txt");
-	if (fin.is_open())
+	TiXmlDocument doc("optionsSave.xml");
+	if (doc.LoadFile())
 	{
-		string in;
-		getline(fin, in);
-		//m_nVolMusic = atoi(in.c_str());
-		getline(fin, in);
-		//m_nVolSound = atoi(in.c_str());
-		getline(fin, in);
+		TiXmlElement* root = doc.RootElement();
+		if (root)
+		{
+			int sfxVolume, musicVolume;
+
+			root->Attribute("sfx", &sfxVolume);
+			root->Attribute("music", &musicVolume);
+			std::string fullscrn;
+			fullscrn = root->Attribute("fullscreen");
+			if (fullscrn == "true") m_bWindowed = false;
+			else m_bWindowed = true;
+
+			m_pAudio->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_SOUND_EFFECTS, sfxVolume * 10);
+			m_pAudio->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_MUSIC, musicVolume * 10);
+		}
 	}
+
+	m_pGraphics->Resize(SGD::Size{ (float)m_nScreenWidth, (float)m_nScreenHeight }, m_bWindowed);
 
 //	m_hSfxMusic = m_pAudio->LoadAudio("resource/audio/JDS_backgroundMusic.xwm");
 //	m_pAudio->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_MUSIC, m_nVolMusic);
