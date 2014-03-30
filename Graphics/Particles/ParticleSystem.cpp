@@ -9,6 +9,7 @@ CParticleSystem* CParticleSystem::s_Instance;
 CParticleSystem::CParticleSystem()
 {
 	numEmitters = 0;
+	numData = 0;
 }
 
 
@@ -43,8 +44,10 @@ void CParticleSystem::Init()
 {
 	std::string efName = "3.xml";
 	LoadEffect(efName);
-	//std::string efName2 = "4.xml";
-	//LoadEffect(efName2);
+	std::string efName2 = "4.xml";
+	LoadEffect(efName2);
+	std::string efName3 = "5.xml";
+	LoadEffect(efName3);
 
 	for (int i = 1; i < numEmitters + 1; i++)
 	particleEffect[i]->Initialize();
@@ -192,7 +195,7 @@ void CParticleSystem::LoadEffect(std::string effectName)
 
 	delete[] imageFile;
 
-	CFlyweight* eData = new CFlyweight(ParticleImage, m_sStartScale, m_sEndScale,
+	CFlyweight *eData =  new CFlyweight(ParticleImage, m_sStartScale, m_sEndScale,
 		ParticleImageOffset,
 	startA, startR, startG, startB,
 	endA, endR, endG, endB,
@@ -204,8 +207,9 @@ void CParticleSystem::LoadEffect(std::string effectName)
 
 	numEmitters++;
 	
+	Flyweights.push_back(eData);
 	particleEffect[numEmitters] = new CEmitter(eData, emitterSize, m_nShape, emitterPosition, m_nNumParticles, m_fSpawnRate, m_fTimeFromLastSpawn, m_bEmitWay, m_fEmitTime);
-	
+
 
 }
 
