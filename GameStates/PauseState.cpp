@@ -1,4 +1,4 @@
-
+#include "OptionsState.h"
 #include "PauseState.h"
 #include "Game.h"
 #include "MainMenuState.h"
@@ -30,6 +30,9 @@ bool CPauseState::Input()
 		Game::GetInstance()->PopState();
 		Game::GetInstance()->PopState();
 		return true;
+	case menuReturn::Options:
+		Game::GetInstance()->PushState(COptionsState::GetInstance());
+		return true;
 	case menuReturn::MainMenu:
 		Game::GetInstance()->PopState();
 		Game::GetInstance()->PopState();
@@ -58,6 +61,7 @@ void CPauseState::Enter()
 	buttons[menuReturn::Continue] = "Continue";
 	buttons[menuReturn::Reload] = "[Reload]";
 	buttons[menuReturn::MainMenu] = "Main Menu";
+	buttons[menuReturn::Options] = "Options";
 	menu = new CMenu(&Game::GetInstance()->Font, buttons, "Paused");
 }
 

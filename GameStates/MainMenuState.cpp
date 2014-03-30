@@ -1,6 +1,8 @@
 
 #include "MainMenuState.h"
 #include "GameplayState.h"
+#include "OptionsState.h"
+#include "CreditsState.h"
 
 CMainMenuState::CMainMenuState()
 {
@@ -25,6 +27,12 @@ bool CMainMenuState::Input()
 		Game::GetInstance()->PopState();
 		Game::GetInstance()->PushState(CGameplayState::GetInstance());
 		return true;
+	case menuReturn::options:
+		Game::GetInstance()->PushState(COptionsState::GetInstance());
+		return true;
+	case menuReturn::credits:
+		//Game::GetInstance()->PushState(CCreditsState::GetInstance());
+		return true;
 	case menuReturn::exit:
 		Game::GetInstance()->PopState();
 		return false;
@@ -48,8 +56,10 @@ void CMainMenuState::Enter()
 	std::vector<std::string> buttons;
 	buttons.resize(menuReturn::count);
 	buttons[menuReturn::play] = "Play";
+	buttons[menuReturn::options] = "Options";
+	buttons[menuReturn::credits] = "Credits";
 	buttons[menuReturn::exit] = "Exit";
-	menu = new CMenu(&Game::GetInstance()->Font, buttons, "EvoArk!!", true);
+	menu = new CMenu(&Game::GetInstance()->Font, buttons, "EvoArk", true);
 }
 
 void CMainMenuState::Exit()

@@ -78,6 +78,9 @@ public:
 
 	ILevelState* GetLevelState();
 
+	bool GetFullscreen() { return !m_bWindowed; }
+	void SetFullscreen(bool _fullscreen) { m_bWindowed = !_fullscreen; }
+
 	/**********************************************************/
 	// Game Font
 	Fnt				Font;
