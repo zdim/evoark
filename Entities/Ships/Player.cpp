@@ -47,9 +47,9 @@ void CPlayer::Update(float dt)
 	pushTimer += dt;
 	warpTimer += dt;
 
-	CParticleSystem::GetInstance()->GetParticleEffect(2)->SetEmitterPosition(position - size / 2 + CCamera::GetInstance()->GetOffset());
+
 	CParticleSystem::GetInstance()->GetParticleEffect(1)->SetEmitterPosition(position);
-	CParticleSystem::GetInstance()->GetParticleEffect(2)->Update(dt);
+
 	CParticleSystem::GetInstance()->GetParticleEffect(1)->Update(dt);
 
 

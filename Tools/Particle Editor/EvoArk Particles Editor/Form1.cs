@@ -688,6 +688,28 @@ namespace EvoArk_Particles_Editor
             m_D3D.Resize(DirectXPanel, DirectXPanel.ClientSize.Width, DirectXPanel.ClientSize.Height, false);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDlg = new ColorDialog();
+            if (colorDlg.ShowDialog() == DialogResult.OK)
+            {
+               StartColorR.Value = colorDlg.Color.R ;
+               StartColorG.Value = colorDlg.Color.G;
+               StartColorB.Value = colorDlg.Color.B;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDlg = new ColorDialog();
+            if (colorDlg.ShowDialog() == DialogResult.OK)
+            {
+               EndColorR.Value = colorDlg.Color.R;
+               EndColorG.Value = colorDlg.Color.G;
+               EndColorB.Value = colorDlg.Color.B;
+            }
+        }
+
        
         
 

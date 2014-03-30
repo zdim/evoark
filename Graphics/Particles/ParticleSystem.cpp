@@ -43,8 +43,8 @@ void CParticleSystem::Init()
 {
 	std::string efName = "3.xml";
 	LoadEffect(efName);
-	std::string efName2 = "4.xml";
-	LoadEffect(efName2);
+	//std::string efName2 = "4.xml";
+	//LoadEffect(efName2);
 
 	for (int i = 1; i < numEmitters + 1; i++)
 	particleEffect[i]->Initialize();
@@ -76,9 +76,9 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	doc.LoadFile(effectFile);
 	TiXmlElement* pRoot = doc.RootElement();
 	
-	int trash;
+	//int trash;
 	TiXmlElement* pEmittor = pRoot->FirstChildElement();
-	pEmittor->Attribute("Emittor", &trash);
+	//pEmittor->Attribute("Emittor", &trash);
 
 	int m_nNumParticles;
 	pEmittor->Attribute("NumOfParticles", &m_nNumParticles);
