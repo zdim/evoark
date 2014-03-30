@@ -20,9 +20,13 @@ COptionsState::~COptionsState()
 
 bool COptionsState::Input()
 {
+	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Escape) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 1))
+	{
+		Game::GetInstance()->PopState();
+		return true;
+	}
 
-
-	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Right))
+	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Right) || SGD::InputManager::GetInstance()->IsDPadPressed(0, SGD::DPad::Right))
 	{
 		if (menu->GetCursor() == menuReturn::sfx)
 		{
@@ -40,7 +44,7 @@ bool COptionsState::Input()
 		}
 	}
 
-	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::LeftArrow))
+	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::LeftArrow) || SGD::InputManager::GetInstance()->IsDPadPressed(0, SGD::DPad::Left))
 	{
 		if (menu->GetCursor() == menuReturn::sfx)
 		{

@@ -94,26 +94,28 @@ CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _labe
 
 int CMenu::Input()
 {
+	
 	if (buttons.empty())
 		return -2;	//Uninitiallized
 
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
 
-	if (input->IsKeyPressed(SGD::Key::Down)) // || input->controllerstuff
+	if (input->IsKeyPressed(SGD::Key::Down) || input->IsDPadPressed(0, SGD::DPad::Down)) // || input->controllerstuff
 	{
 		if (cursor >= (int)buttons.size() - 1)
 			cursor = 0;
 		else
 			cursor++;
+		
 	}
-	if (input->IsKeyPressed(SGD::Key::Up)) // || input->controllerstuff
+	if (input->IsKeyPressed(SGD::Key::Up) || input->IsDPadPressed(0, SGD::DPad::Up)) // || input->controllerstuff
 	{
 		if (cursor <= 0)
 			cursor = buttons.size() - 1;
 		else
 			cursor--;
 	}
-	if (input->IsKeyPressed(SGD::Key::Enter)) // || input->controllerstuff
+	if (input->IsKeyPressed(SGD::Key::Enter) || input->IsButtonPressed(0, 0))  // || input->controllerstuff
 	{
 		return cursor;
 	}

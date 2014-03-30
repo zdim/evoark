@@ -2,7 +2,7 @@
 #include "PauseState.h"
 #include "Game.h"
 #include "MainMenuState.h"
-
+#include "../SGD Wrappers/SGD_InputManager.h"
 CPauseState::CPauseState()
 {
 }
@@ -20,6 +20,11 @@ CPauseState* CPauseState::GetInstance()
 
 bool CPauseState::Input()
 {
+	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Escape) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 1))
+	{
+		Game::GetInstance()->PopState();
+		return true;
+	}
 	int ret = menu->Input();
 	switch (ret)
 	{
