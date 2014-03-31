@@ -43,11 +43,9 @@ void	CTestLevelState::Enter(void)
 {
 	srand((unsigned int)time(nullptr));
 	graphics = SGD::GraphicsManager::GetInstance();
-	//BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
 
 	objArrow = graphics->LoadTexture("Resources/Graphics/Arrow.png");
 	backgroundBlack = graphics->LoadTexture("Resources/Graphics/backgroundBlack3.png", { 50, 255, 255, 255 });
-
 
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
@@ -56,22 +54,21 @@ void	CTestLevelState::Enter(void)
 
 	Generate();
 	//EntityManager->Spawn(EntityType::Stargate, {200,200});
-
+	if (BackgroundImage == SGD::INVALID_HANDLE)
+		BackgroundImage = graphics->LoadTexture("Resources/Graphics/starfield.jpg");
 	player = EntityManager->GetPlayer();
 	//Spawn Coral near the player
 	//EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
 	//Spawn Moccasin near the player
-	EntityManager->Spawn(EntityType::Moccasin, player->GetPosition() + SGD::Vector{ 200,200 }, 4);
-	EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
+	//EntityManager->Spawn(EntityType::Moccasin, player->GetPosition() + SGD::Vector{ 200,200 }, 4);
+	//EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
 
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 	cam = CCamera::GetInstance();
 	cam->Initiallize(player, SGD::Size{(float)m_nScreenWidth,(float)m_nScreenHeight});
 
-
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
-	
  } 
 
 void	CTestLevelState::Exit(void)
@@ -172,10 +169,13 @@ void	CTestLevelState::Generate()
 	bool loadSuccess = false;
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
-	case Level::TestStatic:
-		loadSuccess = LoadXMLLevel("Resources/XML/World/staticTest2.xml");
+	case Level::Gen1:
+		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		break;
-	case Level::TestGen:
+	case Level::Gen2:
+		loadSuccess = LoadXMLLevel("Resources/XML/World/levelTwo.xml");
+		break;
+	case Level::Gen3:
 		loadSuccess = LoadXMLLevel("Resources/XML/World/testWorld2.xml");
 		break;
 	}
@@ -404,7 +404,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 		switch (lMsg->GetProjType())
 		{
 		case EntityType::Laser:
-			CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser);
+			CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser, false);
 			break;
 			
 		default:
@@ -415,7 +415,11 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::DestroyEntity:
 	{
 									 const DestroyEntityMessage* dMsg = dynamic_cast<const DestroyEntityMessage*>(msg);
-
+									 if (dMsg->GetEntity()->GetType() >= 7 && dMsg->GetEntity()->GetType() <= 12)
+									 {
+										 if (dMsg->GetEntity()->GetPosition().IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
+											dynamic_cast<CPlayer*>(CTestLevelState::GetInstance()->player)->AddExp(dynamic_cast<CEnemy*>(dMsg->GetEntity())->GetExpValue());
+									 }
 									 CTestLevelState::GetInstance()->EntityManager->Destroy(dMsg->GetEntity());
 									 break;
 	}
@@ -434,12 +438,13 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	 {
 							   if (GetInstance()->m_bBossKilled == true)
 							   {
-								   if (CGameplayState::GetInstance()->GetLevel() == Level::TestStatic)
-									   CGameplayState::GetInstance()->SetLevel(Level::TestGen);
-								   else if (CGameplayState::GetInstance()->GetLevel() == Level::TestGen)
-									   CGameplayState::GetInstance()->SetLevel(Level::TestStatic);
+								   if (CGameplayState::GetInstance()->GetLevel() == Level::Gen1)
+									   CGameplayState::GetInstance()->SetLevel(Level::Gen2);
+								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen2)
+									   CGameplayState::GetInstance()->SetLevel(Level::Gen3);
+
 									CGameOverState::GetInstance()->SetWin(true);
-								   Game::GetInstance()->PushState(CGameOverState::GetInstance());
+									Game::GetInstance()->PushState(CGameOverState::GetInstance());
 								   
 								   break;
 							   }
@@ -467,7 +472,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	SGD::Rectangle hull = {
 		m_nScreenWidth * .33f,
 		m_nScreenHeight * .92f,
-		m_nScreenWidth * .66f * _player->getHull() / _player->getMaxHull(),
+		m_nScreenWidth * .33f * _player->getHull() / _player->getMaxHull() + m_nScreenWidth * .33f,
 		m_nScreenHeight * .95f
 	};
 
@@ -489,14 +494,14 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	SGD::Rectangle expBox = {
 		m_nScreenWidth * .25f,
 		m_nScreenHeight * .97f,
-		m_nScreenWidth * .74f,
+		m_nScreenWidth * .75f,
 		m_nScreenHeight * .98f
 	};
 
 	SGD::Rectangle exp = {
 		m_nScreenWidth * .25f,
-		m_nScreenWidth * .97f,
-		m_nScreenWidth * .74f * _player->GetExp() / _player->GetReqExp(),
+		m_nScreenHeight * .97f,
+		m_nScreenWidth * .50f * _player->GetExp() / _player->GetReqExp() + m_nScreenWidth * .25f,
 		m_nScreenHeight * .98f
 	};
 
@@ -626,4 +631,8 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 		graphics->DrawRectangle(warpCD, SGD::Color{ 150, 200, 0, 0 });
 	graphics->DrawRectangle(warpBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
 
+	// draw level
+	std::ostringstream levelString;
+	levelString << _player->GetLevel();
+	Game::GetInstance()->Font.WriteCenter(SGD::Rectangle{ m_nScreenWidth * .26f, m_nScreenHeight * .90f, m_nScreenWidth * .31f, m_nScreenHeight * .97f }, levelString.str().c_str());
 }

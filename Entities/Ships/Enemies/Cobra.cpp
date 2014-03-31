@@ -8,6 +8,7 @@ CCobra::CCobra()
 	warpTimer = warpDelay;
 	warpDuration = 1;
 	warpSpeed = 300;
+	expValue = 20;
 }
 
 

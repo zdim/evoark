@@ -4,6 +4,7 @@
 
 CMoccasin::CMoccasin()
 {
+	expValue = 100;
 	modulePositions.push_back({ -40, -40 });
 	modulePositions.push_back({ 40, -40 });
 	modulePositions.push_back({ 40, 40 });

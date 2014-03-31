@@ -9,6 +9,7 @@ class CPlayer :
 
 	unsigned int exp;
 	unsigned int expRequired;
+	unsigned int level;
 	unsigned int perks;
 	unsigned int laserLevel;
 	unsigned int missileLevel;
@@ -52,6 +53,7 @@ public:
 	int GetMaxShield() { return maxShield; }
 	int GetExp() { return this->exp; }
 	int GetReqExp() { return expRequired; }
+	int GetLevel() { return level; }
 	float GetWellDelay() { return wellDelay; }
 	float GetPushDelay() { return pushDelay; }
 	float GetWarpDelay() { return warpDelay; }
@@ -59,6 +61,8 @@ public:
 	float GetPushTimer() { return pushTimer; }
 	float GetWarpTimer() { return warpTimer; }
 	bool GetArrowsOn() { return arrowsOn; }
+
+	void AddExp(int _exp);
 
 	// get textures for icons
 	SGD::HTexture GetWellIcon() { return wellIcon; }
