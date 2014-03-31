@@ -404,7 +404,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 		switch (lMsg->GetProjType())
 		{
 		case EntityType::Laser:
-			CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser);
+			CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser, false);
 			break;
 			
 		default:

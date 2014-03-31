@@ -1,4 +1,4 @@
-
+#include "../SoundBox.h"
 #include "MainMenuState.h"
 #include "GameplayState.h"
 #include "OptionsState.h"
@@ -60,6 +60,8 @@ void CMainMenuState::Enter()
 	buttons[menuReturn::credits] = "Credits";
 	buttons[menuReturn::exit] = "Exit";
 	menu = new CMenu(&Game::GetInstance()->Font, buttons, "EvoArk", true);
+	CSoundBox::GetInstance()->Enter();
+	CSoundBox::GetInstance()->Play(CSoundBox::sounds::cream, true);
 }
 
 void CMainMenuState::Exit()

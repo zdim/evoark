@@ -2,7 +2,7 @@
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../SGD Wrappers/SGD_AudioManager.h"
 #include "OptionsState.h"
-
+#include <sstream>
 
 COptionsState::COptionsState()
 {
@@ -30,8 +30,8 @@ bool COptionsState::Input()
 	{
 		if (menu->GetCursor() == menuReturn::sfx)
 		{
-			soundBox->Play(CSoundBox::sounds::playerLaser);
-
+			soundBox->Play(CSoundBox::sounds::playerLaser, false);
+			if (sfxVolume < 10)
 			{
 				sfxVolume++;
 				SGD::AudioManager::GetInstance()->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_SOUND_EFFECTS, sfxVolume * 10);
@@ -40,7 +40,7 @@ bool COptionsState::Input()
 		else if (menu->GetCursor() == menuReturn::music && musicVolume < 10)
 		{
 			musicVolume++;
-			SGD::AudioManager::GetInstance()->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_MUSIC, sfxVolume * 10);
+			SGD::AudioManager::GetInstance()->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_MUSIC, musicVolume * 10);
 		}
 	}
 
@@ -48,7 +48,7 @@ bool COptionsState::Input()
 	{
 		if (menu->GetCursor() == menuReturn::sfx)
 		{
-			soundBox->Play(CSoundBox::sounds::playerLaser);
+			soundBox->Play(CSoundBox::sounds::playerLaser, false);
 
 			if (sfxVolume > 0)
 			{
@@ -59,7 +59,7 @@ bool COptionsState::Input()
 		else if (menu->GetCursor() == menuReturn::music && musicVolume > 0)
 		{
 			musicVolume--;
-			SGD::AudioManager::GetInstance()->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_MUSIC, sfxVolume * 10);
+			SGD::AudioManager::GetInstance()->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_MUSIC, musicVolume * 10);
 		}
 	}
 
@@ -88,6 +88,14 @@ void COptionsState::Update(float dt)
 void COptionsState::Render()
 {
 	menu->Render();
+
+	std::ostringstream sfxString;
+	sfxString << sfxVolume;
+	Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .6f, Game::GetInstance()->GetScreenHeight() * .39f }, sfxString.str().c_str());
+	std::ostringstream musString;
+	musString << musicVolume;
+	Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .6f, Game::GetInstance()->GetScreenHeight() * .46f }, musString.str().c_str());
+
 }
 
 void COptionsState::Enter()
@@ -100,7 +108,7 @@ void COptionsState::Enter()
 	buttons[menuReturn::back] = "Back";
 	menu = new CMenu(&Game::GetInstance()->Font, buttons, "Options", true);
 	soundBox = CSoundBox::GetInstance();
-	soundBox->Enter();
+	//soundBox->Enter();
 
 	TiXmlDocument doc("optionsSave.xml");
 	if (doc.LoadFile() == false)

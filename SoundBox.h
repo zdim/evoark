@@ -7,14 +7,16 @@ class CSoundBox
 
 	SGD::AudioManager* audio;
 	SGD::HAudio playerLaserSFX = SGD::INVALID_HANDLE;
+
+	SGD::HAudio creamMusic = SGD::INVALID_HANDLE;
 public:
-	enum sounds { playerLaser, };
+	enum sounds { playerLaser, cream, };
 
 	static CSoundBox* GetInstance();
 	void Enter();
 	void Exit();
 
-	void Play(int _soundEnum);
+	void Play(int _soundEnum, bool _loop);
 
 	CSoundBox();
 	~CSoundBox();
