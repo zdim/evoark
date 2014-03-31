@@ -4,7 +4,7 @@
 //#include "../Entities/Ships/Player.h"
 //#include "GameState.h"
 
-enum class Level { Tutorial, Gen1, Gen2, Waves, Final, LoadedLevel, TestStatic, TestGen };
+enum class Level { Tutorial, Gen1, Gen2, Gen3, Waves, Final, LoadedLevel, TestStatic, TestGen };
 struct playerData
 {
 	unsigned int exp;
@@ -27,7 +27,7 @@ struct saveData
 {
 	playerData playerStat;
 	waveData waveStat;
-	Level currLevel = Level::TestStatic;
+	Level currLevel = Level::Gen1;
 };
 
 class CGameplayState : public IGameState

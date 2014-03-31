@@ -43,11 +43,9 @@ void	CTestLevelState::Enter(void)
 {
 	srand((unsigned int)time(nullptr));
 	graphics = SGD::GraphicsManager::GetInstance();
-	//BackgroundImage = graphics->LoadTexture("Resources/Graphics/backgroundTmp.png");
 
 	objArrow = graphics->LoadTexture("Resources/Graphics/Arrow.png");
 	backgroundBlack = graphics->LoadTexture("Resources/Graphics/backgroundBlack3.png", { 50, 255, 255, 255 });
-
 
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
@@ -56,22 +54,21 @@ void	CTestLevelState::Enter(void)
 
 	Generate();
 	//EntityManager->Spawn(EntityType::Stargate, {200,200});
-
+	if (BackgroundImage == SGD::INVALID_HANDLE)
+		BackgroundImage = graphics->LoadTexture("Resources/Graphics/starfield.jpg");
 	player = EntityManager->GetPlayer();
 	//Spawn Coral near the player
 	//EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
 	//Spawn Moccasin near the player
-	EntityManager->Spawn(EntityType::Moccasin, player->GetPosition() + SGD::Vector{ 200,200 }, 4);
-	EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
+	//EntityManager->Spawn(EntityType::Moccasin, player->GetPosition() + SGD::Vector{ 200,200 }, 4);
+	//EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
 
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 	cam = CCamera::GetInstance();
 	cam->Initiallize(player, SGD::Size{(float)m_nScreenWidth,(float)m_nScreenHeight});
 
-
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
-	
  } 
 
 void	CTestLevelState::Exit(void)
@@ -172,10 +169,13 @@ void	CTestLevelState::Generate()
 	bool loadSuccess = false;
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
-	case Level::TestStatic:
-		loadSuccess = LoadXMLLevel("Resources/XML/World/staticTest2.xml");
+	case Level::Gen1:
+		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		break;
-	case Level::TestGen:
+	case Level::Gen2:
+		loadSuccess = LoadXMLLevel("Resources/XML/World/levelTwo.xml");
+		break;
+	case Level::Gen3:
 		loadSuccess = LoadXMLLevel("Resources/XML/World/testWorld2.xml");
 		break;
 	}
@@ -434,12 +434,13 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	 {
 							   if (GetInstance()->m_bBossKilled == true)
 							   {
-								   if (CGameplayState::GetInstance()->GetLevel() == Level::TestStatic)
-									   CGameplayState::GetInstance()->SetLevel(Level::TestGen);
-								   else if (CGameplayState::GetInstance()->GetLevel() == Level::TestGen)
-									   CGameplayState::GetInstance()->SetLevel(Level::TestStatic);
+								   if (CGameplayState::GetInstance()->GetLevel() == Level::Gen1)
+									   CGameplayState::GetInstance()->SetLevel(Level::Gen2);
+								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen2)
+									   CGameplayState::GetInstance()->SetLevel(Level::Gen3);
+
 									CGameOverState::GetInstance()->SetWin(true);
-								   Game::GetInstance()->PushState(CGameOverState::GetInstance());
+									Game::GetInstance()->PushState(CGameOverState::GetInstance());
 								   
 								   break;
 							   }
