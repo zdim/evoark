@@ -4,6 +4,7 @@
 #include "../../EntityManager.h"
 CCoral::CCoral()
 {
+	expValue = 50;
 	modules.resize(count);
 	modules[engine] = new CEngine();
 	modules[cockpit] = new CModule();

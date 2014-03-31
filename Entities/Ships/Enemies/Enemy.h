@@ -6,6 +6,7 @@ class CEnemy :
 	public CShip, public Listener
 {
 protected:
+	int expValue = 0;
 	float turnRate;
 	CShip* target = nullptr;
 public:
@@ -18,5 +19,8 @@ public:
 	void DetectShip(CShip* other);
 	void Update(float dt) override;
 
+	virtual void TakeDamage(int damage, bool collision = false);
 	void HandleEvent(CCustomEvent* e) override;
+
+	int GetExpValue() { return expValue; }
 };

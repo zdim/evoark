@@ -415,7 +415,11 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::DestroyEntity:
 	{
 									 const DestroyEntityMessage* dMsg = dynamic_cast<const DestroyEntityMessage*>(msg);
-
+									 if (dMsg->GetEntity()->GetType() >= 7 && dMsg->GetEntity()->GetType() <= 12)
+									 {
+										 if (dMsg->GetEntity()->GetPosition().IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
+											dynamic_cast<CPlayer*>(CTestLevelState::GetInstance()->player)->AddExp(dynamic_cast<CEnemy*>(dMsg->GetEntity())->GetExpValue());
+									 }
 									 CTestLevelState::GetInstance()->EntityManager->Destroy(dMsg->GetEntity());
 									 break;
 	}
@@ -468,7 +472,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	SGD::Rectangle hull = {
 		m_nScreenWidth * .33f,
 		m_nScreenHeight * .92f,
-		m_nScreenWidth * .66f * _player->getHull() / _player->getMaxHull(),
+		m_nScreenWidth * .33f * _player->getHull() / _player->getMaxHull() + m_nScreenWidth * .33f,
 		m_nScreenHeight * .95f
 	};
 
@@ -490,14 +494,14 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	SGD::Rectangle expBox = {
 		m_nScreenWidth * .25f,
 		m_nScreenHeight * .97f,
-		m_nScreenWidth * .74f,
+		m_nScreenWidth * .75f,
 		m_nScreenHeight * .98f
 	};
 
 	SGD::Rectangle exp = {
 		m_nScreenWidth * .25f,
-		m_nScreenWidth * .97f,
-		m_nScreenWidth * .74f * _player->GetExp() / _player->GetReqExp(),
+		m_nScreenHeight * .97f,
+		m_nScreenWidth * .50f * _player->GetExp() / _player->GetReqExp() + m_nScreenWidth * .25f,
 		m_nScreenHeight * .98f
 	};
 
@@ -627,4 +631,8 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 		graphics->DrawRectangle(warpCD, SGD::Color{ 150, 200, 0, 0 });
 	graphics->DrawRectangle(warpBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
 
+	// draw level
+	std::ostringstream levelString;
+	levelString << _player->GetLevel();
+	Game::GetInstance()->Font.WriteCenter(SGD::Rectangle{ m_nScreenWidth * .26f, m_nScreenHeight * .90f, m_nScreenWidth * .31f, m_nScreenHeight * .97f }, levelString.str().c_str());
 }
