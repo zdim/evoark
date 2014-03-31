@@ -2,11 +2,13 @@
 #include "Laser.h"
 #include "../Ships/Ship.h"
 class CEmitter;
+class CParticleSystem; 
 class CMissile :
 	public CLaser
 {
 	CShip* target = nullptr;
 	CEmitter* m_eTrail;
+	CParticleSystem* m_pSystem;
 public:
 	CMissile();
 	virtual ~CMissile();

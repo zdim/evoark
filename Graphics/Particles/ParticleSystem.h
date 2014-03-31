@@ -9,8 +9,6 @@ class CParticleSystem
 {
 	std::map<int,CEmitter*>                  particleEffect;
 	int                                      numEmitters;
-	int numData;
-	std::vector<CFlyweight*>                    Flyweights;
 
 	CParticleSystem(CParticleSystem const&);           
 	void operator=(CParticleSystem const&); 
@@ -34,7 +32,6 @@ public:
 	void LoadEffect(std::string effectName);
 	void ResetEffect(int num);
 	CEmitter* GetParticleEffect(int n ) { return particleEffect[n]; }
-	CFlyweight* GetParticleData(int n)   { return Flyweights[n]; }
 
 };
 

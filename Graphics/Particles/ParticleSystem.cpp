@@ -9,7 +9,6 @@ CParticleSystem* CParticleSystem::s_Instance;
 CParticleSystem::CParticleSystem()
 {
 	numEmitters = 0;
-	numData = 0;
 }
 
 
@@ -207,7 +206,6 @@ void CParticleSystem::LoadEffect(std::string effectName)
 
 	numEmitters++;
 	
-	Flyweights.push_back(eData);
 	particleEffect[numEmitters] = new CEmitter(eData, emitterSize, m_nShape, emitterPosition, m_nNumParticles, m_fSpawnRate, m_fTimeFromLastSpawn, m_bEmitWay, m_fEmitTime);
 
 

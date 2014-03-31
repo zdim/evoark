@@ -5,8 +5,19 @@
 
 CMissile::CMissile()
 {
+	m_pSystem = CParticleSystem::GetInstance();
 	
-	m_eTrail = new CEmitter(CParticleSystem::GetInstance()->GetParticleData(1), { 1, 1 },1,position,20,0.1,0.2,true,0.0);
+	m_eTrail = new CEmitter(
+		m_pSystem->GetParticleEffect(2)->GetParticleData(),
+		m_pSystem->GetParticleEffect(2)->GetEmitterSize(),
+		m_pSystem->GetParticleEffect(2)->GetShape(),
+		position,
+		m_pSystem->GetParticleEffect(2)->GetNumParticles(),
+		m_pSystem->GetParticleEffect(2)->GetSpawnRate(),
+		m_pSystem->GetParticleEffect(2)->GetSpawnTimeFromLastSpawn(),
+		m_pSystem->GetParticleEffect(2)->GetEmitType(),
+		m_pSystem->GetParticleEffect(2)->GetEmitTime()
+		);
 	m_eTrail->Initialize();
 }
 
