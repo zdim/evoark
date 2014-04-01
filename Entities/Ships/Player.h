@@ -54,6 +54,12 @@ public:
 	int GetExp() { return this->exp; }
 	int GetReqExp() { return expRequired; }
 	int GetLevel() { return level; }
+	int GetPerks() { return perks; }
+	int GetLaserLevel() { return laserLevel; }
+	int GetMissileLevel() { return missileLevel; }
+	int GetWellLevel() { return wellLevel; }
+	int GetPushLevel() { return pushLevel; }
+	int GetWarpLevel() { return warpLevel; }
 	float GetWellDelay() { return wellDelay; }
 	float GetPushDelay() { return pushDelay; }
 	float GetWarpDelay() { return warpDelay; }
@@ -63,6 +69,12 @@ public:
 	bool GetArrowsOn() { return arrowsOn; }
 
 	void AddExp(int _exp);
+	void LaserLevelUp() { laserLevel++; }
+	void MissileLevelUp() { missileLevel++; }
+	void WellLevelUp() { wellLevel++; }
+	void PushLevelUp() { pushLevel++; }
+	void WarpLevelUp() { warpLevel++; }
+	void RemovePerk() { perks--; }
 
 	// get textures for icons
 	SGD::HTexture GetWellIcon() { return wellIcon; }

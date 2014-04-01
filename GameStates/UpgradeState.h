@@ -1,6 +1,7 @@
 #pragma once
 #include "../SGD Wrappers/SGD_Handle.h"
 #include "IGameState.h"
+#include "../Entities/EntityManager.h"
 class CUpgradeState : public IGameState
 {
 	enum upgrades {
@@ -13,6 +14,7 @@ class CUpgradeState : public IGameState
 	};
 
 	int cursor = 0;
+	CPlayer* player = nullptr;
 
 	SGD::HTexture iconTexture = SGD::INVALID_HANDLE;
 public:
