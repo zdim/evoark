@@ -29,6 +29,7 @@ CPlayer::CPlayer()
 	exp = 0;
 	expRequired = 100;
 	level = 0;
+	perks = 0;
 
 	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravWellIcon.png");
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravPushIcon.png");
@@ -236,6 +237,7 @@ void CPlayer::AddExp(int _exp)
 	if (this->exp >= expRequired)
 	{
 		level++;
+		perks++;
 		this->exp = this->exp - expRequired;
 		expRequired *= 2;
 		maxShield += SHIELD_SCALE;

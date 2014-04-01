@@ -11,11 +11,11 @@ class CPlayer :
 	unsigned int expRequired;
 	unsigned int level;
 	unsigned int perks;
-	unsigned int laserLevel;
-	unsigned int missileLevel;
-	unsigned int wellLevel;
-	unsigned int pushLevel;
-	unsigned int warpLevel;
+	unsigned int laserLevel = 0;
+	unsigned int missileLevel = 0;
+	unsigned int wellLevel = 0;
+	unsigned int pushLevel = 0;
+	unsigned int warpLevel = 0;
 
 	float shieldTimer;
 	float laserTimer;
