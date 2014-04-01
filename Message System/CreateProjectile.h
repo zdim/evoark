@@ -12,10 +12,10 @@ class CreateProjectileMessage : public SGD::Message
 	int m_damage;
 	float m_radius;
 	int m_tier;
-	
+	IEntity* m_owner;
 
 public:
-	CreateProjectileMessage(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier = 0, float radius = -1.0f);
+	CreateProjectileMessage(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier = 0, float radius = -1.0f, IEntity* owner = nullptr);
 	~CreateProjectileMessage(){}
 
 	EntityType GetProjType() const {return m_type;}
@@ -25,4 +25,5 @@ public:
 	int GetDamage()			const { return m_damage; }
 	float GetRadius()		const { return m_radius;}
 	int GetTier()			const { return m_tier; }
+	IEntity* GetOwner()		const { return m_owner; }
 };

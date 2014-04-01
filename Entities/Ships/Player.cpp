@@ -20,7 +20,7 @@ CPlayer::CPlayer()
 	laserDelay = 0.25f;
 	missileDelay = 2.0f;
 	wellDelay = 5;
-	pushDelay = 10;
+	pushDelay = 0.5;
 	warpDelay = 10;
 	warpSpeed = 500;
 
@@ -167,7 +167,7 @@ void CPlayer::CreatePush()
 		return;
 	pushTimer = 0;
 	//TODO: Send CreatePush message
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 500, pushLevel, SGD::PI / 4);
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 500, pushLevel, SGD::PI / 2, this);
 	msg->QueueMessage();
 }
 

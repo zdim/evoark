@@ -14,8 +14,21 @@ CPush::~CPush()
 {
 }
 
+void CPush::SetOwner(IEntity* _owner)
+{
+	if (owner)
+		owner->Release();
+
+	owner = _owner;
+
+	if (owner)
+		owner->AddRef();
+}
+
 void CPush::HandleCollision(IEntity* other)
 {
+	if (other == owner)
+		return;
 	SGD::Vector forward = {0,-1};
 	forward.Rotate(rotation);
 	SGD::Vector dir = other->GetPosition() - position;

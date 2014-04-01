@@ -3,7 +3,7 @@
 #include "../SGD Wrappers/SGD_Geometry.h"
 
 #define GRAVDECAY 0.025F
-#define COLLISION_MODIFIER 0.05F
+#define COLLISION_MODIFIER 0.005F
 
 
 class CEntity :
@@ -56,6 +56,9 @@ public:
 
 	virtual void HandleCollision(IEntity* other) override;
 	//virtual void HandleEvent(CCustomEvent* e) override {};
+	
+	//Utility. Nothing outside of entity should NEED to use this, but I'm making it public just in case.
+	virtual void Clamp();
 
 	virtual void AddRef() final;
 	virtual void Release() final;

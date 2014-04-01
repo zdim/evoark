@@ -1,6 +1,6 @@
 #include "CreateProjectile.h"
 
-CreateProjectileMessage::CreateProjectileMessage(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier, float radius) : Message(MessageID::CreateProjectile)
+CreateProjectileMessage::CreateProjectileMessage(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier, float radius, IEntity* owner) : Message(MessageID::CreateProjectile)
 {
 	m_type = type;
 	m_position = position;
@@ -9,5 +9,6 @@ CreateProjectileMessage::CreateProjectileMessage(EntityType type, SGD::Point pos
 	m_damage = damage;
 	m_tier = tier;
 	m_radius = radius;
+	m_owner = owner;
 }
 

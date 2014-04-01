@@ -400,7 +400,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::CreateProjectile:
 	{
 								   const CreateProjectileMessage* lMsg = dynamic_cast<const CreateProjectileMessage*>(msg);
-		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(lMsg->GetProjType(),lMsg->GetPosition(),lMsg->GetOwnerSize(),lMsg->GetRotation(),lMsg->GetDamage(), lMsg->GetTier(), lMsg->GetRadius());
+		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(lMsg->GetProjType(),lMsg->GetPosition(),lMsg->GetOwnerSize(),lMsg->GetRotation(),lMsg->GetDamage(), lMsg->GetTier(), lMsg->GetRadius(), lMsg->GetOwner());
 		switch (lMsg->GetProjType())
 		{
 		case EntityType::Laser:

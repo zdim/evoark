@@ -46,17 +46,21 @@ void CEntity::rotateToward(SGD::Vector direction, float dt)
 
 void	CEntity::Update(float dt)
 {
-	if (GetType() == (int)EntityType::Player &&
-		(position.x + velocity.x * dt > Game::GetInstance()->GetLevelState()->GetWorldSize().width ||
-		position.x + velocity.x * dt < 0 ||
-		position.y + velocity.y * dt > Game::GetInstance()->GetLevelState()->GetWorldSize().height ||
-		position.y + velocity.y * dt < 0))
-		return; 
+	//if (GetType() == (int)EntityType::Player &&
+	//	(position.x + velocity.x * dt > Game::GetInstance()->GetLevelState()->GetWorldSize().width ||
+	//	position.x + velocity.x * dt < 0 ||
+	//	position.y + velocity.y * dt > Game::GetInstance()->GetLevelState()->GetWorldSize().height ||
+	//	position.y + velocity.y * dt < 0))
+	//	return; 
 
 	position += (velocity) * dt;
 	position += gravVec * dt;
-	float gravSpeed = gravVec.ComputeLength();
-	float mySpeed = velocity.ComputeLength();
+	Clamp();
+
+	//Why is this here? It's not being used...
+	//float gravSpeed = gravVec.ComputeLength();	
+	//float mySpeed = velocity.ComputeLength();
+	
 	if (gravVec != SGD::Vector{ 0, 0 })
 	{
 		gravVec -= (gravVec * GRAVDECAY);
@@ -97,6 +101,33 @@ void	CEntity::HandleCollision(IEntity* other)
 	//Should never collide with anything.
 	//TODO: Review catch/throw, and throw an error here
 }
+
+void CEntity::Clamp()
+{
+	SGD::Size world = Game::GetInstance()->GetLevelState()->GetWorldSize();
+	SGD::Rectangle box = GetRect();
+
+	if (box.left < 0)
+	{
+		position.x = size.width/2;
+	}
+
+	if (box.top < 0)
+	{
+		position.y = size.height/2;
+	}
+
+	if (box.right > world.width)
+	{
+		position.x = world.width - size.width/2;
+	}
+
+	if (box.bottom > world.height)
+	{
+		position.y = world.height - size.height/2;
+	}
+}
+
 
 void	CEntity::AddRef()
 {

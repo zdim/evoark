@@ -6,7 +6,7 @@
 
 CShip::CShip()
 {
-	maxHull = 100;
+	maxHull = 1000;
 	hull = maxHull;
 
 }
@@ -50,7 +50,7 @@ void CShip::HandleCollision(IEntity* other)
 		//This formula gets the direction from us to them (so away from us), then multiplies that by (their speed * 1.1) so that they can only fight the push from impact a little bit
 		SGD::Vector dir = other->GetPosition() - position;
 		dir.Normalize();
-		other->AddGravity( dir * (dynamic_cast<CShip*>(other)->getSpeed() * 0.25f));
+		other->AddGravity( dir * (dynamic_cast<CShip*>(other)->getSpeed() * 1.1));
 
 		//Have the other ship take damage based on our mass and speed (not necessarily our current speed/velocity)
 		//We will probably rebalance this later.

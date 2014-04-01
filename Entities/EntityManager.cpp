@@ -277,7 +277,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	}
 }
 
-void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier, float radius)
+void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier, float radius, IEntity* owner)
 {
 	switch (type)
 	{
@@ -355,11 +355,13 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 							 push->SetImage(images[(int)EntityType::Push]);
 							 push->SetRadius(radius);
 							 push->SetVelocity({ 0, 0 });
+							 push->SetSize({256,256});
+							 push->SetOwner(owner);
 							 
-							 SGD::Vector offset = { 0.0, -1.0 };
-							 offset.Rotate(rotation);
-							 offset *= (ownerSize.height + push->GetSize().height) *0.8f;
-							 position += offset;
+							 //SGD::Vector offset = { 0.0, -1.0 };
+							 //offset.Rotate(rotation);
+							 //offset *= (ownerSize.height + push->GetSize().height) * 0.25f;
+							 //position += offset;
 
 							 push->SetPosition(position);
 							 push->SetRotation(rotation);
@@ -619,14 +621,16 @@ bool CEntityManager::ShapedCollisions(IEntity* thing1, IEntity* thing2)
 		}
 		else
 		{
-			return circleRectCollision(thing1, thing2);
+			//return circleRectCollision(thing1, thing2);
+			return circlecollision(thing1, thing2);
 		}
 	}
 	else
 	{
 		if (thing2->IsCircle())
 		{
-			return circleRectCollision(thing2, thing1);
+			//return circleRectCollision(thing2, thing1);
+			return circlecollision(thing1, thing2);
 		}
 		else
 		{
@@ -721,26 +725,30 @@ void CEntityManager::Render()
 {
 	SGD::Rectangle screen = { SGD::Point{ 0, 0 }, SGD::Size{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() } };
 	//SGD::Rectangle test = { SGD::Point{ 0, 0 }, SGD::Size{ 400, 400 } }; // rect. for testing culling
-	for (unsigned int i = 0; i < ships.size(); i++)
-	{
-		if (ships[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
-			ships[i]->Render();
-	}
-	for (unsigned int i = 0; i < projectiles.size(); i++)
-	{
-		if (projectiles[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
-			projectiles[i]->Render();
-	}
-	for (unsigned int i = 0; i < gravObjects.size(); i++)
-	{
-		if (gravObjects[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
-			gravObjects[i]->Render();
-	}
 	for (unsigned int i = 0; i < stationaries.size(); i++)
 	{
 		if (stationaries[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
 			stationaries[i]->Render();
 	}
+
+	for (unsigned int i = 0; i < gravObjects.size(); i++)
+	{
+		if (gravObjects[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
+			gravObjects[i]->Render();
+	}
+
+	for (unsigned int i = 0; i < ships.size(); i++)
+	{
+		if (ships[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
+			ships[i]->Render();
+	}
+
+	for (unsigned int i = 0; i < projectiles.size(); i++)
+	{
+		if (projectiles[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
+			projectiles[i]->Render();
+	}
+
 	//If player exists, he SHOULD be in the EntityGroup "ships"
 	//if (player)
 	//if (player->GetRect().IsIntersecting(screen))
