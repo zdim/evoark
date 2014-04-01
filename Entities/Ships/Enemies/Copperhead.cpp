@@ -13,6 +13,7 @@ CCopperhead::CCopperhead()
     m_fMissileDelay = 2;
     m_fMissileTimer = 0;
     m_nMissileDamage = 75;
+	expValue = 10;
 }
 
 

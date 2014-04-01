@@ -32,7 +32,6 @@
             this.changeImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.EmittorPanel = new System.Windows.Forms.TabPage();
@@ -107,6 +106,8 @@
             this.label24 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.EmittorPanel.SuspendLayout();
@@ -159,41 +160,34 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeImageToolStripMenuItem,
             this.loadToolStripMenuItem,
-            this.exitToolStripMenuItem,
-            this.exitToolStripMenuItem2});
+            this.exitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1965, 42);
+            this.menuStrip1.Size = new System.Drawing.Size(1965, 40);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // changeImageToolStripMenuItem
             // 
             this.changeImageToolStripMenuItem.Name = "changeImageToolStripMenuItem";
-            this.changeImageToolStripMenuItem.Size = new System.Drawing.Size(182, 38);
+            this.changeImageToolStripMenuItem.Size = new System.Drawing.Size(182, 36);
             this.changeImageToolStripMenuItem.Text = "Change Image";
             this.changeImageToolStripMenuItem.Click += new System.EventHandler(this.changeImageToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(145, 38);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(145, 36);
             this.loadToolStripMenuItem.Text = "Load Effect";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(144, 38);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(144, 36);
             this.exitToolStripMenuItem.Text = "Save Effect";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // exitToolStripMenuItem2
-            // 
-            this.exitToolStripMenuItem2.Name = "exitToolStripMenuItem2";
-            this.exitToolStripMenuItem2.Size = new System.Drawing.Size(64, 38);
-            this.exitToolStripMenuItem2.Text = "Exit";
             // 
             // panel1
             // 
@@ -203,7 +197,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1306, 1132);
+            this.panel1.Size = new System.Drawing.Size(1306, 1134);
             this.panel1.TabIndex = 0;
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
@@ -213,7 +207,7 @@
             this.tabControl1.Controls.Add(this.EmittorPanel);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(4, 4);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(644, 1118);
@@ -228,9 +222,9 @@
             this.EmittorPanel.Controls.Add(this.groupBox3);
             this.EmittorPanel.Controls.Add(this.EmittorShapeBox);
             this.EmittorPanel.Location = new System.Drawing.Point(4, 34);
-            this.EmittorPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmittorPanel.Margin = new System.Windows.Forms.Padding(4);
             this.EmittorPanel.Name = "EmittorPanel";
-            this.EmittorPanel.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmittorPanel.Padding = new System.Windows.Forms.Padding(4);
             this.EmittorPanel.Size = new System.Drawing.Size(636, 1080);
             this.EmittorPanel.TabIndex = 0;
             this.EmittorPanel.Text = "Emittor";
@@ -265,7 +259,7 @@
             // NumParticles
             // 
             this.NumParticles.Location = new System.Drawing.Point(308, 46);
-            this.NumParticles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.NumParticles.Margin = new System.Windows.Forms.Padding(4);
             this.NumParticles.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -300,7 +294,7 @@
             0,
             131072});
             this.SpawnRate.Location = new System.Drawing.Point(308, 119);
-            this.SpawnRate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SpawnRate.Margin = new System.Windows.Forms.Padding(4);
             this.SpawnRate.Name = "SpawnRate";
             this.SpawnRate.Size = new System.Drawing.Size(160, 31);
             this.SpawnRate.TabIndex = 4;
@@ -330,7 +324,7 @@
             0,
             131072});
             this.EmissionRate.Location = new System.Drawing.Point(308, 196);
-            this.EmissionRate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmissionRate.Margin = new System.Windows.Forms.Padding(4);
             this.EmissionRate.Name = "EmissionRate";
             this.EmissionRate.Size = new System.Drawing.Size(160, 31);
             this.EmissionRate.TabIndex = 6;
@@ -389,7 +383,7 @@
             0,
             65536});
             this.EmissionTime.Location = new System.Drawing.Point(376, 110);
-            this.EmissionTime.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmissionTime.Margin = new System.Windows.Forms.Padding(4);
             this.EmissionTime.Name = "EmissionTime";
             this.EmissionTime.Size = new System.Drawing.Size(160, 31);
             this.EmissionTime.TabIndex = 6;
@@ -405,9 +399,9 @@
             this.EmittorShapeBox.Controls.Add(this.EmittorShapeButtonLine);
             this.EmittorShapeBox.Controls.Add(this.EmittorShapeButtonPoint);
             this.EmittorShapeBox.Location = new System.Drawing.Point(16, 60);
-            this.EmittorShapeBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmittorShapeBox.Margin = new System.Windows.Forms.Padding(4);
             this.EmittorShapeBox.Name = "EmittorShapeBox";
-            this.EmittorShapeBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmittorShapeBox.Padding = new System.Windows.Forms.Padding(4);
             this.EmittorShapeBox.Size = new System.Drawing.Size(589, 394);
             this.EmittorShapeBox.TabIndex = 0;
             this.EmittorShapeBox.TabStop = false;
@@ -422,7 +416,7 @@
             0,
             131072});
             this.EmittorRadius.Location = new System.Drawing.Point(312, 296);
-            this.EmittorRadius.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmittorRadius.Margin = new System.Windows.Forms.Padding(4);
             this.EmittorRadius.Name = "EmittorRadius";
             this.EmittorRadius.Size = new System.Drawing.Size(160, 31);
             this.EmittorRadius.TabIndex = 10;
@@ -458,7 +452,7 @@
             // EmittorWidth
             // 
             this.EmittorWidth.Location = new System.Drawing.Point(116, 35);
-            this.EmittorWidth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmittorWidth.Margin = new System.Windows.Forms.Padding(4);
             this.EmittorWidth.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -477,7 +471,7 @@
             // EmittorHeight
             // 
             this.EmittorHeight.Location = new System.Drawing.Point(387, 35);
-            this.EmittorHeight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmittorHeight.Margin = new System.Windows.Forms.Padding(4);
             this.EmittorHeight.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -517,7 +511,7 @@
             // 
             this.EmittorShapeButtonCircle.AutoSize = true;
             this.EmittorShapeButtonCircle.Location = new System.Drawing.Point(396, 115);
-            this.EmittorShapeButtonCircle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmittorShapeButtonCircle.Margin = new System.Windows.Forms.Padding(4);
             this.EmittorShapeButtonCircle.Name = "EmittorShapeButtonCircle";
             this.EmittorShapeButtonCircle.Size = new System.Drawing.Size(98, 29);
             this.EmittorShapeButtonCircle.TabIndex = 3;
@@ -530,7 +524,7 @@
             // 
             this.EmittorShapeButtonRect.AutoSize = true;
             this.EmittorShapeButtonRect.Location = new System.Drawing.Point(43, 115);
-            this.EmittorShapeButtonRect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmittorShapeButtonRect.Margin = new System.Windows.Forms.Padding(4);
             this.EmittorShapeButtonRect.Name = "EmittorShapeButtonRect";
             this.EmittorShapeButtonRect.Size = new System.Drawing.Size(87, 29);
             this.EmittorShapeButtonRect.TabIndex = 2;
@@ -543,7 +537,7 @@
             // 
             this.EmittorShapeButtonLine.AutoSize = true;
             this.EmittorShapeButtonLine.Location = new System.Drawing.Point(396, 60);
-            this.EmittorShapeButtonLine.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmittorShapeButtonLine.Margin = new System.Windows.Forms.Padding(4);
             this.EmittorShapeButtonLine.Name = "EmittorShapeButtonLine";
             this.EmittorShapeButtonLine.Size = new System.Drawing.Size(84, 29);
             this.EmittorShapeButtonLine.TabIndex = 1;
@@ -556,7 +550,7 @@
             // 
             this.EmittorShapeButtonPoint.AutoSize = true;
             this.EmittorShapeButtonPoint.Location = new System.Drawing.Point(40, 60);
-            this.EmittorShapeButtonPoint.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EmittorShapeButtonPoint.Margin = new System.Windows.Forms.Padding(4);
             this.EmittorShapeButtonPoint.Name = "EmittorShapeButtonPoint";
             this.EmittorShapeButtonPoint.Size = new System.Drawing.Size(92, 29);
             this.EmittorShapeButtonPoint.TabIndex = 0;
@@ -579,9 +573,9 @@
             this.tabPage2.Controls.Add(this.groupBox6);
             this.tabPage2.Controls.Add(this.groupBox5);
             this.tabPage2.Location = new System.Drawing.Point(4, 34);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage2.Size = new System.Drawing.Size(636, 1080);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Particle";
@@ -590,7 +584,7 @@
             // 
             this.Enertia.DecimalPlaces = 1;
             this.Enertia.Location = new System.Drawing.Point(381, 1015);
-            this.Enertia.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Enertia.Margin = new System.Windows.Forms.Padding(4);
             this.Enertia.Minimum = new decimal(new int[] {
             100,
             0,
@@ -620,7 +614,7 @@
             0,
             131072});
             this.RotationSpeed.Location = new System.Drawing.Point(381, 961);
-            this.RotationSpeed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RotationSpeed.Margin = new System.Windows.Forms.Padding(4);
             this.RotationSpeed.Name = "RotationSpeed";
             this.RotationSpeed.Size = new System.Drawing.Size(132, 31);
             this.RotationSpeed.TabIndex = 14;
@@ -655,7 +649,7 @@
             // 
             this.LifeMin.DecimalPlaces = 2;
             this.LifeMin.Location = new System.Drawing.Point(371, 42);
-            this.LifeMin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LifeMin.Margin = new System.Windows.Forms.Padding(4);
             this.LifeMin.Minimum = new decimal(new int[] {
             1,
             0,
@@ -675,7 +669,7 @@
             // 
             this.LifeMax.DecimalPlaces = 2;
             this.LifeMax.Location = new System.Drawing.Point(128, 42);
-            this.LifeMax.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LifeMax.Margin = new System.Windows.Forms.Padding(4);
             this.LifeMax.Minimum = new decimal(new int[] {
             1,
             0,
@@ -721,7 +715,7 @@
             this.groupBox8.Controls.Add(this.SpeedMinX);
             this.groupBox8.Controls.Add(this.label34);
             this.groupBox8.Controls.Add(this.label35);
-            this.groupBox8.Location = new System.Drawing.Point(11, 589);
+            this.groupBox8.Location = new System.Drawing.Point(11, 623);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -733,7 +727,7 @@
             // SpeedMaxY
             // 
             this.SpeedMaxY.Location = new System.Drawing.Point(428, 111);
-            this.SpeedMaxY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SpeedMaxY.Margin = new System.Windows.Forms.Padding(4);
             this.SpeedMaxY.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -752,7 +746,7 @@
             // SpeedMaxX
             // 
             this.SpeedMaxX.Location = new System.Drawing.Point(139, 111);
-            this.SpeedMaxX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SpeedMaxX.Margin = new System.Windows.Forms.Padding(4);
             this.SpeedMaxX.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -791,7 +785,7 @@
             // SpeedMinY
             // 
             this.SpeedMinY.Location = new System.Drawing.Point(428, 46);
-            this.SpeedMinY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SpeedMinY.Margin = new System.Windows.Forms.Padding(4);
             this.SpeedMinY.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -810,7 +804,7 @@
             // SpeedMinX
             // 
             this.SpeedMinX.Location = new System.Drawing.Point(139, 48);
-            this.SpeedMinX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SpeedMinX.Margin = new System.Windows.Forms.Padding(4);
             this.SpeedMinX.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -848,13 +842,15 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.button1);
+            this.groupBox6.Controls.Add(this.button2);
             this.groupBox6.Controls.Add(this.groupBox9);
             this.groupBox6.Controls.Add(this.groupBox7);
             this.groupBox6.Location = new System.Drawing.Point(11, 244);
             this.groupBox6.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.groupBox6.Size = new System.Drawing.Size(588, 332);
+            this.groupBox6.Size = new System.Drawing.Size(588, 367);
             this.groupBox6.TabIndex = 33;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Color";
@@ -869,19 +865,19 @@
             this.groupBox9.Controls.Add(this.label30);
             this.groupBox9.Controls.Add(this.label31);
             this.groupBox9.Controls.Add(this.EndColorA);
-            this.groupBox9.Location = new System.Drawing.Point(312, 36);
+            this.groupBox9.Location = new System.Drawing.Point(312, 88);
             this.groupBox9.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox9.Size = new System.Drawing.Size(248, 261);
             this.groupBox9.TabIndex = 18;
             this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "End";
+            this.groupBox9.Text = "End Value";
             // 
             // EndColorB
             // 
             this.EndColorB.Location = new System.Drawing.Point(93, 202);
-            this.EndColorB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EndColorB.Margin = new System.Windows.Forms.Padding(4);
             this.EndColorB.Maximum = new decimal(new int[] {
             255,
             0,
@@ -895,7 +891,7 @@
             // EndColorG
             // 
             this.EndColorG.Location = new System.Drawing.Point(93, 156);
-            this.EndColorG.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EndColorG.Margin = new System.Windows.Forms.Padding(4);
             this.EndColorG.Maximum = new decimal(new int[] {
             255,
             0,
@@ -909,7 +905,7 @@
             // EndColorR
             // 
             this.EndColorR.Location = new System.Drawing.Point(93, 104);
-            this.EndColorR.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EndColorR.Margin = new System.Windows.Forms.Padding(4);
             this.EndColorR.Maximum = new decimal(new int[] {
             255,
             0,
@@ -963,7 +959,7 @@
             // EndColorA
             // 
             this.EndColorA.Location = new System.Drawing.Point(93, 52);
-            this.EndColorA.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EndColorA.Margin = new System.Windows.Forms.Padding(4);
             this.EndColorA.Maximum = new decimal(new int[] {
             255,
             0,
@@ -989,19 +985,19 @@
             this.groupBox7.Controls.Add(this.label12);
             this.groupBox7.Controls.Add(this.label7);
             this.groupBox7.Controls.Add(this.StartColorA);
-            this.groupBox7.Location = new System.Drawing.Point(35, 36);
+            this.groupBox7.Location = new System.Drawing.Point(23, 88);
             this.groupBox7.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox7.Size = new System.Drawing.Size(248, 261);
             this.groupBox7.TabIndex = 0;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Start";
+            this.groupBox7.Text = "Start Value";
             // 
             // StartColorB
             // 
             this.StartColorB.Location = new System.Drawing.Point(93, 202);
-            this.StartColorB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.StartColorB.Margin = new System.Windows.Forms.Padding(4);
             this.StartColorB.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1015,7 +1011,7 @@
             // StartColorG
             // 
             this.StartColorG.Location = new System.Drawing.Point(93, 156);
-            this.StartColorG.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.StartColorG.Margin = new System.Windows.Forms.Padding(4);
             this.StartColorG.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1029,7 +1025,7 @@
             // StartColorR
             // 
             this.StartColorR.Location = new System.Drawing.Point(93, 104);
-            this.StartColorR.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.StartColorR.Margin = new System.Windows.Forms.Padding(4);
             this.StartColorR.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1083,7 +1079,7 @@
             // StartColorA
             // 
             this.StartColorA.Location = new System.Drawing.Point(93, 52);
-            this.StartColorA.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.StartColorA.Margin = new System.Windows.Forms.Padding(4);
             this.StartColorA.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1127,7 +1123,7 @@
             0,
             65536});
             this.EndYScale.Location = new System.Drawing.Point(445, 110);
-            this.EndYScale.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EndYScale.Margin = new System.Windows.Forms.Padding(4);
             this.EndYScale.Name = "EndYScale";
             this.EndYScale.Size = new System.Drawing.Size(132, 31);
             this.EndYScale.TabIndex = 17;
@@ -1147,7 +1143,7 @@
             0,
             65536});
             this.EndXScale.Location = new System.Drawing.Point(139, 110);
-            this.EndXScale.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EndXScale.Margin = new System.Windows.Forms.Padding(4);
             this.EndXScale.Name = "EndXScale";
             this.EndXScale.Size = new System.Drawing.Size(132, 31);
             this.EndXScale.TabIndex = 16;
@@ -1187,7 +1183,7 @@
             0,
             65536});
             this.StartYScale.Location = new System.Drawing.Point(445, 56);
-            this.StartYScale.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.StartYScale.Margin = new System.Windows.Forms.Padding(4);
             this.StartYScale.Name = "StartYScale";
             this.StartYScale.Size = new System.Drawing.Size(132, 31);
             this.StartYScale.TabIndex = 13;
@@ -1207,7 +1203,7 @@
             0,
             65536});
             this.StartXScale.Location = new System.Drawing.Point(139, 56);
-            this.StartXScale.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.StartXScale.Margin = new System.Windows.Forms.Padding(4);
             this.StartXScale.Name = "StartXScale";
             this.StartXScale.Size = new System.Drawing.Size(132, 31);
             this.StartXScale.TabIndex = 12;
@@ -1242,7 +1238,7 @@
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 42);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 40);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -1253,10 +1249,30 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(1965, 1136);
+            this.splitContainer1.Size = new System.Drawing.Size(1965, 1138);
             this.splitContainer1.SplitterDistance = 1310;
             this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 3;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(26, 43);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(111, 36);
+            this.button1.TabIndex = 19;
+            this.button1.Text = "Start";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(445, 43);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(111, 36);
+            this.button2.TabIndex = 38;
+            this.button2.Text = "End";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form1
             // 
@@ -1266,7 +1282,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "EvoArk Particle Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -1336,7 +1352,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage EmittorPanel;
@@ -1412,6 +1427,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripMenuItem changeImageToolStripMenuItem;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

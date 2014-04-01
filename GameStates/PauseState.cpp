@@ -1,8 +1,9 @@
-
+#include "OptionsState.h"
 #include "PauseState.h"
 #include "Game.h"
 #include "MainMenuState.h"
-
+#include "UpgradeState.h"
+#include "../SGD Wrappers/SGD_InputManager.h"
 CPauseState::CPauseState()
 {
 }
@@ -20,6 +21,11 @@ CPauseState* CPauseState::GetInstance()
 
 bool CPauseState::Input()
 {
+	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Escape) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 1))
+	{
+		Game::GetInstance()->PopState();
+		return true;
+	}
 	int ret = menu->Input();
 	switch (ret)
 	{
@@ -29,6 +35,12 @@ bool CPauseState::Input()
 	case menuReturn::Reload:
 		Game::GetInstance()->PopState();
 		Game::GetInstance()->PopState();
+		return true;
+	case menuReturn::Upgrades:
+		Game::GetInstance()->PushState(CUpgradeState::GetInstance());
+		return true;
+	case menuReturn::Options:
+		Game::GetInstance()->PushState(COptionsState::GetInstance());
 		return true;
 	case menuReturn::MainMenu:
 		Game::GetInstance()->PopState();
@@ -57,7 +69,9 @@ void CPauseState::Enter()
 	buttons.resize(menuReturn::count);
 	buttons[menuReturn::Continue] = "Continue";
 	buttons[menuReturn::Reload] = "[Reload]";
+	buttons[menuReturn::Upgrades] = "Upgrades";
 	buttons[menuReturn::MainMenu] = "Main Menu";
+	buttons[menuReturn::Options] = "Options";
 	menu = new CMenu(&Game::GetInstance()->Font, buttons, "Paused");
 }
 

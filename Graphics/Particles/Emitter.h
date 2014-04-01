@@ -40,8 +40,14 @@ public:
 
 	SGD::Point GetEmitterPosition() { return emitterPosition; }
 	void       SetEmitterPosition(SGD::Point p) { emitterPosition = p; }
-
-
+	SGD::Size  GetEmitterSize() { return emitterSize; }
+	CFlyweight* GetParticleData() { return particleData; }
+	int        GetNumParticles() { return m_nNumParticles; }
+	int        GetShape() { return shape; }
+	float      GetSpawnRate() { return m_fSpawnRate; }
+	float      GetSpawnTimeFromLastSpawn() { return m_fTimeFromLastSpawn; }
+	bool       GetEmitType() { return m_bLoop; }
+	float      GetEmitTime() { return m_fEmitTime; }
 
 };
 

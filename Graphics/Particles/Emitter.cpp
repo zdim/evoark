@@ -124,16 +124,14 @@ void CEmitter::Update(float deltaTime)
 		if (B > 255) { B = 255; }
 		else if (B < 0) { B = 0; }
 
-		SGD::Color curColor(A, R, G, B);
+		SGD::Color curColor((int)A, (int)R, (int)G, (int)B);
 
 		(*it)->SetCurColor(curColor);
 #pragma endregion 
-
-		// Partical Scale Change 
-		float curWidth = particleData->GetEndScale().width * fLifeCycle * (particleData->GetStartScale().width - particleData->GetEndScale().width);
-		float curHeight = particleData->GetEndScale().height * fLifeCycle * (particleData->GetStartScale().height - particleData->GetEndScale().height);
-
-		SGD::Size curSize{ curWidth, curHeight };
+	
+		SGD::Size curSize { particleData->GetEndScale().width + fLifeCycle * (particleData->GetStartScale().width - particleData->GetEndScale().width),
+			particleData->GetEndScale().height + fLifeCycle * (particleData->GetStartScale().height - particleData->GetEndScale().height) };
+		
 
 		if (particleData->GetStartScale() != particleData->GetEndScale())
 			(*it)->SetCurScale(curSize);
@@ -171,26 +169,18 @@ void CEmitter::Render()
 CParticle CEmitter::CreateParticle()
 {
 
-	SGD::Color tempColor(particleData->GetStartA(), particleData->GetStartR(), particleData->GetStartG(), particleData->GetStartB());
 
-	float maxLife = particleData->GetMaxLife();
-	float minLife = particleData->GetMinLife();
+	SGD::Color tempColor{ particleData->GetStartA(), particleData->GetStartR(), particleData->GetStartG(), particleData->GetStartB() };
 
-	float randLife = minLife + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (maxLife - minLife)));
+	float randLife = particleData->GetMinLife() + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (particleData->GetMaxLife() - particleData->GetMinLife())));
 
 	SGD::Vector randSpeed = { particleData->GetMinSpeed().x + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (particleData->GetMaxSpeed().x - particleData->GetMinSpeed().x))),
 		particleData->GetMinSpeed().y + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (particleData->GetMaxSpeed().y - particleData->GetMinSpeed().y))) };
 
-
 	SGD::Point ppositionn{ emitterPosition.x + (rand() % (int)emitterSize.width),
 		emitterPosition.y + (rand() % (int)emitterSize.height) };
 
-	SGD::Size tScale = particleData->GetStartScale();
-
-
-	if (shape == 3 || shape == 4)
-		ppositionn = { emitterPosition.x + (rand() % (int)emitterSize.width),
-		emitterPosition.y + (rand() % (int)emitterSize.height) };
+	SGD::Size tScale{ particleData->GetStartScale().width, particleData->GetStartScale().height };
 
 
 	if (shape == 4)
@@ -201,23 +191,21 @@ CParticle CEmitter::CreateParticle()
 		SGD::Point EmitterCenter{ emitterPosition.x + emitterSize.width / 2
 			, emitterPosition.y + emitterSize.height / 2 };
 
-		float distance = sqrt((double)(EmitterCenter.x - ppositionn.x)*(EmitterCenter.x - ppositionn.x) +
+		float distance = sqrt((float)(EmitterCenter.x - ppositionn.x)*(EmitterCenter.x - ppositionn.x) +
 			(EmitterCenter.y - ppositionn.y)*(EmitterCenter.y - ppositionn.y));
 
 		do
 		{
 			ppositionn = { emitterPosition.x + (rand() % (int)emitterSize.width),
 				emitterPosition.y + (rand() % (int)emitterSize.width) };
-			distance = sqrt((double)(EmitterCenter.x - ppositionn.x)*(EmitterCenter.x - ppositionn.x) +
+			distance = sqrt((float)(EmitterCenter.x - ppositionn.x)*(EmitterCenter.x - ppositionn.x) +
 				(EmitterCenter.y - ppositionn.y)*(EmitterCenter.y - ppositionn.y));
 
 		} while (distance >= radius);
 
 	}
 
-	CParticle tempParticle(tempColor, ppositionn, randLife, randSpeed, tScale, 0);
-
-	return tempParticle;
+	return CParticle (tempColor, ppositionn, randLife, particleData->GetMinSpeed(), tScale, 0);
 
 }
 

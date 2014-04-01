@@ -10,6 +10,9 @@
 #include "../../Message System/CreateGameOverMessage.h"
 #include "../../Graphics/Particles/ParticleSystem.h"
 
+#define SHIELD_SCALE 100
+#define HULL_SCALE 200
+
 CPlayer::CPlayer()
 {
 	maxShield = 500;
@@ -23,6 +26,10 @@ CPlayer::CPlayer()
 	pushDelay = 0.5;
 	warpDelay = 10;
 	warpSpeed = 500;
+	exp = 0;
+	expRequired = 100;
+	level = 0;
+	perks = 0;
 
 	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravWellIcon.png");
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravPushIcon.png");
@@ -47,9 +54,9 @@ void CPlayer::Update(float dt)
 	pushTimer += dt;
 	warpTimer += dt;
 
-	CParticleSystem::GetInstance()->GetParticleEffect(2)->SetEmitterPosition(position - size / 2 + CCamera::GetInstance()->GetOffset());
+
 	CParticleSystem::GetInstance()->GetParticleEffect(1)->SetEmitterPosition(position);
-	CParticleSystem::GetInstance()->GetParticleEffect(2)->Update(dt);
+
 	CParticleSystem::GetInstance()->GetParticleEffect(1)->Update(dt);
 
 
@@ -222,4 +229,20 @@ void CPlayer::Render()
 		color = SGD::Color{ 255, 0, 0 };
 	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
 	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
+}
+
+void CPlayer::AddExp(int _exp)
+{
+	this->exp += _exp;
+	if (this->exp >= expRequired)
+	{
+		level++;
+		perks++;
+		this->exp = this->exp - expRequired;
+		expRequired *= 2;
+		maxShield += SHIELD_SCALE;
+		maxHull += HULL_SCALE;
+		shield = maxShield;
+		hull = maxHull;
+	}
 }

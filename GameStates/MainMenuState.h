@@ -5,7 +5,7 @@
 class CMainMenuState :
 	public IGameState
 {
-	enum menuReturn {play, exit, count};
+	enum menuReturn {play, options, credits, exit, count};
 	CMenu* menu;
 
 	CMainMenuState();

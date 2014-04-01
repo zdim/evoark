@@ -51,7 +51,7 @@ void			CGameplayState::Enter()
 	//grab the selected profile from Game, then load save data
 	
 	//For now: default the save data, and start the test level
-	save.currLevel = Level::TestStatic;
+	save.currLevel = Level::Gen1;
 	save.playerStat.exp = 0;
 	save.playerStat.laserLevel = 0;
 	save.playerStat.missileLevel = 0;

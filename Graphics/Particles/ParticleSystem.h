@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <vector>
 #include "../../SGD Wrappers/SGD_Handle.h"
 #include "Emitter.h"
 #include "Flyweight.h"

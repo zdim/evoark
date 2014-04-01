@@ -1,10 +1,31 @@
 #pragma once
+#include "../SGD Wrappers/SGD_Handle.h"
 #include "IGameState.h"
-class CUpgradeState :
-	public IGameState
+class CUpgradeState : public IGameState
 {
+	enum upgrades {
+		laserOne, laserTwo, laserThree, 
+		missileOne, missileTwo, missileThree, 
+		warpOne, warpTwo, warpThree, 
+		wellOne, wellTwo, wellThree, 
+		pushOne, pushTwo, pushThree, 
+		back
+	};
+
+	int cursor = 0;
+
+	SGD::HTexture iconTexture = SGD::INVALID_HANDLE;
 public:
 	CUpgradeState();
 	virtual ~CUpgradeState();
+
+	static CUpgradeState* GetInstance();
+
+	bool Input();
+	void Update(float dt);
+	void Render();
+
+	void Enter();
+	void Exit();
 };
 

@@ -45,6 +45,8 @@ void CParticleSystem::Init()
 	LoadEffect(efName);
 	std::string efName2 = "4.xml";
 	LoadEffect(efName2);
+	std::string efName3 = "5.xml";
+	LoadEffect(efName3);
 
 	for (int i = 1; i < numEmitters + 1; i++)
 	particleEffect[i]->Initialize();
@@ -76,9 +78,9 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	doc.LoadFile(effectFile);
 	TiXmlElement* pRoot = doc.RootElement();
 	
-	int trash;
+	//int trash;
 	TiXmlElement* pEmittor = pRoot->FirstChildElement();
-	pEmittor->Attribute("Emittor", &trash);
+	//pEmittor->Attribute("Emittor", &trash);
 
 	int m_nNumParticles;
 	pEmittor->Attribute("NumOfParticles", &m_nNumParticles);
@@ -192,7 +194,7 @@ void CParticleSystem::LoadEffect(std::string effectName)
 
 	delete[] imageFile;
 
-	CFlyweight* eData = new CFlyweight(ParticleImage, m_sStartScale, m_sEndScale,
+	CFlyweight *eData =  new CFlyweight(ParticleImage, m_sStartScale, m_sEndScale,
 		ParticleImageOffset,
 	startA, startR, startG, startB,
 	endA, endR, endG, endB,
@@ -205,7 +207,7 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	numEmitters++;
 	
 	particleEffect[numEmitters] = new CEmitter(eData, emitterSize, m_nShape, emitterPosition, m_nNumParticles, m_fSpawnRate, m_fTimeFromLastSpawn, m_bEmitWay, m_fEmitTime);
-	
+
 
 }
 

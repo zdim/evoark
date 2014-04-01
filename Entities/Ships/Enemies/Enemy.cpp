@@ -94,3 +94,25 @@ void CEnemy::DetectShip(CShip* other)
 	SetTarget(other);
 
 }
+
+void CEnemy::TakeDamage(int damage, bool collision)
+{
+	//if (shield > 0)
+	//{
+	//	shield -= damage;
+	//	damage -= shield;
+	//}
+	//
+	//if (damage <= 0)
+	//{
+	//	return;
+	//}
+	if (collision)
+		damage *= COLLISION_MODIFIER;
+	hull -= damage;
+	if (hull <= 0)
+	{
+
+		SelfDestruct();
+	}
+}
