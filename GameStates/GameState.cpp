@@ -82,7 +82,7 @@ void	CTestLevelState::Exit(void)
 	graphics->UnloadTexture(objArrow);
 	graphics->UnloadTexture(backgroundBlack);
 
-	soundBox->Exit();
+	//soundBox->Exit();
 
 	//Terminating Messages or events before Entity manager will BREAK it on the NEXT level.
 	//Terminate EntityManager FIRST :3
