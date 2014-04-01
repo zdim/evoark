@@ -13,6 +13,7 @@
 #include "../SGD Wrappers/SGD_InputManager.h"
 #include "../SGD Wrappers/SGD_String.h"
 #include "../Graphics/Particles/ParticleSystem.h"
+#include "../SoundBox.h"
 
 //#include "BitmapFont.h"
 #include "GameState.h"
@@ -88,6 +89,7 @@ bool Game::Initialize( int width, int height )
 	}
 
 	m_pParticleSystem->Init();
+	CSoundBox::GetInstance()->Enter();
 
 	TiXmlDocument doc("optionsSave.xml");
 	if (doc.LoadFile())
@@ -204,7 +206,7 @@ void Game::Terminate( void )
 	//	m_pFont = nullptr;
 
 	//m_pAudio->UnloadAudio(m_hSfxMusic);
-
+	CSoundBox::GetInstance()->Exit();
 
 	// Terminate & deallocate the SGD wrappers
 	m_pAudio->Terminate();

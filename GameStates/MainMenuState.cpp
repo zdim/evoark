@@ -66,6 +66,7 @@ void CMainMenuState::Enter()
 
 void CMainMenuState::Exit()
 {
+	//CSoundBox::GetInstance()->Exit();
 	delete menu;
 	menu = nullptr;
 }

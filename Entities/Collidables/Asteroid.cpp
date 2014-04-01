@@ -1,21 +1,49 @@
 #include "Asteroid.h"
-#include "Ships\Ship.h"
+#include "../Ships\Ship.h"
+#include "../../Message System/DestroyEntityMessage.h"
+#include "../../GameStates/Game.h"
 
 void CAsteroid::TakeDamage(int damage)
 {
 	health -= damage;
 	if (health <= 0)
 	{
-		//throw destroy message
+		SelfDestruct();
 	}
 }
 
-void CAsteroid::Update(float dt)
+void CAsteroid::Clamp()
 {
-	velocity += gravVec;
-	gravVec = SGD::Vector{0,0};
-	CEntity::Update(dt);
+	SGD::Size world = Game::GetInstance()->GetLevelState()->GetWorldSize();
+	SGD::Rectangle box = GetRect();
+
+	if (box.right < 0)
+	{
+		position.x = world.width + size.width/2;
+	}
+
+	if (box.bottom < 0)
+	{
+		position.y = world.height + size.height / 2;
+	}
+
+	if (box.left > world.width)
+	{
+		position.x = 0 - size.width / 2;
+	}
+
+	if (box.top > world.height)
+	{
+		position.y = 0 - size.height / 2;
+	}
 }
+
+//void CAsteroid::Update(float dt)
+//{
+//	//velocity += gravVec;
+//	//gravVec = SGD::Vector{0,0};
+//	CEntity::Update(dt);
+//}
 
 void CAsteroid::HandleCollision(IEntity* other)
 {
@@ -51,4 +79,9 @@ void CAsteroid::HandleCollision(IEntity* other)
 		dir.Normalize();
 		ast->AddGravity(dir * ast->GetSpeed());
 	}
+}
+
+void CAsteroid::AddGravity(SGD::Vector grav)
+{
+	velocity += grav;
 }

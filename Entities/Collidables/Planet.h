@@ -1,10 +1,11 @@
 #pragma once
-#include "Entity.h"
+#include "Stationary.h"
 
-class CPlanet : public CEntity
+class CPlanet : public Stationary
 {
 public:
 
+	int GetType() override { return (int)EntityType::Planet; }
 	bool IsCircle() override {return true;}
 	void Update(float dt) override;
 

@@ -255,12 +255,6 @@
     <ClInclude Include="Menu.h">
       <Filter>Menu</Filter>
     </ClInclude>
-    <ClInclude Include="Entities\Asteroid.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Entities\Barrier.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Message System\CreateEntityMessage.h">
       <Filter>Message System</Filter>
     </ClInclude>
@@ -278,9 +272,6 @@
     </ClInclude>
     <ClInclude Include="Message System\MessageID.h">
       <Filter>Message System</Filter>
-    </ClInclude>
-    <ClInclude Include="Entities\Planet.h">
-      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="SGD Wrappers\SGD_Message.h">
       <Filter>SGDWrappers</Filter>
@@ -323,6 +314,15 @@
     </ClInclude>
     <ClInclude Include="SoundBox.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Collidables\Planet.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Collidables\Asteroid.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Collidables\Barrier.h">
+      <Filter>Entities\Collidables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -500,9 +500,6 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Menu</Filter>
     </ClCompile>
-    <ClCompile Include="Entities\Asteroid.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Message System\CreateEntityMessage.cpp">
       <Filter>Message System</Filter>
     </ClCompile>
@@ -514,9 +511,6 @@
     </ClCompile>
     <ClCompile Include="Entities\Projectiles\Laser.cpp">
       <Filter>Entities\Projectiles</Filter>
-    </ClCompile>
-    <ClCompile Include="Entities\Planet.cpp">
-      <Filter>Entities</Filter>
     </ClCompile>
     <ClCompile Include="SGD Wrappers\SGD_Message.cpp">
       <Filter>SGDWrappers</Filter>
@@ -538,6 +532,12 @@
     </ClCompile>
     <ClCompile Include="SoundBox.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Collidables\Planet.cpp">
+      <Filter>Entities\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Collidables\Asteroid.cpp">
+      <Filter>Entities\Collidables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
