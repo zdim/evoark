@@ -1,9 +1,10 @@
 #include "Laser.h"
 #include "../Ships/Ship.h"
 #include "../Modules/Module.h"
-#include "../Asteroid.h"
+#include "../Collidables/Asteroid.h"
 #include "../../Message System/DestroyEntityMessage.h"
 #include "../../Camera.h"
+#include "../../GameStates/Game.h"
 
 CLaser::CLaser()
 {
@@ -13,6 +14,19 @@ CLaser::CLaser()
 CLaser::~CLaser()
 {
 
+}
+
+void CLaser::Clamp()
+{
+	SGD::Size world = Game::GetInstance()->GetLevelState()->GetWorldSize();
+	SGD::Rectangle box = GetRect();
+
+	//Is laser completely outside of the world?
+	if (box.right < 0 || box.bottom < 0 || box.left > world.width || box.top > world.height)
+	{
+		//Destroy the laser
+		SelfDestruct();
+	}
 }
 
 void CLaser::Update(float dt)

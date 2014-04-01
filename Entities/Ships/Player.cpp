@@ -153,7 +153,8 @@ void CPlayer::CreateMissile()
 	missileTimer = 0;
 	//TODO: Send CreateMissile message
 	int damage = 75;
-	damage *= int(1.5f * missileLevel);
+	//damage *= int(1.5f * missileLevel);
+	damage += int(1.5f * missileLevel * damage);
 	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, size, rotation, damage, missileLevel );
 	msg->QueueMessage();
 }
