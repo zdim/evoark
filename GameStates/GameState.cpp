@@ -50,7 +50,7 @@ void	CTestLevelState::Enter(void)
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
 	soundBox = CSoundBox::GetInstance();
-	soundBox->Enter();
+	//soundBox->Enter();
 
 	Generate();
 	//EntityManager->Spawn(EntityType::Stargate, {200,200});
