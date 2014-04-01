@@ -91,10 +91,16 @@ void COptionsState::Render()
 
 	std::ostringstream sfxString;
 	sfxString << sfxVolume;
-	Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .6f, Game::GetInstance()->GetScreenHeight() * .39f }, sfxString.str().c_str());
+	Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .7f, Game::GetInstance()->GetScreenHeight() * .39f }, sfxString.str().c_str());
 	std::ostringstream musString;
 	musString << musicVolume;
-	Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .6f, Game::GetInstance()->GetScreenHeight() * .46f }, musString.str().c_str());
+	Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .7f, Game::GetInstance()->GetScreenHeight() * .46f }, musString.str().c_str());
+	if (fullscreenOn)
+	{
+		Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .7f, Game::GetInstance()->GetScreenHeight() * .53f }, "On");
+	}
+	else
+		Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .7f, Game::GetInstance()->GetScreenHeight() * .53f }, "Off");
 
 }
 

@@ -31,7 +31,7 @@ bool CMainMenuState::Input()
 		Game::GetInstance()->PushState(COptionsState::GetInstance());
 		return true;
 	case menuReturn::credits:
-		//Game::GetInstance()->PushState(CCreditsState::GetInstance());
+		Game::GetInstance()->PushState(CCreditsState::GetInstance());
 		return true;
 	case menuReturn::exit:
 		Game::GetInstance()->PopState();

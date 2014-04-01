@@ -25,8 +25,8 @@ SGD::Size	Fnt::ComputeStringSpace(std::string str)//Returns the amount of space 
 
 	for (unsigned int i = 0; i < str.length(); i++)
 	{
-		width += characters[str[i]].size.width;
-		height = std::max(characters[str[i]].size.height, height);
+		width += characters[str[i]].size.width + characters[str[i]].offset.x;
+		height = std::max(characters[str[i]].size.height + characters[str[i]].offset.y, height);
 	}
 	return SGD::Size{width, height};
 }
@@ -40,7 +40,7 @@ void		Fnt::Write(SGD::Point pos, std::string str)
 		FntChar ch = characters[str[i]];
 		float oldY = pos.y;
 		pos.y += stringSize.height - ch.size.height;
-		graphics->DrawTextureSection(image, pos, SGD::Rectangle(ch.imagePosition, ch.size));
+		graphics->DrawTextureSection(image, { pos.x, pos.y }, SGD::Rectangle(ch.imagePosition, ch.size));
 		pos.x += ch.size.width;
 		pos.y = oldY;
 	}
@@ -59,7 +59,7 @@ void Fnt::WriteCenter(SGD::Rectangle box, std::string str)
 		FntChar ch = characters[str[i]];
 		float oldY = pos.y;
 		pos.y += stringSize.height - ch.size.height;
-		graphics->DrawTextureSection(image, pos, SGD::Rectangle(ch.imagePosition, ch.size));
+		graphics->DrawTextureSection(image, { pos.x, pos.y }, SGD::Rectangle(ch.imagePosition, ch.size));
 		pos.x += ch.size.width;
 		pos.y = oldY;
 	}
@@ -74,15 +74,20 @@ void Fnt::procElement(TiXmlElement* elem)
 		int y;
 		int w;
 		int h;
+		int xoff;
+		int yoff;
 
 		elem->Attribute("id", &id);
 		elem->Attribute("x", &x);
 		elem->Attribute("y", &y);
 		elem->Attribute("width", &w);
 		elem->Attribute("height", &h);
+		elem->Attribute("xoffset", &xoff);
+		elem->Attribute("yoffset", &yoff);
 
 		characters[(char)id].imagePosition = SGD::Point{ (float)x, (float)y };
 		characters[(char)id].size = SGD::Size{ (float)w, (float)h };
+		characters[(char)id].offset = { float(xoff), float(yoff) };
 		return;
 	}
 	if (strcmp(elem->Value(), "info") == 0)

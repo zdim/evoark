@@ -6,11 +6,15 @@ class CSoundBox
 {
 
 	SGD::AudioManager* audio;
+
+	SGD::HAudio uiHighlightSFX = SGD::INVALID_HANDLE;
+
 	SGD::HAudio playerLaserSFX = SGD::INVALID_HANDLE;
+	SGD::HAudio playerLevelUpSFX = SGD::INVALID_HANDLE;
 
 	SGD::HAudio creamMusic = SGD::INVALID_HANDLE;
 public:
-	enum sounds { playerLaser, cream, };
+	enum sounds { uiHighlight, playerLaser, playerLevelUp, cream, };
 
 	static CSoundBox* GetInstance();
 	void Enter();

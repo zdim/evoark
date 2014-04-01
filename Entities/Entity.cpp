@@ -6,7 +6,6 @@
 #include "../GameStates/LevelStates/ILevelState.h"
 #include "../GameStates/Game.h"
 #include "../Message System/DestroyEntityMessage.h"
-
 CEntity::CEntity()
 {
 
@@ -79,6 +78,7 @@ void	CEntity::Render()
 	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
 	SGD::Point renderPoint = offsetToCamera();
 	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint,SGD::Rectangle{SGD::Point{0,0}, imageSize}, rotation, imageSize/2, {}, scale);
+
 	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize/2, {}, scale);
 
 	//Paint rect

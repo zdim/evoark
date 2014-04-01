@@ -18,7 +18,7 @@ public:
 	float GetTurnRate() { return turnRate; }
 	void DetectShip(CShip* other);
 	void Update(float dt) override;
-
+	void Render() override;
 	virtual void TakeDamage(int damage, bool collision = false);
 	void HandleEvent(CCustomEvent* e) override;
 

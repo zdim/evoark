@@ -2,12 +2,15 @@
 #include "../Ships\Ship.h"
 #include "../../Message System/DestroyEntityMessage.h"
 #include "../../GameStates/Game.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 void CAsteroid::TakeDamage(int damage)
 {
 	health -= damage;
+	damaged = .15f; 
 	if (health <= 0)
 	{
+		
 		SelfDestruct();
 	}
 }
@@ -38,12 +41,31 @@ void CAsteroid::Clamp()
 	}
 }
 
-//void CAsteroid::Update(float dt)
-//{
-//	//velocity += gravVec;
-//	//gravVec = SGD::Vector{0,0};
-//	CEntity::Update(dt);
-//}
+void CAsteroid::Update(float dt)
+{
+	//velocity += gravVec;
+	//gravVec = SGD::Vector{0,0};
+	if (damaged > 0)
+		damaged -= dt;
+	if (damaged < 0)
+		damaged = 0;
+	CEntity::Update(dt);
+}
+
+void CAsteroid::Render()
+{
+	SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
+	//CCamera* cam = Game::GetInstance()->GetLevelState()->GetCam();
+	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
+	SGD::Point renderPoint = offsetToCamera();
+	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint,SGD::Rectangle{SGD::Point{0,0}, imageSize}, rotation, imageSize/2, {}, scale);
+	SGD::Color col = {};
+	if (damaged > 0)
+	{
+		col = { 155, 155, 155 };
+	}
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, col, scale);
+}
 
 void CAsteroid::HandleCollision(IEntity* other)
 {
