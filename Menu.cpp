@@ -101,6 +101,25 @@ int CMenu::Input()
 
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
 
+	if (input->GetMouseMovement() != SGD::Vector{ 0, 0 })
+	{
+		SGD::Point mousePos = input->GetMousePosition();
+		bool success = false;
+		for (int i = 0; i < buttons.size(); i++)
+		{
+			if (mousePos.IsWithinRectangle(buttons[i].box))
+			{
+				if (cursor != i)
+					CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+				cursor = i;
+				success = true;
+				break;
+			}
+		}
+		if (success == false)
+			cursor = -1;
+	}
+
 	if (input->IsKeyPressed(SGD::Key::Down) || input->IsDPadPressed(0, SGD::DPad::Down)) // || input->controllerstuff
 	{
 		if (cursor >= (int)buttons.size() - 1)
