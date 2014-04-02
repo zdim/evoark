@@ -66,7 +66,7 @@ public:
 	float GetWellTimer() { return wellTimer; }
 	float GetPushTimer() { return pushTimer; }
 	float GetWarpTimer() { return warpTimer; }
-	bool GetArrowsOn() { return arrowsOn; }
+	bool  GetArrowsOn() { return arrowsOn; }
 
 	void AddExp(int _exp);
 	void LaserLevelUp() { laserLevel++; }

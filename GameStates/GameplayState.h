@@ -7,6 +7,7 @@
 enum class Level { Tutorial, Gen1, Gen2, Gen3, Waves, Final, LoadedLevel, TestStatic, TestGen };
 struct playerData
 {
+	unsigned int level;
 	unsigned int exp;
 	unsigned int expRequired;
 	unsigned int perks;

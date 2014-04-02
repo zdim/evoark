@@ -16,6 +16,7 @@
 #include "..\GameStates\Game.h"
 #include "..\Message System\VictoryMessage.h"
 #include "../Message System/CreateEntityMessage.h"
+#include "../GameStates/GameplayState.h"
 
 CEntityManager::CEntityManager()
 {

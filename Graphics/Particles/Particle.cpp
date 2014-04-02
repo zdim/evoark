@@ -21,5 +21,6 @@ CParticle::CParticle(SGD::Color cColor, SGD::Point cPosition,
 
 CParticle::~CParticle()
 {
+
 }
 

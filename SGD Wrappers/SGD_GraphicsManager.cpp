@@ -113,7 +113,6 @@ namespace SGD
 			EGraphicsManagerStatus		m_eStatus			= E_UNINITIALIZED;			// wrapper initialization status
 
 			HandleManager< TextureInfo > m_HandleManager;								// data storage
-
 			IDirect3D9*					m_pDirect3D			= nullptr;					// Direct3D api
 			IDirect3DDevice9*			m_pDevice			= nullptr;					// device
 			ID3DXSprite*				m_pSprite			= nullptr;					// sprite

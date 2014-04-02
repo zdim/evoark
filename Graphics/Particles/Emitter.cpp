@@ -13,7 +13,6 @@ CEmitter::CEmitter()
 CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, int s, SGD::Point ePosition, int nParticles, float fSpawnRate, float fTimeFromLastSpawn, bool emway, float emitTime)
 {
 	particleData = parData;
-
 	shape = s;
 	emitterSize = eSize;
 	emitterPosition = ePosition;
@@ -22,11 +21,12 @@ CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, int s, SGD::Point ePosi
 	m_fTimeFromLastSpawn = 0;
 	m_bLoop = emway;
 	m_fEmitTime = emitTime;
-	m_fSavedEmitTime = m_fEmitTime;
 }
 
 CEmitter::~CEmitter()
 {
+	m_lAliveParticles.clear();
+	m_lDeadParticles.clear();
 }
 
 void CEmitter::Initialize()
@@ -210,10 +210,9 @@ CParticle CEmitter::CreateParticle()
 }
 
 
-void CEmitter::Reset()
+void CEmitter::Release()
 {
-	if (m_bLoop == false)
-	{
-		m_fEmitTime = m_fSavedEmitTime;
-	}
+
+
+
 }
