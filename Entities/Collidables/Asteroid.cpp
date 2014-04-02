@@ -41,7 +41,7 @@ void CAsteroid::Clamp()
 void CAsteroid::Update(float dt)
 {
 	if (velocity.ComputeLength() > speed)
-		velocity *= GRAVDECAY;
+		velocity -= velocity * GRAVDECAY;
 	CEntity::Update(dt);
 }
 

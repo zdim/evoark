@@ -133,12 +133,9 @@ bool	CTestLevelState::Input(void)
 void	CTestLevelState::Update(float dt)
 {
 	EntityManager->Update(dt);
-	cam->Update(dt);
-
-
-
 	SGD::MessageManager::GetInstance()->Update();
 	CEventManager::GetInstance().Update();
+	cam->Update(dt);
 }
 
 void	CTestLevelState::Render(void)
@@ -170,9 +167,8 @@ void	CTestLevelState::Generate()
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
 	case Level::Gen1:
-		//loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
-
-		loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
+		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
+		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
 		break;
 	case Level::Gen2:
 		loadSuccess = LoadXMLLevel("Resources/XML/World/levelTwo.xml");

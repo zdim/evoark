@@ -82,6 +82,14 @@ void CShip::HandleCollision(IEntity* other)
 			position.y = itsRect.top - size.width/2;
 		}
 	}
+	if (otherType == EntityType::Planet)
+	{
+		float radius = (other->GetSize().width + size.width)/2.0f;
+		SGD::Vector dir = position - other->GetPosition();
+		dir.Normalize();
+		SGD::Vector offset = dir * radius;
+		position = other->GetPosition() + offset;
+	}
 }
 
 
