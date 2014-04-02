@@ -13,6 +13,7 @@
 #include "../SGD Wrappers/SGD_InputManager.h"
 #include "../SGD Wrappers/SGD_String.h"
 #include "../Graphics/Particles/ParticleSystem.h"
+#include "../SoundBox.h"
 
 //#include "BitmapFont.h"
 #include "GameState.h"
@@ -88,6 +89,7 @@ bool Game::Initialize( int width, int height )
 	}
 
 	m_pParticleSystem->Init();
+	CSoundBox::GetInstance()->Enter();
 
 	TiXmlDocument doc("optionsSave.xml");
 	if (doc.LoadFile())
@@ -119,7 +121,7 @@ bool Game::Initialize( int width, int height )
 	//m_pFont = new BitmapFont;
 	//m_pFont->Initialize();
 	Font.Load("Resources/XML/font.xml");
-
+	FontSmall.Load("Resources/XML/font1.xml");
 
 	// Start the game in the Main Menu state
 	//ChangeState(CTestLevelState::GetInstance());
@@ -191,6 +193,7 @@ void Game::Terminate( void )
 		PopState();
 
 	Font.Unload();
+	FontSmall.Unload();
 
 	// Exit the current state
 	//while (!m_qStates.empty())
@@ -204,7 +207,7 @@ void Game::Terminate( void )
 	//	m_pFont = nullptr;
 
 	//m_pAudio->UnloadAudio(m_hSfxMusic);
-
+	CSoundBox::GetInstance()->Exit();
 
 	// Terminate & deallocate the SGD wrappers
 	m_pAudio->Terminate();

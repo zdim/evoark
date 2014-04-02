@@ -61,7 +61,7 @@ void	CTestLevelState::Enter(void)
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
 	soundBox = CSoundBox::GetInstance();
-	soundBox->Enter();
+	//soundBox->Enter();
 
 	Generate();
 	testing = "Level";
@@ -108,7 +108,7 @@ void	CTestLevelState::Exit(void)
 	graphics->UnloadTexture(objArrow);
 	graphics->UnloadTexture(backgroundBlack);
 
-	soundBox->Exit();
+	//soundBox->Exit();
 
 	//Terminating Messages or events before Entity manager will BREAK it on the NEXT level.
 	//Terminate EntityManager FIRST :3
@@ -244,7 +244,10 @@ void	CTestLevelState::Generate()
 					EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, 1);
 					break;
 				case ASTEROID:
-					EntityManager->Spawn(EntityType::Asteroid, col[j].pos, col[j].objectAmount);
+					EntityManager->SpawnCollidable(EntityType::Asteroid, col[j].pos, SGD::Size{32,32});
+					break;
+				case PLANET:
+					EntityManager->SpawnCollidable(EntityType::Planet, col[j].pos);
 					break;
 				case HUMAN:
 					EntityManager->Spawn(EntityType::Human, col[j].pos, 1);
@@ -446,7 +449,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::DestroyEntity:
 	{
 									 const DestroyEntityMessage* dMsg = dynamic_cast<const DestroyEntityMessage*>(msg);
-									 if (dMsg->GetEntity()->GetType() >= 7 && dMsg->GetEntity()->GetType() <= 12)
+									 if (dMsg->GetEntity()->GetType() >= (int)EntityType::Copperhead && dMsg->GetEntity()->GetType() <= (int)EntityType::Moccasin)
 									 {
 										 if (dMsg->GetEntity()->GetPosition().IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
 											dynamic_cast<CPlayer*>(CTestLevelState::GetInstance()->player)->AddExp(dynamic_cast<CEnemy*>(dMsg->GetEntity())->GetExpValue());

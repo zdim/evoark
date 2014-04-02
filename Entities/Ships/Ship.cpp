@@ -6,7 +6,7 @@
 
 CShip::CShip()
 {
-	maxHull = 1000;
+	maxHull = 100;
 	hull = maxHull;
 
 }

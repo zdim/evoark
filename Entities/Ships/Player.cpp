@@ -9,6 +9,7 @@
 #include "../../Event System/CustomEvent.h"
 #include "../../Message System/CreateGameOverMessage.h"
 #include "../../Graphics/Particles/ParticleSystem.h"
+#include "../../SoundBox.h"
 
 #define SHIELD_SCALE 100
 #define HULL_SCALE 200
@@ -153,7 +154,8 @@ void CPlayer::CreateMissile()
 	missileTimer = 0;
 	//TODO: Send CreateMissile message
 	int damage = 75;
-	damage *= int(1.5f * missileLevel);
+	//damage *= int(1.5f * missileLevel);
+	damage += int(1.5f * missileLevel * damage);
 	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, size, rotation, damage, missileLevel );
 	msg->QueueMessage();
 }
@@ -236,6 +238,7 @@ void CPlayer::AddExp(int _exp)
 	this->exp += _exp;
 	if (this->exp >= expRequired)
 	{
+		CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerLevelUp, false);
 		level++;
 		perks++;
 		this->exp = this->exp - expRequired;

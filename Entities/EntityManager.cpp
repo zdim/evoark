@@ -10,6 +10,8 @@
 #include "Projectiles\Well.h"
 #include "Projectiles\Push.h"
 #include "Collidables\InvisibleTrigger.h"
+#include "Collidables\Asteroid.h"
+#include "Collidables\Barrier.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
 #include "..\Message System\VictoryMessage.h"
@@ -40,7 +42,7 @@ void CEntityManager::Initialize()
 	}
 	images[(int)EntityType::Player]		= graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 	images[(int)EntityType::Human]		= graphics->LoadTexture("Resources/Graphics/shipTmp.png");
-	images[(int)EntityType::Copperhead] = graphics->LoadTexture("Resources/Graphics/Ship1.png");
+	images[(int)EntityType::Copperhead] = graphics->LoadTexture("Resources/Graphics/Ship1.png", { 0, 0, 0 });
 	images[(int)EntityType::Cobra]		= graphics->LoadTexture("Resources/Graphics/Ship3.png");
 	images[(int)EntityType::Mamba]		= graphics->LoadTexture("Resources/Graphics/Ship2.png");
 	images[(int)EntityType::Coral]		= graphics->LoadTexture("Resources/Graphics/Ship4.png");
@@ -62,6 +64,9 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Push] = graphics->LoadTexture("Resources/Graphics/GravPushIcon.png");
 
 	images[(int)EntityType::Stargate] = graphics->LoadTexture("Resources/Graphics/Stargate.png");
+	images[(int)EntityType::Planet] = graphics->LoadTexture("Resources/Graphics/planet.png");
+	images[(int)EntityType::Barrier] = graphics->LoadTexture("Resources/Graphics/wallTile.png");
+	images[(int)EntityType::Asteroid] = graphics->LoadTexture("Resources/Graphics/asteroid.png");
 }											  	
 											  
 void CEntityManager::Terminate()			  	
@@ -372,35 +377,52 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 	}
 }
 
-//int CEntityManager::GetDamageFromEntity(IEntity* entity, EntityType projType)
-//{
-//	EntityType type = (EntityType)entity->GetType();
-//	switch (type)
-//	{
-//	case EntityType::Player:
-//	{
-//		dynamic_cast<CPlayer*>(entity)->GetLaserLevel();
-//		break;
-//	}
-//	case EntityType::Human:
-//		break;
-//	case EntityType::Copperhead:
-//	case EntityType::Cobra:
-//	case EntityType::Mamba:
-//	case EntityType::Coordinator:
-//		break;
-//	case EntityType::LaserModule:
-//		break;
-//	case EntityType::MissileModule:
-//		break;
-//	case EntityType::WellModule:
-//		break;
-//	case EntityType::PushModule:
-//		break;
-//	case EntityType::WarpModule:
-//		break;
-//	}
-//}
+void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::Size size, SGD::Vector velocity)
+{
+	switch (type)
+	{
+	case EntityType::Planet:
+	{
+		CPlanet* planet = new CPlanet();
+		planet->SetPosition(position);
+		planet->SetImage(images[(int)EntityType::Planet]);
+		stationaries.push_back(planet);
+		break;
+	}
+	case EntityType::Barrier:
+	{
+								CBarrier* barrier = new CBarrier();
+								barrier->SetPosition(position);
+								barrier->SetSize(size);
+								barrier->SetImage(images[(int)EntityType::Barrier]);
+								stationaries.push_back(barrier);
+
+		break;
+	}
+	case EntityType::Asteroid:
+	{
+								 CAsteroid* asteroid = new CAsteroid();
+								 asteroid->SetPosition(position);
+								 asteroid->SetSize(size);
+								 //If the velocity is defaulted
+								 if (velocity == SGD::Vector{ 0, 0 })
+								 {
+									 //Set the velocity to move 100 pixels/second upward
+									 velocity = SGD::Vector{0,-100};
+									 //Pick a random rotation in radians (note: % requires to int-values, so I multiply by 1,000 here to maintain some precision)
+									 float rotation = float(rand() % int(2 * SGD::PI * 1000));
+									 //Rotate by that random rotation value, dividing it back down into 0 <= rotation <= 2PI
+									 velocity.Rotate(rotation/1000.0f);
+								 }
+								 asteroid->SetVelocity(velocity);
+								 asteroid->SetImage(images[(int)EntityType::Asteroid]);
+								 asteroids.push_back(asteroid);
+		break;
+	}
+	default:
+		break;
+	}
+}
 
 void CEntityManager::ClearTargeted(IEntity* entity)	//Iterates through the groups that could potentially have this entity targeted, and tells them to untarget it.
 {
@@ -509,7 +531,12 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		break;
 	case EntityType::Stargate:
 		stargate = nullptr;
+	case EntityType::InvisTrigger:
+	case EntityType::Planet:
 		RemoveFromGroup(stationaries, entity);
+		break;
+	case EntityType::Asteroid:
+		RemoveFromGroup(asteroids, entity);
 		break;
 	}
 	entity->Release();
@@ -710,14 +737,24 @@ void CEntityManager::Update(float dt)
 	{
 		gravObjects[i]->Update(dt);
 	}
+	for (unsigned int i = 0; i < asteroids.size(); i++)
+	{
+		asteroids[i]->Update(dt);
+	}
 
 	CheckCollision(ships, ships);
 	CheckCollision(projectiles, ships);
 	CheckCollision(ships, stationaries);
+
+	CheckCollision(asteroids, stationaries);
+	CheckCollision(asteroids, ships);
+	CheckCollision(asteroids, projectiles);
+	
 	if (gravObjects.size())
 	{
-	CheckCollision(ships, gravObjects);
-	CheckCollision(projectiles, gravObjects);
+		CheckCollision(ships, gravObjects);
+		CheckCollision(projectiles, gravObjects);
+		CheckCollision(asteroids, gravObjects);
 	}
 }
 
@@ -747,6 +784,11 @@ void CEntityManager::Render()
 	{
 		if (projectiles[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
 			projectiles[i]->Render();
+	}
+	for (unsigned int i = 0; i < asteroids.size(); i++)
+	{
+		if (asteroids[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
+			asteroids[i]->Render();
 	}
 
 	//If player exists, he SHOULD be in the EntityGroup "ships"

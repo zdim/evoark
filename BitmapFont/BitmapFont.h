@@ -7,6 +7,7 @@ struct FntChar
 {
 	SGD::Size size;
 	SGD::Point imagePosition;
+	SGD::Vector offset;
 };
 
 class Fnt

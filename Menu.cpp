@@ -3,6 +3,7 @@
 #include "BitmapFont\BitmapFont.h"
 #include "SGD Wrappers\SGD_GraphicsManager.h"
 #include "SGD Wrappers\SGD_InputManager.h"
+#include "SoundBox.h"
 #include <algorithm>
 
 CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _label, bool fillWindow, bool horizontal, SGD::Size buttonPadding, SGD::Size menuPadding, SGD::Size buttonSpacing)
@@ -100,6 +101,25 @@ int CMenu::Input()
 
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
 
+	if (input->GetMouseMovement() != SGD::Vector{ 0, 0 })
+	{
+		SGD::Point mousePos = input->GetMousePosition();
+		bool success = false;
+		for (int i = 0; i < buttons.size(); i++)
+		{
+			if (mousePos.IsWithinRectangle(buttons[i].box))
+			{
+				if (cursor != i)
+					CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+				cursor = i;
+				success = true;
+				break;
+			}
+		}
+		if (success == false)
+			cursor = -1;
+	}
+
 	if (input->IsKeyPressed(SGD::Key::Down) || input->IsDPadPressed(0, SGD::DPad::Down)) // || input->controllerstuff
 	{
 		if (cursor >= (int)buttons.size() - 1)
@@ -107,6 +127,7 @@ int CMenu::Input()
 		else
 			cursor++;
 		
+		CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
 	}
 	if (input->IsKeyPressed(SGD::Key::Up) || input->IsDPadPressed(0, SGD::DPad::Up)) // || input->controllerstuff
 	{
@@ -114,6 +135,8 @@ int CMenu::Input()
 			cursor = buttons.size() - 1;
 		else
 			cursor--;
+
+		CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
 	}
 	if (input->IsKeyPressed(SGD::Key::Enter) || input->IsButtonPressed(0, 0))  // || input->controllerstuff
 	{

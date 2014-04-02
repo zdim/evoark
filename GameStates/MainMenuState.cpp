@@ -31,7 +31,7 @@ bool CMainMenuState::Input()
 		Game::GetInstance()->PushState(COptionsState::GetInstance());
 		return true;
 	case menuReturn::credits:
-		//Game::GetInstance()->PushState(CCreditsState::GetInstance());
+		Game::GetInstance()->PushState(CCreditsState::GetInstance());
 		return true;
 	case menuReturn::exit:
 		Game::GetInstance()->PopState();
@@ -60,12 +60,13 @@ void CMainMenuState::Enter()
 	buttons[menuReturn::credits] = "Credits";
 	buttons[menuReturn::exit] = "Exit";
 	menu = new CMenu(&Game::GetInstance()->Font, buttons, "EvoArk", true);
-	CSoundBox::GetInstance()->Enter();
+	//CSoundBox::GetInstance()->Enter();
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::cream, true);
 }
 
 void CMainMenuState::Exit()
 {
+	//CSoundBox::GetInstance()->Exit();
 	delete menu;
 	menu = nullptr;
 }

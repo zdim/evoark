@@ -1,12 +1,14 @@
 #pragma once
-#include "Planet.h"
+#include "../Entity.h"
 
-class CAsteroid : public CPlanet
+class CAsteroid : public CEntity
 {
-	SGD::Vector velocity;
-	int health;
+	int health = 5000;
 public:
 
+	bool IsCircle() override {return true;}
+	int GetType() {return (int)EntityType::Asteroid;}
+	void Clamp() override;
 	int GetHealth() {return health;}
 	void SetHealth(int newHP) {health = newHP;}
 
@@ -14,6 +16,8 @@ public:
 
 	void TakeDamage(int damage);
 	void HandleCollision(IEntity* other) override;
+	virtual void AddGravity(SGD::Vector grav) override;
 
 	void Update(float dt) override;
+	void Render() override;
 };
