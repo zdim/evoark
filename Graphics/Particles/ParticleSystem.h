@@ -27,10 +27,10 @@ public:
 	  
 
 	void Init();
+	void Terminate();
 	void Update(float dt);
 	void Render();
 	void LoadEffect(std::string effectName);
-	void ResetEffect(int num);
 	CEmitter* GetParticleEffect(int n ) { return particleEffect[n]; }
 
 };

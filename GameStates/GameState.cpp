@@ -20,12 +20,15 @@
 #include "../Entities/Ships/Player.h"
 #include "../SoundBox.h"
 #include "../GameStates/GameplayState.h"
+#include "../GameStates/MainMenuState.h"
 
 //comment out
 #include "../Entities/Ships/Enemies/Moccasin.h"
 
 CTestLevelState::CTestLevelState()
 {
+	testing = "";
+	
 }
 
 
@@ -41,11 +44,19 @@ CTestLevelState* CTestLevelState::GetInstance(void)
 
 void	CTestLevelState::Enter(void)
 {
+	m_bLoaded = false;
 	srand((unsigned int)time(nullptr));
 	graphics = SGD::GraphicsManager::GetInstance();
 
+	
+	testing = "Resources";
+	m_nLine = 0;
+	Render();
+	graphics->Update();
+
 	objArrow = graphics->LoadTexture("Resources/Graphics/Arrow.png");
 	backgroundBlack = graphics->LoadTexture("Resources/Graphics/backgroundBlack3.png", { 50, 255, 255, 255 });
+
 
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
@@ -53,6 +64,11 @@ void	CTestLevelState::Enter(void)
 	//soundBox->Enter();
 
 	Generate();
+	testing = "Level";
+	m_nLine += 100;
+	Render();	
+	graphics->Update();
+
 	//EntityManager->Spawn(EntityType::Stargate, {200,200});
 	if (BackgroundImage == SGD::INVALID_HANDLE)
 		BackgroundImage = graphics->LoadTexture("Resources/Graphics/starfield.jpg");
@@ -63,12 +79,22 @@ void	CTestLevelState::Enter(void)
 	//EntityManager->Spawn(EntityType::Moccasin, player->GetPosition() + SGD::Vector{ 200,200 }, 4);
 	//EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
 
+
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 	cam = CCamera::GetInstance();
 	cam->Initiallize(player, SGD::Size{(float)m_nScreenWidth,(float)m_nScreenHeight});
 
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
+
+	testing = "Initializing";
+	m_nLine += 30;
+	Render();
+	graphics->Update();
+
+
+
+	m_bLoaded = true;
  } 
 
 void	CTestLevelState::Exit(void)
@@ -133,35 +159,34 @@ bool	CTestLevelState::Input(void)
 void	CTestLevelState::Update(float dt)
 {
 	EntityManager->Update(dt);
-	cam->Update(dt);
-
-
-
 	SGD::MessageManager::GetInstance()->Update();
 	CEventManager::GetInstance().Update();
+	cam->Update(dt);
 }
 
 void	CTestLevelState::Render(void)
 {
-	graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
-	graphics->DrawTexture(backgroundBlack, { 0, 0 });
-	graphics->DrawRectangle({ 0, 0, 2000, 2000 }, { 150, 0, 0, 0 });
+	if (m_bLoaded == true)
+	{
+		graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
+		graphics->DrawTexture(backgroundBlack, { 0, 0 });
+		graphics->DrawRectangle({ 0, 0, 2000, 2000 }, { 150, 0, 0, 0 });
 
-	// draw grids
-	//for (int i = 0; i < m_nNumQuadsWidth; i++)
-	//{
-	//	for (int j = 0; j < m_nNumQuadsHeight; j++)
-	//	{
-	//		SGD::Rectangle r = { SGD::Point{ float(m_nQuadWidth * i), float(m_nQuadHeight * j) }, SGD::Size{ float(m_nQuadWidth), float(m_nQuadHeight) } };
-	//		graphics->DrawRectangle(r, SGD::Color{ 0, 0, 0, 0 }, { 255, 255, 255 });
-	//	}
-	//}
+		EntityManager->Render();
 
-	Game::GetInstance()->Font.Write(SGD::Point{150,150},"testing");
-	
+		UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator(), EntityManager->GetStargate());
+	}
+	else if (m_bLoaded == false)
+	{
+		Game::GetInstance()->Font.Write(SGD::Point{ 150, 150 }, testing);
+		//graphics->DrawRectangle({ 0, 0, 200, 200 }, { 150, 245, 0, 0 });
+		
+		graphics->DrawLine({ 200, 200 }, { 350, 200 }, { 0, 255, 0 }, 5);
+		graphics->DrawLine({ 200, 200 }, { 200 + m_nLine, 200 }, { 255, 0, 0 }, 5);
+		
+		//graphics->DrawLine({ 150, 150 }, { 300, 150 }, { 255, 255, 0 }, 10);
+	}
 
-	EntityManager->Render();
-	UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator(), EntityManager->GetStargate());
 }
 
 void	CTestLevelState::Generate()
@@ -171,12 +196,16 @@ void	CTestLevelState::Generate()
 	{
 	case Level::Gen1:
 		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
+		testing += "1";
+		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
 		break;
 	case Level::Gen2:
 		loadSuccess = LoadXMLLevel("Resources/XML/World/levelTwo.xml");
+		testing += "2";
 		break;
 	case Level::Gen3:
 		loadSuccess = LoadXMLLevel("Resources/XML/World/testWorld2.xml");
+		testing += "3"; 
 		break;
 	}
 	if(loadSuccess)
@@ -383,8 +412,17 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 		pQuad->Attribute("width", &_width);
 		pQuad->Attribute("height", &_height);
 		r = { (float)_left, (float)_top, float(_left + _width), float(_top + _height) };
-		collisionRects.push_back(r);
+		collisionRects[i] = r;
 		pQuad = pQuad->NextSiblingElement();
+	}
+
+	for (int i = 0; i < numCollision; i++)
+	{
+		SGD::Point position;
+		position.x = float(collisionRects[i].left + collisionRects[i].right)/2.0f;
+		position.y = float(collisionRects[i].top + collisionRects[i].bottom)/2.0f;
+		SGD::Size s = collisionRects[i].ComputeSize();
+		EntityManager->SpawnCollidable(EntityType::Barrier, position, s);
 	}
 
 	return true;

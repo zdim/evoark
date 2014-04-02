@@ -69,5 +69,12 @@ void CLaser::HandleCollision(IEntity* other)
 	{
 		CAsteroid* ast = dynamic_cast<CAsteroid*>(other);
 		ast->TakeDamage(damage);
+		SelfDestruct();
+	}
+
+	//Is other a planet
+	if (otherType == EntityType::Planet)
+	{
+		SelfDestruct();
 	}
 }

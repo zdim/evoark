@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Level>
+  <Details width="4" height="4" quadWidth="300" quadHeight="300" events="1" collision="2" background="">
+    <Quad x="0" y="0" possibleTypes="1">
+      <Type type="PLAYER" amount="1" randomized="False" x="17" y="23" />
+    </Quad>
+    <Quad x="0" y="1" possibleTypes="0" />
+    <Quad x="0" y="2" possibleTypes="0" />
+    <Quad x="0" y="3" possibleTypes="0" />
+    <Quad x="1" y="0" possibleTypes="0" />
+    <Quad x="1" y="1" possibleTypes="0" />
+    <Quad x="1" y="2" possibleTypes="0" />
+    <Quad x="1" y="3" possibleTypes="0" />
+    <Quad x="2" y="0" possibleTypes="0" />
+    <Quad x="2" y="1" possibleTypes="0" />
+    <Quad x="2" y="2" possibleTypes="1">
+      <Type type="MOCCASIN" amount="1" randomized="False" x="884" y="873" />
+    </Quad>
+    <Quad x="2" y="3" possibleTypes="0" />
+    <Quad x="3" y="0" possibleTypes="0" />
+    <Quad x="3" y="1" possibleTypes="0" />
+    <Quad x="3" y="2" possibleTypes="0" />
+    <Quad x="3" y="3" possibleTypes="0" />
+    <Event type="STARGATE" x="925" y="924" width="6" height="7" />
+    <Collision x="278" y="0" width="55" height="902" />
+    <Collision x="599" y="130" width="46" height="1069" />
+  </Details>
+</Level>

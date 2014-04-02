@@ -43,8 +43,8 @@ void CAsteroid::Clamp()
 
 void CAsteroid::Update(float dt)
 {
-	//velocity += gravVec;
-	//gravVec = SGD::Vector{0,0};
+	if (velocity.ComputeLength() > speed)
+		velocity -= velocity * GRAVDECAY;
 	if (damaged > 0)
 		damaged -= dt;
 	if (damaged < 0)

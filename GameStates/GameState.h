@@ -53,6 +53,9 @@ private:
 
 	CEntity* player = nullptr;
 	CCamera* cam;
+	std::string    testing;
+	bool           m_bLoaded;
+	int            m_nLine;
 
 	// level creation
 	enum Objects { PLAYER, COPPERHEAD, COBRA, MAMBA, CORAL, MOCASSIN, ASTEROID, PLANET, HUMAN, NONE, NUM_OBJECTS };

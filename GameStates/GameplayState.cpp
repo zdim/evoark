@@ -68,3 +68,4 @@ void			CGameplayState::Enter()
 	//Game::GetInstance()->PushState(l);
 	//... Just do nothing...
 }
+

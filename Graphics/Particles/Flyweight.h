@@ -63,6 +63,7 @@ public:
 
 	~CFlyweight();
 
+	void Release();
 
 	//A&M
 	SGD::HTexture GetImage() { return image; }
