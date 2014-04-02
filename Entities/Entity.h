@@ -24,7 +24,7 @@ protected:
 	void rotateToward(SGD::Vector direction, float dt);
 
 	bool destroying = false;
-
+	float damaged = 0.f;
 public:
 	CEntity();
 	virtual ~CEntity();

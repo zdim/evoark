@@ -3,7 +3,7 @@
 
 class CAsteroid : public CEntity
 {
-	int health = 500;
+	int health = 5000;
 	float speed = 100;
 public:
 
@@ -20,4 +20,5 @@ public:
 	virtual void AddGravity(SGD::Vector grav) override;
 
 	void Update(float dt) override;
+	void Render() override;
 };

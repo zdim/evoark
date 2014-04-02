@@ -42,7 +42,7 @@ void CEntityManager::Initialize()
 	}
 	images[(int)EntityType::Player]		= graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 	images[(int)EntityType::Human]		= graphics->LoadTexture("Resources/Graphics/shipTmp.png");
-	images[(int)EntityType::Copperhead] = graphics->LoadTexture("Resources/Graphics/Ship1.png");
+	images[(int)EntityType::Copperhead] = graphics->LoadTexture("Resources/Graphics/Ship1.png", { 0, 0, 0 });
 	images[(int)EntityType::Cobra]		= graphics->LoadTexture("Resources/Graphics/Ship3.png");
 	images[(int)EntityType::Mamba]		= graphics->LoadTexture("Resources/Graphics/Ship2.png");
 	images[(int)EntityType::Coral]		= graphics->LoadTexture("Resources/Graphics/Ship4.png");

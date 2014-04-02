@@ -5,7 +5,7 @@
 #include "../../../GameStates/Game.h"
 #include "../../../Event System/EventManager.h"
 #include "../../../Message System/CreateProjectile.h"
-
+#include "../../../SGD Wrappers/SGD_GraphicsManager.h"
 CEnemy::CEnemy()
 {
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
@@ -19,6 +19,11 @@ CEnemy::~CEnemy()
 
 void CEnemy::Update(float dt)
 {
+	if (damaged > 0)
+		damaged -= dt;
+	if (damaged < 0)
+		damaged = 0;
+
 	if (target)
 	{
 		SGD::Vector tarDir = target->GetPosition() - position;
@@ -41,6 +46,21 @@ void CEnemy::Update(float dt)
 	{
 		velocity = { 0, 0 };
 	}
+}
+
+void CEnemy::Render()
+{
+	SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
+	//CCamera* cam = Game::GetInstance()->GetLevelState()->GetCam();
+	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
+	SGD::Point renderPoint = offsetToCamera();
+	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint,SGD::Rectangle{SGD::Point{0,0}, imageSize}, rotation, imageSize/2, {}, scale);
+	SGD::Color col = {};
+	if (damaged > 0)
+	{
+		col = { 155, 155, 155 };
+	}
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, col, scale);
 }
 
 void CEnemy::SetTarget(CShip* newTarget)
@@ -110,9 +130,11 @@ void CEnemy::TakeDamage(int damage, bool collision)
 	if (collision)
 		damage *= COLLISION_MODIFIER;
 	hull -= damage;
+	damaged = .15f;
 	if (hull <= 0)
 	{
 
 		SelfDestruct();
 	}
 }
+

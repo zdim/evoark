@@ -121,7 +121,7 @@ bool Game::Initialize( int width, int height )
 	//m_pFont = new BitmapFont;
 	//m_pFont->Initialize();
 	Font.Load("Resources/XML/font.xml");
-
+	FontSmall.Load("Resources/XML/font1.xml");
 
 	// Start the game in the Main Menu state
 	//ChangeState(CTestLevelState::GetInstance());
@@ -193,6 +193,7 @@ void Game::Terminate( void )
 		PopState();
 
 	Font.Unload();
+	FontSmall.Unload();
 
 	// Exit the current state
 	//while (!m_qStates.empty())
