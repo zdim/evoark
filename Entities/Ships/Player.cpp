@@ -21,7 +21,7 @@ CPlayer::CPlayer()
 	shieldRegen = 500;
 	shieldDelay = 2;
 	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 20;
-	laserDelay = 0.25f;
+	laserDelay = 0.2f;
 	missileDelay = 2.0f;
 	wellDelay = 5;
 	pushDelay = 0.5;
@@ -30,7 +30,7 @@ CPlayer::CPlayer()
 	exp = 0;
 	expRequired = 100;
 	level = 0;
-	perks = 0;
+	perks = 5;
 
 	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravWellIcon.png");
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravPushIcon.png");
@@ -248,4 +248,11 @@ void CPlayer::AddExp(int _exp)
 		shield = maxShield;
 		hull = maxHull;
 	}
+}
+
+void CPlayer::LaserLevelUp() 
+{ 
+	laserLevel++;
+	if (laserLevel == 3)
+		laserDelay = .15f;
 }

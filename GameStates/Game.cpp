@@ -122,7 +122,7 @@ bool Game::Initialize( int width, int height )
 	//m_pFont->Initialize();
 	Font.Load("Resources/XML/font.xml");
 	FontSmall.Load("Resources/XML/font1.xml");
-
+	FontPoiret.Load("Resources/XML/fontPoiret.xml");
 	// Start the game in the Main Menu state
 	//ChangeState(CTestLevelState::GetInstance());
 	PushState(CMainMenuState::GetInstance());
@@ -194,7 +194,7 @@ void Game::Terminate( void )
 
 	Font.Unload();
 	FontSmall.Unload();
-
+	FontPoiret.Unload();
 	// Exit the current state
 	//while (!m_qStates.empty())
 	//{

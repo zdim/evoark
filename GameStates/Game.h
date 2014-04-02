@@ -85,6 +85,7 @@ public:
 	// Game Font
 	Fnt				Font;
 	Fnt				FontSmall;
+	Fnt				FontPoiret;
 private:
 	/**********************************************************/
 	// Singleton Object:
