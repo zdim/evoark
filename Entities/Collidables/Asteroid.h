@@ -4,6 +4,7 @@
 class CAsteroid : public CEntity
 {
 	int health = 500;
+	float speed = 100;
 public:
 
 	bool IsCircle() override {return true;}
@@ -18,5 +19,5 @@ public:
 	void HandleCollision(IEntity* other) override;
 	virtual void AddGravity(SGD::Vector grav) override;
 
-	//void Update(float dt) override;
+	void Update(float dt) override;
 };

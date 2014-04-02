@@ -5,9 +5,8 @@ class CTurretModule :
 	public CModule
 {
 protected:
-	CShip* target;
+	CShip* target = nullptr;
 	int damage = 25;
-
 	//float delay;
 	//float timer;
 public:

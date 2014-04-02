@@ -350,7 +350,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 
 							 well->SetPosition(position);
 							 well->SetRotation(rotation);
-							 well->SetStrength(damage);
+							 well->SetStrength((float)damage);
 							 gravObjects.push_back(well);
 							 break;
 	}
@@ -370,7 +370,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 
 							 push->SetPosition(position);
 							 push->SetRotation(rotation);
-							 push->SetStrength(damage);
+							 push->SetStrength((float)damage);
 							 gravObjects.push_back(push);
 							 break;
 	}
@@ -533,6 +533,7 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		stargate = nullptr;
 	case EntityType::InvisTrigger:
 	case EntityType::Planet:
+	case EntityType::Barrier:
 		RemoveFromGroup(stationaries, entity);
 		break;
 	case EntityType::Asteroid:

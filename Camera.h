@@ -8,7 +8,7 @@ class CCamera
 	SGD::Point pos;
 	SGD::Size screenSize;
 	IEntity* target;
-	float speed = 250;
+	float speed = 600;
 	bool locked;
 
 	CCamera(IEntity* t, SGD::Size screen);

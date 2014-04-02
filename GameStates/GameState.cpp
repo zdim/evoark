@@ -170,7 +170,9 @@ void	CTestLevelState::Generate()
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
 	case Level::Gen1:
-		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
+		//loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
+
+		loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
 		break;
 	case Level::Gen2:
 		loadSuccess = LoadXMLLevel("Resources/XML/World/levelTwo.xml");
@@ -383,8 +385,17 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 		pQuad->Attribute("width", &_width);
 		pQuad->Attribute("height", &_height);
 		r = { (float)_left, (float)_top, float(_left + _width), float(_top + _height) };
-		collisionRects.push_back(r);
+		collisionRects[i] = r;
 		pQuad = pQuad->NextSiblingElement();
+	}
+
+	for (int i = 0; i < numCollision; i++)
+	{
+		SGD::Point position;
+		position.x = float(collisionRects[i].left + collisionRects[i].right)/2.0f;
+		position.y = float(collisionRects[i].top + collisionRects[i].bottom)/2.0f;
+		SGD::Size s = collisionRects[i].ComputeSize();
+		EntityManager->SpawnCollidable(EntityType::Barrier, position, s);
 	}
 
 	return true;

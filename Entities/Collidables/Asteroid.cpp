@@ -38,12 +38,12 @@ void CAsteroid::Clamp()
 	}
 }
 
-//void CAsteroid::Update(float dt)
-//{
-//	//velocity += gravVec;
-//	//gravVec = SGD::Vector{0,0};
-//	CEntity::Update(dt);
-//}
+void CAsteroid::Update(float dt)
+{
+	if (velocity.ComputeLength() > speed)
+		velocity *= GRAVDECAY;
+	CEntity::Update(dt);
+}
 
 void CAsteroid::HandleCollision(IEntity* other)
 {

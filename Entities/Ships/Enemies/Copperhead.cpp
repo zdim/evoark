@@ -41,7 +41,7 @@ SGD::Vector CCopperhead::AI(float dt)
 		SGD::Vector vToTarget =
 		{
 			GetTarget()->GetPosition().x - this->GetPosition().x,
-			GetTarget()->GetPosition().y - this->GetPosition().y,
+			GetTarget()->GetPosition().y - this->GetPosition().y
 		};
 
 		SGD::Vector direction = { 0, -1 };

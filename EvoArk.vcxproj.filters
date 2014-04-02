@@ -419,9 +419,6 @@
     <ClCompile Include="Entities\Modules\TurretModule.cpp">
       <Filter>Entities\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Entities\Modules\WarpModule.cpp">
-      <Filter>Entities\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Entities\Modules\WellModule.cpp">
       <Filter>Entities\Modules</Filter>
     </ClCompile>
@@ -537,6 +534,9 @@
       <Filter>Entities\Collidables</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Collidables\Asteroid.cpp">
+      <Filter>Entities\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Collidables\Barrier.cpp">
       <Filter>Entities\Collidables</Filter>
     </ClCompile>
   </ItemGroup>
