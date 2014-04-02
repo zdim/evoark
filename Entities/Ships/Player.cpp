@@ -189,7 +189,7 @@ void CPlayer::Warp()
 
 void CPlayer::TakeDamage(int damage, bool collision)
 {
-	if (collision && warpTimer <= warpDuration && warpLevel >= 3)
+    if (collision && warpTimer <= warpDuration && warpLevel >= 3)
 	{
 		return;
 	}

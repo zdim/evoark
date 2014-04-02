@@ -52,6 +52,12 @@ void CParticleSystem::Init()
 	particleEffect[i]->Initialize();
 }
 
+void Terminate()
+{
+
+}
+
+
 void CParticleSystem::Update(float dt)
 {
 	for (int i = 1; i < numEmitters + 1; i++)
@@ -211,7 +217,3 @@ void CParticleSystem::LoadEffect(std::string effectName)
 
 }
 
-void CParticleSystem::ResetEffect(int num)
-{
-	particleEffect[num]->Reset();
-}

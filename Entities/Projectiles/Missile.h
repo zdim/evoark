@@ -1,10 +1,11 @@
 #pragma once
 #include "Laser.h"
 #include "../Ships/Ship.h"
+#include "../../Event System/IListener.h"
 class CEmitter;
 class CParticleSystem; 
 class CMissile :
-	public CLaser
+	public CLaser, public Listener
 {
 	CShip* target = nullptr;
 	CEmitter* m_eTrail;
@@ -17,11 +18,12 @@ public:
 	void SetTarget(CShip* newTarget);
 	void Render();
 	void Update(float dt);
+	void HandleEvent(CCustomEvent* e) override;
 
 	//stub it for now. We can ^^^ hardcode a target to test tracking, then implement a search
 	void FindTarget(){};
-
-	void HandleCollision(IEntity* other) override;
+	void SelfDestruct() override;
+	//void HandleCollision(IEntity* other) override;
 };
 
 

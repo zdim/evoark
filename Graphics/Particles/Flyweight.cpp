@@ -1,6 +1,6 @@
 
 #include "Flyweight.h"
-
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 
 CFlyweight::CFlyweight()
@@ -58,4 +58,6 @@ CFlyweight::CFlyweight(
 
 CFlyweight::~CFlyweight()
 {
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(image);
 }
+

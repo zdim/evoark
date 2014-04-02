@@ -41,6 +41,9 @@ void CEnemy::Update(float dt)
 	{
 		velocity = { 0, 0 };
 	}
+
+	CCustomEvent* e = new CCustomEvent(EventID::position, nullptr, this);
+	e->Queue();
 }
 
 void CEnemy::SetTarget(CShip* newTarget)
