@@ -209,11 +209,11 @@ void CUpgradeState::Render()
 	int screenHeight = Game::GetInstance()->GetScreenHeight();
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
 	graphics->DrawRectangle({ 0, 0, (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() }, { 0, 0, 0 });
-	Game::GetInstance()->Font.WriteCenter({ screenWidth * .15f,  screenHeight * .75f, screenWidth * .30f, screenHeight * .85f }, "Lasers");
-	Game::GetInstance()->Font.WriteCenter({ screenWidth * .30f, screenHeight * .75f, screenWidth * .45f, screenHeight * .85f }, "Missiles");
-	Game::GetInstance()->Font.WriteCenter({ screenWidth * .45f, screenHeight * .75f, screenWidth * .60f, screenHeight * .85f }, "Warp");
-	Game::GetInstance()->Font.WriteCenter({ screenWidth * .60f, screenHeight * .75f, screenWidth * .75f, screenHeight * .85f }, "Well");
-	Game::GetInstance()->Font.WriteCenter({ screenWidth * .75f, screenHeight * .75f, screenWidth * .9f,  screenHeight * .85f }, "Push");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .10f, screenHeight * .65f, screenWidth * .25f,  screenHeight * .75f }, "Lasers");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .25f, screenHeight * .65f, screenWidth * .40f,  screenHeight * .75f }, "Missiles");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .40f, screenHeight * .65f, screenWidth * .55f,  screenHeight * .75f }, "Warp");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .55f, screenHeight * .65f, screenWidth * .70f,  screenHeight * .75f }, "Well");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .70f, screenHeight * .65f, screenWidth * .85f,  screenHeight * .75f }, "Push");
 
 	// draw upgrade boxes / icons
 	graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .25f });

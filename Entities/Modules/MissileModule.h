@@ -7,5 +7,6 @@ public:
 	int GetType() { return (int)EntityType::MissileModule; }
 	CMissileModule();
 	virtual ~CMissileModule();
+	void Activate() override;
 };
 

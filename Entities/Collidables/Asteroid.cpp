@@ -43,8 +43,8 @@ void CAsteroid::Clamp()
 
 void CAsteroid::Update(float dt)
 {
-	//velocity += gravVec;
-	//gravVec = SGD::Vector{0,0};
+	if (velocity.ComputeLength() > speed)
+		velocity -= velocity * GRAVDECAY;
 	if (damaged > 0)
 		damaged -= dt;
 	if (damaged < 0)
@@ -78,7 +78,7 @@ void CAsteroid::HandleCollision(IEntity* other)
 		//Have them take damage based on our size and velocity
 		float mass = size.width * size.height;
 		float speed = velocity.ComputeLength();
-		ship->TakeDamage(int(mass * speed));
+		ship->TakeDamage(int(mass * speed), true);
 
 		//Have them recieve a force based on our directions and their max speed
 		SGD::Vector dir = ship->GetPosition() - position;

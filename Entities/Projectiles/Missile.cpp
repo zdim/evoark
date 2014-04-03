@@ -5,6 +5,7 @@
 #include "../../Event System/EventManager.h"
 #include "../../Event System/EventID.h"
 #include "../../Event System/CustomEvent.h"
+#include "../../Camera.h"
 
 CMissile::CMissile()
 {
@@ -81,7 +82,7 @@ void CMissile::Update(float dt)
 
 		direction.Rotate(rotation);
 		
-		velocity = direction * 300;
+		velocity = direction * 500;
 
 	}
 
@@ -108,20 +109,26 @@ void CMissile::HandleEvent(CCustomEvent* e)
 							  IEntity* other = dynamic_cast<IEntity*> (e->GetSender());
 							  EntityType otherType = (EntityType)other->GetType();
 
-							  SGD::Vector vToTarget =
+							  
+
+							  if (otherType >= EntityType::Copperhead && otherType <= EntityType::Moccasin && CCamera::GetInstance()->GetBoxInWorld().IsIntersecting(other->GetRect()) == true && tier == 3 )
 							  {
-								  position.x - dynamic_cast<CShip*>(other)->GetPosition().x,
-								  position.y - dynamic_cast<CShip*>(other)->GetPosition().y,
-							  };
+								  if (target == nullptr)
+								  {
+									  SetTarget(dynamic_cast<CShip*>(other));
+									  return; 
+								  }
 
-							  SGD::Vector direction = { 0, -1 };
-							  direction.Rotate(rotation);
-							  float angle = direction.ComputeAngle(vToTarget);
+								  SGD::Vector vToNewTarget = other->GetPosition() - position;					
+								  SGD::Vector vToOldTarget = target->GetPosition() - position;
 
+								  SGD::Vector direction = { 0, -1 };
+								  direction.Rotate(rotation);
 
-							  if (otherType >= EntityType::Copperhead && otherType <= EntityType::Moccasin)
-							  {
-								  if (vToTarget.ComputeLength() <= 150 && angle < 0.999999)
+								  float m_fNewTarget = direction.ComputeAngle(vToNewTarget);
+								  float m_fOldTarget = direction.ComputeAngle(vToOldTarget);
+
+								  if (CCamera::GetInstance()->GetBoxInWorld().IsIntersecting(other->GetRect()) == true && m_fNewTarget < m_fOldTarget)
 								  {
 									  SetTarget(dynamic_cast<CShip*>(other));
 								  }

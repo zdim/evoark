@@ -4,6 +4,7 @@
 class CAsteroid : public CEntity
 {
 	int health = 5000;
+	float speed = 100;
 public:
 
 	bool IsCircle() override {return true;}
@@ -11,7 +12,7 @@ public:
 	void Clamp() override;
 	int GetHealth() {return health;}
 	void SetHealth(int newHP) {health = newHP;}
-
+	void SetVelocity(SGD::Vector newVel) override { CEntity::SetVelocity(newVel); speed = newVel.ComputeLength(); }
 	float GetSpeed() { return velocity.ComputeLength(); }
 
 	void TakeDamage(int damage);

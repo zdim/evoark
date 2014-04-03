@@ -38,6 +38,11 @@ void CLaser::Update(float dt)
 		SelfDestruct();
 }
 
+void CLaser::Render()
+{
+	CProjectile::Render();
+}
+
 void CLaser::HandleCollision(IEntity* other)
 {
 	EntityType otherType = (EntityType)other->GetType();
@@ -64,5 +69,13 @@ void CLaser::HandleCollision(IEntity* other)
 	{
 		CAsteroid* ast = dynamic_cast<CAsteroid*>(other);
 		ast->TakeDamage(damage);
+		SelfDestruct();
 	}
+
+	//Is other a planet
+	if (otherType == EntityType::Planet)
+	{
+		SelfDestruct();
+	}
+
 }

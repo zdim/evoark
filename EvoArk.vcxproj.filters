@@ -324,6 +324,9 @@
     <ClInclude Include="Entities\Collidables\Barrier.h">
       <Filter>Entities\Collidables</Filter>
     </ClInclude>
+    <ClInclude Include="Entities\Collidables\Shield.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -417,9 +420,6 @@
       <Filter>Entities\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Modules\TurretModule.cpp">
-      <Filter>Entities\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Entities\Modules\WarpModule.cpp">
       <Filter>Entities\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Modules\WellModule.cpp">
@@ -537,6 +537,12 @@
       <Filter>Entities\Collidables</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Collidables\Asteroid.cpp">
+      <Filter>Entities\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Collidables\Barrier.cpp">
+      <Filter>Entities\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Collidables\Shield.cpp">
       <Filter>Entities\Collidables</Filter>
     </ClCompile>
   </ItemGroup>

@@ -14,6 +14,7 @@ protected:
 	float timer = 0;	//For cooldown
 	int hull = 50;		//For destruction
 	int hullMax = 50;
+	int tier = 0;
 public:
 	CModule();
 	virtual ~CModule();
@@ -26,6 +27,7 @@ public:
 	float		GetTimer() { return timer; }	//For cooldown
 	int			GetHull() { return hull; }		//For destruction
 	int			GetHullMax() { return hullMax; }
+	int			GetTier() {return tier;}
 
 	void SetOwner (CCoral* newVal);// { owner = newVal; owner->AddRef(); }
 	void SetOffset(SGD::Vector newVal) {posOffset = newVal; }
@@ -33,6 +35,7 @@ public:
 	void SetTimer (float newVal) { timer = newVal; }	//For cooldown
 	void SetHull (int newVal) { hull = newVal; }		//For destruction
 	void SetHullMax (int newVal) { hullMax = newVal; }
+	void SetTier(int newTier) {tier = newTier;}
 
 	virtual void Update(float dt) override;
 

@@ -12,7 +12,6 @@ public:
 	virtual ~CMamba();
 	int GetType() override { return (int)EntityType::Mamba; }
 	void Update(float dt);
-	void AddGrav(SGD::Vector);
 	void CreateMissile();
 };
 

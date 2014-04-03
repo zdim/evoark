@@ -159,12 +159,9 @@ bool	CTestLevelState::Input(void)
 void	CTestLevelState::Update(float dt)
 {
 	EntityManager->Update(dt);
-	cam->Update(dt);
-
-
-
 	SGD::MessageManager::GetInstance()->Update();
 	CEventManager::GetInstance().Update();
+	cam->Update(dt);
 }
 
 void	CTestLevelState::Render(void)
@@ -200,6 +197,7 @@ void	CTestLevelState::Generate()
 	case Level::Gen1:
 		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		testing += "1";
+		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
 		break;
 	case Level::Gen2:
 		loadSuccess = LoadXMLLevel("Resources/XML/World/levelTwo.xml");
@@ -241,7 +239,7 @@ void	CTestLevelState::Generate()
 					EntityManager->Spawn(EntityType::Coral, col[j].pos, col[j].objectAmount);
 					break;
 				case MOCASSIN:
-					EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, 1);
+					EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, (int)CGameplayState::GetInstance()->GetLevel());
 					break;
 				case ASTEROID:
 					EntityManager->SpawnCollidable(EntityType::Asteroid, col[j].pos, SGD::Size{32,32});
@@ -414,8 +412,17 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 		pQuad->Attribute("width", &_width);
 		pQuad->Attribute("height", &_height);
 		r = { (float)_left, (float)_top, float(_left + _width), float(_top + _height) };
-		collisionRects.push_back(r);
+		collisionRects[i] = r;
 		pQuad = pQuad->NextSiblingElement();
+	}
+
+	for (int i = 0; i < numCollision; i++)
+	{
+		SGD::Point position;
+		position.x = float(collisionRects[i].left + collisionRects[i].right)/2.0f;
+		position.y = float(collisionRects[i].top + collisionRects[i].bottom)/2.0f;
+		SGD::Size s = collisionRects[i].ComputeSize();
+		EntityManager->SpawnCollidable(EntityType::Barrier, position, s);
 	}
 
 	return true;

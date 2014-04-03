@@ -4,7 +4,6 @@
 
 void CPlanet::Update(float dt)
 {
-	size = {1024,1024};
 }
 
 void CPlanet::HandleCollision(IEntity* other)

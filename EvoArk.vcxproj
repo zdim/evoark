@@ -85,6 +85,7 @@
     <ClInclude Include="Entities\Collidables\Barrier.h" />
     <ClInclude Include="Entities\Collidables\InvisibleTrigger.h" />
     <ClInclude Include="Entities\Collidables\Planet.h" />
+    <ClInclude Include="Entities\Collidables\Shield.h" />
     <ClInclude Include="Entities\Collidables\Stationary.h" />
     <ClInclude Include="Entities\Collidables\Trigger.h" />
     <ClInclude Include="Entities\Entity.h" />
@@ -171,7 +172,9 @@
     <ClCompile Include="BitmapFont\BitmapFont.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entities\Collidables\Asteroid.cpp" />
+    <ClCompile Include="Entities\Collidables\Barrier.cpp" />
     <ClCompile Include="Entities\Collidables\Planet.cpp" />
+    <ClCompile Include="Entities\Collidables\Shield.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\EntityManager.cpp" />
     <ClCompile Include="Entities\IEntity.cpp" />
@@ -183,7 +186,6 @@
     <ClCompile Include="Entities\Modules\PushModule.cpp" />
     <ClCompile Include="Entities\Modules\ShieldModule.cpp" />
     <ClCompile Include="Entities\Modules\TurretModule.cpp" />
-    <ClCompile Include="Entities\Modules\WarpModule.cpp" />
     <ClCompile Include="Entities\Modules\WellModule.cpp" />
     <ClCompile Include="Entities\Projectiles\GravityProjectile.cpp" />
     <ClCompile Include="Entities\Projectiles\Laser.cpp" />
