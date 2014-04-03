@@ -1,5 +1,6 @@
 #pragma once
 #include "Ship.h"
+class CShield;
 class CPlayer :
 	public CShip
 {
@@ -10,7 +11,7 @@ class CPlayer :
 	unsigned int exp;
 	unsigned int expRequired;
 	unsigned int level;
-	unsigned int perks;
+	unsigned int perks = 0;
 	unsigned int laserLevel = 0;
 	unsigned int missileLevel = 0;
 	unsigned int wellLevel = 0;
@@ -40,6 +41,8 @@ class CPlayer :
 	SGD::HTexture pushIcon = SGD::INVALID_HANDLE;
 	SGD::HTexture warpIcon = SGD::INVALID_HANDLE;
 
+	CShield* m_shield;
+
 public:
 	CPlayer();
 	virtual ~CPlayer();
@@ -48,6 +51,7 @@ public:
 	void Update(float dt) override;
 	void AddGravity(SGD::Vector grav) override;
 	void TakeDamage(int damage, bool collision = false) override;
+	void SetShield(CShield* p) { m_shield = p; }
 
 	int GetShield() { return shield; }
 	int GetMaxShield() { return maxShield; }
@@ -69,7 +73,7 @@ public:
 	bool  GetArrowsOn() { return arrowsOn; }
 
 	void AddExp(int _exp);
-	void LaserLevelUp() { laserLevel++; }
+	void LaserLevelUp();
 	void MissileLevelUp() { missileLevel++; }
 	void WellLevelUp() { wellLevel++; }
 	void PushLevelUp() { pushLevel++; }

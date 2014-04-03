@@ -12,6 +12,7 @@
 #include "Collidables\InvisibleTrigger.h"
 #include "Collidables\Asteroid.h"
 #include "Collidables\Barrier.h"
+#include "Collidables\Shield.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
 #include "..\Message System\VictoryMessage.h"
@@ -41,15 +42,15 @@ void CEntityManager::Initialize()
 	{
 		images[i] = SGD::INVALID_HANDLE;
 	}
-	images[(int)EntityType::Player]		= graphics->LoadTexture("Resources/Graphics/shipTmp.png");
-	images[(int)EntityType::Human]		= graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	images[(int)EntityType::Player] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	images[(int)EntityType::Human] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 	images[(int)EntityType::Copperhead] = graphics->LoadTexture("Resources/Graphics/Ship1.png", { 0, 0, 0 });
-	images[(int)EntityType::Cobra]		= graphics->LoadTexture("Resources/Graphics/Ship3.png");
-	images[(int)EntityType::Mamba]		= graphics->LoadTexture("Resources/Graphics/Ship2.png");
-	images[(int)EntityType::Coral]		= graphics->LoadTexture("Resources/Graphics/Ship4.png");
-	images[(int)EntityType::Moccasin]	= graphics->LoadTexture("Resources/Graphics/Ship6.png");
-	images[(int)EntityType::Laser]		= graphics->LoadTexture("Resources/Graphics/Laser.png");
-	images[(int)EntityType::Missile]	= graphics->LoadTexture("Resources/Graphics/Missile.png");
+	images[(int)EntityType::Cobra] = graphics->LoadTexture("Resources/Graphics/Ship3.png");
+	images[(int)EntityType::Mamba] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
+	images[(int)EntityType::Coral] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
+	images[(int)EntityType::Moccasin] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
+	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Laser.png");
+	images[(int)EntityType::Missile] = graphics->LoadTexture("Resources/Graphics/Missile.png");
 
 	//Change this when we have module assets
 	images[(int)EntityType::BaseModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
@@ -68,10 +69,11 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Planet] = graphics->LoadTexture("Resources/Graphics/planet.png");
 	images[(int)EntityType::Barrier] = graphics->LoadTexture("Resources/Graphics/wallTile.png");
 	images[(int)EntityType::Asteroid] = graphics->LoadTexture("Resources/Graphics/asteroid.png");
-}											  	
-											  
-void CEntityManager::Terminate()			  	
-{											  
+	images[(int)EntityType::Shield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
+}
+
+void CEntityManager::Terminate()
+{
 	DestroyAll();
 	DestroyAllLeaders();
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
@@ -104,25 +106,32 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 		break;
 	case EntityType::Player:
 	{
-		if (player != nullptr)
-			return;
+							   if (player != nullptr)
+								   return;
 
-		player = new CPlayer();
-		player->SetImage(images[(int)EntityType::Player]);
-		player->SetPosition(position);
-		player->SetSize({ 32, 32 });
-		//player->SetImageSize({ 384, 415 });
-		dynamic_cast<CShip*>(player)->setSpeed(200);
-		ships.push_back(player);
 
-		break;
+							   CShield* shield = new CShield();
+							   shield->SetPosition(position);
+							   shield->SetImage(images[(int)EntityType::Shield]);
+
+							   player = new CPlayer();
+							   player->SetImage(images[(int)EntityType::Player]);
+							   player->SetPosition(position);
+							   player->SetSize({ 32, 32 });
+							   dynamic_cast<CPlayer*>(player)->SetShield(shield);
+							   //player->SetImageSize({ 384, 415 });
+							   dynamic_cast<CShip*>(player)->setSpeed(200);
+							   shield->SetOwner(dynamic_cast<CShip*>(player));
+							   ships.push_back(player);
+							   ships.push_back(shield);
+							   break;
 	}
 	case EntityType::Human:
 	{
 							  IEntity* human = new CHuman();
 							  human->SetPosition(position);
 							  human->SetImage(images[(int)EntityType::Human]);
-							  human->SetSize({32,32});
+							  human->SetSize({ 32, 32 });
 							  allies.push_back(human);
 							  ships.push_back(human);
 							  type = (EntityType)amount;
@@ -247,7 +256,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 									 moccasin->AddModule();
 								 }
 								 moccasin->SetImage(images[(int)EntityType::Moccasin]);
-								 moccasin->SetSize({256,256});
+								 moccasin->SetSize({ 256, 256 });
 								 moccasin->SetImages(images);
 								 bigEnemies.push_back(moccasin);
 								 ships.push_back(moccasin);
@@ -258,26 +267,26 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	}
 	case EntityType::Stargate:
 	{
-		if (stargate)
-			return;
-		stargate = new Trigger();
-		stargate->SetImage(images[(int)EntityType::Stargate]);
-		stargate->SetSize({64, 64});
-		stargate->SetPosition(position);
-		CVictoryMessage* msg = new CVictoryMessage;
-		dynamic_cast<Trigger*>(stargate)->Assign(msg);
-		stationaries.push_back(stargate);
-		break;
+								 if (stargate)
+									 return;
+								 stargate = new Trigger();
+								 stargate->SetImage(images[(int)EntityType::Stargate]);
+								 stargate->SetSize({ 64, 64 });
+								 stargate->SetPosition(position);
+								 CVictoryMessage* msg = new CVictoryMessage;
+								 dynamic_cast<Trigger*>(stargate)->Assign(msg);
+								 stationaries.push_back(stargate);
+								 break;
 	}
 	case EntityType::InvisTrigger:
 	{
-								InvisTrigger* trig = new InvisTrigger;
-								trig->SetPosition(position);
-								trig->SetSize({512,512});
-								CreateEntityMessage* msg = new CreateEntityMessage(trig, (EntityType)amount);
-								trig->Assign(msg);
-								stationaries.push_back(trig);
-								break;
+									 InvisTrigger* trig = new InvisTrigger;
+									 trig->SetPosition(position);
+									 trig->SetSize({ 512, 512 });
+									 CreateEntityMessage* msg = new CreateEntityMessage(trig, (EntityType)amount);
+									 trig->Assign(msg);
+									 stationaries.push_back(trig);
+									 break;
 	}
 
 	}
@@ -289,52 +298,127 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 	{
 	case EntityType::Laser:
 	{
-							  CLaser* laser = new CLaser();
-							  laser->SetImage(images[(int)EntityType::Laser]);
-							  laser->SetSize({ 2, 8 });
-							  //laser->SetImageSize({ 74, 290 });
+							  if (tier < 2)
+							  {
+								  CLaser* laser = new CLaser();
+								  laser->SetImage(images[(int)EntityType::Laser]);
+								  laser->SetSize({ 2, 8 });
+								  //laser->SetImageSize({ 74, 290 });
 
-							  SGD::Vector offset = {0.0,-1.0};
-							  offset.Rotate(rotation);
-							  offset *= (ownerSize.height + laser->GetSize().height)*0.75f;
-							  position+=offset;
-							  laser->SetPosition(position);
-							  laser->SetRotation(rotation);
-							  laser->SetDamage(damage);
-							  SGD::Vector vel = { 0, -400 };
-							  vel.Rotate(rotation);
-							  laser->SetVelocity(vel);
-
-
-							  projectiles.push_back(laser);
+								  SGD::Vector offset = { 0.0, -1.0 };
+								  offset.Rotate(rotation);
+								  offset *= (ownerSize.height + laser->GetSize().height)*0.75f;
+								  position += offset;
+								  laser->SetPosition(position);
+								  laser->SetRotation(rotation);
+								  laser->SetDamage(damage);
+								  SGD::Vector vel = { 0, -400 };
+								  vel.Rotate(rotation);
+								  laser->SetVelocity(vel);
+								  laser->SetTier(tier);
+								  projectiles.push_back(laser);
+							  }
+							  else
+							  {
+								  CLaser* laser = new CLaser();
+								  CLaser* laserTwo = new CLaser();
+								  laserTwo->SetImage(images[(int)EntityType::Laser]);
+								  laser->SetImage(images[(int)EntityType::Laser]);
+								  laserTwo->SetSize({ 2, 8 });
+								  laser->SetSize({ 2, 8 });
+								  //laser->SetImageSize({ 74, 290 });
+								  SGD::Vector offset = { 0.5f, -1.0f };
+								  SGD::Vector offset2 = { -0.5f, -1.0f };
+								  SGD::Point pos2 = position;
+								  offset.Rotate(rotation);
+								  offset *= (ownerSize.height + laser->GetSize().height)*0.75f;
+								  position += offset;
+								  offset2.Rotate(rotation);
+								  offset2 *= (ownerSize.height + laser->GetSize().height)*0.75f;
+								  pos2 += offset2;
+								  laserTwo->SetPosition( position );
+								  laserTwo->SetRotation(rotation);
+								  laserTwo->SetDamage(damage);
+								  laser->SetPosition(pos2);
+								  laser->SetRotation(rotation);
+								  laser->SetDamage(damage); 
+								  SGD::Vector vel = { 0, -400 };
+								  vel.Rotate(rotation);
+								  laserTwo->SetVelocity(vel);
+								  laserTwo->SetTier(tier);
+								  laser->SetVelocity(vel);
+								  laser->SetTier(tier); projectiles.push_back(laser);
+								  projectiles.push_back(laserTwo);
+							  }
 							  break;
 	}
 	case EntityType::Missile:
 	{
-								CMissile* missile = new CMissile();
-								missile->SetImage(images[(int)EntityType::Missile]);
-								missile->SetSize({ 4, 16 });
-								//missile->SetImageSize({ 8, 32 });
-
-								SGD::Vector offset = {0.0,-1.0};
-								offset.Rotate(rotation);
-								offset *= (ownerSize.height + missile->GetSize().height) *0.6f;
-								position += offset;
-								
-								missile->SetPosition(position);
-								missile->SetRotation(rotation);
-								missile->SetDamage(damage);
-
-								SGD::Vector vel = {0, -400};
-								vel.Rotate(rotation);
-								missile->SetVelocity(vel);
-
-								if (tier >= 3)
+								if (tier < 2)
 								{
-									missile->FindTarget();
+									CMissile* missile = new CMissile();
+									missile->SetImage(images[(int)EntityType::Missile]);
+									missile->SetSize({ 4, 16 });
+									//missile->SetImageSize({ 8, 32 });
+
+									SGD::Vector offset = {0.0,-1.0};
+									offset.Rotate(rotation);
+									offset *= (ownerSize.height + missile->GetSize().height) *0.6f;
+									position += offset;
+
+									missile->SetPosition(position);
+									missile->SetRotation(rotation);
+									missile->SetDamage(damage);
+
+									SGD::Vector vel = {0, -400};
+									vel.Rotate(rotation);
+									missile->SetVelocity(vel);
+									projectiles.push_back(missile);
 								}
 
-								projectiles.push_back(missile);
+								else if (tier > 1)
+								{
+									CMissile* missile = new CMissile();
+									CMissile* missileTwo = new CMissile();
+									missile->SetImage(images[(int)EntityType::Missile]);
+									missile->SetSize({ 4, 16 });
+									missileTwo->SetImage(images[(int)EntityType::Missile]);
+									missileTwo->SetSize({ 4, 16 });
+									//missile->SetImageSize({ 8, 32 });
+									SGD::Point pos2 = position;
+
+									SGD::Vector offset = { 0.5f, -1.0f };
+									offset.Rotate(rotation);
+									offset *= (ownerSize.height + missile->GetSize().height) *0.6f;
+									position += offset;
+
+									SGD::Vector offset2 = { -0.5f, -1.0f };
+									offset2.Rotate(rotation);
+									offset2 *= (ownerSize.height + missile->GetSize().height) *0.6f;
+									pos2 += offset2;
+
+									missile->SetPosition(position);
+									missile->SetRotation(rotation);
+									missile->SetDamage(damage);
+
+									missileTwo->SetPosition(pos2);
+									missileTwo->SetRotation(rotation);
+									missileTwo->SetDamage(damage);
+
+									SGD::Vector vel = { 0, -400 };
+									vel.Rotate(rotation);
+									missile->SetVelocity(vel);
+									missileTwo->SetVelocity(vel);
+
+									if (tier == 3)
+									{
+										missile->FindTarget();
+										missileTwo->FindTarget();
+									}
+
+									projectiles.push_back(missile);
+									projectiles.push_back(missileTwo);
+								}
 								break;
 	}
 	case EntityType::Well:
@@ -342,8 +426,8 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 							 CWell* well = new CWell;
 							 well->SetImage(images[(int)EntityType::Well]);
 							 well->SetRadius(radius);
-							 well->SetVelocity({0,0});
-							 
+							 well->SetVelocity({ 0, 0 });
+
 							 //SGD::Vector offset = { 0.0, -1.0 };
 							 //offset.Rotate(rotation);
 							 //offset *= (ownerSize.height + well->GetSize().height) *0.6f;
@@ -361,9 +445,9 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 							 push->SetImage(images[(int)EntityType::Push]);
 							 push->SetRadius(radius);
 							 push->SetVelocity({ 0, 0 });
-							 push->SetSize({256,256});
+							 push->SetSize({ 256, 256 });
 							 push->SetOwner(owner);
-							 
+
 							 //SGD::Vector offset = { 0.0, -1.0 };
 							 //offset.Rotate(rotation);
 							 //offset *= (ownerSize.height + push->GetSize().height) * 0.25f;
@@ -384,12 +468,13 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 	{
 	case EntityType::Planet:
 	{
-		CPlanet* planet = new CPlanet();
-		planet->SetPosition(position);
-		planet->SetImage(images[(int)EntityType::Planet]);
-		stationaries.push_back(planet);
-		break;
+							   CPlanet* planet = new CPlanet();
+							   planet->SetPosition(position);
+							   planet->SetImage(images[(int)EntityType::Planet]);
+							   stationaries.push_back(planet);
+							   break;
 	}
+
 	case EntityType::Barrier:
 	{
 								CBarrier* barrier = new CBarrier();
@@ -398,8 +483,10 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 								barrier->SetImage(images[(int)EntityType::Barrier]);
 								stationaries.push_back(barrier);
 
-		break;
+								break;
 	}
+
+
 	case EntityType::Asteroid:
 	{
 								 CAsteroid* asteroid = new CAsteroid();
@@ -409,16 +496,16 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 								 if (velocity == SGD::Vector{ 0, 0 })
 								 {
 									 //Set the velocity to move 100 pixels/second upward
-									 velocity = SGD::Vector{0,-100};
+									 velocity = SGD::Vector{ 0, -100 };
 									 //Pick a random rotation in radians (note: % requires to int-values, so I multiply by 1,000 here to maintain some precision)
 									 float rotation = float(rand() % int(2 * SGD::PI * 1000));
 									 //Rotate by that random rotation value, dividing it back down into 0 <= rotation <= 2PI
-									 velocity.Rotate(rotation/1000.0f);
+									 velocity.Rotate(rotation / 1000.0f);
 								 }
 								 asteroid->SetVelocity(velocity);
 								 asteroid->SetImage(images[(int)EntityType::Asteroid]);
 								 asteroids.push_back(asteroid);
-		break;
+								 break;
 	}
 	default:
 		break;
@@ -474,7 +561,7 @@ void CEntityManager::RemoveFromGroup(EntityGroup& group, IEntity* entity)
 	{
 		if (group[i] == entity)
 		{
-			group.erase(group.begin()+i);
+			group.erase(group.begin() + i);
 			return;
 		}
 	}
@@ -495,6 +582,11 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		//player->Release();
 		player = nullptr;
 		break;
+
+	case EntityType::Shield:
+		RemoveFromGroup(ships, entity);
+		break;
+
 	case EntityType::Human:
 		dynamic_cast<CHuman*>(entity)->SetTarget(nullptr);
 		RemoveFromGroup(ships, entity);
@@ -546,7 +638,7 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 
 void CEntityManager::DestroyGroup(EntityGroup& group)	//Iterates through every entity in a group, calling Destroy()
 {
-	while(group.size())
+	while (group.size())
 	{
 		Destroy(group[0]);
 	}
@@ -567,7 +659,7 @@ void CEntityManager::DestroyLeader(CLeader* l)
 	{
 		if (leaders[i] == l)
 		{
-			leaders.erase(leaders.begin()+i);
+			leaders.erase(leaders.begin() + i);
 			delete l;
 			return;
 		}
@@ -751,7 +843,7 @@ void CEntityManager::Update(float dt)
 	CheckCollision(asteroids, stationaries);
 	CheckCollision(asteroids, ships);
 	CheckCollision(asteroids, projectiles);
-	
+
 	if (gravObjects.size())
 	{
 		CheckCollision(ships, gravObjects);

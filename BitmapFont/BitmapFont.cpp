@@ -105,7 +105,7 @@ void Fnt::procElement(TiXmlElement* elem)
 	{
 		std::string imageName = elem->FirstChildElement()->Attribute("file");
 		std::string imagePath = "Resources/Graphics/" + imageName;
-		image = SGD::GraphicsManager::GetInstance()->LoadTexture(imagePath.c_str());
+		image = SGD::GraphicsManager::GetInstance()->LoadTexture(imagePath.c_str(), { 0, 0, 0 });
 		return;
 	}
 	if (strcmp(elem->Value(), "chars") == 0)

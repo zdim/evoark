@@ -10,6 +10,7 @@
 #include "../../Message System/CreateGameOverMessage.h"
 #include "../../Graphics/Particles/ParticleSystem.h"
 #include "../../SoundBox.h"
+#include "../Collidables/Shield.h"
 
 #define SHIELD_SCALE 100
 #define HULL_SCALE 200
@@ -21,7 +22,7 @@ CPlayer::CPlayer()
 	shieldRegen = 500;
 	shieldDelay = 2;
 	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 20;
-	laserDelay = 0.25f;
+	laserDelay = 0.2f;
 	missileDelay = 2.0f;
 	wellDelay = 5;
 	pushDelay = 0.5;
@@ -30,11 +31,12 @@ CPlayer::CPlayer()
 	exp = 0;
 	expRequired = 100;
 	level = 0;
-	perks = 0;
+	perks = 5;
 
 	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravWellIcon.png");
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravPushIcon.png");
 	warpIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/WarpIcon.png");
+	
 }
 
 
@@ -54,13 +56,6 @@ void CPlayer::Update(float dt)
 	wellTimer += dt;
 	pushTimer += dt;
 	warpTimer += dt;
-
-
-	CParticleSystem::GetInstance()->GetParticleEffect(1)->SetEmitterPosition(position);
-
-	CParticleSystem::GetInstance()->GetParticleEffect(1)->Update(dt);
-
-
 
 	if (shieldTimer >= shieldDelay)
 	{
@@ -143,7 +138,7 @@ void CPlayer::CreateLaser()
 	if (laserLevel >= 1)
 		damage += 15;
 
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, size, rotation, damage, laserLevel);
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, m_shield->GetSize(), rotation, damage, laserLevel);
 	msg->QueueMessage();
 }
 
@@ -156,7 +151,7 @@ void CPlayer::CreateMissile()
 	int damage = 75;
 	//damage *= int(1.5f * missileLevel);
 	damage += int(1.5f * missileLevel * damage);
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, size, rotation, damage, missileLevel );
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, m_shield->GetSize(), rotation, damage, missileLevel );
 	msg->QueueMessage();
 }
 
@@ -224,8 +219,8 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 void CPlayer::Render()
 {
-	if (shield > 0)
-		CParticleSystem::GetInstance()->GetParticleEffect(1)->Render();
+
+
 	SGD::Color color = {};
 	if (shield < maxShield)
 		color = SGD::Color{ 255, 0, 0 };
@@ -248,4 +243,11 @@ void CPlayer::AddExp(int _exp)
 		shield = maxShield;
 		hull = maxHull;
 	}
+}
+
+void CPlayer::LaserLevelUp() 
+{ 
+	laserLevel++;
+	if (laserLevel == 3)
+		laserDelay = .15f;
 }

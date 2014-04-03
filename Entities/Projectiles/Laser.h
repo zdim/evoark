@@ -6,6 +6,7 @@ class CLaser : public CProjectile
 {
 protected:
 	int damage = 10;
+	unsigned int tier = 0;
 	SGD::HAudio hitSound = SGD::INVALID_HANDLE;
 public:
 	CLaser();
@@ -14,8 +15,10 @@ public:
 	void Clamp() override;
 	int GetType() { return (int)EntityType::Laser; }
 	void Update(float dt) override;
+	void Render() override;
 	int GetDamage() {return damage;}
 	void SetDamage(int newDam) {damage = newDam;}
+	void SetTier(unsigned int _tier) { tier = _tier; }
 
 	SGD::HAudio SetSound() {return hitSound;}
 	void SetSound(SGD::HAudio newSound) {hitSound = newSound;}

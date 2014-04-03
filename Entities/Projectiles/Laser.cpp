@@ -38,6 +38,11 @@ void CLaser::Update(float dt)
 		SelfDestruct();
 }
 
+void CLaser::Render()
+{
+	CProjectile::Render();
+}
+
 void CLaser::HandleCollision(IEntity* other)
 {
 	EntityType otherType = (EntityType)other->GetType();
@@ -72,4 +77,5 @@ void CLaser::HandleCollision(IEntity* other)
 	{
 		SelfDestruct();
 	}
+
 }
