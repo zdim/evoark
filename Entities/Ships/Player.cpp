@@ -24,10 +24,10 @@ CPlayer::CPlayer()
 	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 20;
 	laserDelay = 0.2f;
 	missileDelay = 2.0f;
-	wellDelay = 5;
-	pushDelay = 0.5;
-	warpDelay = 10;
-	warpSpeed = 500;
+	wellDelay = 12;
+	pushDelay = 8;
+	warpDelay = 12;
+	warpSpeed = 300;
 	exp = 0;
 	expRequired = 100;
 	level = 0;
@@ -161,8 +161,23 @@ void CPlayer::CreateWell()
 		return;
 	wellTimer = 0;
 	//TODO: Send CreateWell message
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, SGD::InputManager::GetInstance()->GetMousePosition() - CCamera::GetInstance()->GetOffset(), size, rotation, 150, wellLevel, 128);
-	msg->QueueMessage();
+	
+	if (wellLevel == 0)
+	{
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, SGD::InputManager::GetInstance()->GetMousePosition() - CCamera::GetInstance()->GetOffset(), size, rotation, 150, wellLevel, 100);
+		msg->QueueMessage();
+	}
+	else if (wellLevel == 1)
+	{
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, SGD::InputManager::GetInstance()->GetMousePosition() - CCamera::GetInstance()->GetOffset(), size, rotation, 150, wellLevel, 150);
+		msg->QueueMessage();
+	}
+	else
+	{
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, SGD::InputManager::GetInstance()->GetMousePosition() - CCamera::GetInstance()->GetOffset(), size, rotation, 225, wellLevel, 150);
+		msg->QueueMessage();
+	}
+
 }
 
 void CPlayer::CreatePush()
@@ -250,4 +265,13 @@ void CPlayer::LaserLevelUp()
 	laserLevel++;
 	if (laserLevel == 3)
 		laserDelay = .15f;
+}
+
+void CPlayer::WarpLevelUp()
+{ 
+	warpLevel++; 
+	if (warpLevel == 1)
+		warpDelay = 6.0f;
+	else if (warpLevel == 2)
+		warpSpeed = 600.0f;
 }

@@ -354,7 +354,7 @@ void CUpgradeState::Render()
 	case wellOne:
 		graphics->DrawRectangle({ { screenWidth * .44f, screenHeight * .52f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .48f }, SGD::Size{ 150, 100 } }, "Gravity Well I");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Reduced Cooldown");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Increased Radius");
 		break;
 	case wellTwo:
 		graphics->DrawRectangle({ { screenWidth * .44f, screenHeight * .37f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
@@ -371,7 +371,7 @@ void CUpgradeState::Render()
 	case pushOne:
 		graphics->DrawRectangle({ { screenWidth * .59f, screenHeight * .52f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .48f }, SGD::Size{ 150, 100 } }, "Gravity Push I");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Reduced Cooldown");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Larger Arc");
 		break;
 	case pushTwo:
 		graphics->DrawRectangle({ { screenWidth * .59f, screenHeight * .37f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
