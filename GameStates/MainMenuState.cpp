@@ -3,6 +3,7 @@
 #include "GameplayState.h"
 #include "OptionsState.h"
 #include "CreditsState.h"
+#include "PlaySelectState.h"
 
 CMainMenuState::CMainMenuState()
 {
@@ -25,7 +26,7 @@ bool CMainMenuState::Input()
 	{
 	case menuReturn::play:
 		Game::GetInstance()->PopState();
-		Game::GetInstance()->PushState(CGameplayState::GetInstance());
+		Game::GetInstance()->PushState(CPlaySelectState::GetInstance());
 		return true;
 	case menuReturn::options:
 		Game::GetInstance()->PushState(COptionsState::GetInstance());

@@ -134,6 +134,7 @@
     <ClInclude Include="GameStates\MainMenuState.h" />
     <ClInclude Include="GameStates\OptionsState.h" />
     <ClInclude Include="GameStates\PauseState.h" />
+    <ClInclude Include="GameStates\PlaySelectState.h" />
     <ClInclude Include="GameStates\SaveSelectState.h" />
     <ClInclude Include="GameStates\UpgradeState.h" />
     <ClInclude Include="Graphics\Particles\Emitter.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="GameStates\MainMenuState.cpp" />
     <ClCompile Include="GameStates\OptionsState.cpp" />
     <ClCompile Include="GameStates\PauseState.cpp" />
+    <ClCompile Include="GameStates\PlaySelectState.cpp" />
     <ClCompile Include="GameStates\SaveSelectState.cpp" />
     <ClCompile Include="GameStates\UpgradeState.cpp" />
     <ClCompile Include="Graphics\Particles\Emitter.cpp" />
