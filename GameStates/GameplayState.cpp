@@ -73,6 +73,138 @@ void			CGameplayState::Enter()
 	//... Just do nothing...
 }
 
+TiXmlElement* nameEntityDataElement(EntityType type)
+{
+	TiXmlElement* elem;
+	switch (type)
+	{
+	case EntityType::Cobra:
+		elem = new TiXmlElement("cobra");
+		break;
+	case EntityType::Copperhead:
+		elem = new TiXmlElement("copperhead");
+		break;
+	case EntityType::Human:
+		elem = new TiXmlElement("human");
+		break;
+	case EntityType::Mamba:
+		elem = new TiXmlElement("mamba");
+		break;
+	case EntityType::Player:
+		elem = new TiXmlElement("player");
+		break;
+	case EntityType::Coral:
+		elem = new TiXmlElement("coral");
+		break;
+	case EntityType::Moccasin:
+		elem = new TiXmlElement("moccasin");
+		break;
+	case EntityType::BaseModule:
+		elem = new TiXmlElement("base");
+		break;
+	case EntityType::EngineModule:
+		elem = new TiXmlElement("enigne");
+		break;
+	case EntityType::LaserModule:
+		elem = new TiXmlElement("laser");
+		break;
+	case EntityType::MissileModule:
+		elem = new TiXmlElement("missile");
+		break;
+	case EntityType::PushModule:
+		elem = new TiXmlElement("push");
+		break;
+	case EntityType::ShieldModule:
+		elem = new TiXmlElement("shield");
+		break;
+	case EntityType::WarpModule:
+		elem = new TiXmlElement("warp");
+		break;
+	case EntityType::WellModule:
+		elem = new TiXmlElement("well");
+		break;
+	case EntityType::Asteroid:
+		elem = new TiXmlElement("asteroid");
+		break;
+	case EntityType::Barrier:
+		elem = new TiXmlElement("barrier");
+		break;
+	case EntityType::InvisTrigger:
+		elem = new TiXmlElement("invisTrigger");
+		break;
+	case EntityType::Planet:
+		elem = new TiXmlElement("planet");
+		break;
+	case EntityType::Stargate:
+		elem = new TiXmlElement("stargate");
+		break;
+	case EntityType::Trigger:
+		elem = new TiXmlElement("trigger");
+		break;
+	default:
+		elem = nullptr;
+		break;
+	}
+	return elem;
+}
+
+TiXmlElement* makeEntityDataElement(EntityData& data)
+{
+	TiXmlElement* entity = nameEntityDataElement(data.type);
+	entity->SetAttribute("x", data.position.x);
+	entity->SetAttribute("y", data.position.y);
+	entity->SetAttribute("hull",data.hull);
+	entity->SetAttribute("shield",data.shield);
+	entity->SetAttribute("coord",data.coord);
+	return entity;
+}
+
+TiXmlElement* makeModularDataElement(ModularEntityData& data)
+{
+	TiXmlElement* entity = nameEntityDataElement(data.type);
+	entity->SetAttribute("x", data.position.x);
+	entity->SetAttribute("y", data.position.y);
+	for (unsigned int i = 0; i < data.modules.size(); i++)
+	{
+		entity->LinkEndChild(makeEntityDataElement(data.modules[i]));
+	}
+	return entity;
+}
+
+TiXmlElement* makeCollidableElement(CollidableData& data)
+{
+	TiXmlElement* col = nameEntityDataElement(data.type);
+	col->SetAttribute("x", data.position.x);
+	col->SetAttribute("y", data.position.y);
+	col->SetAttribute("width", data.size.width);
+	col->SetAttribute("height", data.size.height);
+	col->SetAttribute("ID", (int)data.ID);
+}
+
+TiXmlElement* makeFlockElement(Flock& data)
+{
+	TiXmlElement* flock = new TiXmlElement("flock");
+	flock->SetAttribute("x", data.home.x);
+	flock->SetAttribute("y",data.home.y);
+	flock->SetAttribute("backup", data.backup);
+	for (unsigned int i = 0; i < data.members.size(); i++)
+	{
+		flock->LinkEndChild(makeEntityDataElement(data.members[i]));
+	}
+}
+
+TiXmlElement* makeModFlockElement(ModularFlock& data)
+{
+	TiXmlElement* flock = new TiXmlElement("modFlock");
+	flock->SetAttribute("x", data.home.x);
+	flock->SetAttribute("y", data.home.y);
+	flock->SetAttribute("backup", data.backup);
+	for (unsigned int i = 0; i < data.members.size(); i++)
+	{
+		flock->LinkEndChild(makeModularDataElement(data.members[i]));
+	}
+}
+
 void CGameplayState::SaveProfile()
 {
 	std::string filepath = "Resources/XML/Profiles/";
@@ -100,115 +232,33 @@ void CGameplayState::SaveProfile()
 	if (save.world.saved)
 	{
 		TiXmlElement* world = new TiXmlElement("world");
-		world->SetAttribute("saved", "true");
+		world->SetAttribute("saved", false);
 		for (unsigned int i = 0; i < save.world.entities.size(); i++)
 		{
-			TiXmlElement* entity;
-			switch (save.world.entities[i].type)
-			{
-			case EntityType::Cobra:
-				entity = new TiXmlElement("cobra");
-				break;
-			case EntityType::Copperhead:
-				entity = new TiXmlElement("copperhead");
-				break;
-			case EntityType::Human:
-				entity = new TiXmlElement("human");
-				break;
-			case EntityType::Mamba:
-				entity = new TiXmlElement("mamba");
-				break;
-			case EntityType::Planet:
-				entity = new TiXmlElement("planet");
-				break;
-			case EntityType::Player:
-				entity = new TiXmlElement("player");
-				break;
-			default:
-				continue;
-			}
-			entity->SetAttribute("x", save.world.entities[i].position.x);
-			entity->SetAttribute("y", save.world.entities[i].position.y);
-			entity->SetAttribute("hull", save.world.entities[i].hull);
-			entity->SetAttribute("shield", save.world.entities[i].shield);
+			world->LinkEndChild(makeEntityDataElement(save.world.entities[i]));
 		}
-		for (unsigned int i = 0; i < save.world.modularEntities.size(); i++)
+
+		for (unsigned int i = 0; i < save.world.flocks.size(); i++)
 		{
-			TiXmlElement* entity;
-			switch (save.world.modularEntities[i].type)
-			{
-			case EntityType::Coral:
-				entity = new TiXmlElement("coral");
-				break;
-			case EntityType::Moccasin:
-				entity = new TiXmlElement("moccasin");
-				break;
-			default:
-				continue;
-			}
-			for (unsigned int j = 0; j < save.world.modularEntities[i].modules.size(); i++)
-			{
-				TiXmlElement* mod;
-				switch (save.world.modularEntities[i].modules[j].type)
-				{
-				case EntityType::BaseModule:
-					mod = new TiXmlElement("base");
-					break;
-				case EntityType::EngineModule:
-					mod = new TiXmlElement("enigne");
-					break;
-				case EntityType::LaserModule:
-					mod = new TiXmlElement("laser");
-					break;
-				case EntityType::MissileModule:
-					mod = new TiXmlElement("missile");
-					break;
-				case EntityType::PushModule:
-					mod = new TiXmlElement("push");
-					break;
-				case EntityType::ShieldModule:
-					mod = new TiXmlElement("shield");
-					break;
-				case EntityType::WarpModule:
-					mod = new TiXmlElement("warp");
-					break;
-				case EntityType::WellModule:
-					mod = new TiXmlElement("well");
-					break;
-				default:
-					continue;
-				}
-			}
+			world->LinkEndChild(makeFlockElement(save.world.flocks[i]));
+		}
+
+		for (unsigned int i = 0; i < save.world.modFlocks.size(); i++)
+		{
+			world->LinkEndChild(makeModFlockElement(save.world.modFlocks[i]));
 		}
 
 		for (unsigned int i = 0; save.world.collidables.size(); i++)
 		{
-			TiXmlElement* col;
-			switch (save.world.collidables[i].type)
-			{
-			case EntityType::Asteroid:
-				col = new TiXmlElement("asteroid");
-				break;
-			case EntityType::Barrier:
-				col = new TiXmlElement("barrier");
-				break;
-			case EntityType::InvisTrigger:
-				col = new TiXmlElement("invisTrigger");
-				break;
-			case EntityType::Planet:
-				col = new TiXmlElement("planet");
-				break;
-			case EntityType::Stargate:
-				col = new TiXmlElement("stargate");
-				break;
-			case EntityType::Trigger:
-				col = new TiXmlElement("trigger");
-				break;
-			default:
-				continue;
-			}
-			//determine triggertype, and save that as an attribute
+			world->LinkEndChild(makeCollidableElement(save.world.collidables[i]));
 		}
+		doc.LinkEndChild(world);
+	}
+	else
+	{
+		TiXmlElement* world = new TiXmlElement("world");
+		world->SetAttribute("save", false);
+		doc.LinkEndChild(world);
 	}
 }
 

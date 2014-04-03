@@ -32,12 +32,30 @@ struct EntityData
 	unsigned int hull;
 	unsigned int shield;
 	SGD::Point position;
+	bool coord;
 };
 
 struct ModularEntityData
 {
 	EntityType type;
+	SGD::Point position;
 	std::vector<EntityData> modules;
+};
+
+struct Flock
+{
+	EntityType type;
+	SGD::Point home;
+	bool backup;
+	std::vector<EntityData> members;
+};
+
+struct ModularFlock
+{
+	EntityType type;
+	SGD::Point home;
+	bool backup;
+	std::vector<ModularEntityData> members;
 };
 
 struct CollidableData
@@ -52,7 +70,9 @@ struct worldData
 {
 	bool saved = false;
 	std::vector<EntityData> entities;
-	std::vector<ModularEntityData> modularEntities;
+	EntityData boss;
+	std::vector<Flock> flocks;
+	std::vector<ModularFlock> modFlocks;
 	std::vector<CollidableData> collidables;
 };
 
@@ -68,6 +88,8 @@ struct saveData
 class CGameplayState : public IGameState
 {
 	saveData save;
+	CGameplayState();
+	~CGameplayState();
 public:
 	static CGameplayState* GetInstance();
 	virtual bool Input() override;
