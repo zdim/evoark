@@ -1,5 +1,6 @@
 #pragma once
 #include "Ship.h"
+class CShield;
 class CPlayer :
 	public CShip
 {
@@ -40,6 +41,8 @@ class CPlayer :
 	SGD::HTexture pushIcon = SGD::INVALID_HANDLE;
 	SGD::HTexture warpIcon = SGD::INVALID_HANDLE;
 
+	CShield* m_shield;
+
 public:
 	CPlayer();
 	virtual ~CPlayer();
@@ -48,6 +51,7 @@ public:
 	void Update(float dt) override;
 	void AddGravity(SGD::Vector grav) override;
 	void TakeDamage(int damage, bool collision = false) override;
+	void SetShield(CShield* p) { m_shield = p; }
 
 	int GetShield() { return shield; }
 	int GetMaxShield() { return maxShield; }

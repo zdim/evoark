@@ -72,4 +72,5 @@ void CLaser::HandleCollision(IEntity* other)
 	{
 		SelfDestruct();
 	}
+
 }

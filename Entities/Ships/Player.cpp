@@ -10,6 +10,7 @@
 #include "../../Message System/CreateGameOverMessage.h"
 #include "../../Graphics/Particles/ParticleSystem.h"
 #include "../../SoundBox.h"
+#include "../Collidables/Shield.h"
 
 #define SHIELD_SCALE 100
 #define HULL_SCALE 200
@@ -35,6 +36,7 @@ CPlayer::CPlayer()
 	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravWellIcon.png");
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravPushIcon.png");
 	warpIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/WarpIcon.png");
+	
 }
 
 
@@ -54,13 +56,6 @@ void CPlayer::Update(float dt)
 	wellTimer += dt;
 	pushTimer += dt;
 	warpTimer += dt;
-
-
-	CParticleSystem::GetInstance()->GetParticleEffect(1)->SetEmitterPosition(position);
-
-	CParticleSystem::GetInstance()->GetParticleEffect(1)->Update(dt);
-
-
 
 	if (shieldTimer >= shieldDelay)
 	{
@@ -224,8 +219,8 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 void CPlayer::Render()
 {
-	if (shield > 0)
-		CParticleSystem::GetInstance()->GetParticleEffect(1)->Render();
+
+
 	SGD::Color color = {};
 	if (shield < maxShield)
 		color = SGD::Color{ 255, 0, 0 };
