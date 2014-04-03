@@ -77,7 +77,7 @@ public:
 	void MissileLevelUp() { missileLevel++; }
 	void WellLevelUp() { wellLevel++; }
 	void PushLevelUp() { pushLevel++; }
-	void WarpLevelUp() { warpLevel++; }
+	void WarpLevelUp();
 	void RemovePerk() { perks--; }
 
 	// get textures for icons
