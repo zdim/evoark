@@ -1,3 +1,3 @@
 #pragma once
 
-enum class EventID { position, distress, test };
+enum class EventID { position, distress, test, count };

@@ -78,7 +78,7 @@ void CAsteroid::HandleCollision(IEntity* other)
 		//Have them take damage based on our size and velocity
 		float mass = size.width * size.height;
 		float speed = velocity.ComputeLength();
-		ship->TakeDamage(int(mass * speed));
+		ship->TakeDamage(int(mass * speed), true);
 
 		//Have them recieve a force based on our directions and their max speed
 		SGD::Vector dir = ship->GetPosition() - position;
