@@ -13,6 +13,7 @@
 #include "Collidables\Asteroid.h"
 #include "Collidables\Barrier.h"
 #include "Collidables\Shield.h"
+#include "Collidables\ModuleShield.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
 #include "..\Message System\VictoryMessage.h"
@@ -70,6 +71,8 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Barrier] = graphics->LoadTexture("Resources/Graphics/wallTile.png");
 	images[(int)EntityType::Asteroid] = graphics->LoadTexture("Resources/Graphics/asteroid.png");
 	images[(int)EntityType::Shield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
+	images[(int)EntityType::ModuleShield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
+	
 }
 
 void CEntityManager::Terminate()
@@ -232,13 +235,15 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  corals.resize(amount);
 							  for (unsigned int i = 0; i < corals.size(); i++)
 							  {
+								 
 								  corals[i] = new CCoral();
 								  corals[i]->SetImage(images[(int)EntityType::Coral]);
 								  //corals[i]->SetImageSize({ 96, 78 });
 								  corals[i]->SetSize({ 128, 128 });
-								  dynamic_cast<CCoral*>(corals[i])->SetImages(images);
+								  dynamic_cast<CCoral*>(corals[i])->SetImages(images);					
 								  bigEnemies.push_back(corals[i]);
 								  ships.push_back(corals[i]);
+								  ships.push_back(dynamic_cast<CCoral*>(corals[i])->GetShield());
 							  }
 							  leader->SetHome(position);
 							  leader->Assign(corals);
@@ -587,6 +592,10 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		break;
 
 	case EntityType::Shield:
+		RemoveFromGroup(ships, entity);
+		break;
+
+	case EntityType::ModuleShield:
 		RemoveFromGroup(ships, entity);
 		break;
 

@@ -7,7 +7,7 @@
 #include "../../Modules/WarpModule.h"
 #include "../../Modules/ShieldModule.h"
 #include "../../Modules/Engine.h"
-
+class CModuleShield;
 class CCoral :
 	public CEnemy
 {
@@ -15,6 +15,7 @@ protected:
 	enum moduleSlot{cockpit, shieldModule, engine, laser, ability, count};
 	std::vector<SGD::Vector>modulePositions;
 	std::vector<CModule*>modules;
+	CModuleShield* m_pShield;
 
 public:
 	CCoral();
@@ -32,5 +33,7 @@ public:
 
 	virtual void SetImages(std::vector<SGD::HTexture>&images);
 	void SetTarget(CShip* newTarget) override;
+	void SetShield(CModuleShield* p) { m_pShield = p; }
+	CModuleShield* GetShield()       { return m_pShield; }
 	int RequestShield(int damage);
 };

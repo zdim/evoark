@@ -330,6 +330,9 @@
     <ClInclude Include="GameStates\PlaySelectState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Entities\Collidables\ModuleShield.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -550,6 +553,9 @@
     </ClCompile>
     <ClCompile Include="GameStates\PlaySelectState.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Collidables\ModuleShield.cpp">
+      <Filter>Entities\Collidables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

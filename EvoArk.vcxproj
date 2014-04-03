@@ -84,6 +84,7 @@
     <ClInclude Include="Entities\Collidables\Asteroid.h" />
     <ClInclude Include="Entities\Collidables\Barrier.h" />
     <ClInclude Include="Entities\Collidables\InvisibleTrigger.h" />
+    <ClInclude Include="Entities\Collidables\ModuleShield.h" />
     <ClInclude Include="Entities\Collidables\Planet.h" />
     <ClInclude Include="Entities\Collidables\Shield.h" />
     <ClInclude Include="Entities\Collidables\Stationary.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entities\Collidables\Asteroid.cpp" />
     <ClCompile Include="Entities\Collidables\Barrier.cpp" />
+    <ClCompile Include="Entities\Collidables\ModuleShield.cpp" />
     <ClCompile Include="Entities\Collidables\Planet.cpp" />
     <ClCompile Include="Entities\Collidables\Shield.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />

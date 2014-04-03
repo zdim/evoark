@@ -62,7 +62,7 @@ void	CTestLevelState::Enter(void)
 	EntityManager->Initialize();
 	soundBox = CSoundBox::GetInstance();
 	//soundBox->Enter();
-
+	EntityManager->Spawn(EntityType::Moccasin, { 200, 200 }, 1);
 	Generate();
 	testing = "Level";
 	m_nLine += 100;
@@ -76,7 +76,7 @@ void	CTestLevelState::Enter(void)
 	//Spawn Coral near the player
 	//EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
 	//Spawn Moccasin near the player
-	//EntityManager->Spawn(EntityType::Moccasin, player->GetPosition() + SGD::Vector{ 200,200 }, 4);
+
 	//EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
 
 

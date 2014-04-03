@@ -2,13 +2,21 @@
 #include "Coral.h"
 #include "../../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../EntityManager.h"
+#include "../../Collidables/ModuleShield.h"
 CCoral::CCoral()
 {
 	expValue = 50;
 	modules.resize(count);
 	modules[engine] = new CEngine();
 	modules[cockpit] = new CModule();
+	m_pShield = new CModuleShield();
+
 	modules[shieldModule] = new CShieldModule();
+	
+	m_pShield->SetOwner(dynamic_cast<CShieldModule*>(modules[shieldModule]));
+	m_pShield->SetOwnerShip(this);
+
+	
 	modules[laser] = new CLaserModule();
 
 	EntityType abilityMod = (EntityType)(rand()%4 + (int)EntityType::MissileModule);
@@ -77,6 +85,7 @@ void CCoral::Render()
 void CCoral::HandleCollision(IEntity* other)
 {
 	CEntityManager* EM = CEntityManager::GetInstance();
+
 	for (unsigned int i = 0; i < modules.size(); i++)
 	{
 		if (EM->ShapedCollisions(modules[i], other))
@@ -100,6 +109,12 @@ void CCoral::DestroyModule(CModule* mod)
 			modules[i] = nullptr;
 			if (i == cockpit)
 				SelfDestruct();
+			if (i == shieldModule)
+			{
+				m_pShield->SelfDestruct();
+				m_pShield = nullptr;
+			}
+				
 			break;
 		}
 	}
@@ -115,6 +130,8 @@ void CCoral::DestroyAllModules()
 
 void CCoral::SetImages(std::vector<SGD::HTexture>& images)
 {
+	m_pShield->SetImage(images[(int)EntityType::Shield]);
+
 	for (unsigned int i = 0; i < modules.size(); i++)
 	{
 		if (modules[i])
