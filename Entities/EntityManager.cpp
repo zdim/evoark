@@ -298,52 +298,127 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 	{
 	case EntityType::Laser:
 	{
-							  CLaser* laser = new CLaser();
-							  laser->SetImage(images[(int)EntityType::Laser]);
-							  laser->SetSize({ 2, 8 });
-							  //laser->SetImageSize({ 74, 290 });
+							  if (tier < 2)
+							  {
+								  CLaser* laser = new CLaser();
+								  laser->SetImage(images[(int)EntityType::Laser]);
+								  laser->SetSize({ 2, 8 });
+								  //laser->SetImageSize({ 74, 290 });
 
-							  SGD::Vector offset = { 0.0, -1.0 };
-							  offset.Rotate(rotation);
-							  offset *= (ownerSize.height + laser->GetSize().height)*0.75f;
-							  position += offset;
-							  laser->SetPosition(position);
-							  laser->SetRotation(rotation);
-							  laser->SetDamage(damage);
-							  SGD::Vector vel = { 0, -400 };
-							  vel.Rotate(rotation);
-							  laser->SetVelocity(vel);
-
-
-							  projectiles.push_back(laser);
+								  SGD::Vector offset = { 0.0, -1.0 };
+								  offset.Rotate(rotation);
+								  offset *= (ownerSize.height + laser->GetSize().height)*0.75f;
+								  position += offset;
+								  laser->SetPosition(position);
+								  laser->SetRotation(rotation);
+								  laser->SetDamage(damage);
+								  SGD::Vector vel = { 0, -400 };
+								  vel.Rotate(rotation);
+								  laser->SetVelocity(vel);
+								  laser->SetTier(tier);
+								  projectiles.push_back(laser);
+							  }
+							  else
+							  {
+								  CLaser* laser = new CLaser();
+								  CLaser* laserTwo = new CLaser();
+								  laserTwo->SetImage(images[(int)EntityType::Laser]);
+								  laser->SetImage(images[(int)EntityType::Laser]);
+								  laserTwo->SetSize({ 2, 8 });
+								  laser->SetSize({ 2, 8 });
+								  //laser->SetImageSize({ 74, 290 });
+								  SGD::Vector offset = { 0.5f, -1.0f };
+								  SGD::Vector offset2 = { -0.5f, -1.0f };
+								  SGD::Point pos2 = position;
+								  offset.Rotate(rotation);
+								  offset *= (ownerSize.height + laser->GetSize().height)*0.75f;
+								  position += offset;
+								  offset2.Rotate(rotation);
+								  offset2 *= (ownerSize.height + laser->GetSize().height)*0.75f;
+								  pos2 += offset2;
+								  laserTwo->SetPosition( position );
+								  laserTwo->SetRotation(rotation);
+								  laserTwo->SetDamage(damage);
+								  laser->SetPosition(pos2);
+								  laser->SetRotation(rotation);
+								  laser->SetDamage(damage); 
+								  SGD::Vector vel = { 0, -400 };
+								  vel.Rotate(rotation);
+								  laserTwo->SetVelocity(vel);
+								  laserTwo->SetTier(tier);
+								  laser->SetVelocity(vel);
+								  laser->SetTier(tier); projectiles.push_back(laser);
+								  projectiles.push_back(laserTwo);
+							  }
 							  break;
 	}
 	case EntityType::Missile:
 	{
-								CMissile* missile = new CMissile();
-								missile->SetImage(images[(int)EntityType::Missile]);
-								missile->SetSize({ 4, 16 });
-								//missile->SetImageSize({ 8, 32 });
-
-								SGD::Vector offset = { 0.0, -1.0 };
-								offset.Rotate(rotation);
-								offset *= (ownerSize.height + missile->GetSize().height) *0.6f;
-								position += offset;
-
-								missile->SetPosition(position);
-								missile->SetRotation(rotation);
-								missile->SetDamage(damage);
-
-								SGD::Vector vel = { 0, -400 };
-								vel.Rotate(rotation);
-								missile->SetVelocity(vel);
-
-								if (tier >= 3)
+								if (tier < 2)
 								{
-									missile->FindTarget();
+									CMissile* missile = new CMissile();
+									missile->SetImage(images[(int)EntityType::Missile]);
+									missile->SetSize({ 4, 16 });
+									//missile->SetImageSize({ 8, 32 });
+
+									SGD::Vector offset = {0.0,-1.0};
+									offset.Rotate(rotation);
+									offset *= (ownerSize.height + missile->GetSize().height) *0.6f;
+									position += offset;
+
+									missile->SetPosition(position);
+									missile->SetRotation(rotation);
+									missile->SetDamage(damage);
+
+									SGD::Vector vel = {0, -400};
+									vel.Rotate(rotation);
+									missile->SetVelocity(vel);
+									projectiles.push_back(missile);
 								}
 
-								projectiles.push_back(missile);
+								else if (tier > 1)
+								{
+									CMissile* missile = new CMissile();
+									CMissile* missileTwo = new CMissile();
+									missile->SetImage(images[(int)EntityType::Missile]);
+									missile->SetSize({ 4, 16 });
+									missileTwo->SetImage(images[(int)EntityType::Missile]);
+									missileTwo->SetSize({ 4, 16 });
+									//missile->SetImageSize({ 8, 32 });
+									SGD::Point pos2 = position;
+
+									SGD::Vector offset = { 0.5f, -1.0f };
+									offset.Rotate(rotation);
+									offset *= (ownerSize.height + missile->GetSize().height) *0.6f;
+									position += offset;
+
+									SGD::Vector offset2 = { -0.5f, -1.0f };
+									offset2.Rotate(rotation);
+									offset2 *= (ownerSize.height + missile->GetSize().height) *0.6f;
+									pos2 += offset2;
+
+									missile->SetPosition(position);
+									missile->SetRotation(rotation);
+									missile->SetDamage(damage);
+
+									missileTwo->SetPosition(pos2);
+									missileTwo->SetRotation(rotation);
+									missileTwo->SetDamage(damage);
+
+									SGD::Vector vel = { 0, -400 };
+									vel.Rotate(rotation);
+									missile->SetVelocity(vel);
+									missileTwo->SetVelocity(vel);
+
+									if (tier == 3)
+									{
+										missile->FindTarget();
+										missileTwo->FindTarget();
+									}
+
+									projectiles.push_back(missile);
+									projectiles.push_back(missileTwo);
+								}
 								break;
 	}
 	case EntityType::Well:

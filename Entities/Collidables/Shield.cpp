@@ -47,7 +47,7 @@ void CShield::HandleCollision(IEntity* other)
 			//float mass = size.width * size.height / 100;
 
 
-			m_pOwner->TakeDamage(int(25), false);
+			m_pOwner->TakeDamage(ast->GetDamage(), false);
 		}
 		//Is other an asteroid?
 	}
