@@ -21,10 +21,5 @@ void CMamba::Update(float dt)
 
 }
 
-void CMamba::AddGrav(SGD::Vector grav)
-{
-	
-}
-
 
 

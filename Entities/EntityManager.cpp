@@ -307,7 +307,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 
 								  SGD::Vector offset = { 0.0, -1.0 };
 								  offset.Rotate(rotation);
-								  offset *= (ownerSize.height + laser->GetSize().height)*0.75f;
+								  offset *= (ownerSize.height + laser->GetSize().height)*0.5f + laser->GetSize().height * 0.25f;
 								  position += offset;
 								  laser->SetPosition(position);
 								  laser->SetRotation(rotation);
@@ -331,10 +331,10 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 								  SGD::Vector offset2 = { -0.5f, -1.0f };
 								  SGD::Point pos2 = position;
 								  offset.Rotate(rotation);
-								  offset *= (ownerSize.height + laser->GetSize().height)*0.75f;
+								  offset *= (ownerSize.height + laser->GetSize().height)*0.5f + laser->GetSize().height * 0.25f;
 								  position += offset;
 								  offset2.Rotate(rotation);
-								  offset2 *= (ownerSize.height + laser->GetSize().height)*0.75f;
+								  offset2 *= (ownerSize.height + laser->GetSize().height)*0.5f + laser->GetSize().height * 0.25f;
 								  pos2 += offset2;
 								  laserTwo->SetPosition( position );
 								  laserTwo->SetRotation(rotation);
@@ -363,7 +363,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 
 									SGD::Vector offset = {0.0,-1.0};
 									offset.Rotate(rotation);
-									offset *= (ownerSize.height + missile->GetSize().height) *0.6f;
+									offset *= (ownerSize.height + missile->GetSize().height) *0.5f + missile->GetSize().height * 0.25f;
 									position += offset;
 
 									missile->SetPosition(position);
@@ -389,12 +389,12 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 
 									SGD::Vector offset = { 0.5f, -1.0f };
 									offset.Rotate(rotation);
-									offset *= (ownerSize.height + missile->GetSize().height) *0.6f;
+									offset *= (ownerSize.height + missile->GetSize().height) *0.5f + missile->GetSize().height * 0.25f;
 									position += offset;
 
 									SGD::Vector offset2 = { -0.5f, -1.0f };
 									offset2.Rotate(rotation);
-									offset2 *= (ownerSize.height + missile->GetSize().height) *0.6f;
+									offset2 *= (ownerSize.height + missile->GetSize().height) *0.5f + missile->GetSize().height * 0.25f;
 									pos2 += offset2;
 
 									missile->SetPosition(position);

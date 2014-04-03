@@ -10,7 +10,8 @@ void CShield::Update(float dt)
 	if (dynamic_cast<CPlayer*>(m_pOwner)->GetShield() > 0)
 	{
 		position = m_pOwner->GetPosition();
-		CEntity::Update(dt);
+		//Doesn't really do anything in this context.
+		//CEntity::Update(dt);
 	}	
 }
 
