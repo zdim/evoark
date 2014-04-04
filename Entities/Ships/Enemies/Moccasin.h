@@ -16,5 +16,5 @@ public:
 	void SelfDestruct() override;
 	unsigned int GetModuleCount() { return modules.size(); }
 	void AddModule();
-	
+	virtual int GetType() override { return (int)EntityType::Moccasin; }
 };

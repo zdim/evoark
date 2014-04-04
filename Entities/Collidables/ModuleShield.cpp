@@ -18,7 +18,7 @@ void CModuleShield::Update(float dt)
 void CModuleShield::HandleCollision(IEntity* other)
 {
 	//Is the other object a ship?
-	if (dynamic_cast<CShieldModule*>(m_pOwner)->GetShield() > 0)
+	if (dynamic_cast<CShieldModule*>(m_pOwner)->GetShield() > 0 )
 	{
 		dynamic_cast<CShieldModule*>(m_pOwner)->HandleCollision(other);
 		other->HandleCollision(dynamic_cast<CShieldModule*>(m_pOwner));

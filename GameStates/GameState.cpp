@@ -78,7 +78,7 @@ void	CTestLevelState::Enter(void)
 		BackgroundImage = graphics->LoadTexture("Resources/Graphics/starfield.jpg");
 	player = EntityManager->GetPlayer();
 	//Spawn Coral near the player
-	//EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
+	EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
 	//Spawn Moccasin near the player
 
 	//EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
