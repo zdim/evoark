@@ -28,7 +28,6 @@ public:
 	int			GetHull() { return hull; }		//For destruction
 	int			GetHullMax() { return hullMax; }
 	int			GetTier() {return tier;}
-
 	void SetOwner (CCoral* newVal);// { owner = newVal; owner->AddRef(); }
 	void SetOffset(SGD::Vector newVal) {posOffset = newVal; }
 	void SetCooldown (float newVal) { cooldown = newVal; }		//For any abilities and shield delay

@@ -13,6 +13,7 @@
 #include "Collidables\Asteroid.h"
 #include "Collidables\Barrier.h"
 #include "Collidables\Shield.h"
+#include "Collidables\ModuleShield.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
 #include "..\Message System\VictoryMessage.h"
@@ -72,6 +73,8 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Barrier] = graphics->LoadTexture("Resources/Graphics/wallTile.png");
 	images[(int)EntityType::Asteroid] = graphics->LoadTexture("Resources/Graphics/asteroid.png");
 	images[(int)EntityType::Shield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
+	images[(int)EntityType::ModuleShield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
+	
 }
 
 void CEntityManager::Terminate()
@@ -234,13 +237,15 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  corals.resize(amount);
 							  for (unsigned int i = 0; i < corals.size(); i++)
 							  {
+								 
 								  corals[i] = new CCoral();
 								  corals[i]->SetImage(images[(int)EntityType::Coral]);
 								  //corals[i]->SetImageSize({ 96, 78 });
 								  corals[i]->SetSize({ 128, 128 });
-								  dynamic_cast<CCoral*>(corals[i])->SetImages(images);
+								  dynamic_cast<CCoral*>(corals[i])->SetImages(images);					
 								  bigEnemies.push_back(corals[i]);
 								  ships.push_back(corals[i]);
+								  ships.push_back(dynamic_cast<CCoral*>(corals[i])->GetShield());
 							  }
 							  leader->SetHome(position);
 							  leader->Assign(corals);
@@ -252,14 +257,17 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								 if (boss)
 									 return;
 								 CMoccasin* moccasin = new CMoccasin;
-								 amount--;
-								 for (amount = amount; amount > 0; amount--)
+							/*	 amount--;
+								 for (amount ; amount > 0; amount--)
 								 {
 									 moccasin->AddModule();
-								 }
+								 }*/
+								 dynamic_cast<CMoccasin*>(moccasin)->Init((int)CGameplayState::GetInstance()->GetLevel());
+
 								 moccasin->SetImage(images[(int)EntityType::Moccasin]);
 								 moccasin->SetSize({ 256, 256 });
 								 moccasin->SetImages(images);
+								
 								 bigEnemies.push_back(moccasin);
 								 ships.push_back(moccasin);
 
@@ -415,8 +423,8 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 
 									if (tier == 3)
 									{
-										missile->FindTarget();
-										missileTwo->FindTarget();
+										missile->SetTier(3);
+										missileTwo->SetTier(3);
 									}
 
 									projectiles.push_back(missile);
@@ -616,6 +624,10 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		break;
 
 	case EntityType::Shield:
+		RemoveFromGroup(ships, entity);
+		break;
+
+	case EntityType::ModuleShield:
 		RemoveFromGroup(ships, entity);
 		break;
 

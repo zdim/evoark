@@ -234,13 +234,13 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 void CPlayer::Render()
 {
+	CShip::Render();
 
-
-	SGD::Color color = {};
-	if (shield < maxShield)
-		color = SGD::Color{ 255, 0, 0 };
-	float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
+	//SGD::Color color = {};
+	//if (shield < maxShield)
+	//	color = SGD::Color{ 255, 0, 0 };
+	//float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
+	//SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
 }
 
 void CPlayer::AddExp(int _exp)

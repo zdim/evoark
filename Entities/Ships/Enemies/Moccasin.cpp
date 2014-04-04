@@ -8,6 +8,7 @@ CMoccasin::CMoccasin()
 	modulePositions.push_back({ -40, -40 });
 	modulePositions.push_back({ 40, -40 });
 	modulePositions.push_back({ 40, 40 });
+
 }
 
 
@@ -15,12 +16,34 @@ CMoccasin::~CMoccasin()
 {
 }
 
+
+void CMoccasin::Init(int l)
+{
+	for (int i = 0; i < l; i++)
+		AddModule();
+
+	switch (l)
+	{
+	case 1:
+		m_nLevel = 1;
+		hull = 2500;
+
+		break;
+	}
+}
+
+
+
 void CMoccasin::SelfDestruct()
 {
 	CCoral::SelfDestruct();
 	BossKilledMessage* msg = new BossKilledMessage;
 	msg->QueueMessage();
 }
+
+
+
+
 
 void CMoccasin::AddModule()
 {

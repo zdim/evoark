@@ -1,10 +1,11 @@
 //
 #include "ShieldModule.h"
-
-
+#include "../Collidables/ModuleShield.h"
+#include "../Ships/Enemies/Coral.h"
 CShieldModule::CShieldModule()
 {
-	cooldown = 45;
+	
+	cooldown = 4;
 }
 
 
@@ -14,6 +15,8 @@ CShieldModule::~CShieldModule()
 
 void CShieldModule::Update(float dt)
 {
+
+
 	CModule::Update(dt);
 	if (timer >= cooldown)
 	{
@@ -21,6 +24,8 @@ void CShieldModule::Update(float dt)
 		if (shield > shieldMax)
 			shield = shieldMax;
 	}
+
+
 }
 
 int CShieldModule::RequestShield(int damage)

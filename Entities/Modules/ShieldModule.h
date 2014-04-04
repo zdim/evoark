@@ -5,7 +5,7 @@ class CShieldModule :
 {
 	int shieldMax = 500;
 	int shield = 500;
-	float regen = 20;
+	float regen = 200;
 public:
 	int GetType(){ return (int)EntityType::ShieldModule; }
 	CShieldModule();
@@ -13,5 +13,6 @@ public:
 
 	void Update(float dt);
 	int RequestShield(int damage);
+	int GetShield() { return shield;  }
 };
 

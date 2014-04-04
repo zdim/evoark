@@ -330,11 +330,8 @@
     <ClInclude Include="GameStates\PlaySelectState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message System\CreateTriggerMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entities\Collidables\EventTrigger.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Entities\Collidables\ModuleShield.h">
+      <Filter>Entities\Collidables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -557,11 +554,8 @@
     <ClCompile Include="GameStates\PlaySelectState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Message System\CreateTriggerMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entities\Collidables\EventTrigger.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Entities\Collidables\ModuleShield.cpp">
+      <Filter>Entities\Collidables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

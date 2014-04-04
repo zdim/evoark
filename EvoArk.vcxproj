@@ -83,8 +83,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Entities\Collidables\Asteroid.h" />
     <ClInclude Include="Entities\Collidables\Barrier.h" />
-    <ClInclude Include="Entities\Collidables\EventTrigger.h" />
     <ClInclude Include="Entities\Collidables\InvisibleTrigger.h" />
+    <ClInclude Include="Entities\Collidables\ModuleShield.h" />
     <ClInclude Include="Entities\Collidables\Planet.h" />
     <ClInclude Include="Entities\Collidables\Shield.h" />
     <ClInclude Include="Entities\Collidables\Stationary.h" />
@@ -147,7 +147,6 @@
     <ClInclude Include="Message System\CreateEntityMessage.h" />
     <ClInclude Include="Message System\CreateGameOverMessage.h" />
     <ClInclude Include="Message System\CreateProjectile.h" />
-    <ClInclude Include="Message System\CreateTriggerMessage.h" />
     <ClInclude Include="Message System\DestroyEntityMessage.h" />
     <ClInclude Include="Message System\MessageID.h" />
     <ClInclude Include="Message System\VictoryMessage.h" />
@@ -176,7 +175,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entities\Collidables\Asteroid.cpp" />
     <ClCompile Include="Entities\Collidables\Barrier.cpp" />
-    <ClCompile Include="Entities\Collidables\EventTrigger.cpp" />
+    <ClCompile Include="Entities\Collidables\ModuleShield.cpp" />
     <ClCompile Include="Entities\Collidables\Planet.cpp" />
     <ClCompile Include="Entities\Collidables\Shield.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
@@ -233,7 +232,6 @@
     <ClCompile Include="Message System\CreateEntityMessage.cpp" />
     <ClCompile Include="Message System\CreateGameOverMessage.cpp" />
     <ClCompile Include="Message System\CreateProjectile.cpp" />
-    <ClCompile Include="Message System\CreateTriggerMessage.cpp" />
     <ClCompile Include="Message System\DestroyEntityMessage.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_Geometry.cpp" />
