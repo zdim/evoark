@@ -2,16 +2,6 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../GameStates/Game.h"
 
-EventTrigger::EventTrigger(int _type)
-{
-	triggerType = _type;
-}
-
-
-EventTrigger::~EventTrigger()
-{
-}
-
 void EventTrigger::HandleCollision(IEntity* other)
 {
 	if (other->GetType() == (int)EntityType::Player)

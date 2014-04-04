@@ -333,6 +333,9 @@
     <ClInclude Include="Entities\Collidables\ModuleShield.h">
       <Filter>Entities\Collidables</Filter>
     </ClInclude>
+    <ClInclude Include="Entities\Collidables\EventTrigger.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -555,6 +558,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Collidables\ModuleShield.cpp">
+      <Filter>Entities\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Collidables\EventTrigger.cpp">
       <Filter>Entities\Collidables</Filter>
     </ClCompile>
   </ItemGroup>

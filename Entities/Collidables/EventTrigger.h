@@ -10,10 +10,12 @@ class EventTrigger : public Trigger
 	bool colliding = false;
 
 public:
-	EventTrigger(int _type);
-	virtual ~EventTrigger();
+	EventTrigger(){}
+	~EventTrigger(){}
 
 	void Render();
+
+	void SetType(int _type) { triggerType = _type; }
 
 	void HandleCollision(IEntity* other);
 };

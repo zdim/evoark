@@ -540,7 +540,9 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 									 trig->Assign(msg);
 									 stationaries.push_back(trig);
 									 break;*/
-									 EventTrigger* trig = new EventTrigger(eventType);
+
+									 EventTrigger* trig = new EventTrigger();
+									 trig->SetType(eventType);
 									 trig->SetPosition(position);
 									 trig->SetSize(size);
 									 stationaries.push_back(trig);
