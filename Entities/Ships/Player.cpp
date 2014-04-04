@@ -195,7 +195,7 @@ void CPlayer::Warp()
 	if (warpTimer <= warpDelay)
 		return;
 
-
+	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerWarp, false);
 	warpTimer = 0;
 }
 
