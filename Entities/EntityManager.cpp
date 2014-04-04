@@ -257,11 +257,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								 if (boss)
 									 return;
 								 CMoccasin* moccasin = new CMoccasin;
-							/*	 amount--;
-								 for (amount ; amount > 0; amount--)
-								 {
-									 moccasin->AddModule();
-								 }*/
+		
 								 dynamic_cast<CMoccasin*>(moccasin)->Init((int)CGameplayState::GetInstance()->GetLevel());
 
 								 moccasin->SetImage(images[(int)EntityType::Moccasin]);
@@ -270,6 +266,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								
 								 bigEnemies.push_back(moccasin);
 								 ships.push_back(moccasin);
+								 ships.push_back(dynamic_cast<CCoral*>(moccasin)->GetShield());
 
 								 moccasin->SetPosition(position);
 								 boss = moccasin;

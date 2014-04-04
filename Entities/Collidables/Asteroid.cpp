@@ -72,12 +72,17 @@ void CAsteroid::HandleCollision(IEntity* other)
 	EntityType otherType = (EntityType)other->GetType();
 
 	//Is other a ship?
+	if (otherType >= EntityType::ShieldModule || otherType >= EntityType::Shield)
+	{
+		this->SelfDestruct();
+	}
+
 	if (otherType >= EntityType::Player && otherType <= EntityType::Moccasin)
 	{
 		CShip* ship = dynamic_cast<CShip*>(other);
 		//Have them take damage based on our size and velocity
 		float mass = size.width * size.height;
-		float speed = velocity.ComputeLength();
+
 		ship->TakeDamage(int(mass * speed), true);
 
 		//Have them recieve a force based on our directions and their max speed
