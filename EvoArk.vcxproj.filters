@@ -330,6 +330,12 @@
     <ClInclude Include="GameStates\PlaySelectState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Message System\CreateTriggerMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Collidables\EventTrigger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -549,6 +555,12 @@
       <Filter>Entities\Collidables</Filter>
     </ClCompile>
     <ClCompile Include="GameStates\PlaySelectState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Message System\CreateTriggerMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Collidables\EventTrigger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
