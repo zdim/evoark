@@ -44,6 +44,10 @@ class CPlayer :
 
 	CShield* m_shield;
 
+	// tutorial
+	bool tutorialWaitForInput[4];
+	bool tutorialTriggerHit[4];
+
 public:
 	CPlayer();
 	virtual ~CPlayer();

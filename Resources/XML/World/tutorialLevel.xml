@@ -280,15 +280,15 @@
     <Quad x="15" y="14" possibleTypes="0" />
     <Quad x="15" y="15" possibleTypes="0" />
     <Event type="STARGATE" x="1558" y="2869" width="130" height="134" />
-    <Event type="TUTORIAL.MOVEMENT" x="221" y="2810" width="166" height="180" />
+    <Event type="TUTORIAL.MOVEMENT" x="100" y="2836" width="414" height="236" />
     <Event type="TUTORIAL.LASERS" x="99" y="2384" width="415" height="409" />
-    <Event type="TUTORIAL.MISSILES" x="596" y="1652" width="795" height="494" />
-    <Event type="TUTORIAL.WARP" x="1506" y="1614" width="400" height="533" />
-    <Event type="TUTORIAL.WELL" x="199" y="595" width="779" height="567" />
-    <Event type="TUTORIAL.PUSH" x="1010" y="18" width="758" height="561" />
+    <Event type="TUTORIAL.MISSILES" x="942" y="1614" width="270" height="533" />
     <Event type="TUTORIAL.COORDINATOR" x="2294" y="280" width="800" height="511" />
     <Event type="TUTORIAL.ALLY" x="2361" y="1440" width="710" height="397" />
-    <Event type="TUTORIAL.BOSS" x="2249" y="2389" width="899" height="778" />
+    <Event type="TUTORIAL.BOSS" x="2294" y="280" width="800" height="511" />
+    <Event type="TUTORIAL.WARP" x="1667" y="1009" width="233" height="676" />
+    <Event type="TUTORIAL.WELL" x="403" y="520" width="451" height="238" />
+    <Event type="TUTORIAL.PUSH" x="1648" y="56" width="202" height="520" />
     <Collision x="576" y="2199" width="616" height="998" />
     <Collision x="1193" y="2199" width="721" height="291" />
     <Collision x="1915" y="811" width="326" height="1679" />
