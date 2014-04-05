@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Level>
+  <Details width="16" height="16" quadWidth="200" quadHeight="200" events="10" collision="5" background="">
+    <Quad x="0" y="0" possibleTypes="0" />
+    <Quad x="0" y="1" possibleTypes="0" />
+    <Quad x="0" y="2" possibleTypes="0" />
+    <Quad x="0" y="3" possibleTypes="0" />
+    <Quad x="0" y="4" possibleTypes="0" />
+    <Quad x="0" y="5" possibleTypes="0" />
+    <Quad x="0" y="6" possibleTypes="0" />
+    <Quad x="0" y="7" possibleTypes="0" />
+    <Quad x="0" y="8" possibleTypes="0" />
+    <Quad x="0" y="9" possibleTypes="0" />
+    <Quad x="0" y="10" possibleTypes="0" />
+    <Quad x="0" y="11" possibleTypes="0" />
+    <Quad x="0" y="12" possibleTypes="0" />
+    <Quad x="0" y="13" possibleTypes="0" />
+    <Quad x="0" y="14" possibleTypes="0" />
+    <Quad x="0" y="15" possibleTypes="0" />
+    <Quad x="1" y="0" possibleTypes="0" />
+    <Quad x="1" y="1" possibleTypes="0" />
+    <Quad x="1" y="2" possibleTypes="0" />
+    <Quad x="1" y="3" possibleTypes="0" />
+    <Quad x="1" y="4" possibleTypes="0" />
+    <Quad x="1" y="5" possibleTypes="0" />
+    <Quad x="1" y="6" possibleTypes="0" />
+    <Quad x="1" y="7" possibleTypes="0" />
+    <Quad x="1" y="8" possibleTypes="0" />
+    <Quad x="1" y="9" possibleTypes="0" />
+    <Quad x="1" y="10" possibleTypes="0" />
+    <Quad x="1" y="11" possibleTypes="1">
+      <Type type="COPPERHEAD" amount="2" randomized="False" x="310" y="2351" />
+    </Quad>
+    <Quad x="1" y="12" possibleTypes="0" />
+    <Quad x="1" y="13" possibleTypes="0" />
+    <Quad x="1" y="14" possibleTypes="1">
+      <Type type="PLAYER" amount="1" randomized="False" x="298" y="2944" />
+    </Quad>
+    <Quad x="1" y="15" possibleTypes="0" />
+    <Quad x="2" y="0" possibleTypes="0" />
+    <Quad x="2" y="1" possibleTypes="0" />
+    <Quad x="2" y="2" possibleTypes="1">
+      <Type type="COPPERHEAD" amount="2" randomized="False" x="535" y="437" />
+    </Quad>
+    <Quad x="2" y="3" possibleTypes="0" />
+    <Quad x="2" y="4" possibleTypes="0" />
+    <Quad x="2" y="5" possibleTypes="0" />
+    <Quad x="2" y="6" possibleTypes="0" />
+    <Quad x="2" y="7" possibleTypes="0" />
+    <Quad x="2" y="8" possibleTypes="0" />
+    <Quad x="2" y="9" possibleTypes="0" />
+    <Quad x="2" y="10" possibleTypes="0" />
+    <Quad x="2" y="11" possibleTypes="0" />
+    <Quad x="2" y="12" possibleTypes="0" />
+    <Quad x="2" y="13" possibleTypes="0" />
+    <Quad x="2" y="14" possibleTypes="0" />
+    <Quad x="2" y="15" possibleTypes="0" />
+    <Quad x="3" y="0" possibleTypes="0" />
+    <Quad x="3" y="1" possibleTypes="0" />
+    <Quad x="3" y="2" possibleTypes="1">
+      <Type type="COPPERHEAD" amount="2" randomized="False" x="700" y="442" />
+    </Quad>
+    <Quad x="3" y="3" possibleTypes="0" />
+    <Quad x="3" y="4" possibleTypes="0" />
+    <Quad x="3" y="5" possibleTypes="0" />
+    <Quad x="3" y="6" possibleTypes="0" />
+    <Quad x="3" y="7" possibleTypes="0" />
+    <Quad x="3" y="8" possibleTypes="0" />
+    <Quad x="3" y="9" possibleTypes="0" />
+    <Quad x="3" y="10" possibleTypes="0" />
+    <Quad x="3" y="11" possibleTypes="0" />
+    <Quad x="3" y="12" possibleTypes="0" />
+    <Quad x="3" y="13" possibleTypes="0" />
+    <Quad x="3" y="14" possibleTypes="0" />
+    <Quad x="3" y="15" possibleTypes="0" />
+    <Quad x="4" y="0" possibleTypes="0" />
+    <Quad x="4" y="1" possibleTypes="0" />
+    <Quad x="4" y="2" possibleTypes="0" />
+    <Quad x="4" y="3" possibleTypes="0" />
+    <Quad x="4" y="4" possibleTypes="0" />
+    <Quad x="4" y="5" possibleTypes="0" />
+    <Quad x="4" y="6" possibleTypes="0" />
+    <Quad x="4" y="7" possibleTypes="0" />
+    <Quad x="4" y="8" possibleTypes="0" />
+    <Quad x="4" y="9" possibleTypes="0" />
+    <Quad x="4" y="10" possibleTypes="0" />
+    <Quad x="4" y="11" possibleTypes="0" />
+    <Quad x="4" y="12" possibleTypes="0" />
+    <Quad x="4" y="13" possibleTypes="0" />
+    <Quad x="4" y="14" possibleTypes="0" />
+    <Quad x="4" y="15" possibleTypes="0" />
+    <Quad x="5" y="0" possibleTypes="0" />
+    <Quad x="5" y="1" possibleTypes="0" />
+    <Quad x="5" y="2" possibleTypes="0" />
+    <Quad x="5" y="3" possibleTypes="0" />
+    <Quad x="5" y="4" possibleTypes="0" />
+    <Quad x="5" y="5" possibleTypes="0" />
+    <Quad x="5" y="6" possibleTypes="0" />
+    <Quad x="5" y="7" possibleTypes="0" />
+    <Quad x="5" y="8" possibleTypes="0" />
+    <Quad x="5" y="9" possibleTypes="0" />
+    <Quad x="5" y="10" possibleTypes="0" />
+    <Quad x="5" y="11" possibleTypes="0" />
+    <Quad x="5" y="12" possibleTypes="0" />
+    <Quad x="5" y="13" possibleTypes="0" />
+    <Quad x="5" y="14" possibleTypes="0" />
+    <Quad x="5" y="15" possibleTypes="0" />
+    <Quad x="6" y="0" possibleTypes="0" />
+    <Quad x="6" y="1" possibleTypes="0" />
+    <Quad x="6" y="2" possibleTypes="0" />
+    <Quad x="6" y="3" possibleTypes="0" />
+    <Quad x="6" y="4" possibleTypes="0" />
+    <Quad x="6" y="5" possibleTypes="0" />
+    <Quad x="6" y="6" possibleTypes="0" />
+    <Quad x="6" y="7" possibleTypes="0" />
+    <Quad x="6" y="8" possibleTypes="0" />
+    <Quad x="6" y="9" possibleTypes="0" />
+    <Quad x="6" y="10" possibleTypes="0" />
+    <Quad x="6" y="11" possibleTypes="0" />
+    <Quad x="6" y="12" possibleTypes="0" />
+    <Quad x="6" y="13" possibleTypes="0" />
+    <Quad x="6" y="14" possibleTypes="0" />
+    <Quad x="6" y="15" possibleTypes="0" />
+    <Quad x="7" y="0" possibleTypes="0" />
+    <Quad x="7" y="1" possibleTypes="0" />
+    <Quad x="7" y="2" possibleTypes="0" />
+    <Quad x="7" y="3" possibleTypes="0" />
+    <Quad x="7" y="4" possibleTypes="0" />
+    <Quad x="7" y="5" possibleTypes="0" />
+    <Quad x="7" y="6" possibleTypes="0" />
+    <Quad x="7" y="7" possibleTypes="0" />
+    <Quad x="7" y="8" possibleTypes="0" />
+    <Quad x="7" y="9" possibleTypes="1">
+      <Type type="COPPERHEAD" amount="2" randomized="False" x="1498" y="1901" />
+    </Quad>
+    <Quad x="7" y="10" possibleTypes="0" />
+    <Quad x="7" y="11" possibleTypes="0" />
+    <Quad x="7" y="12" possibleTypes="0" />
+    <Quad x="7" y="13" possibleTypes="0" />
+    <Quad x="7" y="14" possibleTypes="0" />
+    <Quad x="7" y="15" possibleTypes="0" />
+    <Quad x="8" y="0" possibleTypes="0" />
+    <Quad x="8" y="1" possibleTypes="0" />
+    <Quad x="8" y="2" possibleTypes="0" />
+    <Quad x="8" y="3" possibleTypes="0" />
+    <Quad x="8" y="4" possibleTypes="0" />
+    <Quad x="8" y="5" possibleTypes="0" />
+    <Quad x="8" y="6" possibleTypes="0" />
+    <Quad x="8" y="7" possibleTypes="0" />
+    <Quad x="8" y="8" possibleTypes="0" />
+    <Quad x="8" y="9" possibleTypes="0" />
+    <Quad x="8" y="10" possibleTypes="0" />
+    <Quad x="8" y="11" possibleTypes="0" />
+    <Quad x="8" y="12" possibleTypes="0" />
+    <Quad x="8" y="13" possibleTypes="0" />
+    <Quad x="8" y="14" possibleTypes="0" />
+    <Quad x="8" y="15" possibleTypes="0" />
+    <Quad x="9" y="0" possibleTypes="1">
+      <Type type="MAMBA" amount="1" randomized="False" x="1900" y="169" />
+    </Quad>
+    <Quad x="9" y="1" possibleTypes="1">
+      <Type type="MAMBA" amount="1" randomized="False" x="1909" y="296" />
+    </Quad>
+    <Quad x="9" y="2" possibleTypes="1">
+      <Type type="MAMBA" amount="1" randomized="False" x="1920" y="454" />
+    </Quad>
+    <Quad x="9" y="3" possibleTypes="0" />
+    <Quad x="9" y="4" possibleTypes="0" />
+    <Quad x="9" y="5" possibleTypes="0" />
+    <Quad x="9" y="6" possibleTypes="0" />
+    <Quad x="9" y="7" possibleTypes="0" />
+    <Quad x="9" y="8" possibleTypes="0" />
+    <Quad x="9" y="9" possibleTypes="0" />
+    <Quad x="9" y="10" possibleTypes="0" />
+    <Quad x="9" y="11" possibleTypes="0" />
+    <Quad x="9" y="12" possibleTypes="0" />
+    <Quad x="9" y="13" possibleTypes="0" />
+    <Quad x="9" y="14" possibleTypes="1">
+      <Type type="MOCCASIN" amount="1" randomized="False" x="1900" y="2898" />
+    </Quad>
+    <Quad x="9" y="15" possibleTypes="0" />
+    <Quad x="10" y="0" possibleTypes="0" />
+    <Quad x="10" y="1" possibleTypes="0" />
+    <Quad x="10" y="2" possibleTypes="0" />
+    <Quad x="10" y="3" possibleTypes="0" />
+    <Quad x="10" y="4" possibleTypes="0" />
+    <Quad x="10" y="5" possibleTypes="0" />
+    <Quad x="10" y="6" possibleTypes="0" />
+    <Quad x="10" y="7" possibleTypes="0" />
+    <Quad x="10" y="8" possibleTypes="0" />
+    <Quad x="10" y="9" possibleTypes="0" />
+    <Quad x="10" y="10" possibleTypes="0" />
+    <Quad x="10" y="11" possibleTypes="0" />
+    <Quad x="10" y="12" possibleTypes="0" />
+    <Quad x="10" y="13" possibleTypes="0" />
+    <Quad x="10" y="14" possibleTypes="0" />
+    <Quad x="10" y="15" possibleTypes="0" />
+    <Quad x="11" y="0" possibleTypes="0" />
+    <Quad x="11" y="1" possibleTypes="0" />
+    <Quad x="11" y="2" possibleTypes="0" />
+    <Quad x="11" y="3" possibleTypes="0" />
+    <Quad x="11" y="4" possibleTypes="0" />
+    <Quad x="11" y="5" possibleTypes="0" />
+    <Quad x="11" y="6" possibleTypes="0" />
+    <Quad x="11" y="7" possibleTypes="0" />
+    <Quad x="11" y="8" possibleTypes="0" />
+    <Quad x="11" y="9" possibleTypes="0" />
+    <Quad x="11" y="10" possibleTypes="0" />
+    <Quad x="11" y="11" possibleTypes="0" />
+    <Quad x="11" y="12" possibleTypes="0" />
+    <Quad x="11" y="13" possibleTypes="0" />
+    <Quad x="11" y="14" possibleTypes="0" />
+    <Quad x="11" y="15" possibleTypes="0" />
+    <Quad x="12" y="0" possibleTypes="0" />
+    <Quad x="12" y="1" possibleTypes="0" />
+    <Quad x="12" y="2" possibleTypes="0" />
+    <Quad x="12" y="3" possibleTypes="0" />
+    <Quad x="12" y="4" possibleTypes="0" />
+    <Quad x="12" y="5" possibleTypes="0" />
+    <Quad x="12" y="6" possibleTypes="0" />
+    <Quad x="12" y="7" possibleTypes="0" />
+    <Quad x="12" y="8" possibleTypes="0" />
+    <Quad x="12" y="9" possibleTypes="0" />
+    <Quad x="12" y="10" possibleTypes="0" />
+    <Quad x="12" y="11" possibleTypes="0" />
+    <Quad x="12" y="12" possibleTypes="0" />
+    <Quad x="12" y="13" possibleTypes="0" />
+    <Quad x="12" y="14" possibleTypes="0" />
+    <Quad x="12" y="15" possibleTypes="0" />
+    <Quad x="13" y="0" possibleTypes="0" />
+    <Quad x="13" y="1" possibleTypes="0" />
+    <Quad x="13" y="2" possibleTypes="0" />
+    <Quad x="13" y="3" possibleTypes="0" />
+    <Quad x="13" y="4" possibleTypes="1">
+      <Type type="COORDINATOR" amount="3" randomized="False" x="2699" y="860" />
+    </Quad>
+    <Quad x="13" y="5" possibleTypes="0" />
+    <Quad x="13" y="6" possibleTypes="0" />
+    <Quad x="13" y="7" possibleTypes="0" />
+    <Quad x="13" y="8" possibleTypes="0" />
+    <Quad x="13" y="9" possibleTypes="1">
+      <Type type="HUMAN" amount="3" randomized="False" x="2700" y="1889" />
+    </Quad>
+    <Quad x="13" y="10" possibleTypes="0" />
+    <Quad x="13" y="11" possibleTypes="0" />
+    <Quad x="13" y="12" possibleTypes="0" />
+    <Quad x="13" y="13" possibleTypes="0" />
+    <Quad x="13" y="14" possibleTypes="0" />
+    <Quad x="13" y="15" possibleTypes="0" />
+    <Quad x="14" y="0" possibleTypes="0" />
+    <Quad x="14" y="1" possibleTypes="0" />
+    <Quad x="14" y="2" possibleTypes="0" />
+    <Quad x="14" y="3" possibleTypes="0" />
+    <Quad x="14" y="4" possibleTypes="0" />
+    <Quad x="14" y="5" possibleTypes="0" />
+    <Quad x="14" y="6" possibleTypes="0" />
+    <Quad x="14" y="7" possibleTypes="0" />
+    <Quad x="14" y="8" possibleTypes="0" />
+    <Quad x="14" y="9" possibleTypes="0" />
+    <Quad x="14" y="10" possibleTypes="0" />
+    <Quad x="14" y="11" possibleTypes="0" />
+    <Quad x="14" y="12" possibleTypes="0" />
+    <Quad x="14" y="13" possibleTypes="0" />
+    <Quad x="14" y="14" possibleTypes="0" />
+    <Quad x="14" y="15" possibleTypes="0" />
+    <Quad x="15" y="0" possibleTypes="0" />
+    <Quad x="15" y="1" possibleTypes="0" />
+    <Quad x="15" y="2" possibleTypes="0" />
+    <Quad x="15" y="3" possibleTypes="0" />
+    <Quad x="15" y="4" possibleTypes="0" />
+    <Quad x="15" y="5" possibleTypes="0" />
+    <Quad x="15" y="6" possibleTypes="0" />
+    <Quad x="15" y="7" possibleTypes="0" />
+    <Quad x="15" y="8" possibleTypes="0" />
+    <Quad x="15" y="9" possibleTypes="0" />
+    <Quad x="15" y="10" possibleTypes="0" />
+    <Quad x="15" y="11" possibleTypes="0" />
+    <Quad x="15" y="12" possibleTypes="0" />
+    <Quad x="15" y="13" possibleTypes="0" />
+    <Quad x="15" y="14" possibleTypes="0" />
+    <Quad x="15" y="15" possibleTypes="0" />
+    <Event type="STARGATE" x="1558" y="2869" width="130" height="134" />
+    <Event type="TUTORIAL.MOVEMENT" x="221" y="2810" width="166" height="180" />
+    <Event type="TUTORIAL.LASERS" x="99" y="2384" width="415" height="409" />
+    <Event type="TUTORIAL.MISSILES" x="596" y="1652" width="795" height="494" />
+    <Event type="TUTORIAL.WARP" x="1506" y="1614" width="400" height="533" />
+    <Event type="TUTORIAL.WELL" x="199" y="595" width="779" height="567" />
+    <Event type="TUTORIAL.PUSH" x="1010" y="18" width="758" height="561" />
+    <Event type="TUTORIAL.COORDINATOR" x="2294" y="280" width="800" height="511" />
+    <Event type="TUTORIAL.ALLY" x="2361" y="1440" width="710" height="397" />
+    <Event type="TUTORIAL.BOSS" x="2249" y="2389" width="899" height="778" />
+    <Collision x="576" y="2199" width="616" height="998" />
+    <Collision x="1193" y="2199" width="721" height="291" />
+    <Collision x="1915" y="811" width="326" height="1679" />
+    <Collision x="3" y="1201" width="1655" height="396" />
+    <Collision x="984" y="598" width="1258" height="212" />
+  </Details>
+</Level>

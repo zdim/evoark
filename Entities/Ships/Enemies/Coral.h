@@ -9,6 +9,7 @@
 #include "../../Modules/Engine.h"
 #include <vector>
 
+class CModuleShield;
 struct EntityData;
 
 class CCoral :
@@ -18,6 +19,7 @@ protected:
 	enum moduleSlot{cockpit, shieldModule, engine, laser, ability, count};
 	std::vector<SGD::Vector>modulePositions;
 	std::vector<CModule*>modules;
+	CModuleShield* m_pShield;
 
 public:
 	CCoral();
@@ -35,6 +37,8 @@ public:
 
 	virtual void SetImages(std::vector<SGD::HTexture>&images);
 	void SetTarget(CShip* newTarget) override;
+	void SetShield(CModuleShield* p) { m_pShield = p; }
+	CModuleShield* GetShield()       { return m_pShield; }
 	int RequestShield(int damage);
 	std::vector<EntityData> GetModuleData();
 	void SetModuleData(std::vector<EntityData> mods);

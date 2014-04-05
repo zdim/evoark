@@ -324,6 +324,15 @@
     <ClInclude Include="Entities\Collidables\Shield.h">
       <Filter>Entities\Collidables</Filter>
     </ClInclude>
+    <ClInclude Include="GameStates\PlaySelectState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Collidables\ModuleShield.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Collidables\EventTrigger.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
     <ClInclude Include="GameStates\ProfileSelectState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
@@ -540,6 +549,15 @@
       <Filter>Entities\Collidables</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Collidables\Shield.cpp">
+      <Filter>Entities\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStates\PlaySelectState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Collidables\ModuleShield.cpp">
+      <Filter>Entities\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Collidables\EventTrigger.cpp">
       <Filter>Entities\Collidables</Filter>
     </ClCompile>
     <ClCompile Include="GameStates\ProfileSelectState.cpp">

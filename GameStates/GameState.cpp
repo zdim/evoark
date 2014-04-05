@@ -14,6 +14,7 @@
 #include "../SGD Wrappers/SGD_MessageManager.h"
 #include "../Event System/EventManager.h"
 #include "../Message System/CreateEntityMessage.h"
+#include "../Entities/Collidables/EventTrigger.h"
 #include "../Message System/DestroyEntityMessage.h"
 #include "LevelStates\GameOverState.h"
 #include "../Message System/CreateProjectile.h"
@@ -56,12 +57,16 @@ void	CTestLevelState::Enter(void)
 
 	objArrow = graphics->LoadTexture("Resources/Graphics/Arrow.png");
 	backgroundBlack = graphics->LoadTexture("Resources/Graphics/backgroundBlack3.png", { 50, 255, 255, 255 });
-
+	backgroundNebula = graphics->LoadTexture("Resources/Graphics/Smoke.png");
+	backgroundStars = graphics->LoadTexture("Resources/Graphics/stars1new.png", { 0, 0, 0 });
+	backgroundStars1 = graphics->LoadTexture("Resources/Graphics/stars2new.png", { 0, 0, 0 });
+	backgroundStars2 = graphics->LoadTexture("Resources/Graphics/stars3.png", { 0, 0, 0 });
 
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
 	soundBox = CSoundBox::GetInstance();
 	//soundBox->Enter();
+	//EntityManager->Spawn(EntityType::Moccasin, { 200, 200 }, 1);
 
 	//Get SaveData and load based on it
 	saveData save = CGameplayState::GetInstance()->GetSaveData();
@@ -86,7 +91,7 @@ void	CTestLevelState::Enter(void)
 	//Spawn Coral near the player
 	//EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
 	//Spawn Moccasin near the player
-	//EntityManager->Spawn(EntityType::Moccasin, player->GetPosition() + SGD::Vector{ 200,200 }, 4);
+
 	//EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
 
 
@@ -94,6 +99,11 @@ void	CTestLevelState::Enter(void)
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 	cam = CCamera::GetInstance();
 	cam->Initiallize(player, SGD::Size{(float)m_nScreenWidth,(float)m_nScreenHeight});
+
+	nebulaPos = { cam->GetOffset().x, cam->GetOffset().y };
+	stars1Pos = { cam->GetOffset().x, cam->GetOffset().y };
+	stars2Pos = { cam->GetOffset().x, cam->GetOffset().y };
+	starsPos =  { cam->GetOffset().x, cam->GetOffset().y }; 
 
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
 
@@ -117,7 +127,10 @@ void	CTestLevelState::Exit(void)
 	graphics->UnloadTexture(backgroundBlack);
 	graphics->UnloadTexture(objArrow);
 	graphics->UnloadTexture(backgroundBlack);
-
+	graphics->UnloadTexture(backgroundNebula);
+	graphics->UnloadTexture(backgroundStars);
+	graphics->UnloadTexture(backgroundStars1);
+	graphics->UnloadTexture(backgroundStars2);
 	//soundBox->Exit();
 
 	//Terminating Messages or events before Entity manager will BREAK it on the NEXT level.
@@ -174,14 +187,33 @@ void	CTestLevelState::Update(float dt)
 	SGD::MessageManager::GetInstance()->Update();
 	CEventManager::GetInstance().Update();
 	cam->Update(dt);
+
+	// parallax effect
+	nebulaPos = { cam->GetOffset().x * .5f, cam->GetOffset().y * .5f };
+	stars1Pos = { cam->GetOffset().x * .1f, cam->GetOffset().y * .1f };
+	stars2Pos = { cam->GetOffset().x * .2f, cam->GetOffset().y * .2f };
+	starsPos = { cam->GetOffset().x * .3f, cam->GetOffset().y * .3f };
 }
 
 void	CTestLevelState::Render(void)
 {
 	if (m_bLoaded == true)
 	{
-		graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
-		graphics->DrawTexture(backgroundBlack, { 0, 0 });
+
+		//graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
+		//graphics->DrawTexture(backgroundBlack, { 0, 0 });
+		
+		for (int i = 0; i < 4; i++)
+		{
+			//graphics->DrawTexture(backgroundStars2, stars2Pos + SGD::Vector{ stars2Pos.x * i, stars2Pos.y * i });
+			for (int j = 0; j < 4; j++)
+			{
+				graphics->DrawTexture(backgroundStars1, stars1Pos + SGD::Vector{ 1024 * i, 768 * j });
+				graphics->DrawTexture(backgroundStars, starsPos + SGD::Vector{ 1024 * i, 768 * j });
+				//graphics->DrawTexture(backgroundNebula, nebulaPos + SGD::Vector{ 1024 * i, 768 * j }, 0, {}, { 200, 50, 120, 100 });
+				graphics->DrawTextureSection(backgroundNebula, { nebulaPos.x + 1024 * i, nebulaPos.y + 768 * j }, { 0, 0, 1024, 768 }, 0, {}, { 50, 50, 120, 100 });
+			}
+		}
 		graphics->DrawRectangle({ 0, 0, 2000, 2000 }, { 150, 0, 0, 0 });
 
 		EntityManager->Render();
@@ -207,7 +239,10 @@ void	CTestLevelState::Generate()
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
 	case Level::Gen1:
-		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
+
+		// temporary tweak to test tutorial.
+		loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
+		//loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		testing += "1";
 		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
 		break;
@@ -251,7 +286,8 @@ void	CTestLevelState::Generate()
 					EntityManager->Spawn(EntityType::Coral, col[j].pos, col[j].objectAmount);
 					break;
 				case MOCASSIN:
-					EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, 1);
+
+					EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, (int)CGameplayState::GetInstance()->GetLevel());
 					break;
 				case ASTEROID:
 					EntityManager->SpawnCollidable(EntityType::Asteroid, col[j].pos, SGD::Size{32,32});
@@ -270,14 +306,54 @@ void	CTestLevelState::Generate()
 
 		for (unsigned int i = 0; i < events.size(); i++)
 		{
+			int eventID = -1;
 			if (events[i].eType == "STARGATE")
 			{
-				EntityManager->Spawn(EntityType::Stargate, { events[i].area.left, events[i].area.top }, 1, false);
+
+				EntityManager->SpawnCollidable(EntityType::Stargate, { events[i].area.left, events[i].area.top }, { events[i].area.bottom - events[i].area.top, events[i].area.right - events[i].area.left });
+				continue;
 			}
-			else
+
+			else if (events[i].eType == "TUTORIAL.MOVEMENT")
 			{
-				EntityManager->Spawn(EntityType::InvisTrigger, { events[i].area.left, events[i].area.top }, (unsigned int)EntityType::Coral);
+
+				eventID = (int)triggerID::tutMovement;
 			}
+			else if (events[i].eType == "TUTORIAL.LASERS")
+			{
+				eventID = (int)triggerID::tutLasers;
+			}
+			else if (events[i].eType == "TUTORIAL.MISSILES")
+			{
+				eventID = (int)triggerID::tutMissiles;
+			}
+			else if (events[i].eType == "TUTORIAL.WARP")
+			{
+				eventID = (int)triggerID::tutWarp;
+			}
+			else if (events[i].eType == "TUTORIAL.WELL")
+			{
+				eventID = (int)triggerID::tutWell;
+			}
+			else if (events[i].eType == "TUTORIAL.PUSH")
+			{
+				eventID = (int)triggerID::tutPush;
+			}
+			else if (events[i].eType == "TUTORIAL.COORDINATOR")
+			{
+				eventID = (int)triggerID::tutCoordinator;
+			}
+			else if (events[i].eType == "TUTORIAL.ALLY")
+			{
+				eventID = (int)triggerID::tutHuman;
+			}
+			else if (events[i].eType == "TUTORIAL.BOSS")
+			{
+				eventID = (int)triggerID::tutBoss;
+			}
+
+			EntityManager->SpawnCollidable(EntityType::InvisTrigger, { events[i].area.left, events[i].area.top }, { events[i].area.right - events[i].area.left, events[i].area.bottom - events[i].area.top }, { 0, 0 }, eventID);
+
 		}
 	}
 	else
@@ -413,7 +489,8 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 		pQuad->Attribute("width", &_width);
 		pQuad->Attribute("height", &_height);
 		e.area = { (float)_left, (float)_top, float(_left + _width), float(_top + _height) };
-		events.push_back(e);
+
+		events[i] = e;
 		pQuad = pQuad->NextSiblingElement();
 	}
 	
@@ -462,11 +539,14 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 		case EntityType::Laser:
 			CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser, false);
 			break;
-			
+		case EntityType::Missile:
+			CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerMissile, false);
+			break;
 		default:
 			break;
 		};
 		break;
+	
 	}
 	case MessageID::DestroyEntity:
 	{

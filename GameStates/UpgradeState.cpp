@@ -37,6 +37,8 @@ bool CUpgradeState::Input()
 		{
 			if (mousePos.IsWithinRectangle(buttons[i]))
 			{
+				if (cursor != i)
+					CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
 				cursor = i;
 				return true;
 			}
@@ -89,106 +91,151 @@ bool CUpgradeState::Input()
 			{
 				player->LaserLevelUp();
 				player->RemovePerk();
-				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
+
 			break;
 		case laserTwo:
 			if (player->GetPerks() > 0 && player->GetLaserLevel() == 1)
 			{
 				player->LaserLevelUp();
 				player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case laserThree:
 			if (player->GetPerks() > 1 && player->GetLaserLevel() == 2)
 			{
 				player->LaserLevelUp();
 				player->RemovePerk(); player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case missileOne:
 			if (player->GetPerks() > 0 && player->GetMissileLevel() == 0)
 			{
 				player->MissileLevelUp();
 				player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break; 
 		case missileTwo:
 			if (player->GetPerks() > 0 && player->GetMissileLevel() == 1)
 			{
 				player->MissileLevelUp();
 				player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case missileThree:
 			if (player->GetPerks() > 1 && player->GetMissileLevel() == 2)
 			{
 				player->MissileLevelUp();
 				player->RemovePerk(); player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case wellOne:
 			if (player->GetPerks() > 0 && player->GetWellLevel() == 0)
 			{
 				player->WellLevelUp();
 				player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case wellTwo:
 			if (player->GetPerks() > 0 && player->GetWellLevel() == 1)
 			{
 				player->WellLevelUp();
 				player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case wellThree:
 			if (player->GetPerks() > 1 && player->GetWellLevel() == 2)
 			{
 				player->WellLevelUp();
 				player->RemovePerk(); player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case pushOne:
 			if (player->GetPerks() > 0 && player->GetPushLevel() == 0)
 			{
 				player->PushLevelUp();
 				player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case pushTwo:
 			if (player->GetPerks() > 0 && player->GetPushLevel() == 1)
 			{
 				player->PushLevelUp();
 				player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case pushThree:
 			if (player->GetPerks() > 1 && player->GetPushLevel() == 2)
 			{
 				player->PushLevelUp();
 				player->RemovePerk(); player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case warpOne:
 			if (player->GetPerks() > 0 && player->GetWarpLevel() == 0)
 			{
 				player->WarpLevelUp();
 				player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case warpTwo:
 			if (player->GetPerks() > 0 && player->GetWarpLevel() == 1)
 			{
 				player->WarpLevelUp();
 				player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		case warpThree:
 			if (player->GetPerks() > 1 && player->GetWarpLevel() == 2)
 			{
 				player->WarpLevelUp();
 				player->RemovePerk(); player->RemovePerk();
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiSuccess, false);
 			}
+			else
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiFailure, false);
 			break;
 		default:
 			break;
@@ -354,7 +401,7 @@ void CUpgradeState::Render()
 	case wellOne:
 		graphics->DrawRectangle({ { screenWidth * .44f, screenHeight * .52f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .48f }, SGD::Size{ 150, 100 } }, "Gravity Well I");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Reduced Cooldown");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Increased Radius");
 		break;
 	case wellTwo:
 		graphics->DrawRectangle({ { screenWidth * .44f, screenHeight * .37f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
@@ -371,7 +418,7 @@ void CUpgradeState::Render()
 	case pushOne:
 		graphics->DrawRectangle({ { screenWidth * .59f, screenHeight * .52f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .48f }, SGD::Size{ 150, 100 } }, "Gravity Push I");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Reduced Cooldown");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Larger Arc");
 		break;
 	case pushTwo:
 		graphics->DrawRectangle({ { screenWidth * .59f, screenHeight * .37f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);

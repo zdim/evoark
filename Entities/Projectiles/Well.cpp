@@ -4,7 +4,7 @@
 CWell::CWell()
 {
 	radius = size.width/2.0f;
-	duration = 10;
+	duration = 3;
 }
 
 
