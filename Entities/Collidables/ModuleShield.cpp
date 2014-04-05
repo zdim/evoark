@@ -1,5 +1,6 @@
 #include "ModuleShield.h"
 #include "../Ships/Ship.h"
+#include "../Ships/Enemies/Moccasin.h"
 #include "Asteroid.h"
 #include "../Projectiles/Laser.h"
 #include "../Modules/ShieldModule.h"
@@ -20,10 +21,26 @@ void CModuleShield::HandleCollision(IEntity* other)
 	//Is the other object a ship?
 	if (dynamic_cast<CShieldModule*>(m_pOwner)->GetShield() > 0 )
 	{
-		dynamic_cast<CShieldModule*>(m_pOwner)->HandleCollision(other);
-		other->HandleCollision(dynamic_cast<CShieldModule*>(m_pOwner));
+		if (m_pOwnerShip->GetType() == (int)EntityType::Moccasin)
+		{
+			if (dynamic_cast<CMoccasin*>(m_pOwnerShip)->GetLevel() == 1)
+			{
+				if (other->GetType() == (int)EntityType::Asteroid)
+				{
+					dynamic_cast<CShieldModule*>(m_pOwner)->HandleCollision(other);
+					other->HandleCollision(dynamic_cast<CShieldModule*>(m_pOwner));
+				}
+				else if (other->GetType() == (int)EntityType::Laser)
+					other->SelfDestruct();
+			}
+			
+		}
+		else
+		{
+			dynamic_cast<CShieldModule*>(m_pOwner)->HandleCollision(other);
+			other->HandleCollision(dynamic_cast<CShieldModule*>(m_pOwner));
+		}	
 	}
-
 }
 
 void CModuleShield::Render()

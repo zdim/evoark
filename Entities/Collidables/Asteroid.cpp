@@ -1,5 +1,7 @@
 #include "Asteroid.h"
 #include "../Ships\Ship.h"
+#include "../Modules/ShieldModule.h"
+
 #include "../../Message System/DestroyEntityMessage.h"
 #include "../../GameStates/Game.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
@@ -74,14 +76,26 @@ void CAsteroid::HandleCollision(IEntity* other)
 	//Is other a ship?
 	if (otherType >= EntityType::ShieldModule || otherType >= EntityType::Shield)
 	{
-		this->SelfDestruct();
+		CModule* module = dynamic_cast<CShieldModule*>(other);
+		//Have them take damage based on our size and velocity
+
+		//CCoral* ship = module->GetOwner();
+		////Have them take damage based on our size and velocity
+		//float mass = (size.width * size.height);
+
+		//ship->TakeDamage(int(mass * speed), true);
+
+		////Have them recieve a force based on our directions and their max speed
+		//SGD::Vector dir = ship->GetPosition() - position;
+		//dir.Normalize();
+		//ship->AddGravity(dir * ship->getSpeed() * 0.5f);
 	}
 
 	if (otherType >= EntityType::Player && otherType <= EntityType::Moccasin)
 	{
 		CShip* ship = dynamic_cast<CShip*>(other);
 		//Have them take damage based on our size and velocity
-		float mass = size.width * size.height;
+		float mass = (size.width * size.height) / 10;
 
 		ship->TakeDamage(int(mass * speed), true);
 

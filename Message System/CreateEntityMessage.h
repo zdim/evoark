@@ -11,6 +11,6 @@ public:
 	CreateEntityMessage(IEntity* creator, EntityType created);
 	~CreateEntityMessage();
 
-	IEntity* GetSender() {return sender;}
+	IEntity* GetSender() const {return sender;}
 	EntityType GetEntityType() {return toCreate;}
 };
