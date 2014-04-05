@@ -12,6 +12,7 @@
 #include "../../SoundBox.h"
 #include "../Collidables/Shield.h"
 #include "../../GameStates/GameplayState.h"
+#include "../Collidables/EventTrigger.h"
 
 #define SHIELD_SCALE 100
 #define HULL_SCALE 200
@@ -38,6 +39,8 @@ CPlayer::CPlayer()
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravPushIcon.png");
 	warpIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/WarpIcon.png");
 	
+	for (int i = 0; i < 4; i++) tutorialWaitForInput[i] = false;
+	for (int i = 0; i < 4; i++) tutorialTriggerHit[i] = false;
 }
 
 
@@ -50,6 +53,50 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update(float dt)
 {
+	SGD::InputManager* input = SGD::InputManager::GetInstance();
+
+	if (CGameplayState::GetInstance()->GetLevel() == Level::Tutorial)
+	{
+		if (tutorialWaitForInput[0])
+		{
+			if (input->IsKeyDown(SGD::Key::MouseRight))
+			{
+				tutorialWaitForInput[0] = false;
+				CreateMissile();
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[1])
+		{
+			if (input->IsKeyPressed(SGD::Key::Space))
+			{
+				tutorialWaitForInput[1] = false;
+				Warp();
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[2])
+		{
+			if (input->IsKeyPressed(SGD::Key::Q))
+			{
+				tutorialWaitForInput[2] = false;
+				CreateWell();
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[3])
+		{
+			if (input->IsKeyPressed(SGD::Key::E))
+			{
+				tutorialWaitForInput[3] = false;
+				CreatePush();
+			}
+			return;
+		}
+	}
 	//Timers
 	shieldTimer += dt;
 	laserTimer += dt;
@@ -66,7 +113,6 @@ void CPlayer::Update(float dt)
 	}
 
 	//Movement
-	SGD::InputManager* input = SGD::InputManager::GetInstance();
 	SGD::Vector dir = SGD::Vector{0,0};
 	if (input->IsKeyDown(SGD::Key::W))
 		dir.y -= 1;
@@ -296,6 +342,45 @@ void CPlayer::HandleCollision(IEntity* other)
 {
 	if (other == m_shield)
 		return;
+
+	if (other->GetType() == (int)EntityType::EventTrigger)
+	{
+		switch (dynamic_cast<EventTrigger*>(other)->GetTriggerType())
+		{
+		case (int)triggerID::tutMissiles:
+			if (!tutorialTriggerHit[0])
+			{
+				missileTimer += missileDelay;
+				tutorialWaitForInput[0] = true;
+				tutorialTriggerHit[0] = true;
+			}
+			break;
+		case (int)triggerID::tutWarp:
+			if (!tutorialTriggerHit[1])
+			{
+				warpTimer += warpDelay;
+				tutorialWaitForInput[1] = true;
+				tutorialTriggerHit[1] = true;
+			}
+			break;
+		case (int)triggerID::tutWell:
+			if (!tutorialTriggerHit[2])
+			{
+				wellTimer += wellDelay;
+				tutorialWaitForInput[2] = true;
+				tutorialTriggerHit[2] = true;
+			}
+			break;
+		case (int)triggerID::tutPush:
+			if (!tutorialTriggerHit[3])
+			{
+				pushTimer += pushDelay;
+				tutorialWaitForInput[3] = true;
+				tutorialTriggerHit[3] = true;
+			}
+			break;
+		}
+	}
 
 	CShip::HandleCollision(other);
 }
