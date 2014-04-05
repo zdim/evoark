@@ -76,19 +76,7 @@ void CAsteroid::HandleCollision(IEntity* other)
 	//Is other a ship?
 	if (otherType >= EntityType::ShieldModule || otherType >= EntityType::Shield)
 	{
-		CModule* module = dynamic_cast<CShieldModule*>(other);
-		//Have them take damage based on our size and velocity
-
-		//CCoral* ship = module->GetOwner();
-		////Have them take damage based on our size and velocity
-		//float mass = (size.width * size.height);
-
-		//ship->TakeDamage(int(mass * speed), true);
-
-		////Have them recieve a force based on our directions and their max speed
-		//SGD::Vector dir = ship->GetPosition() - position;
-		//dir.Normalize();
-		//ship->AddGravity(dir * ship->getSpeed() * 0.5f);
+		SelfDestruct();
 	}
 
 	if (otherType >= EntityType::Player && otherType <= EntityType::Moccasin)

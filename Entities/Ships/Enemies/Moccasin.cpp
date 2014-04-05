@@ -10,7 +10,7 @@ CMoccasin::CMoccasin()
 	modulePositions.push_back({ 40, -40 });
 	modulePositions.push_back({ 40, 40 });
 	m_fAsteroidTimer = 0;
-	m_fACD = 2;
+	m_fACD = 1;
 }
 
 

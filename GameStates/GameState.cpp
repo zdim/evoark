@@ -227,8 +227,8 @@ void	CTestLevelState::Generate()
 	{
 	case Level::Gen1:
 		// temporary tweak to test tutorial.
-		loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
-		//loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
+		//loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
+		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		testing += "1";
 		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
 		break;
