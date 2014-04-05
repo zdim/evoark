@@ -1,5 +1,5 @@
 #include "Camera.h"
-#include "GameStates\LevelStates\ILevelState.h"
+#include "GameStates\ILevelState.h"
 #include "GameStates\Game.h"
 CCamera::CCamera(IEntity* t = nullptr, SGD::Size screen = SGD::Size{})
 {

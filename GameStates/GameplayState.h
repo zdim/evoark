@@ -1,6 +1,6 @@
 #pragma once
 #include "IGameState.h"
-#include "LevelStates\ILevelState.h"
+#include "ILevelState.h"
 //#include "../Entities/Ships/Player.h"
 //#include "GameState.h"
 #include "../Message System/MessageID.h"

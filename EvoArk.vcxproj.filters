@@ -34,9 +34,6 @@
     <Filter Include="GameStates">
       <UniqueIdentifier>{8c699ff6-c0a0-49b3-ae7b-894a9b9afc8b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameStates\LevelStates">
-      <UniqueIdentifier>{507fe161-e852-4ee7-8155-81441ae0b4f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics">
       <UniqueIdentifier>{9dde2839-e315-4f3f-9513-f732bc62f3a6}</UniqueIdentifier>
     </Filter>
@@ -207,18 +204,6 @@
     <ClInclude Include="GameStates\UpgradeState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="GameStates\LevelStates\FinalLevelState.h">
-      <Filter>GameStates\LevelStates</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStates\LevelStates\ILevelState.h">
-      <Filter>GameStates\LevelStates</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStates\LevelStates\MainLevelState.h">
-      <Filter>GameStates\LevelStates</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStates\LevelStates\TutorialState.h">
-      <Filter>GameStates\LevelStates</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\Particles\Emitter.h">
       <Filter>Graphics\Particles</Filter>
     </ClInclude>
@@ -282,9 +267,6 @@
     <ClInclude Include="Message System\CreateProjectile.h">
       <Filter>Message System</Filter>
     </ClInclude>
-    <ClInclude Include="GameStates\LevelStates\GameOverState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
     <ClInclude Include="Message System\CreateGameOverMessage.h">
       <Filter>Message System</Filter>
     </ClInclude>
@@ -338,6 +320,12 @@
     </ClInclude>
     <ClInclude Include="Entities\Collidables\RepairStation.h">
       <Filter>Entities\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStates\ILevelState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStates\GameOverState.h">
+      <Filter>GameStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -458,18 +446,6 @@
     <ClCompile Include="GameStates\UpgradeState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
-    <ClCompile Include="GameStates\LevelStates\FinalLevelState.cpp">
-      <Filter>GameStates\LevelStates</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStates\LevelStates\ILevelState.cpp">
-      <Filter>GameStates\LevelStates</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStates\LevelStates\MainLevelState.cpp">
-      <Filter>GameStates\LevelStates</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStates\LevelStates\TutorialState.cpp">
-      <Filter>GameStates\LevelStates</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\Particles\Emitter.cpp">
       <Filter>Graphics\Particles</Filter>
     </ClCompile>
@@ -533,9 +509,6 @@
     <ClCompile Include="Message System\CreateProjectile.cpp">
       <Filter>Message System</Filter>
     </ClCompile>
-    <ClCompile Include="GameStates\LevelStates\GameOverState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
     <ClCompile Include="Message System\CreateGameOverMessage.cpp">
       <Filter>Message System</Filter>
     </ClCompile>
@@ -568,6 +541,12 @@
     </ClCompile>
     <ClCompile Include="Entities\Collidables\RepairStation.cpp">
       <Filter>Entities\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStates\ILevelState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStates\GameOverState.cpp">
+      <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

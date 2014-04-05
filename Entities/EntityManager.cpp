@@ -14,6 +14,7 @@
 #include "Collidables\Barrier.h"
 #include "Collidables\Shield.h"
 #include "Collidables\ModuleShield.h"
+#include "Collidables\RepairStation.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
 #include "..\Message System\VictoryMessage.h"
@@ -32,7 +33,7 @@ CEntityManager::~CEntityManager()
 }
 
 CEntityManager* CEntityManager::GetInstance()
-{
+{ 
 	static CEntityManager instance;
 	return &instance;
 }
@@ -481,6 +482,15 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 							   planet->SetPosition(position);
 							   planet->SetImage(images[(int)EntityType::Planet]);
 							   stationaries.push_back(planet);
+							   break;
+	}
+
+	case EntityType::RepairStation:
+	{
+							   CRepairStation* station = new CRepairStation();
+							   station->SetPosition(position);
+							   station->SetImage(images[(int)EntityType::RepairStation]);
+							   stationaries.push_back(station);
 							   break;
 	}
 

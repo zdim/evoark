@@ -9,7 +9,7 @@
 #include <string>
 #include "../Graphics/Particles/ParticleSystem.h"
 #include "../SGD Wrappers/SGD_Message.h"
-#include "LevelStates\ILevelState.h"
+#include "ILevelState.h"
 #include "../Camera.h"
 #include "../SoundBox.h"
 

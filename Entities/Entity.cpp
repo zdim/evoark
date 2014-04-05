@@ -3,7 +3,7 @@
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
 #include <algorithm>
 #include "../Camera.h"
-#include "../GameStates/LevelStates/ILevelState.h"
+#include "../GameStates/ILevelState.h"
 #include "../GameStates/Game.h"
 #include "../Message System/DestroyEntityMessage.h"
 CEntity::CEntity()
