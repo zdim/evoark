@@ -13,7 +13,7 @@ CLaser::CLaser()
 
 CLaser::~CLaser()
 {
-
+	SetOwner(nullptr);
 }
 
 void CLaser::Clamp()
@@ -92,3 +92,14 @@ void CLaser::HandleCollision(IEntity* other)
 //	dir.Rotate(angle);
 //	velocity = dir * speed;
 //}
+
+void CLaser::SetOwner(IEntity* _owner)
+{
+	if (owner)
+		owner->Release();
+
+	owner = _owner;
+
+	if (owner)
+		owner->AddRef();
+}

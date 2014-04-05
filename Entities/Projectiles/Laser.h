@@ -8,6 +8,7 @@ protected:
 	int damage = 10;
 	unsigned int tier = 0;
 	SGD::HAudio hitSound = SGD::INVALID_HANDLE;
+	IEntity* owner = nullptr;
 public:
 	CLaser();
 	~CLaser();
@@ -19,6 +20,8 @@ public:
 	int GetDamage() {return damage;}
 	void SetDamage(int newDam) {damage = newDam;}
 	void SetTier(unsigned int _tier) { tier = _tier; }
+
+	void SetOwner(IEntity* _owner);
 
 	//void AddGravity(SGD::Vector grav) override;
 
