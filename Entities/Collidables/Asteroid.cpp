@@ -74,9 +74,11 @@ void CAsteroid::HandleCollision(IEntity* other)
 	EntityType otherType = (EntityType)other->GetType();
 
 	//Is other a ship?
-	if (otherType >= EntityType::ShieldModule || otherType >= EntityType::Shield)
-	{
-
+	if (otherType == EntityType::ShieldModule )
+	{	
+		CShieldModule* module = dynamic_cast<CShieldModule*>(other);
+		float mass = (size.width * size.height) / 10;
+		module->TakeDamage(int(mass * speed), true);
 		SelfDestruct();
 	}
 
@@ -103,7 +105,7 @@ void CAsteroid::HandleCollision(IEntity* other)
 
 		//Have it take damage based on our mass and velocity
 
-		float mass = size.width * size.height / 100;
+		float mass = size.width * size.height / 10;
 		float speed = velocity.ComputeLength();
 		ast->TakeDamage(int(mass*speed));
 

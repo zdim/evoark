@@ -336,6 +336,9 @@
     <ClInclude Include="GameStates\ProfileSelectState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="RepairStation.h">
+      <Filter>Entities\Collidables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -562,6 +565,9 @@
     </ClCompile>
     <ClCompile Include="GameStates\ProfileSelectState.cpp">
       <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="RepairStation.cpp">
+      <Filter>Entities\Collidables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

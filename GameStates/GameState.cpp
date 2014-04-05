@@ -67,7 +67,7 @@ void	CTestLevelState::Enter(void)
 	EntityManager->Initialize();
 	soundBox = CSoundBox::GetInstance();
 	//soundBox->Enter();
-	//EntityManager->Spawn(EntityType::Moccasin, { 200, 200 }, 1);
+	EntityManager->Spawn(EntityType::Moccasin, { 200, 200 }, 1);
 
 	//Get SaveData and load based on it
 	saveData save = CGameplayState::GetInstance()->GetSaveData();
