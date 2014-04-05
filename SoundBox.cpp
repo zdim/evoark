@@ -25,7 +25,11 @@ void CSoundBox::Enter()
 	playerLaserSFX = audio->LoadAudio("Resources/Audio/PlayerLaser1.wav");
 	playerMissileSFX = audio->LoadAudio("Resources/Audio/PlayerMissile.wav");
 	playerWarpSFX = audio->LoadAudio("Resources/Audio/PlayerWarp.wav");
+	playerWellSFX = audio->LoadAudio("Resources/Audio/PlayerWell3Sec.wav");
+	playerPushSFX = audio->LoadAudio("Resources/Audio/PlayerPush.wav");
 	playerLevelUpSFX = audio->LoadAudio("Resources/Audio/PlayerLevelUp.wav");
+	enemyHullDamageSFX = audio->LoadAudio("Resources/Audio/EnemyHullDamage.wav");
+	enemyShieldDamageSFX = audio->LoadAudio("Resources/Audio/EnemyShieldDamage.wav");
 	creamMusic = audio->LoadAudio("Resources/Audio/cream.xwm");
 }
 
@@ -37,8 +41,13 @@ void CSoundBox::Exit()
 	audio->UnloadAudio(playerLaserSFX);
 	audio->UnloadAudio(playerMissileSFX);
 	audio->UnloadAudio(playerWarpSFX);
-	audio->UnloadAudio(creamMusic);
+	audio->UnloadAudio(playerWellSFX);
+	audio->UnloadAudio(playerPushSFX);
 	audio->UnloadAudio(playerLevelUpSFX);
+	audio->UnloadAudio(enemyHullDamageSFX);
+	audio->UnloadAudio(enemyShieldDamageSFX);
+	audio->UnloadAudio(creamMusic);
+
 }
 
 void CSoundBox::Play(int _soundEnum, bool _loop)
@@ -64,8 +73,20 @@ void CSoundBox::Play(int _soundEnum, bool _loop)
 	case playerWarp:
 		soundToPlay = playerWarpSFX;
 		break;
+	case playerWell:
+		soundToPlay = playerWellSFX;
+		break;
+	case playerPush:
+		soundToPlay = playerPushSFX;
+		break;
 	case playerLevelUp:
 		soundToPlay = playerLevelUpSFX;
+		break;
+	case enemyHullDamage:
+		soundToPlay = enemyHullDamageSFX;
+		break;
+	case enemyShieldDamage:
+		soundToPlay = enemyShieldDamageSFX;
 		break;
 	case cream:
 		soundToPlay = creamMusic;

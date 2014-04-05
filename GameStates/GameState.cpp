@@ -262,7 +262,7 @@ void	CTestLevelState::Generate()
 		testing += "3";
 		break;
 	case Level::Waves:
-		
+		loadSuccess = LoadXMLLevel("Resources/XML/World/finalLevel.xml");
 		genLevel = false;
 		break;
 	}

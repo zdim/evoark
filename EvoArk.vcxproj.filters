@@ -336,7 +336,7 @@
     <ClInclude Include="GameStates\ProfileSelectState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="RepairStation.h">
+    <ClInclude Include="Entities\Collidables\RepairStation.h">
       <Filter>Entities\Collidables</Filter>
     </ClInclude>
   </ItemGroup>
@@ -566,7 +566,7 @@
     <ClCompile Include="GameStates\ProfileSelectState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
-    <ClCompile Include="RepairStation.cpp">
+    <ClCompile Include="Entities\Collidables\RepairStation.cpp">
       <Filter>Entities\Collidables</Filter>
     </ClCompile>
   </ItemGroup>

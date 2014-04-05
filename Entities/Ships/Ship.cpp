@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../Graphics/Particles/ParticleSystem.h"
-
+#include "../../SoundBox.h"
 CShip::CShip()
 {
 	maxHull = 100;
@@ -30,6 +30,9 @@ void CShip::TakeDamage(int damage, bool collision)
 	//}
 	if (collision)
 		damage *= COLLISION_MODIFIER;
+
+	CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyShieldDamage, false);
+
 	hull -= damage;
 	if (hull <= 0)
 	{
