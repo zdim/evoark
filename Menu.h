@@ -19,6 +19,7 @@ class CMenu
 	SGD::Point labelPoint;
 	Fnt* font;
 	int cursor;
+	bool horizontal;
 
 public:
 	//CMenu();

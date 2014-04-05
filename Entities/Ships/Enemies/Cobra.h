@@ -21,5 +21,7 @@ public:
 
 class CCobraCoord : public CCobra, public Coordinator
 {
+public:
 	virtual ~CCobraCoord(){}
+	bool IsCoordinator() override { return true; }
 };

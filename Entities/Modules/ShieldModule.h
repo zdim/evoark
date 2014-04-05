@@ -8,6 +8,8 @@ class CShieldModule :
 	float regen = 20;
 public:
 	int GetType(){ return (int)EntityType::ShieldModule; }
+	int GetShield() {return shield;}
+	void SetShield(int value) {shield = value;}
 	CShieldModule();
 	virtual ~CShieldModule();
 

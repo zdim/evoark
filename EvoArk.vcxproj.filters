@@ -204,9 +204,6 @@
     <ClInclude Include="GameStates\PauseState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="GameStates\SaveSelectState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
     <ClInclude Include="GameStates\UpgradeState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
@@ -327,6 +324,9 @@
     <ClInclude Include="Entities\Collidables\Shield.h">
       <Filter>Entities\Collidables</Filter>
     </ClInclude>
+    <ClInclude Include="GameStates\ProfileSelectState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -443,9 +443,6 @@
     <ClCompile Include="GameStates\PauseState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
-    <ClCompile Include="GameStates\SaveSelectState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
     <ClCompile Include="GameStates\UpgradeState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
@@ -544,6 +541,9 @@
     </ClCompile>
     <ClCompile Include="Entities\Collidables\Shield.cpp">
       <Filter>Entities\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStates\ProfileSelectState.cpp">
+      <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

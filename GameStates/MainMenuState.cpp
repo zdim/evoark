@@ -1,6 +1,6 @@
 #include "../SoundBox.h"
 #include "MainMenuState.h"
-#include "GameplayState.h"
+#include "ProfileSelectState.h"
 #include "OptionsState.h"
 #include "CreditsState.h"
 
@@ -25,7 +25,7 @@ bool CMainMenuState::Input()
 	{
 	case menuReturn::play:
 		Game::GetInstance()->PopState();
-		Game::GetInstance()->PushState(CGameplayState::GetInstance());
+		Game::GetInstance()->PushState(CProfileSelectState::GetInstance());
 		return true;
 	case menuReturn::options:
 		Game::GetInstance()->PushState(COptionsState::GetInstance());

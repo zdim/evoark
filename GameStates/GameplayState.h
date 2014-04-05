@@ -9,28 +9,28 @@
 enum class Level { Tutorial, Gen1, Gen2, Gen3, Waves, Final, LoadedLevel, TestStatic, TestGen };
 struct playerData
 {
-	unsigned int level;
-	unsigned int exp;
-	unsigned int expRequired;
-	unsigned int perks;
-	unsigned int laserLevel;
-	unsigned int missileLevel;
-	unsigned int wellLevel;
-	unsigned int pushLevel;
-	unsigned int warpLevel;
+	int level;
+	int exp;
+	int expRequired;
+	int perks;
+	int laserLevel;
+	int missileLevel;
+	int wellLevel;
+	int pushLevel;
+	int warpLevel;
 };
 
 struct waveData
 {
-	unsigned int alliesSaved;
-	unsigned int enemiesKilled;
+	int alliesSaved;
+	int enemiesKilled;
 };
 
 struct EntityData
 {
 	EntityType type;
-	unsigned int hull;
-	unsigned int shield;
+	int hull;
+	int shield;
 	SGD::Point position;
 	bool coord;
 };
@@ -69,8 +69,10 @@ struct CollidableData
 struct worldData
 {
 	bool saved = false;
+	SGD::Size size;
+	std::string background;
 	std::vector<EntityData> entities;
-	EntityData boss;
+	ModularEntityData boss;
 	std::vector<Flock> flocks;
 	std::vector<ModularFlock> modFlocks;
 	std::vector<CollidableData> collidables;
@@ -88,8 +90,8 @@ struct saveData
 class CGameplayState : public IGameState
 {
 	saveData save;
-	CGameplayState();
-	~CGameplayState();
+	CGameplayState(){}
+	~CGameplayState(){}
 public:
 	static CGameplayState* GetInstance();
 	virtual bool Input() override;
@@ -99,12 +101,20 @@ public:
 	virtual void Enter() override;
 
 	void SaveProfile();
-	void LoadProfile();
+	saveData LoadProfile();
+	void DeleteProfile(unsigned int prof);
 
 	Level GetLevel() {return save.currLevel;}
 	void SetLevel(Level l) {save.currLevel = l;}
+	void IncrementLevel() { save.currLevel = (Level)(int(save.currLevel) + 1); }
 	//friend ILevelState;
 
 	unsigned int GetProfile() {return save.profile;}
 	void SetProfile(unsigned int profile) {save.profile = profile;}
+
+	saveData GetSaveData() {return save;}
+	void SetSaveData(saveData s) {save = s;}
+
+	void IncrementAlliesSaved() {save.waveStat.alliesSaved++;}
+	void IncrementEnemiesKilled() {save.waveStat.enemiesKilled++;}
 };

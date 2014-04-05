@@ -1,5 +1,6 @@
 #pragma once
 #include "Ship.h"
+struct playerData;
 class CShield;
 class CPlayer :
 	public CShip
@@ -52,6 +53,7 @@ public:
 	void AddGravity(SGD::Vector grav) override;
 	void TakeDamage(int damage, bool collision = false) override;
 	void SetShield(CShield* p) { m_shield = p; }
+	void SetShieldValue(int value) {shield = value;}
 
 	int GetShield() { return shield; }
 	int GetMaxShield() { return maxShield; }
@@ -94,5 +96,7 @@ public:
 	void CreateWell();
 	void CreatePush();
 	void Warp();
+
+	void SetStats(playerData& data);
 };
 

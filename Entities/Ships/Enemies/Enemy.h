@@ -1,6 +1,6 @@
 #pragma once
 #include "../Ship.h"
-#include "../../Leader.h"
+//#include "../../Leader.h"
 #include "../../../Event System/IListener.h"
 class CEnemy :
 	public CShip, public Listener

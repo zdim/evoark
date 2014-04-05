@@ -118,6 +118,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							   player->SetImage(images[(int)EntityType::Player]);
 							   player->SetPosition(position);
 							   player->SetSize({ 32, 32 });
+							   dynamic_cast<CPlayer*>(player)->SetStats(CGameplayState::GetInstance()->GetSaveData().playerStat);
 							   dynamic_cast<CPlayer*>(player)->SetShield(shield);
 							   //player->SetImageSize({ 384, 415 });
 							   dynamic_cast<CShip*>(player)->setSpeed(200);
@@ -889,4 +890,310 @@ void CEntityManager::Render()
 	//if (player)
 	//if (player->GetRect().IsIntersecting(screen))
 	//	player->Render();
+}
+
+void CEntityManager::Save()
+{
+	saveData save = CGameplayState::GetInstance()->GetSaveData();
+
+	save.world.size = Game::GetInstance()->GetLevelState()->GetWorldSize();
+
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(player);
+	save.playerStat.exp = pPlayer->GetExp();
+	save.playerStat.expRequired = pPlayer->GetReqExp();
+	save.playerStat.level = pPlayer->GetLevel();
+	save.playerStat.perks = pPlayer->GetPerks();
+	save.playerStat.laserLevel = pPlayer->GetLaserLevel();
+	save.playerStat.missileLevel = pPlayer->GetMissileLevel();
+	save.playerStat.wellLevel = pPlayer->GetWellLevel();
+	save.playerStat.pushLevel = pPlayer->GetPushLevel();
+	save.playerStat.warpLevel = pPlayer->GetWarpLevel();
+
+	if (boss)
+	{
+		save.world.boss.type = EntityType::Moccasin;
+		save.world.boss.position = boss->GetPosition();
+		save.world.boss.modules = boss->GetModuleData();
+	}
+	else
+	{
+		save.world.boss.type = EntityType::BaseClass;
+	}
+
+	EntityData playerEnt;
+	playerEnt.coord = false;
+	playerEnt.type = EntityType::Player;
+	playerEnt.position = player->GetPosition();
+	playerEnt.hull = pPlayer->getHull();
+	playerEnt.shield = pPlayer->GetShield();
+
+	save.world.entities.clear();
+	save.world.entities.push_back(playerEnt);
+
+	for (unsigned int i = 0; i < allies.size(); i++)
+	{
+		EntityData ally;
+		ally.coord = false;
+		ally.type = EntityType::Human;
+		ally.position = allies[i]->GetPosition();
+		ally.hull = dynamic_cast<CShip*>(allies[i])->getHull();
+		ally.shield = 0;
+		save.world.entities.push_back(ally);
+	}
+
+	save.world.collidables.clear();
+
+	for (unsigned int i = 0; i < asteroids.size(); i++)
+	{
+		CollidableData col;
+		col.type = EntityType::Asteroid;
+		col.size = asteroids[i]->GetSize();
+		col.position = asteroids[i]->GetPosition();
+		//Asteroids will heal between saving and loading. 
+		//Not a big loss, really since they go offscreen so frequently anyway, it's impossible to really keep track of which ones you've damaged.
+		save.world.collidables.push_back(col);
+	}
+
+	for (unsigned int i = 0; i < stationaries.size(); i++)
+	{
+		CollidableData col; 
+		col.type = (EntityType)stationaries[i]->GetType();
+		col.size = stationaries[i]->GetSize();
+		col.position = stationaries[i]->GetPosition();
+		save.world.collidables.push_back(col);
+	}
+
+	save.world.flocks.clear();
+	save.world.modFlocks.clear();
+
+	for (unsigned int i = 0; i < leaders.size(); i++)
+	{
+		if (leaders[i]->GetType() == EntityType::Coral)
+		{
+			//Add to modFlocks
+			ModularFlock flock;
+			flock.type = EntityType::Coral;
+			flock.home = leaders[i]->GetHome();
+			flock.backup = leaders[i]->IsBackup();
+			leaders[i]->GetEntityData(flock.members);
+			save.world.modFlocks.push_back(flock);
+		}
+		else
+		{
+			//Add to flocks
+			Flock flock;
+			flock.type = leaders[i]->GetType();
+			flock.home = leaders[i]->GetHome();
+			flock.backup = leaders[i]->IsBackup();
+			leaders[i]->GetEntityData(flock.members);
+			save.world.flocks.push_back(flock);
+		}
+	}
+
+	save.world.saved = true;
+	CGameplayState::GetInstance()->SetSaveData(save);
+}
+
+EntityGroup CEntityManager::CreateCopperheadLeader(Flock& data)
+{
+	EntityGroup copperheads;
+	copperheads.resize(data.members.size());
+	for (unsigned int j = 0; j < copperheads.size(); j++)
+	{
+		if (data.members[j].coord && !coordinator)
+		{
+			CCopperheadCoord* C = new CCopperheadCoord();
+			copperheads[j] = C;
+			coordinator = C;
+		}
+		else
+		{
+			copperheads[j] = new CCopperhead();
+		}
+		copperheads[j]->SetImage(images[(int)EntityType::Copperhead]);
+		copperheads[j]->SetSize({ 32, 32 });
+		//copperheads[i]->SetImageSize({ 70, 94 });
+		smallEnemies.push_back(copperheads[j]);
+		ships.push_back(copperheads[j]);
+	}
+	return copperheads;
+}
+
+EntityGroup CEntityManager::CreateCobraLeader(Flock& data)
+{
+	EntityGroup cobras;
+	cobras.resize(data.members.size());
+	for (unsigned int i = 0; i < cobras.size(); i++)
+	{
+		if (data.members[i].coord && !coordinator)
+		{
+			CCobraCoord* C = new CCobraCoord;
+			cobras[i] = C;
+			coordinator = C;
+		}
+		else
+		{
+			cobras[i] = new CCobra();
+		}
+		cobras[i]->SetImage(images[(int)EntityType::Cobra]);
+		//cobras[i]->SetImageSize({ 77, 93 });
+		cobras[i]->SetSize({ 32, 32 });
+		smallEnemies.push_back(cobras[i]);
+		ships.push_back(cobras[i]);
+	}
+	return cobras;
+}
+
+EntityGroup CEntityManager::CreateMambaLeader(Flock& data)
+{
+	EntityGroup mambas;
+	mambas.resize(data.members.size());
+	for (unsigned int i = 0; i < mambas.size(); i++)
+	{
+		if (data.members.size() && !coordinator)
+		{
+			CMambaCoord* C = new CMambaCoord;
+			mambas[i] = C;
+			coordinator = C;
+		}
+		else
+		{
+			mambas[i] = new CMamba();
+		}
+		mambas[i]->SetImage(images[(int)EntityType::Mamba]);
+		//mambas[i]->SetImageSize({ 96, 78 });
+		mambas[i]->SetSize({ 32, 32 });
+		smallEnemies.push_back(mambas[i]);
+		ships.push_back(mambas[i]);
+	}
+	return mambas;
+}
+
+void CEntityManager::CreateLeader(Flock& data)
+{
+	CLeader* leader = new CLeader;
+	EntityGroup flock;
+	switch (data.type)
+	{
+	case EntityType::Copperhead:
+		flock = CreateCopperheadLeader(data);
+		break;
+	case EntityType::Cobra:
+		flock = CreateCobraLeader(data);
+		break;
+	case EntityType::Mamba:
+		flock = CreateMambaLeader(data);
+		break;
+	default:
+		return;
+	}
+	leader->SetHome(data.home);
+	leader->Assign(flock); //Leader repositions entities
+	for (unsigned int j = 0; j < flock.size(); j++)
+	{
+		dynamic_cast<CShip*>(flock[j])->setHull(data.members[j].hull);
+		if (data.backup)
+		{
+			flock[j]->SetPosition(data.members[j].position);
+		}
+	}
+	leaders.push_back(leader);
+}
+
+void CEntityManager::CreateLeader(ModularFlock& data)
+{
+	CLeader* leader = new CLeader();
+	EntityGroup corals;
+	corals.resize(data.members.size());
+	for (unsigned int i = 0; i < corals.size(); i++)
+	{
+		corals[i] = new CCoral();
+		corals[i]->SetImage(images[(int)EntityType::Coral]);
+		//corals[i]->SetImageSize({ 96, 78 });
+		corals[i]->SetSize({ 128, 128 });
+		dynamic_cast<CCoral*>(corals[i])->SetImages(images);
+		bigEnemies.push_back(corals[i]);
+		ships.push_back(corals[i]);
+	}
+	leader->SetHome(data.home);
+	leader->Assign(corals);
+	leaders.push_back(leader);
+	for (unsigned int j = 0; j < corals.size(); j++)
+	{
+		dynamic_cast<CCoral*>(corals[j])->SetModuleData(data.members[j].modules);
+		if (data.backup)
+		{
+			corals[j]->SetPosition(data.members[j].position);
+		}
+	}
+}
+
+void CEntityManager::Load()
+{
+	saveData save = CGameplayState::GetInstance()->GetSaveData();
+
+	if (save.world.boss.type == EntityType::Moccasin)
+	{
+		boss = new CMoccasin;
+		boss->SetModuleData(save.world.boss.modules);
+		boss->SetImage(images[(int)EntityType::Moccasin]);
+		boss->SetSize({ 256, 256 });
+		boss->SetImages(images);
+		bigEnemies.push_back(boss);
+		ships.push_back(boss);
+		boss->SetPosition(save.world.boss.position);
+	}
+
+	for (unsigned int i = 0; i < save.world.entities.size(); i++)
+	{
+		if (save.world.entities[i].type == EntityType::Player)
+		{
+			CShield* shield = new CShield();
+			shield->SetPosition(save.world.entities[i].position);
+			shield->SetImage(images[(int)EntityType::Shield]);
+
+			player = new CPlayer();
+			player->SetImage(images[(int)EntityType::Player]);
+			player->SetPosition(save.world.entities[i].position);
+			player->SetSize({ 32, 32 });
+			player->SetStats(CGameplayState::GetInstance()->GetSaveData().playerStat);
+			player->SetShield(shield);
+			player->setSpeed(200);
+			shield->SetOwner(dynamic_cast<CShip*>(player));
+
+			player->SetShieldValue(save.world.entities[i].shield);
+			player->setHull(save.world.entities[i].hull);
+
+			ships.push_back(player);
+			ships.push_back(shield);
+		}
+		else
+		{
+			CShip* human = new CHuman();
+			human->SetPosition(save.world.entities[i].position);
+			human->SetImage(images[(int)EntityType::Human]);
+			human->SetSize({ 32, 32 });
+
+			human->setHull(save.world.entities[i].hull);
+
+			allies.push_back(human);
+			ships.push_back(human);
+			break;
+		}
+	}
+
+	for (unsigned int i = 0; i < save.world.collidables.size(); i++)
+	{
+		SpawnCollidable(save.world.collidables[i].type, save.world.collidables[i].position, save.world.collidables[i].size);
+	}
+
+	for (unsigned int i = 0; i < save.world.flocks.size(); i++)
+	{
+		CreateLeader(save.world.flocks[i]);
+	}
+
+	for (unsigned int i = 0; i < save.world.modFlocks.size(); i++)
+	{
+		CreateLeader(save.world.modFlocks[i]);
+	}
 }

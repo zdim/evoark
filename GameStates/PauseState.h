@@ -4,7 +4,7 @@
 class CPauseState :
 	public IGameState
 {
-	enum menuReturn { Continue, Reload, Upgrades, Options, MainMenu, count };
+	enum menuReturn { Continue, ForceCheckpoint, ForceSave, Upgrades, Options, MainMenu, count };
 	CMenu* menu;
 
 	CPauseState();

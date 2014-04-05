@@ -63,7 +63,17 @@ void	CTestLevelState::Enter(void)
 	soundBox = CSoundBox::GetInstance();
 	//soundBox->Enter();
 
-	Generate();
+	//Get SaveData and load based on it
+	saveData save = CGameplayState::GetInstance()->GetSaveData();
+	if (save.world.saved == true)
+	{
+		EntityManager->Load();
+	}
+	else
+	{
+		Generate();
+		EntityManager->Save();
+	}
 	testing = "Level";
 	m_nLine += 100;
 	Render();	
@@ -117,6 +127,8 @@ void	CTestLevelState::Exit(void)
 	SGD::MessageManager::GetInstance()->DeleteInstance();
 	CEventManager::GetInstance().ClearEvents();
 	CEventManager::GetInstance().ClearListeners();
+
+	CGameplayState::GetInstance()->SaveProfile();
 }
 
 bool	CTestLevelState::Input(void)
@@ -308,6 +320,9 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 		background = "Resources/Graphics/" + background;
 		BackgroundImage = graphics->LoadTexture(background.c_str());
 	}
+	saveData save = CGameplayState::GetInstance()->GetSaveData();
+	save.world.background = background;
+	CGameplayState::GetInstance()->SetSaveData(save);
 
 	world.resize(m_nNumQuadsWidth);
 	for (unsigned int size = 0; size < world.size(); size++)

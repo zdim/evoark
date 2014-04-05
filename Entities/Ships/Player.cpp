@@ -11,6 +11,7 @@
 #include "../../Graphics/Particles/ParticleSystem.h"
 #include "../../SoundBox.h"
 #include "../Collidables/Shield.h"
+#include "../../GameStates/GameplayState.h"
 
 #define SHIELD_SCALE 100
 #define HULL_SCALE 200
@@ -250,4 +251,19 @@ void CPlayer::LaserLevelUp()
 	laserLevel++;
 	if (laserLevel == 3)
 		laserDelay = .15f;
+}
+
+void CPlayer::SetStats(playerData& data)
+{
+	exp = data.exp;
+	expRequired = data.expRequired;
+	level = data.level;
+	maxShield += SHIELD_SCALE * level;
+	maxHull += HULL_SCALE * level;
+	perks = data.perks;
+	for (laserLevel; laserLevel < data.laserLevel; LaserLevelUp());
+	for (missileLevel; missileLevel < data.missileLevel; MissileLevelUp());
+	for (wellLevel; wellLevel < data.wellLevel; WellLevelUp());
+	for (pushLevel; pushLevel < data.pushLevel; PushLevelUp());
+	for (warpLevel; warpLevel < data.warpLevel; WarpLevelUp());
 }

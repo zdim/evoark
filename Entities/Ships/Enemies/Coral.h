@@ -7,6 +7,9 @@
 #include "../../Modules/WarpModule.h"
 #include "../../Modules/ShieldModule.h"
 #include "../../Modules/Engine.h"
+#include <vector>
+
+struct EntityData;
 
 class CCoral :
 	public CEnemy
@@ -26,11 +29,13 @@ public:
 	virtual void Render()							override;
 	virtual void HandleCollision(IEntity* other)	override;
 
-	virtual void DestroyModule(CModule* mod);
+	virtual void DestroyModule(CModule* mod, bool safe = false);
 	virtual void DestroyAllModules();
 	//virtual void SelfDestruct(void);
 
 	virtual void SetImages(std::vector<SGD::HTexture>&images);
 	void SetTarget(CShip* newTarget) override;
 	int RequestShield(int damage);
+	std::vector<EntityData> GetModuleData();
+	void SetModuleData(std::vector<EntityData> mods);
 };

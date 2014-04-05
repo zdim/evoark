@@ -33,7 +33,7 @@ bool CUpgradeState::Input()
 	if (input->GetMouseMovement() != SGD::Vector{ 0, 0 })
 	{
 		SGD::Point mousePos = input->GetMousePosition();
-		for (int i = 0; i < buttons.size(); i++)
+		for (unsigned int i = 0; i < buttons.size(); i++)
 		{
 			if (mousePos.IsWithinRectangle(buttons[i]))
 			{
@@ -392,7 +392,7 @@ void CUpgradeState::Render()
 		graphics->DrawRectangle({ { screenWidth * .15f * (cursor / 3 + 1), screenHeight * (.55f - (cursor % 3) * .15f) }, SGD::Size{ 64, 64 } }, { 50, 255, 255, 255 }, { 255, 255, 255 }, 2);
 	std::ostringstream perksToSpend;
 	perksToSpend << "Perks to spend: " << player->GetPerks();
-	Game::GetInstance()->FontSmall.Write({ screenWidth * .7, screenHeight * .9 }, perksToSpend.str().c_str());
+	Game::GetInstance()->FontSmall.Write({ screenWidth * .7f, screenHeight * .9f }, perksToSpend.str().c_str());
 }
 
 void CUpgradeState::Enter()

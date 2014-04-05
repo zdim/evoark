@@ -6,11 +6,12 @@
 #include "SoundBox.h"
 #include <algorithm>
 
-CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _label, bool fillWindow, bool horizontal, SGD::Size buttonPadding, SGD::Size menuPadding, SGD::Size buttonSpacing)
+CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _label, bool fillWindow, bool _horizontal, SGD::Size buttonPadding, SGD::Size menuPadding, SGD::Size buttonSpacing)
 {
 	font = _font;
 	label = _label;
 	cursor = 0;
+	horizontal = _horizontal;
 	buttons.resize(buttonLabels.size());
 	for (unsigned int i = 0; i < buttons.size(); i++)
 	{
@@ -105,7 +106,7 @@ int CMenu::Input()
 	{
 		SGD::Point mousePos = input->GetMousePosition();
 		bool success = false;
-		for (int i = 0; i < buttons.size(); i++)
+		for (unsigned int i = 0; i < buttons.size(); i++)
 		{
 			if (mousePos.IsWithinRectangle(buttons[i].box))
 			{
@@ -119,24 +120,47 @@ int CMenu::Input()
 		if (success == false)
 			cursor = -1;
 	}
-
-	if (input->IsKeyPressed(SGD::Key::Down) || input->IsDPadPressed(0, SGD::DPad::Down)) // || input->controllerstuff
+	if (horizontal)
 	{
-		if (cursor >= (int)buttons.size() - 1)
-			cursor = 0;
-		else
-			cursor++;
-		
-		CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+		if (input->IsKeyPressed(SGD::Key::Right) || input->IsDPadPressed(0, SGD::DPad::Right)) // || input->controllerstuff
+		{
+			if (cursor >= (int)buttons.size() - 1)
+				cursor = 0;
+			else
+				cursor++;
+
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+		}
+		if (input->IsKeyPressed(SGD::Key::Left) || input->IsDPadPressed(0, SGD::DPad::Left)) // || input->controllerstuff
+		{
+			if (cursor <= 0)
+				cursor = buttons.size() - 1;
+			else
+				cursor--;
+
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+		}
 	}
-	if (input->IsKeyPressed(SGD::Key::Up) || input->IsDPadPressed(0, SGD::DPad::Up)) // || input->controllerstuff
+	else
 	{
-		if (cursor <= 0)
-			cursor = buttons.size() - 1;
-		else
-			cursor--;
+		if (input->IsKeyPressed(SGD::Key::Down) || input->IsDPadPressed(0, SGD::DPad::Down)) // || input->controllerstuff
+		{
+			if (cursor >= (int)buttons.size() - 1)
+				cursor = 0;
+			else
+				cursor++;
 
-		CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+		}
+		if (input->IsKeyPressed(SGD::Key::Up) || input->IsDPadPressed(0, SGD::DPad::Up)) // || input->controllerstuff
+		{
+			if (cursor <= 0)
+				cursor = buttons.size() - 1;
+			else
+				cursor--;
+
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+		}
 	}
 	if (input->IsKeyPressed(SGD::Key::Enter) || input->IsButtonPressed(0, 0))  // || input->controllerstuff
 	{

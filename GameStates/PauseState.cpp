@@ -4,6 +4,8 @@
 #include "MainMenuState.h"
 #include "UpgradeState.h"
 #include "../SGD Wrappers/SGD_InputManager.h"
+
+#include "GameplayState.h" //Comment out later -- Debug stuff
 CPauseState::CPauseState()
 {
 }
@@ -32,9 +34,11 @@ bool CPauseState::Input()
 	case menuReturn::Continue:
 		Game::GetInstance()->PopState();
 		return true;
-	case menuReturn::Reload:
-		Game::GetInstance()->PopState();
-		Game::GetInstance()->PopState();
+	case menuReturn::ForceCheckpoint:
+		CEntityManager::GetInstance()->Save();
+		return true;
+	case menuReturn::ForceSave:
+		CGameplayState::GetInstance()->SaveProfile();
 		return true;
 	case menuReturn::Upgrades:
 		Game::GetInstance()->PushState(CUpgradeState::GetInstance());
@@ -68,7 +72,8 @@ void CPauseState::Enter()
 	std::vector<std::string> buttons;
 	buttons.resize(menuReturn::count);
 	buttons[menuReturn::Continue] = "Continue";
-	buttons[menuReturn::Reload] = "[Reload]";
+	buttons[menuReturn::ForceCheckpoint] = "[Checkpoint]";
+	buttons[menuReturn::ForceSave] = "[Save]";
 	buttons[menuReturn::Upgrades] = "Upgrades";
 	buttons[menuReturn::MainMenu] = "Main Menu";
 	buttons[menuReturn::Options] = "Options";

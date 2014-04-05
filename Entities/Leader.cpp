@@ -1,6 +1,9 @@
 
 #include "Leader.h"
 #include <algorithm>
+#include "Ships\Enemies\Coral.h"
+#include "../GameStates/GameplayState.h"
+#include "EntityManager.h"
 
 CLeader::CLeader()
 {
@@ -21,7 +24,7 @@ bool CLeader::Assign(const EntityGroup& flock)
 	destinations.resize(flock.size());
 	for (unsigned int i = 0; i < members.size(); i++)
 	{
-		members[i] = flock[i];
+		members[i] = dynamic_cast<CEnemy*>(flock[i]);
 		//members[i]->SetPosition(destinations[i]);
 		members[i]->AddRef();
 	}
@@ -82,6 +85,10 @@ void CLeader::Remove(IEntity* entity)
 		return;
 	//members[i]->Release();
 	members.erase(members.begin()+i);
+	if (!members.size())
+	{
+		CEntityManager::GetInstance()->DestroyLeader(this);
+	}
 }
 
 void CLeader::SetTarget(CShip* newTarget)
@@ -96,4 +103,43 @@ void CLeader::SetTarget(CShip* newTarget)
 		newTarget->AddRef();
 
 	target = newTarget;
+}
+
+void CLeader::GetEntityData(std::vector<EntityData>& flockData)
+{
+	flockData.clear();
+	if (GetType() == EntityType::Coral)
+	{
+		return;
+	}
+	EntityType t = (EntityType)members[0]->GetType();
+	for (unsigned int i = 0; i < members.size(); i++)
+	{
+		EntityData data;
+		data.type = t;
+		data.coord = members[i]->IsCoordinator();
+		data.position = members[i]->GetPosition();
+		data.hull = members[i]->getHull();
+		data.shield = 0;
+		flockData.push_back(data);
+	}
+}
+
+void CLeader::GetEntityData(std::vector<ModularEntityData>& flockData)
+{
+	flockData.clear();
+	if (GetType() != EntityType::Coral)
+	{
+		return;
+	}
+	EntityType t = (EntityType)members[0]->GetType();
+	for (unsigned int i = 0; i < members.size(); i++)
+	{
+		ModularEntityData data;
+		CCoral* coral = dynamic_cast<CCoral*>(members[i]);
+		data.type = t;
+		data.position = coral->GetPosition();
+		data.modules = coral->GetModuleData();
+		flockData.push_back(data);
+	}
 }

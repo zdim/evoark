@@ -12,7 +12,7 @@ public:
 	CShip();
 	virtual ~CShip();
 
-
+	virtual bool IsCoordinator() {return false;}
 	virtual void TakeDamage(int damage, bool collision = false);
 	void HandleCollision(IEntity* other) override;
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "../../Leader.h"
 class CCopperhead :
 	public CEnemy
 {
@@ -29,5 +30,7 @@ public:
 
 class CCopperheadCoord : public CCopperhead, public Coordinator
 {
+public:
 	virtual ~CCopperheadCoord(){}
+	bool IsCoordinator() override { return true; }
 };

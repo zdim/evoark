@@ -5,11 +5,14 @@
 #include "../SGD Wrappers/SGD_Handle.h"
 #include "Ships\Player.h"
 #include "Ships\Enemies\Moccasin.h"
+
+struct Flock;
+struct ModularFlock;
 //class CMoccasin;
 class CEntityManager
 {
 	std::vector<CLeader*> leaders;
-	CEntity* player = nullptr;
+	CPlayer* player = nullptr;
 	EntityGroup allies;
 	EntityGroup smallEnemies;
 	EntityGroup bigEnemies;
@@ -33,7 +36,7 @@ public:
 
 	CPlayer* GetPlayer() { return dynamic_cast<CPlayer*>(player); }
 	CEntity* GetStargate() { return dynamic_cast<CEntity*>(stargate); }
-	CMoccasin* GetBoss() {return boss;}
+	CMoccasin* GetBoss() const {return boss;}
 	std::vector<IEntity*> GetAllies() { return allies; }
 	IEntity* GetCoordinator();
 	//IEntity* GetStargate() { return (IEntity*)stargate; }	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.
@@ -59,5 +62,16 @@ public:
 
 	void Update(float dt);
 	void Render();
+
+	void Save();
+	void Load();
+
+	//Don't use these outside of load!
+	EntityGroup CreateCopperheadLeader(Flock& data);
+	EntityGroup CreateCobraLeader(Flock& data);
+	EntityGroup CreateMambaLeader(Flock& data);
+	EntityGroup CreateCoralLeader(Flock& data);
+	void CreateLeader(Flock& data);
+	void CreateLeader(ModularFlock& data);
 };
 

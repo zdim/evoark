@@ -18,5 +18,6 @@ public:
 class CMambaCoord : public CMamba, public Coordinator
 {
 	virtual ~CMambaCoord(){}
+	bool IsCoordinator() override {return true;}
 };
 
