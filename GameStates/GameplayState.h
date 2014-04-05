@@ -113,7 +113,7 @@ public:
 	unsigned int GetProfile() {return save.profile;}
 	void SetProfile(unsigned int profile) {save.profile = profile;}
 
-	saveData GetSaveData() {return save;}
+	saveData & GetSaveData() {return save;}
 	void SetSaveData(saveData s) {save = s;}
 
 	void IncrementAlliesSaved() {save.waveStat.alliesSaved++;}
