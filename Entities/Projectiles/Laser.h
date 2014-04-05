@@ -20,6 +20,8 @@ public:
 	void SetDamage(int newDam) {damage = newDam;}
 	void SetTier(unsigned int _tier) { tier = _tier; }
 
+	void AddGravity(SGD::Vector grav) override;
+
 	SGD::HAudio SetSound() {return hitSound;}
 	void SetSound(SGD::HAudio newSound) {hitSound = newSound;}
 

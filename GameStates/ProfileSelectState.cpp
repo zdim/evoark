@@ -54,6 +54,14 @@ bool CProfileSelectState::Input()
 void CProfileSelectState::SeletionInput()
 {
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
+
+	if (input->IsKeyPressed(SGD::Key::Escape))
+	{
+		Game::GetInstance()->PopState();
+		Game::GetInstance()->PushState(CMainMenuState::GetInstance());
+		return;
+	}
+
 	if (input->IsKeyPressed(SGD::Key::RightArrow))
 	{
 		if (currentProfile >= 2)
@@ -76,12 +84,48 @@ void CProfileSelectState::SeletionInput()
 	{
 		state = MyState::Menu;
 	}
+
+	if (input->IsKeyPressed(SGD::Key::MouseLeft))
+	{
+		SGD::Point mouse = input->GetMousePosition();
+		if (mouse.IsWithinRectangle(SGD::Rectangle{ current, profileSize }))
+		{
+			state = MyState::Menu;
+			return;
+		}
+		if (mouse.IsWithinRectangle(SGD::Rectangle{ next, profileSize }))
+		{
+			if (currentProfile >= 2)
+				currentProfile = 0;
+			else
+				currentProfile++;
+			state = MyState::Transition;
+			transTimer = 0;
+		}
+		if (mouse.IsWithinRectangle(SGD::Rectangle{ previous, profileSize }))
+		{
+			if (currentProfile <= 0)
+				currentProfile = 2;
+			else
+				currentProfile--;
+			state = MyState::Transition;
+			transTimer = 0;
+		}
+	}
 }
 
 void CProfileSelectState::MenuInput()
 {
+	SGD::InputManager* input = SGD::InputManager::GetInstance();
 	if (state == MyState::ConfirmOverwrite)
 	{
+		if (input->IsKeyPressed(SGD::Key::Escape))
+		{
+			delete confirm;
+			confirm = nullptr;
+			state = MyState::Menu;
+			return;
+		}
 		switch (confirm->Input())
 		{
 		case 0:
@@ -90,7 +134,7 @@ void CProfileSelectState::MenuInput()
 			confirm = nullptr;
 			CGameplayState::GetInstance()->DeleteProfile(currentProfile+1);
 			saveData profile = CreateProfile();
-			profile.profile = currentProfile + 1;
+			//profile.profile = currentProfile + 1;
 			TutorialConfirmation();
 			break;
 		}
@@ -109,12 +153,19 @@ void CProfileSelectState::MenuInput()
 
 	if (state == MyState::ConfirmDelete)
 	{
+		if (input->IsKeyPressed(SGD::Key::Escape))
+		{
+			delete confirm;
+			confirm = nullptr;
+			state = MyState::Menu;
+			return;
+		}
 		switch (confirm->Input())
 		{
 		case 0:
 			CGameplayState::GetInstance()->DeleteProfile(currentProfile+1);
 			profiles[currentProfile] = CreateProfile();
-			profiles[currentProfile].profile = currentProfile + 1;
+			//profiles[currentProfile].profile = currentProfile + 1;
 			//Don't break! They both delete confirm and change state beck to menu
 		case 1:
 			delete confirm;
@@ -130,17 +181,26 @@ void CProfileSelectState::MenuInput()
 
 	if (state == MyState::ConfirmTutorial)
 	{
+		if (input->IsKeyPressed(SGD::Key::Escape))
+		{
+			delete confirm;
+			confirm = nullptr;
+			state = MyState::Menu;
+			return;
+		}
 		switch (confirm->Input())
 		{
 		case 0:
-			CGameplayState::GetInstance()->SetLevel(Level::Gen1);
+			profiles[currentProfile].currLevel = Level::Gen1;
 		case 1:
+			CGameplayState::GetInstance()->SetSaveData(profiles[currentProfile]);
 			Game::GetInstance()->PopState();
 			Game::GetInstance()->PushState(CGameplayState::GetInstance());
 			break;
 		case 2:
 			delete confirm;
 			confirm = nullptr;
+			state = MyState::Menu;
 			break;
 		case -1:
 		default:
@@ -149,9 +209,20 @@ void CProfileSelectState::MenuInput()
 		return;
 	}
 
+	if (input->IsKeyPressed(SGD::Key::Escape))
+	{
+		state = MyState::Idle;
+		return;
+	}
+
 	switch (menu->Input())
 	{
 	case 0:
+		if (profiles[currentProfile].currLevel == Level::Tutorial)
+		{
+			TutorialConfirmation();
+			break;
+		}
 		CGameplayState::GetInstance()->SetSaveData(profiles[currentProfile]);
 		Game::GetInstance()->PopState();
 		Game::GetInstance()->PushState(CGameplayState::GetInstance());
@@ -326,15 +397,20 @@ void CProfileSelectState::LoadProfiles()
 	{
 		if (profiles[i].profile == 0)
 		{
+			currentProfile = i;
 			profiles[i] = CreateProfile();
-			profiles[i].profile = i + 1;
+			//profiles[i].profile = i + 1;
 		}
 	}
+	currentProfile = 0;
 }
 
 saveData CProfileSelectState::CreateProfile()
 {
 	saveData profile;
+	profile.profile = currentProfile+1;
+	if (profile.profile > 3)
+		profile.profile = 1;
 	profile.currLevel = Level::Tutorial;
 
 	profile.playerStat.level = 1;
@@ -357,7 +433,7 @@ saveData CProfileSelectState::CreateProfile()
 
 void CProfileSelectState::RenderProfile(int index, SGD::Point pos)
 {
-	SGD::GraphicsManager::GetInstance()->DrawRectangle(SGD::Rectangle{ pos, SGD::Size{375,200} }, SGD::Color(0,0, 155));
+	SGD::GraphicsManager::GetInstance()->DrawRectangle(SGD::Rectangle{ pos, profileSize }, SGD::Color(0,0, 155));
 	if (index > 2)
 		index = 0;
 	if (index < 0)

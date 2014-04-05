@@ -77,7 +77,7 @@ void CAsteroid::HandleCollision(IEntity* other)
 		this->SelfDestruct();
 	}
 
-	if (otherType >= EntityType::Player && otherType <= EntityType::Moccasin)
+	if (otherType >= EntityType::Player && otherType <= EntityType::Coordinator)
 	{
 		CShip* ship = dynamic_cast<CShip*>(other);
 		//Have them take damage based on our size and velocity

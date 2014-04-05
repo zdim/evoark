@@ -85,6 +85,9 @@ void CCoral::Render()
 
 void CCoral::HandleCollision(IEntity* other)
 {
+	if (other = m_pShield)
+		return;
+
 	CEntityManager* EM = CEntityManager::GetInstance();
 
 	for (unsigned int i = 0; i < modules.size(); i++)

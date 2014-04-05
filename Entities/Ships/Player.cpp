@@ -291,3 +291,11 @@ void CPlayer::SetStats(playerData& data)
 	for (pushLevel; pushLevel < data.pushLevel; PushLevelUp());
 	for (warpLevel; warpLevel < data.warpLevel; WarpLevelUp());
 }
+
+void CPlayer::HandleCollision(IEntity* other)
+{
+	if (other == m_shield)
+		return;
+
+	CShip::HandleCollision(other);
+}

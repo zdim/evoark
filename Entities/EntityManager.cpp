@@ -541,6 +541,7 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 
 									 EventTrigger* trig = new EventTrigger();
 									 trig->SetType(eventType);
+									 position += size/2;
 									 trig->SetPosition(position);
 									 trig->SetSize(size);
 									 stationaries.push_back(trig);

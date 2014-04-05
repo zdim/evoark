@@ -46,7 +46,7 @@ void CShip::HandleCollision(IEntity* other)
 	//Is the other object a ship?
 	EntityType otherType = (EntityType)other->GetType();
 	
-	if (otherType >= EntityType::Player && otherType <= EntityType::Moccasin)
+	if (otherType >= EntityType::Player && otherType <= EntityType::Coordinator)
 	{
 		
 		//This formula gets the direction from us to them (so away from us), then multiplies that by (their speed * 1.1) so that they can only fight the push from impact a little bit

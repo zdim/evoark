@@ -79,3 +79,10 @@ void CLaser::HandleCollision(IEntity* other)
 	}
 
 }
+
+void CLaser::AddGravity(SGD::Vector grav)
+{
+	float speed = velocity.ComputeLength();
+	grav.Normalize();
+	velocity = grav * speed;
+}

@@ -38,14 +38,14 @@ void			CGameplayState::Enter()
 	//grab the selected profile from Game, then load save data
 
 	//For now: default the save data, and start the test level
-	save.currLevel = Level::Gen1;
-	save.playerStat.exp = 0;
-	save.playerStat.laserLevel = 0;
-	save.playerStat.missileLevel = 0;
-	save.playerStat.perks = 15;
-	save.playerStat.pushLevel = 0;
-	save.playerStat.warpLevel = 0;
-	save.playerStat.wellLevel = 0;
+	//save.currLevel = Level::Gen1;
+	//save.playerStat.exp = 0;
+	//save.playerStat.laserLevel = 0;
+	//save.playerStat.missileLevel = 0;
+	//save.playerStat.perks = 15;
+	//save.playerStat.pushLevel = 0;
+	//save.playerStat.warpLevel = 0;
+	//save.playerStat.wellLevel = 0;
 }
 
 TiXmlElement* nameEntityDataElement(EntityType type)
@@ -323,7 +323,7 @@ unsigned int flockType(TiXmlElement* elem)
 		return 5;
 	if (type <= EntityType::WarpModule)
 		return 3;
-	if (type >= EntityType::Asteroid)
+	if (type >= EntityType::Trigger)
 		return 4;
 
 	return 0;

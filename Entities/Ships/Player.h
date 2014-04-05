@@ -97,6 +97,8 @@ public:
 	void CreatePush();
 	void Warp();
 
+	void HandleCollision(IEntity* other) override;
+
 	void SetStats(playerData& data);
 };
 
