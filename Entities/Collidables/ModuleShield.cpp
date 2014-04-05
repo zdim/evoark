@@ -18,6 +18,8 @@ void CModuleShield::Update(float dt)
 
 void CModuleShield::HandleCollision(IEntity* other)
 {
+	if (other == m_pOwnerShip)
+		return;
 	//Is the other object a ship?
 	if (dynamic_cast<CShieldModule*>(m_pOwner)->GetShield() > 0 )
 	{
@@ -30,12 +32,15 @@ void CModuleShield::HandleCollision(IEntity* other)
 					dynamic_cast<CShieldModule*>(m_pOwner)->HandleCollision(other);
 					other->HandleCollision(dynamic_cast<CShieldModule*>(m_pOwner));
 				}
-				else if (other->GetType() == (int)EntityType::Laser)
-					other->SelfDestruct();
+			}
+			else
+			{
+				dynamic_cast<CShieldModule*>(m_pOwner)->HandleCollision(other);
+				other->HandleCollision(dynamic_cast<CShieldModule*>(m_pOwner));
 			}
 			
 		}
-		else
+		else if ((other)->GetType() != (int)EntityType::Moccasin )
 		{
 			dynamic_cast<CShieldModule*>(m_pOwner)->HandleCollision(other);
 			other->HandleCollision(dynamic_cast<CShieldModule*>(m_pOwner));

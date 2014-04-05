@@ -30,13 +30,16 @@ CMissile::CMissile()
 
 CMissile::~CMissile()
 {
-	
-	delete target;
+	SetTarget(nullptr);
+	//delete target;
 	delete m_eTrail;
 }
 
 void CMissile::SelfDestruct()
 {
+	if (destroying)
+		return;
+
 	CEntity::SelfDestruct();
 	SetTarget(nullptr);
 	CEventManager::GetInstance().Unregister(dynamic_cast<Listener*>(this), EventID::position);

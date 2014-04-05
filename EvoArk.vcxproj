@@ -138,7 +138,6 @@
     <ClInclude Include="GameStates\PauseState.h" />
     <ClInclude Include="GameStates\ProfileSelectState.h" />
     <ClInclude Include="GameStates\PlaySelectState.h" />
-
     <ClInclude Include="GameStates\UpgradeState.h" />
     <ClInclude Include="Graphics\Particles\Emitter.h" />
     <ClInclude Include="Graphics\Particles\Flyweight.h" />
@@ -152,6 +151,7 @@
     <ClInclude Include="Message System\DestroyEntityMessage.h" />
     <ClInclude Include="Message System\MessageID.h" />
     <ClInclude Include="Message System\VictoryMessage.h" />
+    <ClInclude Include="RepairStation.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SGD Wrappers\SGD_AudioManager.h" />
     <ClInclude Include="SGD Wrappers\SGD_Color.h" />
@@ -226,7 +226,6 @@
     <ClCompile Include="GameStates\PauseState.cpp" />
     <ClCompile Include="GameStates\ProfileSelectState.cpp" />
     <ClCompile Include="GameStates\PlaySelectState.cpp" />
-
     <ClCompile Include="GameStates\UpgradeState.cpp" />
     <ClCompile Include="Graphics\Particles\Emitter.cpp" />
     <ClCompile Include="Graphics\Particles\Flyweight.cpp" />
@@ -237,6 +236,7 @@
     <ClCompile Include="Message System\CreateGameOverMessage.cpp" />
     <ClCompile Include="Message System\CreateProjectile.cpp" />
     <ClCompile Include="Message System\DestroyEntityMessage.cpp" />
+    <ClCompile Include="RepairStation.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_Geometry.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_GraphicsManager.cpp" />

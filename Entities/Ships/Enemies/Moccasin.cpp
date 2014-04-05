@@ -2,6 +2,8 @@
 #include "Moccasin.h"
 #include "../../../Message System/BossKilledMessage.h"
 #include "../../../Message System/CreateEntityMessage.h"
+#include "../../EntityManager.h"
+#include "../../Collidables/ModuleShield.h"
 
 CMoccasin::CMoccasin()
 {
@@ -27,13 +29,28 @@ void CMoccasin::Init(int l)
 	switch (l)
 	{
 	case 1:
-		m_nLevel = 1;
-		hull = 2500;
+		m_nLevel = 0;
 
 		break;
 	}
 }
 
+void CMoccasin::HandleCollision(IEntity* other)
+{
+	if (other == m_pShield )
+		return;
+
+	CEntityManager* EM = CEntityManager::GetInstance();
+
+	for (unsigned int i = 0; i < modules.size(); i++)
+	{
+		if (EM->ShapedCollisions(modules[i], other))
+		{
+			modules[i]->HandleCollision(other);
+			other->HandleCollision(modules[i]);
+		}
+	}
+}
 
 void CMoccasin::Update(float dt)
 {
