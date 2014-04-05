@@ -65,7 +65,7 @@ void CCoral::Update(float dt)
 		if (modules[i])
 		{
 			modules[i]->Update(dt);
-			if (i == laser && target)
+			if ((i == laser && target) || (i == ability && target))
 				modules[i]->Activate();
 		}
 	}

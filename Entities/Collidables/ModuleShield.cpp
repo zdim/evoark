@@ -3,6 +3,7 @@
 #include "../Ships/Enemies/Moccasin.h"
 #include "Asteroid.h"
 #include "../Projectiles/Laser.h"
+#include "../Projectiles/Missile.h"
 #include "../Modules/ShieldModule.h"
 #include "../Ships/Ship.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
@@ -21,6 +22,20 @@ void CModuleShield::HandleCollision(IEntity* other)
 	if (other == m_pOwnerShip)
 		return;
 	//Is the other object a ship?
+	if (other->GetType() == (int)EntityType::Laser)
+	{
+		CLaser* l = dynamic_cast<CLaser*>(other);
+		if (l->GetOwner() == m_pOwnerShip)
+			return;
+	}
+
+	if (other->GetType() == (int)EntityType::Missile)
+	{
+		CMissile* l = dynamic_cast<CMissile*>(other);
+		if (l->GetOwner() == m_pOwnerShip)
+			return;
+	}
+
 	if (dynamic_cast<CShieldModule*>(m_pOwner)->GetShield() > 0 )
 	{
 		if (m_pOwnerShip->GetType() == (int)EntityType::Moccasin)
