@@ -67,7 +67,7 @@ private:
 	int            m_nLine;
 
 	// level creation
-	enum Objects { PLAYER, COPPERHEAD, COBRA, MAMBA, CORAL, MOCASSIN, ASTEROID, PLANET, HUMAN, NONE, NUM_OBJECTS };
+	enum Objects { PLAYER, COPPERHEAD, COBRA, MAMBA, CORAL, MOCASSIN, ASTEROID, PLANET, HUMAN, COORDINATOR, NONE, NUM_OBJECTS };
 
 	struct Quadrant
 	{

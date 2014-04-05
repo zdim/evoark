@@ -222,12 +222,17 @@ void	CTestLevelState::Render(void)
 void	CTestLevelState::Generate()
 {
 	bool loadSuccess = false;
+	bool genLevel = true;
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
+	case Level::Tutorial:
+		loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
+		genLevel = false;
+		break;
 	case Level::Gen1:
 		// temporary tweak to test tutorial.
-		loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
-		//loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
+		//loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
+		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		testing += "1";
 		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
 		break;
@@ -238,6 +243,10 @@ void	CTestLevelState::Generate()
 	case Level::Gen3:
 		loadSuccess = LoadXMLLevel("Resources/XML/World/testWorld2.xml");
 		testing += "3"; 
+		break;
+	case Level::Waves:
+		
+		genLevel = false;
 		break;
 	}
 	if(loadSuccess)
@@ -259,13 +268,13 @@ void	CTestLevelState::Generate()
 					EntityManager->Spawn(EntityType::Player, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5))});
 					break;
 				case COPPERHEAD:
-					EntityManager->Spawn(EntityType::Copperhead, col[j].pos, col[j].objectAmount, true);
+					EntityManager->Spawn(EntityType::Copperhead, col[j].pos, col[j].objectAmount, genLevel);
 					break;
 				case COBRA:
-					EntityManager->Spawn(EntityType::Cobra, col[j].pos, col[j].objectAmount, true);
+					EntityManager->Spawn(EntityType::Cobra, col[j].pos, col[j].objectAmount, genLevel);
 					break;
 				case MAMBA:
-				EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount, true);
+					EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount, genLevel);
 					break;
 				case CORAL:
 					EntityManager->Spawn(EntityType::Coral, col[j].pos, col[j].objectAmount);
@@ -281,6 +290,9 @@ void	CTestLevelState::Generate()
 					break;
 				case HUMAN:
 					EntityManager->Spawn(EntityType::Human, col[j].pos, 1);
+					break;
+				case COORDINATOR:
+					EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount, true);
 					break;
 				default:
 					break;
@@ -439,6 +451,8 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 				q.objType = PLANET;
 			else if (type == "HUMAN")
 				q.objType = HUMAN;
+			else if (type == "COORDINATOR")
+				q.objType = COORDINATOR;
 			else if (type == "NONE")
 				q.objType = NONE;
 		}
