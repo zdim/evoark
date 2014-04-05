@@ -6,6 +6,7 @@
 #include "../../../Event System/EventManager.h"
 #include "../../../Message System/CreateProjectile.h"
 #include "../../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../../SoundBox.h"
 CEnemy::CEnemy()
 {
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
@@ -132,6 +133,7 @@ void CEnemy::TakeDamage(int damage, bool collision)
 	//}
 	if (collision)
 		damage *= COLLISION_MODIFIER;
+	CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyShieldDamage, false);
 	hull -= damage;
 	damaged = .15f;
 	if (hull <= 0)

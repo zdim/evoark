@@ -206,6 +206,8 @@ void CPlayer::CreateWell()
 {
 	if(wellTimer <= wellDelay)
 		return;
+
+	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerWell, false);
 	wellTimer = 0;
 	//TODO: Send CreateWell message
 	
@@ -231,6 +233,8 @@ void CPlayer::CreatePush()
 {
 	if (pushTimer <= pushDelay)
 		return;
+
+	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerPush, false);
 	pushTimer = 0;
 	//TODO: Send CreatePush message
 	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 500, pushLevel, SGD::PI / 2, this);
@@ -257,6 +261,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	shieldTimer = 0;
 	if (shield > 0)
 	{
+		CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyShieldDamage, false);
 		shield -= damage;
 		damage -= shield;
 	}
@@ -269,6 +274,8 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	{
 		return;
 	}
+
+	CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyHullDamage, false);
 
 	hull -= damage;
 	if (hull <= 0 && !destroying)

@@ -65,13 +65,13 @@ void CGameOverState::Enter()
 {
 	std::vector<std::string> buttons;
 	buttons.resize(menuReturn::count);
-	buttons[menuReturn::play] = "Again";
+	buttons[menuReturn::play] = "Continue";
 	buttons[menuReturn::exit] = "Exit";
 
 	if ( win == false )
-	menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Lost!!", true);
+	menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Died", true);
 	if (win == true)
-		menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Win!!", true);
+		menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Win!", true);
 }
 
 void CGameOverState::Exit()
