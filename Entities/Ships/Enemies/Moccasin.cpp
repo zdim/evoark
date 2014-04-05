@@ -1,6 +1,7 @@
 //
 #include "Moccasin.h"
 #include "../../../Message System/BossKilledMessage.h"
+#include "../../../Message System/CreateEntityMessage.h"
 
 CMoccasin::CMoccasin()
 {
@@ -8,7 +9,8 @@ CMoccasin::CMoccasin()
 	modulePositions.push_back({ -40, -40 });
 	modulePositions.push_back({ 40, -40 });
 	modulePositions.push_back({ 40, 40 });
-
+	m_fAsteroidTimer = 0;
+	m_fACD = 1;
 }
 
 
@@ -32,6 +34,24 @@ void CMoccasin::Init(int l)
 	}
 }
 
+
+void CMoccasin::Update(float dt)
+{
+	m_fAsteroidTimer += dt;
+
+	if (m_nLevel == 1)
+	{
+		if (m_fAsteroidTimer >= m_fACD && target != nullptr )
+		{
+			CreateEntityMessage* msg = new CreateEntityMessage(this, EntityType::Asteroid);
+			msg->QueueMessage();
+			m_fAsteroidTimer = 0;
+		}
+		
+	}
+	
+	CCoral::Update(dt);
+}
 
 
 void CMoccasin::SelfDestruct()

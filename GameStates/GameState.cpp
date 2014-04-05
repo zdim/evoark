@@ -16,6 +16,7 @@
 #include "../Message System/CreateEntityMessage.h"
 #include "../Entities/Collidables/EventTrigger.h"
 #include "../Message System/DestroyEntityMessage.h"
+#include "../Message System/CreateEntityMessage.h"
 #include "LevelStates\GameOverState.h"
 #include "../Message System/CreateProjectile.h"
 #include "../Entities/Ships/Player.h"
@@ -29,7 +30,7 @@
 CTestLevelState::CTestLevelState()
 {
 	testing = "";
-	
+
 }
 
 
@@ -49,7 +50,7 @@ void	CTestLevelState::Enter(void)
 	srand((unsigned int)time(nullptr));
 	graphics = SGD::GraphicsManager::GetInstance();
 
-	
+
 	testing = "Resources";
 	m_nLine = 0;
 	Render();
@@ -81,7 +82,7 @@ void	CTestLevelState::Enter(void)
 	}
 	testing = "Level";
 	m_nLine += 100;
-	Render();	
+	Render();
 	graphics->Update();
 
 	//EntityManager->Spawn(EntityType::Stargate, {200,200});
@@ -98,12 +99,12 @@ void	CTestLevelState::Enter(void)
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
 	m_nScreenWidth = Game::GetInstance()->GetScreenWidth();
 	cam = CCamera::GetInstance();
-	cam->Initiallize(player, SGD::Size{(float)m_nScreenWidth,(float)m_nScreenHeight});
+	cam->Initiallize(player, SGD::Size{ (float)m_nScreenWidth, (float)m_nScreenHeight });
 
 	nebulaPos = { cam->GetOffset().x, cam->GetOffset().y };
 	stars1Pos = { cam->GetOffset().x, cam->GetOffset().y };
 	stars2Pos = { cam->GetOffset().x, cam->GetOffset().y };
-	starsPos =  { cam->GetOffset().x, cam->GetOffset().y }; 
+	starsPos = { cam->GetOffset().x, cam->GetOffset().y };
 
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
 
@@ -115,7 +116,7 @@ void	CTestLevelState::Enter(void)
 
 
 	m_bLoaded = true;
- } 
+}
 
 void	CTestLevelState::Exit(void)
 {
@@ -202,7 +203,7 @@ void	CTestLevelState::Render(void)
 
 		//graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
 		//graphics->DrawTexture(backgroundBlack, { 0, 0 });
-		
+
 		for (int i = 0; i < 4; i++)
 		{
 			//graphics->DrawTexture(backgroundStars2, stars2Pos + SGD::Vector{ stars2Pos.x * i, stars2Pos.y * i });
@@ -224,10 +225,10 @@ void	CTestLevelState::Render(void)
 	{
 		Game::GetInstance()->Font.Write(SGD::Point{ 150, 150 }, testing);
 		//graphics->DrawRectangle({ 0, 0, 200, 200 }, { 150, 245, 0, 0 });
-		
+
 		graphics->DrawLine({ 200, 200 }, { 350, 200 }, { 0, 255, 0 }, 5);
 		graphics->DrawLine({ 200, 200 }, { 200 + m_nLine, 200 }, { 255, 0, 0 }, 5);
-		
+
 		//graphics->DrawLine({ 150, 150 }, { 300, 150 }, { 255, 255, 0 }, 10);
 	}
 
@@ -258,21 +259,21 @@ void	CTestLevelState::Generate()
 		break;
 	case Level::Gen3:
 		loadSuccess = LoadXMLLevel("Resources/XML/World/testWorld2.xml");
-		testing += "3"; 
+		testing += "3";
 		break;
 	case Level::Waves:
 		
 		genLevel = false;
 		break;
 	}
-	if(loadSuccess)
+	if (loadSuccess)
 	{
 		for (int i = 0; i < m_nNumQuadsWidth; i++)
 		{
 			QuadCol& col = world[i];
 			for (int j = 0; j < m_nNumQuadsHeight; j++)
 			{
-				
+
 				if (col[j].randomized)
 				{
 					col[j].pos.x = float(m_nQuadWidth * i + rand() % m_nQuadWidth);
@@ -281,7 +282,7 @@ void	CTestLevelState::Generate()
 				switch (col[j].objType)
 				{
 				case PLAYER:
-					EntityManager->Spawn(EntityType::Player, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5))});
+					EntityManager->Spawn(EntityType::Player, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) });
 					break;
 				case COPPERHEAD:
 
@@ -303,7 +304,7 @@ void	CTestLevelState::Generate()
 					EntityManager->Spawn(EntityType::Moccasin, { float(m_nQuadWidth * i + (m_nQuadWidth * .5)), float(m_nQuadHeight * j + (m_nQuadHeight * .5)) }, (int)CGameplayState::GetInstance()->GetLevel());
 					break;
 				case ASTEROID:
-					EntityManager->SpawnCollidable(EntityType::Asteroid, col[j].pos, SGD::Size{32,32});
+					EntityManager->SpawnCollidable(EntityType::Asteroid, col[j].pos, SGD::Size{ 32, 32 });
 					break;
 				case PLANET:
 					EntityManager->SpawnCollidable(EntityType::Planet, col[j].pos);
@@ -375,8 +376,8 @@ void	CTestLevelState::Generate()
 	else
 	{
 
-		}
 	}
+}
 
 bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 {
@@ -511,7 +512,7 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 		events[i] = e;
 		pQuad = pQuad->NextSiblingElement();
 	}
-	
+
 	for (int i = 0; i < numCollision; i++)
 	{
 		SGD::Rectangle r = { 0, 0, 0, 0 };
@@ -529,8 +530,8 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 	for (int i = 0; i < numCollision; i++)
 	{
 		SGD::Point position;
-		position.x = float(collisionRects[i].left + collisionRects[i].right)/2.0f;
-		position.y = float(collisionRects[i].top + collisionRects[i].bottom)/2.0f;
+		position.x = float(collisionRects[i].left + collisionRects[i].right) / 2.0f;
+		position.y = float(collisionRects[i].top + collisionRects[i].bottom) / 2.0f;
 		SGD::Size s = collisionRects[i].ComputeSize();
 		EntityManager->SpawnCollidable(EntityType::Barrier, position, s);
 	}
@@ -546,25 +547,37 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	{
 	case MessageID::CreateEntity:
 	{
-		break;
+									const CreateEntityMessage* cMsg = dynamic_cast<const CreateEntityMessage*>(msg);
+									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 1 )
+									{
+
+										SGD::Point randPosition = cMsg->GetSender()->GetPosition();
+										randPosition.x += rand() % 900 + 1000;
+										randPosition.y += rand() % 900 + 1000;
+										int m_nAsteroidSize[3] = { 32, 64, 128 };
+										int size = m_nAsteroidSize[rand() % 3];
+										CTestLevelState::GetInstance()->EntityManager->SpawnCollidable(EntityType::Asteroid, randPosition, SGD::Size{ size, size });
+									}
+
+									break;
 	}
 	case MessageID::CreateProjectile:
 	{
-								   const CreateProjectileMessage* lMsg = dynamic_cast<const CreateProjectileMessage*>(msg);
-		CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(lMsg->GetProjType(),lMsg->GetPosition(),lMsg->GetOwnerSize(),lMsg->GetRotation(),lMsg->GetDamage(), lMsg->GetTier(), lMsg->GetRadius(), lMsg->GetOwner());
-		switch (lMsg->GetProjType())
-		{
-		case EntityType::Laser:
-			CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser, false);
-			break;
-		case EntityType::Missile:
-			CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerMissile, false);
-			break;
-		default:
-			break;
-		};
-		break;
-	
+										const CreateProjectileMessage* lMsg = dynamic_cast<const CreateProjectileMessage*>(msg);
+										CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(lMsg->GetProjType(), lMsg->GetPosition(), lMsg->GetOwnerSize(), lMsg->GetRotation(), lMsg->GetDamage(), lMsg->GetTier(), lMsg->GetRadius(), lMsg->GetOwner());
+										switch (lMsg->GetProjType())
+										{
+										case EntityType::Laser:
+											CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser, false);
+											break;
+										case EntityType::Missile:
+											CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerMissile, false);
+											break;
+										default:
+											break;
+										};
+										break;
+
 	}
 	case MessageID::DestroyEntity:
 	{
@@ -572,7 +585,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 									 if (dMsg->GetEntity()->GetType() >= (int)EntityType::Copperhead && dMsg->GetEntity()->GetType() <= (int)EntityType::Moccasin)
 									 {
 										 if (dMsg->GetEntity()->GetPosition().IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
-											dynamic_cast<CPlayer*>(CTestLevelState::GetInstance()->player)->AddExp(dynamic_cast<CEnemy*>(dMsg->GetEntity())->GetExpValue());
+											 dynamic_cast<CPlayer*>(CTestLevelState::GetInstance()->player)->AddExp(dynamic_cast<CEnemy*>(dMsg->GetEntity())->GetExpValue());
 									 }
 									 CTestLevelState::GetInstance()->EntityManager->Destroy(dMsg->GetEntity());
 									 break;
@@ -584,12 +597,12 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	}
 	case MessageID::BossKilled:
 	{
-		GetInstance()->m_bBossKilled = true; 
-		break;
+								  GetInstance()->m_bBossKilled = true;
+								  break;
 
 	}
 	case MessageID::Victory:
-	 {
+	{
 							   if (GetInstance()->m_bBossKilled == true)
 							   {
 								   if (CGameplayState::GetInstance()->GetLevel() == Level::Gen1)
@@ -597,13 +610,13 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen2)
 									   CGameplayState::GetInstance()->SetLevel(Level::Gen3);
 
-									CGameOverState::GetInstance()->SetWin(true);
-									Game::GetInstance()->PushState(CGameOverState::GetInstance());
-								   
+								   CGameOverState::GetInstance()->SetWin(true);
+								   Game::GetInstance()->PushState(CGameOverState::GetInstance());
+
 								   break;
 							   }
-							   break; 
-	 }
+							   break;
+	}
 	}
 }
 
@@ -673,7 +686,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 		wellBox.left,
 		wellBox.top + m_nScreenHeight * .05f * wellCooldownPercentage,
 		wellBox.right,
-		wellBox.bottom};
+		wellBox.bottom };
 
 	// set gravity push box
 	SGD::Rectangle pushBox = {
@@ -733,16 +746,16 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 		// commented out until coordinator is fixed
 		if (_coordinator)
 		{
-		SGD::Vector toCoordinator = _coordinator->GetPosition() - _player->GetPosition();
-		if (toCoordinator.ComputeLength() > 400)
-		{
-		toCoordinator.Normalize();
-		SGD::Point coordArrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
-		coordArrowPos += toCoordinator * 200;
-		float coordArrowRot = atan2(_coordinator->GetPosition().y - _player->GetPosition().y, _coordinator->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
+			SGD::Vector toCoordinator = _coordinator->GetPosition() - _player->GetPosition();
+			if (toCoordinator.ComputeLength() > 400)
+			{
+				toCoordinator.Normalize();
+				SGD::Point coordArrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
+				coordArrowPos += toCoordinator * 200;
+				float coordArrowRot = atan2(_coordinator->GetPosition().y - _player->GetPosition().y, _coordinator->GetPosition().x - _player->GetPosition().x) + SGD::PI / 2;
 
-		graphics->DrawTexture(objArrow, coordArrowPos, coordArrowRot, {}, { 200, 200, 50, 0 }, { .15f, .15f });
-		}
+				graphics->DrawTexture(objArrow, coordArrowPos, coordArrowRot, {}, { 200, 200, 50, 0 }, { .15f, .15f });
+			}
 		}
 		SGD::Vector toStargate = _stargate->GetPosition() - _player->GetPosition();
 		if (toStargate.ComputeLength() > 400)
