@@ -227,8 +227,8 @@ void	CTestLevelState::Generate()
 	{
 	case Level::Gen1:
 		// temporary tweak to test tutorial.
-		//loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
-		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
+		loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
+		//loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		testing += "1";
 		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
 		break;
@@ -325,7 +325,7 @@ void	CTestLevelState::Generate()
 			{
 				eventID = (int)triggerID::tutCoordinator;
 			}
-			else if (events[i].eType == "TUTORIAL.HUMAN")
+			else if (events[i].eType == "TUTORIAL.ALLY")
 			{
 				eventID = (int)triggerID::tutHuman;
 			}
@@ -334,7 +334,7 @@ void	CTestLevelState::Generate()
 				eventID = (int)triggerID::tutBoss;
 			}
 
-			EntityManager->SpawnCollidable(EntityType::InvisTrigger, { events[i].area.left, events[i].area.top }, { events[i].area.bottom - events[i].area.top, events[i].area.right - events[i].area.left }, { 0, 0 }, eventID);
+			EntityManager->SpawnCollidable(EntityType::InvisTrigger, { events[i].area.left, events[i].area.top }, { events[i].area.right - events[i].area.left, events[i].area.bottom - events[i].area.top }, { 0, 0 }, eventID);
 
 		}
 	}
@@ -468,7 +468,7 @@ bool CTestLevelState::LoadXMLLevel(const char* pXMLFile)
 		pQuad->Attribute("width", &_width);
 		pQuad->Attribute("height", &_height);
 		e.area = { (float)_left, (float)_top, float(_left + _width), float(_top + _height) };
-		events.push_back(e);
+		events[i] = e;
 		pQuad = pQuad->NextSiblingElement();
 	}
 
