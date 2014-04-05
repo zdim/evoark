@@ -13,7 +13,7 @@ CLaser::CLaser()
 
 CLaser::~CLaser()
 {
-
+	SetOwner(nullptr);
 }
 
 void CLaser::Clamp()
@@ -80,9 +80,26 @@ void CLaser::HandleCollision(IEntity* other)
 
 }
 
-void CLaser::AddGravity(SGD::Vector grav)
+//void CLaser::AddGravity(SGD::Vector grav)
+//{
+//	float speed = velocity.ComputeLength();
+//	grav.Normalize();
+//	SGD::Vector dir = velocity;
+//	dir.Normalize();
+//	float angle = dir.ComputeAngle(grav);
+//	angle *= -dir.ComputeSteering(grav);
+//	angle *= 0.5f;
+//	dir.Rotate(angle);
+//	velocity = dir * speed;
+//}
+
+void CLaser::SetOwner(IEntity* _owner)
 {
-	float speed = velocity.ComputeLength();
-	grav.Normalize();
-	velocity = grav * speed;
+	if (owner)
+		owner->Release();
+
+	owner = _owner;
+
+	if (owner)
+		owner->AddRef();
 }

@@ -13,6 +13,8 @@ public:
 	EventTrigger(){}
 	~EventTrigger(){}
 
+	int GetType() { return (int)EntityType::EventTrigger; }
+	int GetTriggerType() { return triggerType; }
 	void Render();
 
 	void SetType(int _type) { triggerType = _type; }
