@@ -70,6 +70,7 @@ struct worldData
 {
 	bool saved = false;
 	SGD::Size size;
+	SGD::Size quadSize;
 	std::string background;
 	std::vector<EntityData> entities;
 	ModularEntityData boss;

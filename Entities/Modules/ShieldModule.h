@@ -15,6 +15,6 @@ public:
 
 	void Update(float dt);
 	int RequestShield(int damage);
-	int GetShield() { return shield;  }
+	//int GetShield() { return shield;  }
 };
 

@@ -6,6 +6,7 @@
 #include "../SGD Wrappers/SGD_InputManager.h"
 
 #include "GameplayState.h" //Comment out later -- Debug stuff
+#include "GameState.h"
 CPauseState::CPauseState()
 {
 }
@@ -35,7 +36,7 @@ bool CPauseState::Input()
 		Game::GetInstance()->PopState();
 		return true;
 	case menuReturn::ForceCheckpoint:
-		CEntityManager::GetInstance()->Save();
+		CTestLevelState::GetInstance()->Save();
 		return true;
 	case menuReturn::ForceSave:
 		CGameplayState::GetInstance()->SaveProfile();

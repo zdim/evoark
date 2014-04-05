@@ -37,6 +37,9 @@ public:
 	SGD::Size GetWorldSize() { return SGD::Size{ float(m_nNumQuadsWidth * m_nQuadWidth), float(m_nNumQuadsHeight * m_nQuadHeight) }; }
 	bool GetBossStatus() override { return m_bBossKilled; }
 
+	void Save();
+	void Load();
+
 private:
 	CTestLevelState();
 	virtual ~CTestLevelState();

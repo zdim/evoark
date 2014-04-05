@@ -223,6 +223,10 @@ void CGameplayState::SaveProfile()
 	{
 		TiXmlElement* world = new TiXmlElement("world");
 		world->SetAttribute("saved", true);
+		world->SetAttribute("quadsWide", save.world.size.width);
+		world->SetAttribute("quadsHigh", save.world.size.height);
+		world->SetAttribute("quadWidth", save.world.quadSize.width);
+		world->SetAttribute("quadHeight", save.world.quadSize.height);
 		world->LinkEndChild(makeModularDataElement(save.world.boss));
 		for (unsigned int i = 0; i < save.world.entities.size(); i++)
 		{
@@ -272,14 +276,14 @@ EntityType getElementEntityType(TiXmlElement* elem)
 	types.push_back(EntityType::Coral);
 	strings.push_back("coral");
 	types.push_back(EntityType::Moccasin);
-	strings.push_back("mocassin");
+	strings.push_back("moccasin");
 	types.push_back(EntityType::BaseModule);
 	strings.push_back("base");
 	types.push_back(EntityType::EngineModule);
 	strings.push_back("engine");
 	types.push_back(EntityType::LaserModule);
 	strings.push_back("laser");
-	types.push_back(EntityType::Missile);
+	types.push_back(EntityType::MissileModule);
 	strings.push_back("missile");
 	types.push_back(EntityType::PushModule);
 	strings.push_back("push");
@@ -305,19 +309,22 @@ EntityType getElementEntityType(TiXmlElement* elem)
 
 unsigned int flockType(TiXmlElement* elem)
 {
-	if (elem->Value() == "flock")
+	std::string flock = "flock";
+	std::string modFlock = "modFlock";
+	std::string value = elem->Value();
+	if (flock == elem->Value())
 		return 1;
-	if (elem->Value() == "modFlock")
+	if (modFlock == elem->Value())
 		return 2;
 	EntityType type = getElementEntityType(elem);
 	if (type == EntityType::BaseClass)
 		return 0;
-	if (type <= EntityType::WellModule)
+	if (type == EntityType::Moccasin)
+		return 5;
+	if (type <= EntityType::WarpModule)
 		return 3;
 	if (type >= EntityType::Asteroid)
 		return 4;
-	if (type == EntityType::Moccasin)
-		return 5;
 
 	return 0;
 }
@@ -333,7 +340,9 @@ EntityData processXmlEntity(TiXmlElement* entity)
 	entity->Attribute("x", &x);
 	entity->Attribute("y", &y);
 	data.position = {(float)x,(float)y};
-	data.coord = entity->Attribute("coord") == "true";
+	int i;
+	entity->Attribute("coord", &i);
+	data.coord = (bool)i;
 	return data;
 }
 
@@ -358,8 +367,10 @@ ModularEntityData processModularEntity(TiXmlElement* entity)
 Flock processFlock(TiXmlElement* flock)
 {
 	Flock data;
-	data.type = getElementEntityType(flock);
-	data.backup = flock->Attribute("backup") == "true";
+	data.type = getElementEntityType(flock->FirstChildElement());
+	int i;
+	flock->Attribute("backup", &i);
+	data.backup = (bool)i;
 	double x;
 	double y;
 	flock->Attribute("x", &x);
@@ -369,7 +380,7 @@ Flock processFlock(TiXmlElement* flock)
 	while (elem)
 	{
 		data.members.push_back(processXmlEntity(elem));
-		elem->NextSiblingElement();
+		elem = elem->NextSiblingElement();
 	}
 	return data;
 }
@@ -377,8 +388,10 @@ Flock processFlock(TiXmlElement* flock)
 ModularFlock processModularFlock(TiXmlElement* modFlock)
 {
 	ModularFlock data;
-	data.type = getElementEntityType(modFlock);
-	data.backup = modFlock->Attribute("backup") == "true";
+	data.type = getElementEntityType(modFlock->FirstChildElement());
+	int i;
+	modFlock->Attribute("backup", &i);
+	data.backup = (bool)i;
 	double x;
 	double y;
 	modFlock->Attribute("x", &x);
@@ -449,6 +462,16 @@ saveData CGameplayState::LoadProfile()
 
 	if (save.world.saved)
 	{
+		double quadsX;
+		double quadsY;
+		double quadW;
+		double quadH;
+		world->Attribute("quadsWide", &quadsX);
+		world->Attribute("quadsHigh", &quadsY);
+		world->Attribute("quadWidth", &quadW);
+		world->Attribute("quadHeight", &quadH);
+		save.world.size = {quadsX, quadsY};
+		save.world.quadSize = {quadW, quadH};
 		TiXmlElement* elem = world->FirstChildElement();
 		while (elem)
 		{

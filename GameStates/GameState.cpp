@@ -72,12 +72,12 @@ void	CTestLevelState::Enter(void)
 	saveData save = CGameplayState::GetInstance()->GetSaveData();
 	if (save.world.saved == true)
 	{
-		EntityManager->Load();
+		Load();
 	}
 	else
 	{
 		Generate();
-		EntityManager->Save();
+		Save();
 	}
 	testing = "Level";
 	m_nLine += 100;
@@ -238,11 +238,13 @@ void	CTestLevelState::Generate()
 	bool loadSuccess = false;
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
+	case Level::Tutorial:
+		loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
+		break;
 	case Level::Gen1:
 
 		// temporary tweak to test tutorial.
-		loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
-		//loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
+		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		testing += "1";
 		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
 		break;
@@ -771,4 +773,23 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	std::ostringstream levelString;
 	levelString << _player->GetLevel();
 	Game::GetInstance()->Font.WriteCenter(SGD::Rectangle{ m_nScreenWidth * .26f, m_nScreenHeight * .90f, m_nScreenWidth * .31f, m_nScreenHeight * .97f }, levelString.str().c_str());
+}
+
+void CTestLevelState::Save()
+{
+	saveData save = CGameplayState::GetInstance()->GetSaveData();
+	save.world.size = SGD::Size{ m_nNumQuadsWidth, m_nNumQuadsHeight };
+	save.world.quadSize = SGD::Size{ m_nQuadHeight, m_nQuadHeight };
+	CGameplayState::GetInstance()->SetSaveData(save);
+	EntityManager->Save();
+}
+
+void CTestLevelState::Load()
+{
+	saveData save = CGameplayState::GetInstance()->GetSaveData();
+	m_nNumQuadsWidth = save.world.size.width;
+	m_nNumQuadsHeight = save.world.size.height;
+	m_nQuadWidth = save.world.quadSize.width;
+	m_nQuadHeight = save.world.quadSize.height;
+	EntityManager->Load();
 }

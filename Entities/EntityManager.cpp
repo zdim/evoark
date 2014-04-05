@@ -939,7 +939,7 @@ void CEntityManager::Save()
 {
 	saveData save = CGameplayState::GetInstance()->GetSaveData();
 
-	save.world.size = Game::GetInstance()->GetLevelState()->GetWorldSize();
+	//save.world.size = Game::GetInstance()->GetLevelState()->GetWorldSize();
 
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(player);
 	save.playerStat.exp = pPlayer->GetExp();
@@ -1154,7 +1154,6 @@ void CEntityManager::CreateLeader(ModularFlock& data)
 		corals[i]->SetImage(images[(int)EntityType::Coral]);
 		//corals[i]->SetImageSize({ 96, 78 });
 		corals[i]->SetSize({ 128, 128 });
-		dynamic_cast<CCoral*>(corals[i])->SetImages(images);
 		bigEnemies.push_back(corals[i]);
 		ships.push_back(corals[i]);
 	}
@@ -1164,6 +1163,7 @@ void CEntityManager::CreateLeader(ModularFlock& data)
 	for (unsigned int j = 0; j < corals.size(); j++)
 	{
 		dynamic_cast<CCoral*>(corals[j])->SetModuleData(data.members[j].modules);
+		dynamic_cast<CCoral*>(corals[j])->SetImages(images);
 		if (data.backup)
 		{
 			corals[j]->SetPosition(data.members[j].position);

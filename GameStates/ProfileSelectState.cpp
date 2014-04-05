@@ -281,7 +281,7 @@ void CProfileSelectState::TransitionRender()
 		renderedCurrent = pointLerp(current, next, transTimer, transDuration);
 	}
 
-	if (transTimer >= transDuration * 0.3f)
+	if (transTimer >= transDuration * 0.5f)
 	{
 		if (lerpForward)
 		{
@@ -306,9 +306,9 @@ void CProfileSelectState::TransitionRender()
 		}
 		else
 		{
+			RenderProfile(renderedProfile + 1, renderedNext);
 			RenderProfile(renderedProfile - 1, renderedPrevious);
 			RenderProfile(renderedProfile, renderedCurrent);
-			RenderProfile(renderedProfile + 1, renderedNext);
 		}
 	}
 }

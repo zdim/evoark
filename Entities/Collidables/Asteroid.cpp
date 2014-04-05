@@ -81,7 +81,7 @@ void CAsteroid::HandleCollision(IEntity* other)
 	{
 		CShip* ship = dynamic_cast<CShip*>(other);
 		//Have them take damage based on our size and velocity
-		float mass = size.width * size.height;
+		float mass = size.width * size.height / 100;
 
 		ship->TakeDamage(int(mass * speed), true);
 
@@ -97,7 +97,7 @@ void CAsteroid::HandleCollision(IEntity* other)
 		CAsteroid* ast = dynamic_cast<CAsteroid*>(other);
 
 		//Have it take damage based on our mass and velocity
-		float mass = size.width * size.height;
+		float mass = size.width * size.height / 100;
 		float speed = velocity.ComputeLength();
 		ast->TakeDamage(int(mass*speed));
 
