@@ -17,7 +17,7 @@
 #include "../Entities/Collidables/EventTrigger.h"
 #include "../Message System/DestroyEntityMessage.h"
 #include "../Message System/CreateEntityMessage.h"
-#include "LevelStates\GameOverState.h"
+#include "GameOverState.h"
 #include "../Message System/CreateProjectile.h"
 #include "../Entities/Ships/Player.h"
 #include "../SoundBox.h"

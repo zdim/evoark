@@ -16,7 +16,7 @@ enum class EntityType {
 	BaseModule, ShieldModule, EngineModule, LaserModule,  //Basic Modules
 	MissileModule, WellModule, PushModule, WarpModule,	//Ability Modules
 	Trigger, InvisTrigger, EventTrigger, Stargate, //LevelEvents
-	Barrier, Planet, Shield, ModuleShield, //Stationary Collidables
+	Barrier, Planet, Shield, ModuleShield,RepairStation, //Stationary Collidables
 	Asteroid,	//Mobile Collidables
 	Count
 };
