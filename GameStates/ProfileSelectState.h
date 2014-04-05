@@ -10,7 +10,7 @@ class CProfileSelectState : public IGameState
 	std::vector<saveData> profiles;
 
 	float transTimer;
-	float transDuration = 1.5f;
+	float transDuration = 0.15f;
 
 	int currentProfile = 0;
 	int renderedProfile = 0;
