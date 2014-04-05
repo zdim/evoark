@@ -11,7 +11,7 @@
     </Quad>
     <Quad x="0" y="3" possibleTypes="0" />
     <Quad x="0" y="4" possibleTypes="1">
-      <Type type="PLANET" amount="1" randomized="True" x="139" y="1330" />
+      <Type type="PLANET" amount="1" randomized="False" x="23" y="1330" />
     </Quad>
     <Quad x="0" y="5" possibleTypes="0" />
     <Quad x="0" y="6" possibleTypes="0" />
@@ -25,9 +25,7 @@
     </Quad>
     <Quad x="1" y="3" possibleTypes="0" />
     <Quad x="1" y="4" possibleTypes="0" />
-    <Quad x="1" y="5" possibleTypes="1">
-      <Type type="COBRA" amount="3" randomized="False" x="452" y="1644" />
-    </Quad>
+    <Quad x="1" y="5" possibleTypes="0" />
     <Quad x="1" y="6" possibleTypes="2">
       <Type type="COBRA" amount="3" randomized="False" x="451" y="1907" />
       <Type type="MAMBA" amount="5" randomized="False" x="507" y="1972" />
@@ -130,9 +128,7 @@
     <Quad x="5" y="4" possibleTypes="1">
       <Type type="ASTEROID" amount="3" randomized="True" x="1643" y="1339" />
     </Quad>
-    <Quad x="5" y="5" possibleTypes="1">
-      <Type type="PLANET" amount="1" randomized="True" x="1644" y="1630" />
-    </Quad>
+    <Quad x="5" y="5" possibleTypes="0" />
     <Quad x="5" y="6" possibleTypes="1">
       <Type type="CORAL" amount="1" randomized="False" x="1619" y="1937" />
     </Quad>
@@ -208,9 +204,7 @@
     <Quad x="8" y="2" possibleTypes="0" />
     <Quad x="8" y="3" possibleTypes="0" />
     <Quad x="8" y="4" possibleTypes="0" />
-    <Quad x="8" y="5" possibleTypes="1">
-      <Type type="PLANET" amount="1" randomized="True" x="2563" y="1642" />
-    </Quad>
+    <Quad x="8" y="5" possibleTypes="0" />
     <Quad x="8" y="6" possibleTypes="3">
       <Type type="COPPERHEAD" amount="3" randomized="True" x="2530" y="1930" />
       <Type type="MAMBA" amount="3" randomized="True" x="2508" y="1985" />
@@ -226,15 +220,17 @@
       <Type type="NONE" amount="3" randomized="True" x="2616" y="2490" />
     </Quad>
     <Quad x="8" y="9" possibleTypes="0" />
-    <Quad x="9" y="0" possibleTypes="0" />
-    <Quad x="9" y="1" possibleTypes="1">
-      <Type type="PLANET" amount="1" randomized="True" x="2832" y="441" />
+    <Quad x="9" y="0" possibleTypes="1">
+      <Type type="PLANET" amount="1" randomized="True" x="2974" y="70" />
     </Quad>
+    <Quad x="9" y="1" possibleTypes="0" />
     <Quad x="9" y="2" possibleTypes="1">
       <Type type="HUMAN" amount="1" randomized="False" x="2726" y="721" />
     </Quad>
     <Quad x="9" y="3" possibleTypes="0" />
-    <Quad x="9" y="4" possibleTypes="0" />
+    <Quad x="9" y="4" possibleTypes="1">
+      <Type type="PLANET" amount="1" randomized="False" x="2973" y="1357" />
+    </Quad>
     <Quad x="9" y="5" possibleTypes="0" />
     <Quad x="9" y="6" possibleTypes="0" />
     <Quad x="9" y="7" possibleTypes="0" />
