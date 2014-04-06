@@ -15,7 +15,7 @@ void EventTrigger::Render()
 {
 	if (colliding)
 	{
-		SGD::Size screenSize = { Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() };
+		SGD::Size screenSize = { (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() };
 		SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
 		switch (triggerType)
 		{

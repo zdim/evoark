@@ -26,6 +26,7 @@ void CMoccasin::Init(int l)
 	for (int i = 0; i < l; i++)
 		AddModule();
 
+
 	switch (l)
 	{
 	case 1:

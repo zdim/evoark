@@ -1,7 +1,7 @@
 #include "GameOverState.h"
-#include "../GameplayState.h"
-#include "../Game.h"
-#include "../GameState.h"
+#include "GameplayState.h"
+#include "Game.h"
+#include "GameState.h"
 
 CGameOverState::CGameOverState()
 {

@@ -1,7 +1,7 @@
 #pragma once
-#include "../IGameState.h"
-#include "../../Entities/IEntity.h"
-#include "../../Camera.h"
+#include "IGameState.h"
+#include "../Entities/IEntity.h"
+#include "../Camera.h"
 class ILevelState :
 	public IGameState
 {

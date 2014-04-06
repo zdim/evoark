@@ -17,7 +17,8 @@
 #include "../Entities/Collidables/EventTrigger.h"
 #include "../Message System/DestroyEntityMessage.h"
 #include "../Message System/CreateEntityMessage.h"
-#include "LevelStates\GameOverState.h"
+
+#include "GameOverState.h"
 #include "../Message System/CreateProjectile.h"
 #include "../Entities/Ships/Player.h"
 #include "../SoundBox.h"
@@ -67,9 +68,10 @@ void	CTestLevelState::Enter(void)
 	EntityManager->Initialize();
 	soundBox = CSoundBox::GetInstance();
 	//soundBox->Enter();
-	EntityManager->Spawn(EntityType::Moccasin, { 200, 200 }, 1);
-	EntityManager->GetBoss()->Init(4);
-	EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
+
+	//EntityManager->Spawn(EntityType::Moccasin, { 200, 200 }, 1);
+	//EntityManager->GetBoss()->Init(4);
+	//EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
 
 	//Get SaveData and load based on it
 	saveData save = CGameplayState::GetInstance()->GetSaveData();
@@ -144,7 +146,9 @@ void	CTestLevelState::Exit(void)
 	CEventManager::GetInstance().ClearEvents();
 	CEventManager::GetInstance().ClearListeners();
 
-	CGameplayState::GetInstance()->SaveProfile();
+
+	if (CGameplayState::GetInstance()->GetLevel() != Level::Tutorial)
+		CGameplayState::GetInstance()->SaveProfile();
 }
 
 bool	CTestLevelState::Input(void)
@@ -211,10 +215,13 @@ void	CTestLevelState::Render(void)
 			//graphics->DrawTexture(backgroundStars2, stars2Pos + SGD::Vector{ stars2Pos.x * i, stars2Pos.y * i });
 			for (int j = 0; j < 4; j++)
 			{
-				graphics->DrawTexture(backgroundStars1, stars1Pos + SGD::Vector{ 1024 * i, 768 * j });
-				graphics->DrawTexture(backgroundStars, starsPos + SGD::Vector{ 1024 * i, 768 * j });
+
+
+				graphics->DrawTexture(backgroundStars1, stars1Pos + SGD::Vector{ 1024.f * i, 768.f * j });
+				graphics->DrawTexture(backgroundStars, starsPos + SGD::Vector{ 1024.f * i, 768.f * j });
 				//graphics->DrawTexture(backgroundNebula, nebulaPos + SGD::Vector{ 1024 * i, 768 * j }, 0, {}, { 200, 50, 120, 100 });
-				graphics->DrawTextureSection(backgroundNebula, { nebulaPos.x + 1024 * i, nebulaPos.y + 768 * j }, { 0, 0, 1024, 768 }, 0, {}, { 50, 50, 120, 100 });
+
+				graphics->DrawTextureSection(backgroundNebula, { nebulaPos.x + 1024.f * i, nebulaPos.y + 768.f * j }, { 0, 0, 1024.f, 768.f }, 0, {}, { 50, 50, 120, 100 });
 			}
 		}
 		graphics->DrawRectangle({ 0, 0, 2000, 2000 }, { 150, 0, 0, 0 });
@@ -229,7 +236,8 @@ void	CTestLevelState::Render(void)
 		//graphics->DrawRectangle({ 0, 0, 200, 200 }, { 150, 245, 0, 0 });
 
 		graphics->DrawLine({ 200, 200 }, { 350, 200 }, { 0, 255, 0 }, 5);
-		graphics->DrawLine({ 200, 200 }, { 200 + m_nLine, 200 }, { 255, 0, 0 }, 5);
+
+		graphics->DrawLine({ 200, 200 }, { 200.f + m_nLine, 200 }, { 255, 0, 0 }, 5);
 
 		//graphics->DrawLine({ 150, 150 }, { 300, 150 }, { 255, 255, 0 }, 10);
 	}
@@ -248,9 +256,7 @@ void	CTestLevelState::Generate()
 		break;
 	case Level::Gen1:
 
-		// temporary tweak to test tutorial.
 
-		//loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
 		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		testing += "1";
 		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
@@ -270,6 +276,7 @@ void	CTestLevelState::Generate()
 	}
 	if (loadSuccess)
 	{
+		int _alliesSpawned = 0;
 		for (int i = 0; i < m_nNumQuadsWidth; i++)
 		{
 			QuadCol& col = world[i];
@@ -312,7 +319,14 @@ void	CTestLevelState::Generate()
 					EntityManager->SpawnCollidable(EntityType::Planet, col[j].pos);
 					break;
 				case HUMAN:
+					if (genLevel == false)
+					{
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 11) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved < 3 && _alliesSpawned == 12) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved < 5 && _alliesSpawned == 13) break;
+					}
 					EntityManager->Spawn(EntityType::Human, col[j].pos, 1);
+					_alliesSpawned++;
 					break;
 				case COORDINATOR:
 					EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount, true);
@@ -558,7 +572,8 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										randPosition.y += rand() % 900 + 1000;
 										int m_nAsteroidSize[3] = { 32, 64, 128 };
 										int size = m_nAsteroidSize[rand() % 3];
-										CTestLevelState::GetInstance()->EntityManager->SpawnCollidable(EntityType::Asteroid, randPosition, SGD::Size{ size, size });
+
+										CTestLevelState::GetInstance()->EntityManager->SpawnCollidable(EntityType::Asteroid, randPosition, SGD::Size{ (float)size, (float)size });
 									}
 
 									break;
@@ -607,10 +622,27 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	{
 							   if (GetInstance()->m_bBossKilled == true)
 							   {
-								   if (CGameplayState::GetInstance()->GetLevel() == Level::Gen1)
+
+								   if (CGameplayState::GetInstance()->GetLevel() == Level::Tutorial)
+								   {
+									   CGameplayState::GetInstance()->SetLevel(Level::Gen1);
+									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+								   }
+								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen1)
+								   {
 									   CGameplayState::GetInstance()->SetLevel(Level::Gen2);
+									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+								   }
 								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen2)
+								   {
 									   CGameplayState::GetInstance()->SetLevel(Level::Gen3);
+									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+								   }
+								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen3)
+								   {
+									   CGameplayState::GetInstance()->SetLevel(Level::Waves);
+									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+								   }
 
 								   CGameOverState::GetInstance()->SetWin(true);
 								   Game::GetInstance()->PushState(CGameOverState::GetInstance());
@@ -809,8 +841,10 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 void CTestLevelState::Save()
 {
 	saveData save = CGameplayState::GetInstance()->GetSaveData();
-	save.world.size = SGD::Size{ m_nNumQuadsWidth, m_nNumQuadsHeight };
-	save.world.quadSize = SGD::Size{ m_nQuadHeight, m_nQuadHeight };
+
+
+	save.world.size = SGD::Size{ (float)m_nNumQuadsWidth, (float)m_nNumQuadsHeight };
+	save.world.quadSize = SGD::Size{ (float)m_nQuadHeight, (float)m_nQuadHeight };
 	CGameplayState::GetInstance()->SetSaveData(save);
 	EntityManager->Save();
 }
@@ -818,9 +852,13 @@ void CTestLevelState::Save()
 void CTestLevelState::Load()
 {
 	saveData save = CGameplayState::GetInstance()->GetSaveData();
-	m_nNumQuadsWidth = save.world.size.width;
-	m_nNumQuadsHeight = save.world.size.height;
-	m_nQuadWidth = save.world.quadSize.width;
-	m_nQuadHeight = save.world.quadSize.height;
+
+
+
+
+	m_nNumQuadsWidth = (int)save.world.size.width;
+	m_nNumQuadsHeight = (int)save.world.size.height;
+	m_nQuadWidth = (int)save.world.quadSize.width;
+	m_nQuadHeight = (int)save.world.quadSize.height;
 	EntityManager->Load();
 }

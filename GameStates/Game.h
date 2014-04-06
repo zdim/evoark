@@ -26,7 +26,7 @@ class IGameState;
 //#include <deque>
 #include <vector>
 #include "../BitmapFont/BitmapFont.h"
-#include "LevelStates\ILevelState.h"
+#include "ILevelState.h"
 
 class CParticleSystem;
 

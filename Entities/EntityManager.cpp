@@ -14,6 +14,7 @@
 #include "Collidables\Barrier.h"
 #include "Collidables\Shield.h"
 #include "Collidables\ModuleShield.h"
+#include "Collidables\RepairStation.h"
 #include "..\SGD Wrappers\SGD_GraphicsManager.h"
 #include "..\GameStates\Game.h"
 #include "..\Message System\VictoryMessage.h"
@@ -32,7 +33,7 @@ CEntityManager::~CEntityManager()
 }
 
 CEntityManager* CEntityManager::GetInstance()
-{
+{ 
 	static CEntityManager instance;
 	return &instance;
 }
@@ -490,6 +491,15 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 							   break;
 	}
 
+	case EntityType::RepairStation:
+	{
+							   CRepairStation* station = new CRepairStation();
+							   station->SetPosition(position);
+							   station->SetImage(images[(int)EntityType::RepairStation]);
+							   stationaries.push_back(station);
+							   break;
+	}
+
 	case EntityType::Barrier:
 	{
 								CBarrier* barrier = new CBarrier();
@@ -676,6 +686,7 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 	case EntityType::Stargate:
 		stargate = nullptr;
 	case EntityType::InvisTrigger:
+	case EntityType::EventTrigger:
 	case EntityType::Planet:
 	case EntityType::Barrier:
 		RemoveFromGroup(stationaries, entity);

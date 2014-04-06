@@ -1,6 +1,2 @@
 <?xml ?>
-<<<<<<< HEAD
-<Options sfx="4" music="0" fullscreen="true" />
-=======
-<Options sfx="1" music="0" fullscreen="false" />
->>>>>>> f925fc1fafcbe633fae70b465274a1b563a35557
+<Options sfx="0" music="0" fullscreen="false" />
