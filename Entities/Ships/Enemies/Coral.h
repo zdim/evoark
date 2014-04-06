@@ -42,4 +42,5 @@ public:
 	int RequestShield(int damage);
 	std::vector<EntityData> GetModuleData();
 	void SetModuleData(std::vector<EntityData> mods);
+	std::vector<CModule*> GetModules() { return modules; }
 };

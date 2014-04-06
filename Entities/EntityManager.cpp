@@ -33,7 +33,7 @@ CEntityManager::~CEntityManager()
 }
 
 CEntityManager* CEntityManager::GetInstance()
-{ 
+{
 	static CEntityManager instance;
 	return &instance;
 }
@@ -75,7 +75,8 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Asteroid] = graphics->LoadTexture("Resources/Graphics/asteroid.png");
 	images[(int)EntityType::Shield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
 	images[(int)EntityType::ModuleShield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
-	
+	images[(int)EntityType::RepairStation] = graphics->LoadTexture("Resources/Graphics/Shield.png");
+
 }
 
 void CEntityManager::Terminate()
@@ -239,12 +240,12 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  corals.resize(amount);
 							  for (unsigned int i = 0; i < corals.size(); i++)
 							  {
-								 
+
 								  corals[i] = new CCoral();
 								  corals[i]->SetImage(images[(int)EntityType::Coral]);
 								  //corals[i]->SetImageSize({ 96, 78 });
 								  corals[i]->SetSize({ 128, 128 });
-								  dynamic_cast<CCoral*>(corals[i])->SetImages(images);					
+								  dynamic_cast<CCoral*>(corals[i])->SetImages(images);
 								  bigEnemies.push_back(corals[i]);
 								  ships.push_back(corals[i]);
 								  ships.push_back(dynamic_cast<CCoral*>(corals[i])->GetShield());
@@ -259,13 +260,13 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								 if (boss)
 									 return;
 								 CMoccasin* moccasin = new CMoccasin;
-		
+
 								 dynamic_cast<CMoccasin*>(moccasin)->Init((int)CGameplayState::GetInstance()->GetLevel());
 
 								 moccasin->SetImage(images[(int)EntityType::Moccasin]);
 								 moccasin->SetSize({ 256, 256 });
 								 moccasin->SetImages(images);
-								
+
 								 bigEnemies.push_back(moccasin);
 								 ships.push_back(moccasin);
 								 ships.push_back(dynamic_cast<CCoral*>(moccasin)->GetShield());
@@ -296,7 +297,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 									 trig->Assign(msg);
 									 stationaries.push_back(trig);
 									 break;*/
-									 
+
 	}
 
 	}
@@ -346,12 +347,12 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 								  offset2.Rotate(rotation);
 								  offset2 *= (ownerSize.height + laser->GetSize().height)*0.5f + laser->GetSize().height * 0.25f;
 								  pos2 += offset2;
-								  laserTwo->SetPosition( position );
+								  laserTwo->SetPosition(position);
 								  laserTwo->SetRotation(rotation);
 								  laserTwo->SetDamage(damage);
 								  laser->SetPosition(pos2);
 								  laser->SetRotation(rotation);
-								  laser->SetDamage(damage); 
+								  laser->SetDamage(damage);
 								  SGD::Vector vel = { 0, -650 };
 								  vel.Rotate(rotation);
 								  laserTwo->SetVelocity(vel);
@@ -371,7 +372,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 									missile->SetSize({ 4, 16 });
 									//missile->SetImageSize({ 8, 32 });
 
-									SGD::Vector offset = {0.0,-1.0};
+									SGD::Vector offset = { 0.0, -1.0 };
 									offset.Rotate(rotation);
 									offset *= (ownerSize.height + missile->GetSize().height) *0.5f + missile->GetSize().height * 0.25f;
 									position += offset;
@@ -380,7 +381,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 									missile->SetRotation(rotation);
 									missile->SetDamage(damage);
 
-									SGD::Vector vel = {0, -620};
+									SGD::Vector vel = { 0, -620 };
 									vel.Rotate(rotation);
 									missile->SetVelocity(vel);
 									projectiles.push_back(missile);
@@ -472,6 +473,17 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 	}
 }
 
+
+void CEntityManager::SpawnStation(SGD::Point position, SGD::Size size, CMoccasin* owner )
+{
+	CRepairStation* station = new CRepairStation();
+	station->SetPosition(position);
+	station->SetOwner(owner);
+	station->SetImage(images[(int)EntityType::RepairStation]);
+	stationaries.push_back(station);
+}
+
+
 void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::Size size, SGD::Vector velocity, int eventType)
 {
 	switch (type)
@@ -482,15 +494,6 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 							   planet->SetPosition(position);
 							   planet->SetImage(images[(int)EntityType::Planet]);
 							   stationaries.push_back(planet);
-							   break;
-	}
-
-	case EntityType::RepairStation:
-	{
-							   CRepairStation* station = new CRepairStation();
-							   station->SetPosition(position);
-							   station->SetImage(images[(int)EntityType::RepairStation]);
-							   stationaries.push_back(station);
 							   break;
 	}
 
@@ -541,17 +544,17 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 	}
 	case EntityType::InvisTrigger:
 	{
-									/* InvisTrigger* trig = new InvisTrigger;
-									 trig->SetPosition(position);
-									 trig->SetSize(size);
-									 CreateTriggerMessage* msg = new CreateTriggerMessage(eventType);
-									 trig->Assign(msg);
-									 stationaries.push_back(trig);
-									 break;*/
+									 /* InvisTrigger* trig = new InvisTrigger;
+									  trig->SetPosition(position);
+									  trig->SetSize(size);
+									  CreateTriggerMessage* msg = new CreateTriggerMessage(eventType);
+									  trig->Assign(msg);
+									  stationaries.push_back(trig);
+									  break;*/
 
 									 EventTrigger* trig = new EventTrigger();
 									 trig->SetType(eventType);
-									 position += size/2;
+									 position += size / 2;
 									 trig->SetPosition(position);
 									 trig->SetSize(size);
 									 stationaries.push_back(trig);
@@ -682,6 +685,7 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 	case EntityType::InvisTrigger:
 	case EntityType::Planet:
 	case EntityType::Barrier:
+	case EntityType::RepairStation:
 		RemoveFromGroup(stationaries, entity);
 		break;
 	case EntityType::Asteroid:
@@ -1010,7 +1014,7 @@ void CEntityManager::Save()
 
 	for (unsigned int i = 0; i < stationaries.size(); i++)
 	{
-		CollidableData col; 
+		CollidableData col;
 		col.type = (EntityType)stationaries[i]->GetType();
 		col.size = stationaries[i]->GetSize();
 		col.position = stationaries[i]->GetPosition();

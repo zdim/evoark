@@ -6,6 +6,27 @@
 void CRepairStation::Update(float dt)
 {
 
+	for (int i = 0; i != m_pOwner->GetModules().size(); ++i)
+	{
+		if (m_pOwner->GetModules()[i] != nullptr)
+		{
+			int test = m_pOwner->GetModules()[i]->GetHull();
+			int test2 = m_pOwner->GetModules()[i]->GetHullMax();
+
+			if (m_pOwner->GetModules()[i]->GetHull() < m_pOwner->GetModules()[i]->GetHullMax())
+			{
+				int heal = m_pOwner->GetModules()[i]->GetHull() + 5;
+				if (heal > m_pOwner->GetModules()[i]->GetHullMax())
+					m_pOwner->GetModules()[i]->SetHull(m_pOwner->GetModules()[i]->GetHullMax());
+				else
+					m_pOwner->GetModules()[i]->SetHull(heal);
+				
+			}
+				
+		}
+			
+	}
+
 }
 
 void CRepairStation::HandleCollision(IEntity* other)

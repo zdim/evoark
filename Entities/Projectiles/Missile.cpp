@@ -31,8 +31,7 @@ CMissile::CMissile()
 CMissile::~CMissile()
 {
 	SetTarget(nullptr);
-	//delete target;
-	delete m_eTrail;
+	
 }
 
 void CMissile::SelfDestruct()

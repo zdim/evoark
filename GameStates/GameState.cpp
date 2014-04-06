@@ -562,6 +562,17 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										int size = m_nAsteroidSize[rand() % 3];
 										CTestLevelState::GetInstance()->EntityManager->SpawnCollidable(EntityType::Asteroid, randPosition, SGD::Size{ size, size });
 									}
+									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 0 )
+									{
+										SGD::Point pos = cMsg->GetSender()->GetPosition();
+										SGD::Point pos1 = { pos.x + 400, pos.y + 400 };
+										SGD::Point pos2 = { pos.x + 600, pos.y + 600 };
+										SGD::Point pos3 = { pos.x - 400, pos.y - 400 };
+										SGD::Point pos4 = { pos.x - 600, pos.y - 600 };
+
+										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos1, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
+										
+									}
 
 									break;
 	}

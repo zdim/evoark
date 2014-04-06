@@ -29,9 +29,13 @@ void CMoccasin::Init(int l)
 
 	switch (l)
 	{
-	case 1:
+	case 0:
 		m_nLevel = 0;
-
+		break;
+	case 1:
+		m_nLevel = 1;
+		break;
+	case 2:
 		break;
 	}
 }
@@ -58,6 +62,13 @@ void CMoccasin::Update(float dt)
 	m_fAsteroidTimer += dt;
 
 	if (m_nLevel == 1)
+	{
+		CreateEntityMessage* msg = new CreateEntityMessage(this, EntityType::RepairStation);
+		msg->QueueMessage();
+		m_nLevel = 0;
+	}
+
+	if (m_nLevel == 2)
 	{
 		if (m_fAsteroidTimer >= m_fACD && target != nullptr )
 		{
