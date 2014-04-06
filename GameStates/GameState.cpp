@@ -245,10 +245,6 @@ void	CTestLevelState::Generate()
 		genLevel = false;
 		break;
 	case Level::Gen1:
-
-		// temporary tweak to test tutorial.
-
-		//loadSuccess = LoadXMLLevel("Resources/XML/World/tutorialLevel.xml");
 		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		testing += "1";
 		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
@@ -268,6 +264,7 @@ void	CTestLevelState::Generate()
 	}
 	if (loadSuccess)
 	{
+		int _alliesSpawned = 0;
 		for (int i = 0; i < m_nNumQuadsWidth; i++)
 		{
 			QuadCol& col = world[i];
@@ -310,7 +307,14 @@ void	CTestLevelState::Generate()
 					EntityManager->SpawnCollidable(EntityType::Planet, col[j].pos);
 					break;
 				case HUMAN:
+					if (genLevel == false)
+					{
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 11) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved < 3 && _alliesSpawned == 12) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved < 5 && _alliesSpawned == 13) break;
+					}
 					EntityManager->Spawn(EntityType::Human, col[j].pos, 1);
+					_alliesSpawned++;
 					break;
 				case COORDINATOR:
 					EntityManager->Spawn(EntityType::Mamba, col[j].pos, col[j].objectAmount, true);
@@ -605,10 +609,26 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	{
 							   if (GetInstance()->m_bBossKilled == true)
 							   {
-								   if (CGameplayState::GetInstance()->GetLevel() == Level::Gen1)
+								   if (CGameplayState::GetInstance()->GetLevel() == Level::Tutorial)
+								   {
+									   CGameplayState::GetInstance()->SetLevel(Level::Gen1);
+									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+								   }
+								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen1)
+								   {
 									   CGameplayState::GetInstance()->SetLevel(Level::Gen2);
+									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+								   }
 								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen2)
+								   {
 									   CGameplayState::GetInstance()->SetLevel(Level::Gen3);
+									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+								   }
+								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen3)
+								   {
+									   CGameplayState::GetInstance()->SetLevel(Level::Waves);
+									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+								   }
 
 								   CGameOverState::GetInstance()->SetWin(true);
 								   Game::GetInstance()->PushState(CGameOverState::GetInstance());
