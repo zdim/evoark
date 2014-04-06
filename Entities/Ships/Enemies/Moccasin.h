@@ -15,7 +15,7 @@ public:
 	virtual ~CMoccasin();
 	void Init(int i);
 	void Update(float dt);
-	void HandleCollision(IEntity* other);
+	//void HandleCollision(IEntity* other);
 	void SelfDestruct() override;
 	unsigned int GetModuleCount() { return modules.size(); }
 	void AddModule();

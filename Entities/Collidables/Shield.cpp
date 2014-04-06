@@ -15,6 +15,8 @@ void CShield::Update(float dt)
 
 void CShield::HandleCollision(IEntity* other)
 {
+	if (other == m_pOwner)
+		return;
 	//Is the other object a ship?
 	if (dynamic_cast<CPlayer*>(m_pOwner)->GetShield() > 0)
 	{

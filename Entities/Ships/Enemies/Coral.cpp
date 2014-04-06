@@ -4,6 +4,8 @@
 #include "../../EntityManager.h"
 #include "../../../GameStates/GameplayState.h"
 #include "../../Collidables/ModuleShield.h"
+#include "../../Projectiles/Laser.h"
+
 CCoral::CCoral()
 {
 	expValue = 50;
@@ -65,8 +67,20 @@ void CCoral::Update(float dt)
 		if (modules[i])
 		{
 			modules[i]->Update(dt);
-			if ((i == laser && target) || (i == ability && target))
+			if ((i == laser && target) || (i >= ability && target))
 				modules[i]->Activate();
+			if (modules[i]->GetType() == (int)EntityType::WarpModule)
+			{
+				if (target)
+				{
+					if (dynamic_cast<CWarpModule*>(modules[i])->isActive())
+					{
+						SGD::Vector dir = target->GetPosition() - position;
+						dir.Normalize();
+						velocity += dir * 300;
+					}
+				}
+			}
 		}
 	}
 	if (!modules[cockpit])
@@ -87,6 +101,13 @@ void CCoral::HandleCollision(IEntity* other)
 {
 	if (other == m_pShield)
 		return;
+	if (other->GetType() == (int)EntityType::Laser || other->GetType() == (int)EntityType::Missile)
+	{
+		CLaser* l = dynamic_cast<CLaser*>(other);
+		if (l->GetOwner() == this)
+			return;
+	}
+
 
 	CEntityManager* EM = CEntityManager::GetInstance();
 
@@ -197,6 +218,7 @@ std::vector<EntityData> CCoral::GetModuleData()
 
 void CCoral::SetModuleData(std::vector<EntityData> mods)
 {
+	modules.resize(mods.size());
 	for (unsigned int i = 0; i < mods.size(); i++)
 	{
 		//If this module is alive in object, but types don't match up

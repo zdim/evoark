@@ -5,6 +5,7 @@
 #include "../../Message System/DestroyEntityMessage.h"
 #include "../../Camera.h"
 #include "../../GameStates/Game.h"
+#include "../Collidables/ModuleShield.h"
 
 CLaser::CLaser()
 {

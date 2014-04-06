@@ -68,6 +68,8 @@ void	CTestLevelState::Enter(void)
 	soundBox = CSoundBox::GetInstance();
 	//soundBox->Enter();
 	EntityManager->Spawn(EntityType::Moccasin, { 200, 200 }, 1);
+	EntityManager->GetBoss()->Init(4);
+	EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
 
 	//Get SaveData and load based on it
 	saveData save = CGameplayState::GetInstance()->GetSaveData();

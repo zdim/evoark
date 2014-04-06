@@ -325,6 +325,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 								  vel.Rotate(rotation);
 								  laser->SetVelocity(vel);
 								  laser->SetTier(tier);
+								  laser->SetOwner(owner);
 								  projectiles.push_back(laser);
 							  }
 							  else
@@ -356,6 +357,8 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 								  laserTwo->SetVelocity(vel);
 								  laserTwo->SetTier(tier);
 								  laser->SetVelocity(vel);
+								  laser->SetOwner(owner);
+								  laserTwo->SetOwner(owner);
 								  laser->SetTier(tier); projectiles.push_back(laser);
 								  projectiles.push_back(laserTwo);
 							  }
@@ -382,6 +385,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 									SGD::Vector vel = {0, -620};
 									vel.Rotate(rotation);
 									missile->SetVelocity(vel);
+									missile->SetOwner(owner);
 									projectiles.push_back(missile);
 								}
 
@@ -418,6 +422,8 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 									vel.Rotate(rotation);
 									missile->SetVelocity(vel);
 									missileTwo->SetVelocity(vel);
+									missile->SetOwner(owner);
+									missile->SetOwner(owner);
 
 									if (tier == 3)
 									{
@@ -724,7 +730,7 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 {
 	EntityGroup* smallGroup;
 	EntityGroup* bigGroup;
-
+	SGD::Rectangle screen = CCamera::GetInstance()->GetBoxInWorld();
 	if (group1.size() < group2.size())
 	{
 		smallGroup = &group1;
@@ -745,8 +751,12 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 	{
 		for (unsigned int i = 0; i < small.size(); i++)
 		{
-			for (unsigned int j = i + 1; j < small.size(); j++)
+			if (!small[i]->GetRect().IsIntersecting(screen))
+				continue;
+			for (unsigned int j = i + 1; j < big.size(); j++)
 			{
+				if (!big[j]->GetRect().IsIntersecting(screen))
+					continue;
 				if (ShapedCollisions(small[i], big[j]))
 				{
 					small[i]->HandleCollision(big[j]);
@@ -759,8 +769,12 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 	{
 		for (unsigned int i = 0; i < small.size(); i++)
 		{
+			if (!small[i]->GetRect().IsIntersecting(screen))
+				continue;
 			for (unsigned int j = 0; j < big.size(); j++)
 			{
+				if (!big[j]->GetRect().IsIntersecting(screen))
+					continue;
 				if (ShapedCollisions(small[i], big[j]))
 				{
 					small[i]->HandleCollision(big[j]);
@@ -856,29 +870,40 @@ bool CEntityManager::rectCollision(IEntity* rect1, IEntity* rect2)
 
 void CEntityManager::Update(float dt)
 {
+	SGD::Rectangle screen = CCamera::GetInstance()->GetBoxInWorld();
+	screen.top -= 300;
+	screen.left -= 300;
+	screen.right += 300;
+	screen.bottom += 300;
+
 	for (unsigned int i = 0; i < leaders.size(); i++)
 	{
 		leaders[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < ships.size(); i++)
 	{
-		ships[i]->Update(dt);
+		if(ships[i]->GetRect().IsIntersecting(screen))
+			ships[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < projectiles.size(); i++)
 	{
-		projectiles[i]->Update(dt);
+		if (projectiles[i]->GetRect().IsIntersecting(screen))
+			projectiles[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < stationaries.size(); i++)
 	{
-		stationaries[i]->Update(dt);
+		if (stationaries[i]->GetRect().IsIntersecting(screen))
+			stationaries[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < gravObjects.size(); i++)
 	{
-		gravObjects[i]->Update(dt);
+		if (gravObjects[i]->GetRect().IsIntersecting(screen))
+			gravObjects[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < asteroids.size(); i++)
 	{
-		asteroids[i]->Update(dt);
+		if (asteroids[i]->GetRect().IsIntersecting(screen))
+			asteroids[i]->Update(dt);
 	}
 
 	CheckCollision(ships, ships);

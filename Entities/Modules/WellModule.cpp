@@ -4,7 +4,7 @@
 
 CWellModule::CWellModule()
 {
-	cooldown = 35;
+	cooldown = 5;
 	timer = cooldown;
 }
 
@@ -17,7 +17,7 @@ void CWellModule::Activate()
 {
 	if (timer >= cooldown)
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, position, size, rotation, damage, tier, radius);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, target->GetPosition(), size, rotation, damage, tier, radius);
 		msg->QueueMessage();
 		timer = 0;
 	}

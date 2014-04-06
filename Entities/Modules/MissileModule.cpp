@@ -5,7 +5,7 @@
 
 CMissileModule::CMissileModule()
 {
-	cooldown = 15;
+	cooldown = 5;
 	timer = cooldown;
 }
 
@@ -19,7 +19,7 @@ void CMissileModule::Activate()
 {
 	if (timer >= cooldown)
 	{
-		CreateProjectileMessage* Msg = new CreateProjectileMessage(EntityType::Missile,position,size,rotation,damage,tier,-1.0f,owner);
+		CreateProjectileMessage* Msg = new CreateProjectileMessage(EntityType::Missile,position,size * 1.25,rotation,damage,tier,-1.0f,owner);
 		Msg->QueueMessage();
 		timer = 0;
 	}
