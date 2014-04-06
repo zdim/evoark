@@ -680,6 +680,7 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 	case EntityType::Stargate:
 		stargate = nullptr;
 	case EntityType::InvisTrigger:
+	case EntityType::EventTrigger:
 	case EntityType::Planet:
 	case EntityType::Barrier:
 		RemoveFromGroup(stationaries, entity);
