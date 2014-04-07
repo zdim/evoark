@@ -41,7 +41,7 @@ void CMissile::SelfDestruct()
 
 	CEntity::SelfDestruct();
 	SetTarget(nullptr);
-	CEventManager::GetInstance().Unregister(dynamic_cast<Listener*>(this), EventID::position);
+//	CEventManager::GetInstance().Unregister(dynamic_cast<Listener*>(this), EventID::position);
 }
 
 void CMissile::SetTarget(CShip* t)

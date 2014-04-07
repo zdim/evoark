@@ -6,6 +6,7 @@
 #include "../GameStates/ILevelState.h"
 #include "../GameStates/Game.h"
 #include "../Message System/DestroyEntityMessage.h"
+#include "../Event System/EventManager.h"
 CEntity::CEntity()
 {
 
@@ -151,4 +152,7 @@ void CEntity::SelfDestruct()
 	DestroyEntityMessage* msg = new DestroyEntityMessage(this);
 	msg->QueueMessage();
 	destroying = true;
+	Listener* l = dynamic_cast<Listener*>(this);
+	if (l)
+		CEventManager::GetInstance().UnregisterAll(l);
 }

@@ -38,6 +38,22 @@ void CEventManager::Unregister(Listener* listener, EventID id)
 	unlisteners[id].push_back(listener);
 }
 
+void CEventManager::UnregisterAll(Listener* listener)
+{
+	for (std::map<EventID, ListenerGroup>::iterator it = listenerMap.begin(); it != listenerMap.end(); ++it)
+	{
+		ListenerGroup group = it->second;
+		for (unsigned int i = 0; i < group.size(); i++)
+		{
+			if (group[i] == listener)
+			{
+				Unregister(listener, it->first);
+				break;
+			}
+		}
+	}
+}
+
 void CEventManager::ClearEvents()
 {
 	while (!events.empty())

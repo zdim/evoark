@@ -16,7 +16,6 @@ CEnemy::CEnemy()
 
 CEnemy::~CEnemy()
 {
-	CEventManager::GetInstance().Unregister(dynamic_cast<Listener*>(this), EventID::position);
 }
 
 void CEnemy::Update(float dt)
@@ -73,13 +72,22 @@ void CEnemy::SetTarget(CShip* newTarget)
 	if (target == newTarget)
 		return;
 
+	if ((unsigned int)target == 0xfeeefeee)
+	{
+		target = nullptr;
+	}
+	if (newTarget && newTarget->GetType() == (int)EntityType::Human)
+	{
+		target = nullptr;
+	}
+
 	if (target)
 		target->Release();
 
-	if (newTarget)
-		newTarget->AddRef();
-
 	target = newTarget;
+
+	if (target)
+		target->AddRef();
 }
 
 void CEnemy::HandleEvent(CCustomEvent* e)
@@ -92,8 +100,9 @@ void CEnemy::HandleEvent(CCustomEvent* e)
 							  IEntity* other = dynamic_cast<IEntity*> (e->GetSender());
 							  EntityType otherType = (EntityType)other->GetType();
 							  if (otherType == EntityType::Human || otherType == EntityType::Player)
+							  {
 								  DetectShip(dynamic_cast<CShip*>(other));
-
+							  }
 							  //detect projectiles and collidables
 							  break;							  
 	}
@@ -112,10 +121,13 @@ void CEnemy::DetectShip(CShip* other)
 		if (angle >= SGD::PI / 4.0f)
 			return;
 
-		float distance = toTarget.ComputeLength();
-		if (distance >= SGD::Vector{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() }.ComputeLength() * 0.25f)
-			return;
-
+	float distance = toTarget.ComputeLength();
+	if (distance >= SGD::Vector{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() }.ComputeLength() * 0.25f)
+	{
+		//if (other == target)
+		//	SetTarget(nullptr);
+		return;
+	}
 		SetTarget(other);
 		if (leader)
 			leader->SetTarget(other);

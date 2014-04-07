@@ -12,7 +12,7 @@ CMoccasin::CMoccasin()
 	modulePositions.push_back({ 40, -40 });
 	modulePositions.push_back({ 40, 40 });
 	m_fTimer = 0;
-	m_fAsteroidCD = 1;
+	m_fAsteroidCD = 15;
 	m_fShipCD = 5;
 	leader = nullptr;
 
@@ -37,7 +37,7 @@ void CMoccasin::Init(int l)
 		m_nLevel = 0;
 		break;
 	case 1:
-		m_nLevel = 3;
+		m_nLevel = 1;
 		break;
 	case 2:
 		m_nLevel = 2;
@@ -55,22 +55,24 @@ void CMoccasin::Update(float dt)
 
 	if (m_nLevel == 1)
 	{
-		CreateEntityMessage* msg = new CreateEntityMessage(this);
-		msg->QueueMessage();
-		m_nLevel = 0;
-	}
-
-	if (m_nLevel == 2)
-	{
 		if (m_fTimer >= m_fAsteroidCD && target != nullptr)
 		{
 			CreateEntityMessage* msg = new CreateEntityMessage(this);
 			msg->QueueMessage();
 			m_fTimer = 0;
 		}
-		
+
 	}
 
+
+	if (m_nLevel == 2)
+	{
+		CreateEntityMessage* msg = new CreateEntityMessage(this);
+		msg->QueueMessage();
+		m_nLevel = 0;
+	}
+
+	
 	if (m_nLevel == 3)
 	{
 		if (m_fTimer >= m_fShipCD && target != nullptr)
