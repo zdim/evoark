@@ -1,5 +1,6 @@
 //
 #include "Enemy.h"
+#include "../../Leader.h"
 #include "../../../Event System/EventID.h"
 #include "../../../Event System/CustomEvent.h"
 #include "../../../GameStates/Game.h"
@@ -116,7 +117,8 @@ void CEnemy::DetectShip(CShip* other)
 		return;
 
 	SetTarget(other);
-
+	if (leader)
+		leader->SetTarget(other);
 }
 
 void CEnemy::TakeDamage(int damage, bool collision)
