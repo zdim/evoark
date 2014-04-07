@@ -20,6 +20,7 @@ public:
 	void SendNow(CCustomEvent* e);
 	void Register(Listener* listener, EventID id);
 	void Unregister(Listener* listener, EventID id);
+	void UnregisterAll(Listener* listener);
 	void ClearEvents();
 	void ClearListeners();
 

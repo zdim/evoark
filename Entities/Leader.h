@@ -19,10 +19,14 @@ class CLeader
 	SGD::Point position;
 	Coordinator* coordiantor;
 	LeaderState state;
-	float timer;
-	float abilityDelay;
+	float timer = 0;
+	float abilityDelay = 15.0f;
+	float teleportDelay = 15.0f;
 
 	void CalculateDestinations();
+	void SetDestinations();
+	void Teleport();
+	bool DestinationsOffscreen();
 public:
 	CLeader();
 	~CLeader();
@@ -31,6 +35,7 @@ public:
 	int GetCurrentHull();
 	bool Assign(const EntityGroup& flock);
 	void Update(float dt);
+	LeaderState GetState() {return state;}
 	void SetState(LeaderState newState, SGD::Point location);
 	SGD::Point GetHome() {return home;}
 	void SetHome(SGD::Point location) {home = location;}

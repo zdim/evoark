@@ -25,6 +25,7 @@ public:
 	virtual void TakeDamage(int damage, bool collision = false);
 	void HandleEvent(CCustomEvent* e) override;
 	void SetLeader(CLeader* lead) { if (!leader) leader = lead; }
+	void SetDestination(SGD::Point newDest) {destination = newDest;}
 
 	int GetExpValue() { return expValue; }
 };

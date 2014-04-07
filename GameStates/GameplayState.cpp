@@ -224,10 +224,10 @@ void CGameplayState::SaveProfile()
 	{
 		TiXmlElement* world = new TiXmlElement("world");
 		world->SetAttribute("saved", true);
-		world->SetAttribute("quadsWide", save.world.size.width);
-		world->SetAttribute("quadsHigh", save.world.size.height);
-		world->SetAttribute("quadWidth", save.world.quadSize.width);
-		world->SetAttribute("quadHeight", save.world.quadSize.height);
+		world->SetDoubleAttribute("quadsWide", (double)save.world.size.width);
+		world->SetDoubleAttribute("quadsHigh", (double)save.world.size.height);
+		world->SetDoubleAttribute("quadWidth", (double)save.world.quadSize.width);
+		world->SetDoubleAttribute("quadHeight", (double)save.world.quadSize.height);
 		world->LinkEndChild(makeModularDataElement(save.world.boss));
 		for (unsigned int i = 0; i < save.world.entities.size(); i++)
 		{
@@ -343,7 +343,7 @@ EntityData processXmlEntity(TiXmlElement* entity)
 	data.position = {(float)x,(float)y};
 	int i;
 	entity->Attribute("coord", &i);
-	data.coord = (bool)i;
+	data.coord = i != 0;
 	return data;
 }
 
@@ -371,7 +371,7 @@ Flock processFlock(TiXmlElement* flock)
 	data.type = getElementEntityType(flock->FirstChildElement());
 	int i;
 	flock->Attribute("backup", &i);
-	data.backup = (bool)i;
+	data.backup = i != 0;
 	double x;
 	double y;
 	flock->Attribute("x", &x);
@@ -392,7 +392,7 @@ ModularFlock processModularFlock(TiXmlElement* modFlock)
 	data.type = getElementEntityType(modFlock->FirstChildElement());
 	int i;
 	modFlock->Attribute("backup", &i);
-	data.backup = (bool)i;
+	data.backup = i != 0;
 	double x;
 	double y;
 	modFlock->Attribute("x", &x);
@@ -459,7 +459,9 @@ saveData CGameplayState::LoadProfile()
 
 	TiXmlElement* world = wave->NextSiblingElement();
 	//std::string buffer = world->Attribute("saved");
-	save.world.saved = world->Attribute("saved");
+	int i;
+	world->Attribute("saved", &i);
+	save.world.saved = i != 0;
 
 	if (save.world.saved)
 	{
@@ -471,8 +473,8 @@ saveData CGameplayState::LoadProfile()
 		world->Attribute("quadsHigh", &quadsY);
 		world->Attribute("quadWidth", &quadW);
 		world->Attribute("quadHeight", &quadH);
-		save.world.size = {quadsX, quadsY};
-		save.world.quadSize = {quadW, quadH};
+		save.world.size = { (float)quadsX, (float)quadsY };
+		save.world.quadSize = { (float)quadW, (float)quadH };
 		save.world.collidables.clear();
 		save.world.entities.clear();
 		save.world.flocks.clear();
