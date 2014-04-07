@@ -37,6 +37,7 @@ public:
 	CPlayer* GetPlayer() { return dynamic_cast<CPlayer*>(player); }
 	CEntity* GetStargate() { return dynamic_cast<CEntity*>(stargate); }
 	CMoccasin* GetBoss() const {return boss;}
+	std::vector<SGD::HTexture>GetImages() {return images;}
 	std::vector<IEntity*> GetAllies() { return allies; }
 	IEntity* GetCoordinator();
 	//IEntity* GetStargate() { return (IEntity*)stargate; }	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.

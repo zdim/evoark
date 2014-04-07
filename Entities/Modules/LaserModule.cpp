@@ -19,7 +19,7 @@ void CLaserModule::Activate()
 	if (timer >= cooldown)
 	{
 		//Send a create laser message
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, size, GetRotation(), damage, tier, -1.0f, owner);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, size * 1.25, GetRotation(), damage, tier, -1.0f, owner);
 		msg->QueueMessage();
 		timer = 0;
 	}

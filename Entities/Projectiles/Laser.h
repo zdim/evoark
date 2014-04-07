@@ -21,6 +21,7 @@ public:
 	void SetDamage(int newDam) {damage = newDam;}
 	void SetTier(unsigned int _tier) { tier = _tier; }
 
+	IEntity* GetOwner(void){return owner;}
 	void SetOwner(IEntity* _owner);
 
 	//void AddGravity(SGD::Vector grav) override;

@@ -18,11 +18,16 @@ void CModuleShield::Update(float dt)
 
 void CModuleShield::HandleCollision(IEntity* other)
 {
-	if (other == m_pOwnerShip)
-		return;
 	//Is the other object a ship?
 	if (dynamic_cast<CShieldModule*>(m_pOwner)->GetShield() > 0 )
 	{
+		if (other->GetType() == (int)EntityType::Laser || other->GetType() == (int)EntityType::Missile /*|| other->GetType() == (int)EntityType::Push*/ )
+		{
+			CLaser* l = dynamic_cast<CLaser*>(other);
+			if (l->GetOwner() == m_pOwnerShip)
+				return;
+		}
+
 		if (m_pOwnerShip->GetType() == (int)EntityType::Moccasin)
 		{
 			if (dynamic_cast<CMoccasin*>(m_pOwnerShip)->GetLevel() == 1)
@@ -32,6 +37,8 @@ void CModuleShield::HandleCollision(IEntity* other)
 					dynamic_cast<CShieldModule*>(m_pOwner)->HandleCollision(other);
 					other->HandleCollision(dynamic_cast<CShieldModule*>(m_pOwner));
 				}
+				else if (other->GetType() == (int)EntityType::Laser)
+					other->SelfDestruct();
 			}
 			else
 			{
@@ -40,7 +47,7 @@ void CModuleShield::HandleCollision(IEntity* other)
 			}
 			
 		}
-		else if ((other)->GetType() != (int)EntityType::Moccasin )
+		else
 		{
 			dynamic_cast<CShieldModule*>(m_pOwner)->HandleCollision(other);
 			other->HandleCollision(dynamic_cast<CShieldModule*>(m_pOwner));

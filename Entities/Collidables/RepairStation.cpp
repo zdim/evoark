@@ -2,39 +2,65 @@
 #include "../Ships/Ship.h"
 #include "Asteroid.h"
 #include "../Ships/Enemies/Moccasin.h"
+#include "../Projectiles/Laser.h"
+
+CRepairStation::CRepairStation()
+{
+	hull = 100;
+}
+
+
 
 void CRepairStation::Update(float dt)
 {
-
-	for (int i = 0; i != m_pOwner->GetModules().size(); ++i)
+	if (m_pOwner != nullptr)
 	{
-		if (m_pOwner->GetModules()[i] != nullptr)
+		for (int i = 0; i != m_pOwner->GetModules().size(); ++i)
 		{
-			int test = m_pOwner->GetModules()[i]->GetHull();
-			int test2 = m_pOwner->GetModules()[i]->GetHullMax();
-
-			if (m_pOwner->GetModules()[i]->GetHull() < m_pOwner->GetModules()[i]->GetHullMax())
+			if (m_pOwner->GetModules()[i] != nullptr)
 			{
-				int heal = m_pOwner->GetModules()[i]->GetHull() + 5;
-				if (heal > m_pOwner->GetModules()[i]->GetHullMax())
-					m_pOwner->GetModules()[i]->SetHull(m_pOwner->GetModules()[i]->GetHullMax());
-				else
-					m_pOwner->GetModules()[i]->SetHull(heal);
-				
+				int test = m_pOwner->GetModules()[i]->GetHull();
+				int test2 = m_pOwner->GetModules()[i]->GetHullMax();
+
+				if (m_pOwner->GetModules()[i]->GetHull() < m_pOwner->GetModules()[i]->GetHullMax())
+				{
+					int heal = m_pOwner->GetModules()[i]->GetHull() + 1;
+					if (heal > m_pOwner->GetModules()[i]->GetHullMax())
+						m_pOwner->GetModules()[i]->SetHull(m_pOwner->GetModules()[i]->GetHullMax());
+					else
+						m_pOwner->GetModules()[i]->SetHull(heal);
+
+				}
+
 			}
-				
+
 		}
-			
 	}
+
 
 }
 
 void CRepairStation::HandleCollision(IEntity* other)
 {
 	//Is the other object a ship?
+
+	
+
+
 	EntityType otherType = (EntityType)other->GetType();
+
+
+	if (otherType == EntityType::Laser || otherType == EntityType::Missile)
+	{
+		dynamic_cast<CLaser*>(other)->HandleCollision(this);
+		//other->HandleCollision(dynamic_cast<CShieldModule*>(m_pOwner));
+		
+	}
+
+
 	SGD::Vector dir = other->GetPosition() - position;
 	dir.Normalize();
+
 	if (otherType >= EntityType::Player && otherType <= EntityType::Moccasin)
 	{
 		//This formula gets the direction from us to them (so away from us), then multiplies that by (their speed * 1.1) so that they can only fight the push from impact a little bit
@@ -49,5 +75,14 @@ void CRepairStation::HandleCollision(IEntity* other)
 		float speed = ast->GetVelocity().ComputeLength();
 		//Make a new velocity going in a different direction with the same speed
 		ast->SetVelocity(dir*speed);
+	}
+}
+
+void CRepairStation::TakeDamage(int damage)
+{
+	hull -= damage;
+	if (hull <= 0)
+	{
+		SelfDestruct();
 	}
 }
