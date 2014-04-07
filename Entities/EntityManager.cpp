@@ -1258,7 +1258,6 @@ void CEntityManager::Load()
 
 			allies.push_back(human);
 			ships.push_back(human);
-			break;
 		}
 	}
 

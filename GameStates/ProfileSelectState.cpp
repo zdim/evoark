@@ -418,7 +418,7 @@ saveData CProfileSelectState::CreateProfile()
 	profile.playerStat.expRequired = 100;
 	profile.playerStat.laserLevel = 0;
 	profile.playerStat.missileLevel = 0;
-	profile.playerStat.perks = 15;
+	profile.playerStat.perks = 1;
 	profile.playerStat.pushLevel = 0;
 	profile.playerStat.warpLevel = 0;
 	profile.playerStat.wellLevel = 0;

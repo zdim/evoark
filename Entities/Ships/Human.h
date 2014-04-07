@@ -1,12 +1,14 @@
 #pragma once
 #include "Ship.h"
+#include "../../Event System/IListener.h"
 class CHuman :
-	public CShip
+	public CShip, public Listener
 {
 private:
 	CShip* target = nullptr;
 	bool godMode;
 
+	int damage = 5;
 	float laserTimer;
 	float laserDelay;
 	
@@ -21,6 +23,10 @@ public:
 
 	//stubbing for now
 	IEntity* GetTarget() {return target;}
-	void SetTarget(IEntity* newTarget) {}
+	void SetTarget(CShip* newTarget);
+	void HandleEvent(CCustomEvent* e);
+	void DetectShip(CShip* other);
+	void CreateLaser();
+	void TakeDamage(int damage, bool collision) override { CShip::TakeDamage(damage,collision);}
+	void SelfDestruct() override { CShip::SelfDestruct(); }
 };
-

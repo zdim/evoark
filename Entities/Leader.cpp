@@ -47,6 +47,7 @@ bool CLeader::Assign(const EntityGroup& flock)
 	}
 	CalculateDestinations();
 	Teleport();
+	SetDestinations();
 	return true;
 }
 

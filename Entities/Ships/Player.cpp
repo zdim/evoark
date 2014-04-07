@@ -257,7 +257,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 		return;
 	}
 	if (collision)
-		damage *= COLLISION_MODIFIER;
+		damage = int((float)damage * COLLISION_MODIFIER);
 	shieldTimer = 0;
 	if (shield > 0)
 	{
@@ -337,6 +337,8 @@ void CPlayer::SetStats(playerData& data)
 	level = data.level;
 	maxShield += SHIELD_SCALE * level;
 	maxHull += HULL_SCALE * level;
+	hull = maxHull;
+	shield = maxShield;
 	perks = data.perks;
 	for (laserLevel; laserLevel < data.laserLevel; LaserLevelUp());
 	for (missileLevel; missileLevel < data.missileLevel; MissileLevelUp());
