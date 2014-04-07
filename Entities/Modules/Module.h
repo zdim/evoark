@@ -32,7 +32,7 @@ public:
 	void SetOffset(SGD::Vector newVal) {posOffset = newVal; }
 	void SetCooldown (float newVal) { cooldown = newVal; }		//For any abilities and shield delay
 	void SetTimer (float newVal) { timer = newVal; }	//For cooldown
-	void SetHull (int newVal) { hull = newVal; }		//For destruction
+	void SetHull(int newVal) { hull = newVal; }		//For destruction
 	void SetHullMax (int newVal) { hullMax = newVal; }
 	void SetTier(int newTier) {tier = newTier;}
 

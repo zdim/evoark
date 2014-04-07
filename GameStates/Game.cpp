@@ -20,6 +20,9 @@
 #include "MainMenuState.h"
 #include "GameplayState.h"
 
+#include <shlwapi.h>
+#pragma comment(lib,"shlwapi.lib")
+#include "shlobj.h"
 #include <ctime>
 #include <cstdlib>
 #include <cassert>
@@ -91,7 +94,8 @@ bool Game::Initialize( int width, int height )
 	m_pParticleSystem->Init();
 	CSoundBox::GetInstance()->Enter();
 
-	TiXmlDocument doc("optionsSave.xml");
+	std::string path = GetAppDataPath() + "optionsSave.xml";
+	TiXmlDocument doc(path.c_str());
 	if (doc.LoadFile())
 	{
 		TiXmlElement* root = doc.RootElement();
@@ -271,4 +275,27 @@ ILevelState* Game::GetLevelState()
 			return lState;
 	}
 	return nullptr;
+}
+
+std::string Game::GetAppDataPath()
+{
+	HRESULT safeCheck;
+	std::ostringstream oss;
+	char path[MAX_PATH];
+	LPWSTR wszPath = nullptr;
+	size_t size;
+
+	safeCheck = SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, 0, &wszPath);
+
+	wcstombs_s(&size, path, MAX_PATH, wszPath, MAX_PATH);
+
+	if (safeCheck == S_OK)
+		oss << path;
+	string pathToReturn = oss.str();
+
+	pathToReturn += "\\Eclipse Games\\EvoArk\\";
+	
+	SHCreateDirectoryExA(nullptr, pathToReturn.c_str(), 0);
+
+	return pathToReturn;
 }

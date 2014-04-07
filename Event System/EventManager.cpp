@@ -28,7 +28,7 @@ void CEventManager::SendNow(CCustomEvent* e)
 				break;
 		}
 		if (j == unlisteners[e->GetID()].size())
-			bucket[i]->HandleEvent(e);
+		bucket[i]->HandleEvent(e);
 	}
 }
 

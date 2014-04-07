@@ -6,6 +6,7 @@
 #include "../../Camera.h"
 #include "../../GameStates/Game.h"
 #include "../Collidables/ModuleShield.h"
+#include "../Collidables/RepairStation.h"
 
 CLaser::CLaser()
 {
@@ -70,6 +71,13 @@ void CLaser::HandleCollision(IEntity* other)
 	{
 		CAsteroid* ast = dynamic_cast<CAsteroid*>(other);
 		ast->TakeDamage(damage);
+		SelfDestruct();
+	}
+
+	if (otherType == EntityType::RepairStation)
+	{
+		CRepairStation* st = dynamic_cast<CRepairStation*>(other);
+		st->TakeDamage(damage);
 		SelfDestruct();
 	}
 

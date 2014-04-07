@@ -140,15 +140,15 @@ void CEnemy::HandleEvent(CCustomEvent* e)
 
 void CEnemy::DetectShip(CShip* other)
 {
-	SGD::Point pos = other->GetPosition();
-	SGD::Vector toTarget = pos - position;
+		SGD::Point pos = other->GetPosition();
+		SGD::Vector toTarget = pos - position;
 
-	SGD::Vector forward = { 0, -1 };
-	forward.Rotate(rotation);
-	//"delta rotation" the amount of rotation it will take to face the target.
-	float angle = forward.ComputeAngle(toTarget);
-	if (angle >= SGD::PI / 4.0f)
-		return;
+		SGD::Vector forward = { 0, -1 };
+		forward.Rotate(rotation);
+		//"delta rotation" the amount of rotation it will take to face the target.
+		float angle = forward.ComputeAngle(toTarget);
+		if (angle >= SGD::PI / 4.0f)
+			return;
 
 	float distance = toTarget.ComputeLength();
 	if (distance >= SGD::Vector{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() }.ComputeLength() * 0.25f)
@@ -157,9 +157,11 @@ void CEnemy::DetectShip(CShip* other)
 		//	SetTarget(nullptr);
 		return;
 	}
-	SetTarget(other);
-	if (leader)
-		leader->SetTarget(other);
+		SetTarget(other);
+		if (leader)
+			leader->SetTarget(other);
+	
+	
 }
 
 void CEnemy::TakeDamage(int damage, bool collision)

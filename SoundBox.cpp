@@ -31,6 +31,8 @@ void CSoundBox::Enter()
 	enemyHullDamageSFX = audio->LoadAudio("Resources/Audio/EnemyHullDamage.wav");
 	enemyShieldDamageSFX = audio->LoadAudio("Resources/Audio/EnemyShieldDamage.wav");
 	creamMusic = audio->LoadAudio("Resources/Audio/cream.xwm");
+	ambientMusic = audio->LoadAudio("Resources/Audio/ambientSpace.xwm");
+	slowTranceMusic = audio->LoadAudio("Resources/Audio/slowTrance.xwm");
 }
 
 void CSoundBox::Exit()
@@ -47,7 +49,8 @@ void CSoundBox::Exit()
 	audio->UnloadAudio(enemyHullDamageSFX);
 	audio->UnloadAudio(enemyShieldDamageSFX);
 	audio->UnloadAudio(creamMusic);
-
+	audio->UnloadAudio(slowTranceMusic);
+	audio->UnloadAudio(ambientMusic);
 }
 
 void CSoundBox::Play(int _soundEnum, bool _loop)
@@ -90,6 +93,14 @@ void CSoundBox::Play(int _soundEnum, bool _loop)
 		break;
 	case cream:
 		soundToPlay = creamMusic;
+		break;
+	case ambient:
+		if (audio->IsAudioPlaying(slowTranceMusic)) audio->StopAudio(slowTranceMusic);
+		soundToPlay = ambientMusic;
+		break;
+	case slowTrance:
+		if (audio->IsAudioPlaying(ambientMusic)) audio->StopAudio(ambientMusic);
+		soundToPlay = slowTranceMusic;
 		break;
 	default:
 		break;

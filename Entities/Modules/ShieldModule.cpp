@@ -1,6 +1,5 @@
 //
 #include "ShieldModule.h"
-#include "../Collidables/ModuleShield.h"
 #include "../Ships/Enemies/Coral.h"
 CShieldModule::CShieldModule()
 {

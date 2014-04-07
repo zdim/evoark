@@ -187,7 +187,7 @@ TiXmlElement* makeModFlockElement(ModularFlock& data)
 
 void CGameplayState::SaveProfile()
 {
-	std::string filepath = "Resources/XML/Profiles/";
+	std::string filepath = Game::GetInstance()->GetAppDataPath();
 	if (save.profile == 0 || save.profile >= 4)
 		return;
 	
@@ -428,7 +428,7 @@ saveData CGameplayState::LoadProfile()
 {
 	saveData blank;
 	blank.profile = 0;
-	std::string filepath = "Resources/XML/Profiles/";
+	std::string filepath = Game::GetInstance()->GetAppDataPath();
 	if (save.profile == 0 || save.profile >= 4)
 		return blank;
 
