@@ -59,10 +59,6 @@ SGD::Vector CCopperhead::AI(float dt)
 			{
 				CreateMissile();
 			}
-			if (GetType() == 8)
-			{
-			
-			}
 		}
 		
 

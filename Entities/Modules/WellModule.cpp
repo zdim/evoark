@@ -4,8 +4,9 @@
 
 CWellModule::CWellModule()
 {
-	cooldown = 5;
+	cooldown = 100;
 	timer = cooldown;
+	damage = 75;
 }
 
 

@@ -27,7 +27,7 @@ CMoccasin::~CMoccasin()
 
 void CMoccasin::Init(int l)
 {
-	for (int i = 0; i < l; i++)
+	for (int i = 0; i < 2; i++)
 		AddModule();
 
 
