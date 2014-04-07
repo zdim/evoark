@@ -65,7 +65,7 @@ void CMainMenuState::Enter()
 	buttons[menuReturn::exit] = "Exit";
 	menu = new CMenu(&Game::GetInstance()->Font, buttons, "EvoArk", true);
 	//CSoundBox::GetInstance()->Enter();
-	CSoundBox::GetInstance()->Play(CSoundBox::sounds::cream, true);
+	CSoundBox::GetInstance()->Play(CSoundBox::sounds::ambient, true);
 }
 
 void CMainMenuState::Exit()
