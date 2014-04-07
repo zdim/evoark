@@ -763,11 +763,11 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 		for (unsigned int i = 0; i < small.size(); i++)
 		{
 			if (!small[i]->GetRect().IsIntersecting(screen))
-				continue;
+			{continue;}
 			for (unsigned int j = i + 1; j < big.size(); j++)
 			{
 				if (!big[j]->GetRect().IsIntersecting(screen))
-					continue;
+				{continue;}
 				if (ShapedCollisions(small[i], big[j]))
 				{
 					small[i]->HandleCollision(big[j]);
@@ -893,7 +893,7 @@ void CEntityManager::Update(float dt)
 	}
 	for (unsigned int i = 0; i < ships.size(); i++)
 	{
-		if(ships[i]->GetRect().IsIntersecting(screen))
+		//if(ships[i]->GetRect().IsIntersecting(screen))
 			ships[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < projectiles.size(); i++)
@@ -913,7 +913,7 @@ void CEntityManager::Update(float dt)
 	}
 	for (unsigned int i = 0; i < asteroids.size(); i++)
 	{
-		if (asteroids[i]->GetRect().IsIntersecting(screen))
+		//if (asteroids[i]->GetRect().IsIntersecting(screen))
 			asteroids[i]->Update(dt);
 	}
 

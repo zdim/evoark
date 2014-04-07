@@ -27,6 +27,7 @@ bool CLeader::Assign(const EntityGroup& flock)
 		members[i] = dynamic_cast<CEnemy*>(flock[i]);
 		//members[i]->SetPosition(destinations[i]);
 		members[i]->AddRef();
+		members[i]->SetLeader(this);
 	}
 	CalculateDestinations();
 	for (unsigned int i = 0; i < members.size(); i++)
@@ -103,6 +104,11 @@ void CLeader::SetTarget(CShip* newTarget)
 		newTarget->AddRef();
 
 	target = newTarget;
+
+	for (unsigned int i = 0; i < members.size(); i++)
+	{
+		members[i]->SetTarget(newTarget);
+	}
 }
 
 void CLeader::GetEntityData(std::vector<EntityData>& flockData)

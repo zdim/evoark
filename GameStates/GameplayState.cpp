@@ -193,7 +193,8 @@ void CGameplayState::SaveProfile()
 	
 	filepath += "profile_" + std::to_string(save.profile) + ".xml";
 	TiXmlDocument doc(filepath.c_str());
-	
+	doc.LoadFile();
+	doc.Clear();
 	TiXmlElement* deleted = new TiXmlElement("state");
 	deleted->SetAttribute("deleted", "false");
 	doc.LinkEndChild(deleted);
@@ -472,6 +473,10 @@ saveData CGameplayState::LoadProfile()
 		world->Attribute("quadHeight", &quadH);
 		save.world.size = {quadsX, quadsY};
 		save.world.quadSize = {quadW, quadH};
+		save.world.collidables.clear();
+		save.world.entities.clear();
+		save.world.flocks.clear();
+		save.world.modFlocks.clear();
 		TiXmlElement* elem = world->FirstChildElement();
 		while (elem)
 		{
@@ -491,6 +496,10 @@ saveData CGameplayState::LoadProfile()
 				break;
 			case 5:
 				save.world.boss = processModularEntity(elem);
+			}
+			if (!elem->NextSibling())
+			{
+				break;
 			}
 			elem = elem->NextSiblingElement();
 		}
