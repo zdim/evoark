@@ -266,7 +266,7 @@ void	CTestLevelState::Generate()
 		testing += "2";
 		break;
 	case Level::Gen3:
-		loadSuccess = LoadXMLLevel("Resources/XML/World/testWorld2.xml");
+		loadSuccess = LoadXMLLevel("Resources/XML/World/levelThree.xml");
 		testing += "3";
 		break;
 	case Level::Waves:
