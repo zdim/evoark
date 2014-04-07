@@ -575,7 +575,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 
 										CTestLevelState::GetInstance()->EntityManager->SpawnCollidable(EntityType::Asteroid, randPosition, SGD::Size{ (float)size, (float)size });
 									}
-									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 0 )
+									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 2 )
 									{
 										SGD::Point pos = cMsg->GetSender()->GetPosition();
 										SGD::Point pos1 = { pos.x + 200, pos.y + 100 };
@@ -587,6 +587,12 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos2, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
 										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos3, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
 										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos4, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
+									}
+									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 3)
+									{		
+										SGD::Point pos = cMsg->GetSender()->GetPosition();
+										SGD::Point pos1 = { pos.x + 200, pos.y + 100 };
+										CTestLevelState::GetInstance()->EntityManager->SpawnCarrierShips(pos1, dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetTarget(), dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetShipNumbers());
 									}
 
 									break;

@@ -11,9 +11,12 @@ CMoccasin::CMoccasin()
 	modulePositions.push_back({ -40, -40 });
 	modulePositions.push_back({ 40, -40 });
 	modulePositions.push_back({ 40, 40 });
-	m_fAsteroidTimer = 0;
-	m_fACD = 1;
+	m_fTimer = 0;
+	m_fAsteroidCD = 1;
+	m_fShipCD = 5;
 	leader = nullptr;
+
+	m_nNumberOfShips = 1;
 }
 
 
@@ -34,7 +37,7 @@ void CMoccasin::Init(int l)
 		m_nLevel = 0;
 		break;
 	case 1:
-		m_nLevel = 1;
+		m_nLevel = 3;
 		break;
 	case 2:
 		m_nLevel = 2;
@@ -48,31 +51,35 @@ void CMoccasin::Init(int l)
 
 void CMoccasin::Update(float dt)
 {
-	m_fAsteroidTimer += dt;
+	m_fTimer += dt;
 
 	if (m_nLevel == 1)
 	{
-		CreateEntityMessage* msg = new CreateEntityMessage(this, EntityType::RepairStation);
+		CreateEntityMessage* msg = new CreateEntityMessage(this);
 		msg->QueueMessage();
 		m_nLevel = 0;
 	}
 
 	if (m_nLevel == 2)
 	{
-		if (m_fAsteroidTimer >= m_fACD && target != nullptr )
+		if (m_fTimer >= m_fAsteroidCD && target != nullptr)
 		{
-			CreateEntityMessage* msg = new CreateEntityMessage(this, EntityType::Asteroid);
+			CreateEntityMessage* msg = new CreateEntityMessage(this);
 			msg->QueueMessage();
-			m_fAsteroidTimer = 0;
+			m_fTimer = 0;
 		}
 		
 	}
 
 	if (m_nLevel == 3)
 	{
-		CreateEntityMessage* msg = new CreateEntityMessage(this, EntityType::RepairStation);
-		msg->QueueMessage();
-		m_nLevel = 0;
+		if (m_fTimer >= m_fShipCD && target != nullptr)
+		{
+			CreateEntityMessage* msg = new CreateEntityMessage(this);
+			msg->QueueMessage();
+			m_nNumberOfShips += 2;
+			m_fTimer = 0;
+		}	
 	}
 	
 	CCoral::Update(dt);

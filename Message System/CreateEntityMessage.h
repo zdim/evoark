@@ -8,9 +8,8 @@ class CreateEntityMessage : public SGD::Message
 	IEntity* sender;
 	EntityType toCreate;
 public:
-	CreateEntityMessage(IEntity* creator, EntityType created);
+	CreateEntityMessage(IEntity* creator);
 	~CreateEntityMessage();
 
 	IEntity* GetSender() const {return sender;}
-	EntityType GetEntityType() {return toCreate;}
 };

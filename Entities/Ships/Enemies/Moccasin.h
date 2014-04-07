@@ -9,8 +9,10 @@ class CMoccasin :
 private:
 
 	int m_nLevel;
-	float m_fAsteroidTimer;
-	float m_fACD;
+	float m_fTimer;
+	float m_fAsteroidCD;
+	float m_fShipCD;
+	int   m_nNumberOfShips;
 	std::vector<CRepairStation*> stations;
 
 public:
@@ -24,4 +26,5 @@ public:
 	virtual int GetType() override { return (int)EntityType::Moccasin; }
 	int GetLevel() { return m_nLevel; }
 	std::vector<CRepairStation*> GetStations() { return stations; }
+	int GetShipNumbers() { return m_nNumberOfShips; }
 };

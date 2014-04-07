@@ -303,6 +303,29 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 	}
 }
 
+
+void CEntityManager::SpawnCarrierShips(SGD::Point position, CShip* target, int amount)
+{
+
+	CLeader* leader = new CLeader();
+	EntityGroup copperheads;
+	copperheads.resize(amount);
+	for (unsigned int i = 0; i < copperheads.size(); i++)
+	{
+		copperheads[i] = new CCopperhead();
+		
+		copperheads[i]->SetImage(images[(int)EntityType::Copperhead]);
+		copperheads[i]->SetSize({ 32, 32 });
+		dynamic_cast<CEnemy*>(copperheads[i])->SetTarget(target);
+		smallEnemies.push_back(copperheads[i]);
+		ships.push_back(copperheads[i]);
+	}
+	leader->SetHome(position);
+	leader->Assign(copperheads); //Leader repositions entities
+	leaders.push_back(leader);
+
+}
+
 void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier, float radius, IEntity* owner)
 {
 	switch (type)

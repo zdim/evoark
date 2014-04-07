@@ -1,9 +1,8 @@
 #include "CreateEntityMessage.h"
 
-CreateEntityMessage::CreateEntityMessage(IEntity* creator, EntityType created) : Message(MessageID::CreateEntity)
+CreateEntityMessage::CreateEntityMessage(IEntity* creator ) : Message(MessageID::CreateEntity)
 {
 	sender = creator;
-	toCreate = created;
 	sender->AddRef();
 }
 
