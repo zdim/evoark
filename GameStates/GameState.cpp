@@ -385,6 +385,10 @@ void	CTestLevelState::Generate()
 			{
 				eventID = (int)triggerID::tutBoss;
 			}
+			else if (events[i].eType == "TUTORIAL.STARGATE")
+			{
+				eventID = (int)triggerID::tutStargate;
+			}
 
 			EntityManager->SpawnCollidable(EntityType::InvisTrigger, { events[i].area.left, events[i].area.top }, { events[i].area.right - events[i].area.left, events[i].area.bottom - events[i].area.top }, { 0, 0 }, eventID);
 
