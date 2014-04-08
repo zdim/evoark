@@ -15,7 +15,7 @@ CMoccasin::CMoccasin()
 	m_fAsteroidCD = 15;
 	m_fShipCD = 5;
 	leader = nullptr;
-
+	m_bStationsUP = false;
 	m_nNumberOfShips = 1;
 }
 
@@ -37,15 +37,16 @@ void CMoccasin::Init(int l)
 		m_nLevel = 0;
 		break;
 	case 1:
-		m_nLevel = 1;
+		m_nLevel = 2;
 		break;
 	case 2:
-		m_nLevel = 2;
+		m_nLevel = 2;	
 		break;
 	case 3:
 		m_nLevel = 3;
 		break;
 	}
+	
 }
 
 
@@ -64,12 +65,11 @@ void CMoccasin::Update(float dt)
 
 	}
 
-
-	if (m_nLevel == 2)
+	if (m_nLevel == 2 && m_bStationsUP == false )
 	{
 		CreateEntityMessage* msg = new CreateEntityMessage(this);
 		msg->QueueMessage();
-		m_nLevel = 0;
+		m_bStationsUP = true;
 	}
 
 	

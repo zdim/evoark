@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include "Coral.h"
 
 class CRepairStation;
@@ -13,6 +13,7 @@ private:
 	float m_fAsteroidCD;
 	float m_fShipCD;
 	int   m_nNumberOfShips;
+	bool  m_bStationsUP;
 	std::vector<CRepairStation*> stations;
 
 public:
