@@ -1314,6 +1314,7 @@ void CEntityManager::CreateLeader(ModularFlock& data)
 		corals[i]->SetSize({ 128, 128 });
 		bigEnemies.push_back(corals[i]);
 		ships.push_back(corals[i]);
+		ships.push_back(dynamic_cast<CCoral*>(corals[i])->GetShield());
 	}
 	leader->SetHome(data.home);
 	leader->Assign(corals);
@@ -1343,6 +1344,7 @@ void CEntityManager::Load()
 		boss->SetImages(images);
 		bigEnemies.push_back(boss);
 		ships.push_back(boss);
+		ships.push_back(dynamic_cast<CCoral*>(boss)->GetShield());
 		boss->SetPosition(save.world.boss.position);
 	}
 
