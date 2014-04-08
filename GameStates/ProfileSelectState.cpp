@@ -133,8 +133,7 @@ void CProfileSelectState::MenuInput()
 			delete confirm;
 			confirm = nullptr;
 			CGameplayState::GetInstance()->DeleteProfile(currentProfile+1);
-			saveData profile = CreateProfile();
-			//profile.profile = currentProfile + 1;
+			profiles[currentProfile] = CreateProfile();
 			TutorialConfirmation();
 			break;
 		}
@@ -418,7 +417,7 @@ saveData CProfileSelectState::CreateProfile()
 	profile.playerStat.expRequired = 100;
 	profile.playerStat.laserLevel = 0;
 	profile.playerStat.missileLevel = 0;
-	profile.playerStat.perks = 15;
+	profile.playerStat.perks = 1;
 	profile.playerStat.pushLevel = 0;
 	profile.playerStat.warpLevel = 0;
 	profile.playerStat.wellLevel = 0;

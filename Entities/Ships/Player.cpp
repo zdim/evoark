@@ -53,6 +53,11 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update(float dt)
 {
+	if (damaged > 0)
+		damaged -= dt;
+	if (damaged < 0)
+		damaged = 0;
+
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
 
 	if (CGameplayState::GetInstance()->GetLevel() == Level::Tutorial)
@@ -165,8 +170,18 @@ void CPlayer::Update(float dt)
 	e->Queue();
 
 	CEntity::Update(dt);
+}
 
-	
+void CPlayer::Render()
+{
+	SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
+	SGD::Point renderPoint = offsetToCamera();
+	SGD::Color col = {};
+	if (damaged > 0)
+	{
+		col = { 155, 155, 155 };
+	}
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, col, scale);
 }
 
 void CPlayer::AddGravity(SGD::Vector grav)
@@ -185,7 +200,7 @@ void CPlayer::CreateLaser()
 	if (laserLevel >= 1)
 		damage += 15;
 
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, m_shield->GetSize(), rotation, damage, laserLevel);
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, m_shield->GetSize(), rotation, damage, laserLevel,-1.0f,this);
 	msg->QueueMessage();
 }
 
@@ -198,7 +213,7 @@ void CPlayer::CreateMissile()
 	int damage = 75;
 	//damage *= int(1.5f * missileLevel);
 	damage += int(1.5f * missileLevel * damage);
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, m_shield->GetSize(), rotation, damage, missileLevel );
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, m_shield->GetSize(), rotation, damage, missileLevel, -1.0f, this);
 	msg->QueueMessage();
 }
 
@@ -254,7 +269,7 @@ void CPlayer::CreatePush()
 	}
 	else
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 2, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI * 2, this);
 		msg->QueueMessage();
 	}
 
@@ -276,7 +291,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 		return;
 	}
 	if (collision)
-		damage *= COLLISION_MODIFIER;
+		damage = int((float)damage * COLLISION_MODIFIER);
 	shieldTimer = 0;
 	if (shield > 0)
 	{
@@ -297,23 +312,13 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyHullDamage, false);
 
 	hull -= damage;
+	damaged = .15f;
 	if (hull <= 0 && !destroying)
 	{
 		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
 		msg->QueueMessage();
 		SelfDestruct();
 	}
-}
-
-void CPlayer::Render()
-{
-	CShip::Render();
-
-	//SGD::Color color = {};
-	//if (shield < maxShield)
-	//	color = SGD::Color{ 255, 0, 0 };
-	//float scale = std::max(size.width / imageSize.width, size.height / imageSize.height);
-	//SGD::GraphicsManager::GetInstance()->DrawTexture(image, offsetToCamera(), rotation, imageSize / 2, color, { scale, scale });
 }
 
 void CPlayer::AddExp(int _exp)
@@ -356,7 +361,10 @@ void CPlayer::SetStats(playerData& data)
 	level = data.level;
 	maxShield += SHIELD_SCALE * level;
 	maxHull += HULL_SCALE * level;
+	hull = maxHull;
+	shield = maxShield;
 	perks = data.perks;
+	//perks = 100;
 	for (laserLevel; laserLevel < data.laserLevel; LaserLevelUp());
 	for (missileLevel; missileLevel < data.missileLevel; MissileLevelUp());
 	for (wellLevel; wellLevel < data.wellLevel; WellLevelUp());

@@ -37,6 +37,7 @@ public:
 	void SetTier(int newTier) {tier = newTier;}
 
 	virtual void Update(float dt) override;
+	virtual void Render() override;
 
 	virtual void TakeDamage(int damage, bool collision = false);
 	virtual void Activate();

@@ -40,6 +40,7 @@ CEntityManager* CEntityManager::GetInstance()
 
 void CEntityManager::Initialize()
 {
+	clearing = false;
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
 	images.resize((int)EntityType::Count);
 	for (unsigned int i = 0; i < images.size(); i++)
@@ -102,6 +103,16 @@ IEntity* CEntityManager::GetCoordinator()
 	if (dynamic_cast<CMambaCoord*>(coordinator)) return dynamic_cast<CMambaCoord*>(coordinator);
 	return nullptr;
 
+}
+
+std::vector<SGD::Point> CEntityManager::GetLeaderPositions()
+{
+	std::vector<SGD::Point> positions;
+	for (unsigned int i = 0; i < leaders.size(); i++)
+	{
+		positions.push_back(leaders[i]->GetPosition());
+	}
+	return positions;
 }
 
 void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int amount, bool coord) //Spawns either one entity, or a flock of enemies, making the leader object in the process
@@ -341,6 +352,8 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 
 								  SGD::Vector offset = { 0.0, -1.0 };
 								  offset.Rotate(rotation);
+								  float laserOffset = laser->GetSize().height * 0.75f;
+								  float ownerOffset = ownerSize.height * 0.5f;
 								  offset *= (ownerSize.height + laser->GetSize().height)*0.5f + laser->GetSize().height * 0.25f;
 								  position += offset;
 								  laser->SetPosition(position);
@@ -476,6 +489,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 							 well->SetPosition(position);
 							 well->SetRotation(rotation);
 							 well->SetStrength((float)damage);
+							 well->SetTier(tier);
 							 gravObjects.push_back(well);
 							 break;
 	}
@@ -601,6 +615,10 @@ void CEntityManager::ClearTargeted(IEntity* entity)	//Iterates through the group
 	if (!entity)
 		return;
 
+	if (entity->GetType() >= (int)EntityType::Laser && entity->GetType() <= (int)EntityType::Well)
+		return;
+	CShip* ship = dynamic_cast<CShip*>(entity);
+
 	for (unsigned int i = 0; i < smallEnemies.size(); i++)
 	{
 		CEnemy* enemy = dynamic_cast<CEnemy*>(smallEnemies[i]);
@@ -616,7 +634,7 @@ void CEntityManager::ClearTargeted(IEntity* entity)	//Iterates through the group
 	for (unsigned int i = 0; i < allies.size(); i++)
 	{
 		CHuman* ally = dynamic_cast<CHuman*>(allies[i]);
-		if (ally->GetTarget() == entity)
+		if (ally->GetTarget() == ship)
 			ally->SetTarget(nullptr);
 	}
 }
@@ -683,6 +701,8 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		dynamic_cast<CHuman*>(entity)->SetTarget(nullptr);
 		RemoveFromGroup(ships, entity);
 		RemoveFromGroup(allies, entity);
+		if (!allies.size() && !clearing)
+			Save();
 		break;
 	case EntityType::Copperhead:
 	case EntityType::Cobra:
@@ -694,10 +714,14 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		if (GetCoordinator() == entity)
 		{
 			coordinator = nullptr;
+			if (!clearing)
+				Save();
 		}
 		break;
 	case EntityType::Moccasin:
 		boss = nullptr;
+		if (!clearing)
+			Save();
 	case EntityType::Coral:
 		dynamic_cast<CEnemy*>(entity)->SetTarget(nullptr);
 		dynamic_cast<CCoral*>(entity)->DestroyAllModules();
@@ -739,6 +763,7 @@ void CEntityManager::DestroyGroup(EntityGroup& group)	//Iterates through every e
 
 void CEntityManager::DestroyAll()	//Calls DestroyGroup on all groups
 {
+	clearing = true;
 	DestroyGroup(ships);
 	DestroyGroup(projectiles);
 	DestroyGroup(asteroids);
@@ -794,11 +819,19 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 		for (unsigned int i = 0; i < small.size(); i++)
 		{
 			if (!small[i]->GetRect().IsIntersecting(screen))
-			{continue;}
+			{
+				if ((small[i]->GetType() >= (int)EntityType::Player && small[i]->GetType() <= (int)EntityType::Moccasin)
+					|| small[i]->GetType() == (int)EntityType::ModuleShield)
+					continue;
+			}
 			for (unsigned int j = i + 1; j < big.size(); j++)
 			{
 				if (!big[j]->GetRect().IsIntersecting(screen))
-				{continue;}
+				{
+					if ((big[j]->GetType() >= (int)EntityType::Player && big[j]->GetType() <= (int)EntityType::Moccasin)
+						|| big[j]->GetType() == (int)EntityType::ModuleShield)
+						continue;
+				}
 				if (ShapedCollisions(small[i], big[j]))
 				{
 					small[i]->HandleCollision(big[j]);
@@ -812,11 +845,19 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 		for (unsigned int i = 0; i < small.size(); i++)
 		{
 			if (!small[i]->GetRect().IsIntersecting(screen))
-				continue;
+			{
+				if ((small[i]->GetType() >= (int)EntityType::Player && small[i]->GetType() <= (int)EntityType::Moccasin)
+					|| small[i]->GetType() == (int)EntityType::ModuleShield)
+					continue;
+			}
 			for (unsigned int j = 0; j < big.size(); j++)
 			{
 				if (!big[j]->GetRect().IsIntersecting(screen))
-					continue;
+				{
+					if ((big[j]->GetType() >= (int)EntityType::Player && big[j]->GetType() <= (int)EntityType::Moccasin)
+						|| big[j]->GetType() == (int)EntityType::ModuleShield)
+						continue;
+				}
 				if (ShapedCollisions(small[i], big[j]))
 				{
 					small[i]->HandleCollision(big[j]);
@@ -924,22 +965,22 @@ void CEntityManager::Update(float dt)
 	}
 	for (unsigned int i = 0; i < ships.size(); i++)
 	{
-		//if(ships[i]->GetRect().IsIntersecting(screen))
+		if(ships[i]->GetRect().IsIntersecting(screen))
 			ships[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < projectiles.size(); i++)
 	{
-		if (projectiles[i]->GetRect().IsIntersecting(screen))
+		//if (projectiles[i]->GetRect().IsIntersecting(screen))
 			projectiles[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < stationaries.size(); i++)
 	{
-		if (stationaries[i]->GetRect().IsIntersecting(screen))
+		//if (stationaries[i]->GetRect().IsIntersecting(screen))
 			stationaries[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < gravObjects.size(); i++)
 	{
-		if (gravObjects[i]->GetRect().IsIntersecting(screen))
+		//if (gravObjects[i]->GetRect().IsIntersecting(screen))
 			gravObjects[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < asteroids.size(); i++)
@@ -1161,7 +1202,7 @@ EntityGroup CEntityManager::CreateMambaLeader(Flock& data)
 	mambas.resize(data.members.size());
 	for (unsigned int i = 0; i < mambas.size(); i++)
 	{
-		if (data.members.size() && !coordinator)
+		if (data.members[i].coord && !coordinator)
 		{
 			CMambaCoord* C = new CMambaCoord;
 			mambas[i] = C;
@@ -1289,7 +1330,6 @@ void CEntityManager::Load()
 
 			allies.push_back(human);
 			ships.push_back(human);
-			break;
 		}
 	}
 

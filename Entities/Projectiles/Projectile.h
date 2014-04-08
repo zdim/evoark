@@ -3,6 +3,7 @@
 class CProjectile :
 	public CEntity
 {
+protected:
 	float speed;
 	int tier = 0;
 public:

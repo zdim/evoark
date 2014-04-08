@@ -1,16 +1,7 @@
-
-*.sdf
-*.opensdf
-*.suo
-*.user
 /Debug
 /Release
-/ipch
-/Tools/World Editor/bin/Debug
-/Tools/World Editor/obj/Debug
-/*.suo
-/*.suo
-/~AutoRecover.EvoArk.vcxproj
-/*.suo
-/EvoArk.v12.suo
+/*.sdf
 /Resources/XML/Profiles
+/Tools/World Editor/*.suo
+/Tools/World Editor/obj/Debug
+/*.opensdf

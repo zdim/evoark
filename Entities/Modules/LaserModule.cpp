@@ -19,6 +19,8 @@ CLaserModule::~CLaserModule()
 void CLaserModule::Update(float dt)
 {
 	timer += dt;
+
+	if (GetOwner()->GetType() == (int) EntityType::Moccasin )
 	m_fSprayTimer += dt;
 
 	float test = owner->GetRotation();
@@ -34,24 +36,27 @@ void CLaserModule::Update(float dt)
 
 void CLaserModule::Activate()
 {
-	if (m_fSprayTimer >= m_nSprayCD)
+	if (GetOwner()->GetType() == (int)EntityType::Moccasin)
 	{
-		if (dynamic_cast<CMoccasin*>(GetOwner())->GetLevel() == 3)
+		if (m_fSprayTimer >= m_nSprayCD)
 		{
-			for (int i = 0; i < 20; i++)
+			if (dynamic_cast<CMoccasin*>(GetOwner())->GetLevel() == 3)
 			{
-				CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, size * 1.25, GetRotation() * i, damage, tier, -1.0f, owner);
-				msg->QueueMessage();
+				for (int i = 0; i < 20; i++)
+				{
+					CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, size * 1.25, GetRotation() * i, damage, tier, -1.0f, owner);
+					msg->QueueMessage();
+				}
+
+				m_fSprayTimer = 0;
 			}
 
-			m_fSprayTimer = 0;
 		}
-
 	}
+
 
 	if (timer >= cooldown)
 	{
-		//Send a create laser message
 		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, size * 1.25, GetRotation(), damage, tier, -1.0f, owner);
 		msg->QueueMessage();
 		timer = 0;

@@ -3,10 +3,14 @@
 #include "Asteroid.h"
 #include "../Ships/Enemies/Moccasin.h"
 #include "../Projectiles/Laser.h"
+#include "../../Event System/EventID.h"
+#include "../../Event System/CustomEvent.h"
+#include "../../Event System/EventManager.h"
 
 CRepairStation::CRepairStation()
 {
 	hull = 100;
+	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::bossdead);
 }
 
 
@@ -15,6 +19,7 @@ void CRepairStation::Update(float dt)
 {
 	if (m_pOwner != nullptr)
 	{
+
 		for (int i = 0; i != m_pOwner->GetModules().size(); ++i)
 		{
 			if (m_pOwner->GetModules()[i] != nullptr)
@@ -44,7 +49,7 @@ void CRepairStation::HandleCollision(IEntity* other)
 {
 	//Is the other object a ship?
 
-	
+
 
 
 	EntityType otherType = (EntityType)other->GetType();
@@ -54,7 +59,7 @@ void CRepairStation::HandleCollision(IEntity* other)
 	{
 		dynamic_cast<CLaser*>(other)->HandleCollision(this);
 		//other->HandleCollision(dynamic_cast<CShieldModule*>(m_pOwner));
-		
+
 	}
 
 
@@ -84,5 +89,18 @@ void CRepairStation::TakeDamage(int damage)
 	if (hull <= 0)
 	{
 		SelfDestruct();
+	}
+}
+
+void CRepairStation::HandleEvent(CCustomEvent* e)
+{
+	EventID id = e->GetID();
+	switch (id)
+	{
+	case EventID::bossdead:
+	{
+							  SetOwner(nullptr);
+							  break;
+	}
 	}
 }

@@ -39,6 +39,7 @@ public:
 	virtual SGD::Size		GetSize() = 0;
 	virtual SGD::Vector		GetGravVec() = 0;
 	virtual bool			IsCircle() = 0;
+	virtual bool			IsDestroying() = 0;
 
 	//Simplify rect collision
 	virtual SGD::Rectangle	GetRect() = 0;

@@ -6,7 +6,7 @@ CPush::CPush()
 {
 	radius = SGD::PI /4.0f;
 	duration = 0.2;
-	size = {128,128};
+	size = {256,256};
 }
 
 
@@ -34,11 +34,12 @@ void CPush::HandleCollision(IEntity* other)
 	SGD::Vector dir = other->GetPosition() - position;
 	dir.Normalize();
 	float angleBetween = dir.ComputeAngle(forward);
-	dir.Rotate(angleBetween/2);
 	if (radius < dir.ComputeAngle(forward))
 	{
 		return;
 	}
+	if (radius < SGD::PI * 2)
+		dir.Rotate(angleBetween / 2);
 
 	//float mass = other->GetSize().width * other->GetSize().height;
 	other->AddGravity(dir * strength);

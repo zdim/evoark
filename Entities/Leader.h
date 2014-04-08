@@ -38,6 +38,7 @@ public:
 	LeaderState GetState() {return state;}
 	void SetState(LeaderState newState, SGD::Point location);
 	SGD::Point GetHome() {return home;}
+	SGD::Point GetPosition() {return position;}
 	void SetHome(SGD::Point location) {home = location;}
 	int FindInFlock(IEntity* entity);
 	void Remove(IEntity* entity);
