@@ -62,6 +62,7 @@ private:
 	bool m_bBossKilled = false; 
 	CSoundBox* soundBox = nullptr;
 
+	float bossPan = 0.f;
 
 	CEntity* player = nullptr;
 	CCamera* cam;
