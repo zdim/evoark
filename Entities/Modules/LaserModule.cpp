@@ -40,7 +40,7 @@ void CLaserModule::Activate()
 	{
 		if (m_fSprayTimer >= m_nSprayCD)
 		{
-			if (dynamic_cast<CMoccasin*>(GetOwner())->GetLevel() == 3)
+			if (dynamic_cast<CMoccasin*>(GetOwner())->GetLevel() == 4 )
 			{
 				for (int i = 0; i < 20; i++)
 				{

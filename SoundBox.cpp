@@ -22,7 +22,7 @@ void CSoundBox::Enter()
 	uiHighlightSFX = audio->LoadAudio("Resources/Audio/UIHighlight.wav");
 	uiFailureSFX = audio->LoadAudio("Resources/Audio/UIFailure.wav");
 	uiSuccessSFX = audio->LoadAudio("Resources/Audio/UISuccess.wav");
-	playerLaserSFX = audio->LoadAudio("Resources/Audio/PlayerLaser1.wav");
+	playerLaserSFX = audio->LoadAudio("Resources/Audio/LaserFire1.wav");
 	playerMissileSFX = audio->LoadAudio("Resources/Audio/PlayerMissile.wav");
 	playerWarpSFX = audio->LoadAudio("Resources/Audio/PlayerWarp.wav");
 	playerWellSFX = audio->LoadAudio("Resources/Audio/PlayerWell3Sec.wav");

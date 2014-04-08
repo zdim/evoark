@@ -49,6 +49,8 @@ void CWell::HandleCollision(IEntity* other)
 		return;
 	}
 	dir = position - other->GetPosition();
+	if (dir.ComputeLength() < 1)
+		dir.y += 1;
 	dir.Normalize();
 	//float mass = other->GetSize().width * other->GetSize().height;
 	other->AddGravity(dir * strength);

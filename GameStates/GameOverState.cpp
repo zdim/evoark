@@ -2,6 +2,8 @@
 #include "GameplayState.h"
 #include "Game.h"
 #include "GameState.h"
+#include "CreditsState.h"
+#include "MainMenuState.h"
 
 CGameOverState::CGameOverState()
 {
@@ -32,7 +34,15 @@ bool CGameOverState::Input()
 		{
 		case menuReturn::play:
 			Game::GetInstance()->PopState();
-			Game::GetInstance()->PopState();
+			if (CGameplayState::GetInstance()->GetLevel() == Level::Final)
+			{
+				Game::GetInstance()->PopState();
+				Game::GetInstance()->PopState();
+				Game::GetInstance()->PushState(CMainMenuState::GetInstance());
+				Game::GetInstance()->PushState(CCreditsState::GetInstance());
+			}
+			else
+				Game::GetInstance()->PopState();
 			return true;
 		case menuReturn::exit:
 			Game::GetInstance()->PopState();
@@ -51,6 +61,7 @@ void CGameOverState::Update(float dt)
 	m_fTimer += dt;
 	if (m_fTimer < m_fDelay)
 	{
+		Game* _game = Game::GetInstance();
 		Game::GetInstance()->GetLevelState()->Update(dt);
 	}
 }

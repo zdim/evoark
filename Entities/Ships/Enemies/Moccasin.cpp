@@ -12,11 +12,12 @@ CMoccasin::CMoccasin()
 	modulePositions.push_back({ 40, -40 });
 	modulePositions.push_back({ 40, 40 });
 	m_fTimer = 0;
-	m_fAsteroidCD = 15;
+	m_fAsteroidCD = 8;
 	m_fShipCD = 5;
 	leader = nullptr;
 	m_bStationsUP = false;
 	m_nNumberOfShips = 1;
+	speed = 25;
 }
 
 
@@ -27,7 +28,7 @@ CMoccasin::~CMoccasin()
 
 void CMoccasin::Init(int l)
 {
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 3; i++)
 		AddModule();
 
 
@@ -37,13 +38,16 @@ void CMoccasin::Init(int l)
 		m_nLevel = 0;
 		break;
 	case 1:
-		m_nLevel = 3;
+		m_nLevel = 1;
 		break;
 	case 2:
 		m_nLevel = 2;	
 		break;
 	case 3:
 		m_nLevel = 3;
+		break;
+	case 4:
+		m_nLevel = 4;
 		break;
 	}
 	
@@ -73,16 +77,33 @@ void CMoccasin::Update(float dt)
 	}
 
 	
-	if (m_nLevel == 3)
+	if (m_nLevel == 3 || m_nLevel == 4 )
 	{
 		if (m_fTimer >= m_fShipCD && target != nullptr)
 		{
 			CreateEntityMessage* msg = new CreateEntityMessage(this);
 			msg->QueueMessage();
-			m_nNumberOfShips += 2;
+			m_nNumberOfShips += (rand() % 2 + 1);
 			m_fTimer = 0;
 		}	
 	}
+
+	if (target)
+	{
+		SGD::Vector dir = target->GetPosition() - position;
+		if (dir.ComputeLength() > 500 )
+		{
+			dir.Normalize();
+			velocity = dir * speed;
+		}
+		else velocity = {0,0};
+	}
+	else
+	{
+		velocity = { 0, 0 };
+	}
+
+	position += (velocity)* dt;
 	
 	CCoral::Update(dt);
 }

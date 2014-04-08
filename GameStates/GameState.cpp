@@ -72,7 +72,7 @@ void	CTestLevelState::Enter(void)
 	//soundBox->Enter();
 	soundBox->Play(CSoundBox::sounds::slowTrance, true);
 
-	//EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 1);
+	//EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 4);
 	//EntityManager->GetBoss()->Init(4);
 	//EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
 
@@ -205,6 +205,37 @@ void	CTestLevelState::Update(float dt)
 	stars1Pos = { cam->GetOffset().x * .1f, cam->GetOffset().y * .1f };
 	stars2Pos = { cam->GetOffset().x * .2f, cam->GetOffset().y * .2f };
 	starsPos = { cam->GetOffset().x * .3f, cam->GetOffset().y * .3f };
+
+	if (bossPan > 0) bossPan -= dt;
+	if (bossPan < 0 && bossPan > -5.f && EntityManager->GetBoss() && CGameplayState::GetInstance()->GetLevel() == Level::Final)
+	{
+		bossPan = -10.f;
+		cam->SetTarget(EntityManager->GetPlayer());
+		EntityManager->Save();
+	}
+
+
+	if (CGameplayState::GetInstance()->GetLevel() == Level::Waves && EntityManager->GetAllies().empty() && EntityManager->GetBoss() == nullptr)
+	{
+		EntityManager->Spawn(EntityType::Moccasin, { float(m_nNumQuadsWidth * m_nQuadWidth) * .5f, float(m_nNumQuadsHeight * m_nQuadHeight) *.5f }, 4, false);
+		cam->SetTarget(EntityManager->GetBoss());
+		bossPan = 4.f;
+		CGameplayState::GetInstance()->SetLevel(Level::Final);
+		//EntityManager->Save();
+	}
+
+	if (CGameplayState::GetInstance()->GetLevel() == Level::Final && m_bBossKilled && bossPan == -10.f)
+	{
+		bossPan = 3.f;
+	}
+
+	if (bossPan <= 0 && bossPan > -1.f && EntityManager->GetBoss() == nullptr && CGameplayState::GetInstance()->GetLevel() == Level::Final && m_bBossKilled == true)
+	{
+		CGameOverState::GetInstance()->SetWin(true);
+		Game::GetInstance()->PushState(CGameOverState::GetInstance());
+		bossPan = -1.f;
+	}
+
 }
 
 void	CTestLevelState::Render(void)
@@ -217,15 +248,10 @@ void	CTestLevelState::Render(void)
 
 		for (int i = 0; i < 4; i++)
 		{
-			//graphics->DrawTexture(backgroundStars2, stars2Pos + SGD::Vector{ stars2Pos.x * i, stars2Pos.y * i });
 			for (int j = 0; j < 4; j++)
 			{
-
-
 				graphics->DrawTexture(backgroundStars1, stars1Pos + SGD::Vector{ 1024.f * i, 768.f * j });
 				graphics->DrawTexture(backgroundStars, starsPos + SGD::Vector{ 1024.f * i, 768.f * j });
-				//graphics->DrawTexture(backgroundNebula, nebulaPos + SGD::Vector{ 1024 * i, 768 * j }, 0, {}, { 200, 50, 120, 100 });
-
 				graphics->DrawTextureSection(backgroundNebula, { nebulaPos.x + 1024.f * i, nebulaPos.y + 768.f * j }, { 0, 0, 1024.f, 768.f }, 0, {}, { 50, 50, 120, 100 });
 			}
 		}
@@ -253,6 +279,10 @@ void	CTestLevelState::Generate()
 {
 	bool loadSuccess = false;
 	bool genLevel = true;
+
+	// to test final battle
+	CGameplayState::GetInstance()->SetLevel(Level::Waves);
+
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
 	case Level::Tutorial:
@@ -260,8 +290,6 @@ void	CTestLevelState::Generate()
 		genLevel = false;
 		break;
 	case Level::Gen1:
-
-
 		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		testing += "1";
 		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
@@ -282,12 +310,12 @@ void	CTestLevelState::Generate()
 	if (loadSuccess)
 	{
 		int _alliesSpawned = 0;
+
 		for (int i = 0; i < m_nNumQuadsWidth; i++)
 		{
 			QuadCol& col = world[i];
 			for (int j = 0; j < m_nNumQuadsHeight; j++)
 			{
-
 				if (col[j].randomized)
 				{
 					col[j].pos.x = float(m_nQuadWidth * i + rand() % m_nQuadWidth);
@@ -326,9 +354,12 @@ void	CTestLevelState::Generate()
 				case HUMAN:
 					if (genLevel == false)
 					{
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 11) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved < 3 && _alliesSpawned == 12) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved < 5 && _alliesSpawned == 13) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 2 ) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 1 && _alliesSpawned == 4 ) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 2 && _alliesSpawned == 6 ) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 3 && _alliesSpawned == 8 ) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 4 && _alliesSpawned == 10) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 5 && _alliesSpawned == 12) break;
 					}
 					EntityManager->Spawn(EntityType::Human, col[j].pos, 1);
 					_alliesSpawned++;
@@ -347,14 +378,12 @@ void	CTestLevelState::Generate()
 			int eventID = -1;
 			if (events[i].eType == "STARGATE")
 			{
-
 				EntityManager->SpawnCollidable(EntityType::Stargate, { events[i].area.left, events[i].area.top }, { events[i].area.bottom - events[i].area.top, events[i].area.right - events[i].area.left });
 				continue;
 			}
 
 			else if (events[i].eType == "TUTORIAL.MOVEMENT")
 			{
-
 				eventID = (int)triggerID::tutMovement;
 			}
 			else if (events[i].eType == "TUTORIAL.LASERS")
@@ -579,14 +608,14 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										
 
 										SGD::Point randPosition = cMsg->GetSender()->GetPosition();
-										randPosition.x += rand() % 1000 + 700;
-										randPosition.y += rand() % 1000 + 700;
+										randPosition.x += rand() % 800 + 700;
+										randPosition.y += rand() % 800 + 700;
 										int m_nAsteroidSize[3] = { 32, 64, 128 };
 										int size = m_nAsteroidSize[rand() % 3];
 
 										SGD::Vector dir = dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetTarget()->GetPosition() - randPosition;								
 										dir.Normalize();
-										SGD::Vector velocity = dir * 100;
+										SGD::Vector velocity = dir * (rand() % 200 + 100);
 										
 										CTestLevelState::GetInstance()->EntityManager->SpawnCollidable(EntityType::Asteroid, randPosition, SGD::Size{ (float)size, (float)size }, velocity);
 									}
@@ -603,7 +632,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos3, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
 										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos4, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
 									}
-									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 3)
+									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 3 || dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 4 )
 									{		
 										SGD::Point pos = cMsg->GetSender()->GetPosition();
 										SGD::Point pos1 = { pos.x + 200, pos.y + 100 };
@@ -645,6 +674,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	}
 	case MessageID::GameOver:
 	{
+								CGameOverState::GetInstance()->SetWin(false);
 								Game::GetInstance()->PushState(CGameOverState::GetInstance());
 								break;
 	}
@@ -827,6 +857,8 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 				graphics->DrawTexture(objArrow, coordArrowPos, coordArrowRot, {}, { 200, 200, 50, 0 }, { .15f, .15f });
 			}
 		}
+		if (_stargate)
+		{
 		SGD::Vector toStargate = _stargate->GetPosition() - _player->GetPosition();
 		if (toStargate.ComputeLength() > 400)
 		{
@@ -836,6 +868,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 			float stargateArrowRot = atan2(_stargate->GetPosition().y - _player->GetPosition().y, _stargate->GetPosition().x - _player->GetPosition().x) + SGD::PI * .5f;
 
 			graphics->DrawTexture(objArrow, stargateArrowPos, stargateArrowRot, {}, { 200, 150, 150, 20 }, { .15f, .15f });
+		}
 		}
 	}
 	// draw exp
