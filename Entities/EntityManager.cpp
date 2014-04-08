@@ -1324,6 +1324,7 @@ void CEntityManager::Load()
 	{
 		boss = new CMoccasin;
 		boss->SetModuleData(save.world.boss.modules);
+		boss->Init((int)save.currLevel);
 		boss->SetImage(images[(int)EntityType::Moccasin]);
 		boss->SetSize({ 256, 256 });
 		boss->SetImages(images);

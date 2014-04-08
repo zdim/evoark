@@ -223,6 +223,7 @@ void CGameplayState::SaveProfile()
 	if (save.world.saved)
 	{
 		TiXmlElement* world = new TiXmlElement("world");
+		world->SetAttribute("currentLevel", (int)save.currLevel);
 		world->SetAttribute("saved", true);
 		world->SetDoubleAttribute("quadsWide", (double)save.world.size.width);
 		world->SetDoubleAttribute("quadsHigh", (double)save.world.size.height);
@@ -476,7 +477,8 @@ saveData CGameplayState::LoadProfile()
 	int i;
 	world->Attribute("saved", &i);
 	save.world.saved = i != 0;
-
+	world->Attribute("currentLevel", &i);
+	save.currLevel = (Level)i;
 	if (save.world.saved)
 	{
 		double quadsX;

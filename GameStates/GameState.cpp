@@ -211,6 +211,7 @@ void	CTestLevelState::Update(float dt)
 	{
 		bossPan = -10.f;
 		cam->SetTarget(EntityManager->GetPlayer());
+		EntityManager->Save();
 	}
 
 
@@ -220,11 +221,12 @@ void	CTestLevelState::Update(float dt)
 		cam->SetTarget(EntityManager->GetBoss());
 		bossPan = 4.f;
 		CGameplayState::GetInstance()->SetLevel(Level::Final);
+		//EntityManager->Save();
 	}
 
 	if (CGameplayState::GetInstance()->GetLevel() == Level::Final && m_bBossKilled && bossPan == -10.f)
 	{
-		bossPan = 5.f;
+		bossPan = 3.f;
 	}
 
 	if (bossPan <= 0 && bossPan > -1.f && EntityManager->GetBoss() == nullptr && CGameplayState::GetInstance()->GetLevel() == Level::Final && m_bBossKilled == true)
@@ -669,6 +671,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	}
 	case MessageID::GameOver:
 	{
+								CGameOverState::GetInstance()->SetWin(false);
 								Game::GetInstance()->PushState(CGameOverState::GetInstance());
 								break;
 	}
