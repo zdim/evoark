@@ -260,8 +260,6 @@ void	CTestLevelState::Generate()
 		genLevel = false;
 		break;
 	case Level::Gen1:
-
-
 		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
 		testing += "1";
 		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
@@ -282,6 +280,7 @@ void	CTestLevelState::Generate()
 	if (loadSuccess)
 	{
 		int _alliesSpawned = 0;
+
 		for (int i = 0; i < m_nNumQuadsWidth; i++)
 		{
 			QuadCol& col = world[i];
@@ -326,9 +325,12 @@ void	CTestLevelState::Generate()
 				case HUMAN:
 					if (genLevel == false)
 					{
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 11) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved < 3 && _alliesSpawned == 12) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved < 5 && _alliesSpawned == 13) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 2 ) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 1 && _alliesSpawned == 4 ) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 2 && _alliesSpawned == 6 ) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 3 && _alliesSpawned == 8 ) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 4 && _alliesSpawned == 10) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 5 && _alliesSpawned == 12) break;
 					}
 					EntityManager->Spawn(EntityType::Human, col[j].pos, 1);
 					_alliesSpawned++;
@@ -347,14 +349,12 @@ void	CTestLevelState::Generate()
 			int eventID = -1;
 			if (events[i].eType == "STARGATE")
 			{
-
 				EntityManager->SpawnCollidable(EntityType::Stargate, { events[i].area.left, events[i].area.top }, { events[i].area.bottom - events[i].area.top, events[i].area.right - events[i].area.left });
 				continue;
 			}
 
 			else if (events[i].eType == "TUTORIAL.MOVEMENT")
 			{
-
 				eventID = (int)triggerID::tutMovement;
 			}
 			else if (events[i].eType == "TUTORIAL.LASERS")
@@ -824,6 +824,8 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 				graphics->DrawTexture(objArrow, coordArrowPos, coordArrowRot, {}, { 200, 200, 50, 0 }, { .15f, .15f });
 			}
 		}
+		if (_stargate)
+		{
 		SGD::Vector toStargate = _stargate->GetPosition() - _player->GetPosition();
 		if (toStargate.ComputeLength() > 400)
 		{
@@ -833,6 +835,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 			float stargateArrowRot = atan2(_stargate->GetPosition().y - _player->GetPosition().y, _stargate->GetPosition().x - _player->GetPosition().x) + SGD::PI * .5f;
 
 			graphics->DrawTexture(objArrow, stargateArrowPos, stargateArrowRot, {}, { 200, 150, 150, 20 }, { .15f, .15f });
+		}
 		}
 	}
 	// draw exp
