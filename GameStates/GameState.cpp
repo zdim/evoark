@@ -217,7 +217,11 @@ void	CTestLevelState::Update(float dt)
 
 	if (CGameplayState::GetInstance()->GetLevel() == Level::Waves && EntityManager->GetAllies().empty() && EntityManager->GetBoss() == nullptr)
 	{
-		EntityManager->Spawn(EntityType::Moccasin, { float(m_nNumQuadsWidth * m_nQuadWidth) * .5f, float(m_nNumQuadsHeight * m_nQuadHeight) *.5f }, 4, false);
+		if (player->GetPosition().x < GetWorldSize().width * .5f)
+			EntityManager->Spawn(EntityType::Moccasin, { float(m_nNumQuadsWidth * m_nQuadWidth) * .75f, float(m_nNumQuadsHeight * m_nQuadHeight) *.5f }, 4, false);
+		else
+			EntityManager->Spawn(EntityType::Moccasin, { float(m_nNumQuadsWidth * m_nQuadWidth) * .25f, float(m_nNumQuadsHeight * m_nQuadHeight) *.5f }, 4, false);
+
 		cam->SetTarget(EntityManager->GetBoss());
 		bossPan = 4.f;
 		CGameplayState::GetInstance()->SetLevel(Level::Final);
@@ -281,7 +285,7 @@ void	CTestLevelState::Generate()
 	bool genLevel = true;
 
 	// to test final battle
-	CGameplayState::GetInstance()->SetLevel(Level::Waves);
+	//CGameplayState::GetInstance()->SetLevel(Level::Waves);
 
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
