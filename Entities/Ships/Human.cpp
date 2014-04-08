@@ -211,7 +211,8 @@ void CHuman::RescueAI(float dt)
 	if (!CCamera::GetInstance()->GetBoxInWorld().IsIntersecting(GetRect()))
 	{
 		CEntityManager::GetInstance()->GetPlayer()->AddExp(SAVING_EXP);
-		CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved++;
+		if (CGameplayState::GetInstance()->GetLevel() != Level::Tutorial)
+			CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved++;
 		SelfDestruct();
 
 	}
