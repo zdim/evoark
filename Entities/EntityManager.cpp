@@ -489,6 +489,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 							 well->SetPosition(position);
 							 well->SetRotation(rotation);
 							 well->SetStrength((float)damage);
+							 well->SetTier(tier);
 							 gravObjects.push_back(well);
 							 break;
 	}

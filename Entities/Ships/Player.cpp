@@ -269,7 +269,7 @@ void CPlayer::CreatePush()
 	}
 	else
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 2, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI * 2, this);
 		msg->QueueMessage();
 	}
 
@@ -364,6 +364,7 @@ void CPlayer::SetStats(playerData& data)
 	hull = maxHull;
 	shield = maxShield;
 	perks = data.perks;
+	//perks = 100;
 	for (laserLevel; laserLevel < data.laserLevel; LaserLevelUp());
 	for (missileLevel; missileLevel < data.missileLevel; MissileLevelUp());
 	for (wellLevel; wellLevel < data.wellLevel; WellLevelUp());

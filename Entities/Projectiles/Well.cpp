@@ -1,6 +1,8 @@
 //
 #include "Well.h"
-
+#include "../Collidables/Asteroid.h"
+#include "../Ships/Ship.h"
+#include "../Modules/Module.h"
 CWell::CWell()
 {
 	radius = size.width/2.0f;
@@ -12,9 +14,41 @@ CWell::~CWell()
 {
 }
 
+//void CWell::Update(float dt)
+//{
+//	if (duration - timer < 0.1)
+//	{
+//
+//	}
+//}
+
 void CWell::HandleCollision(IEntity* other)
-{
-	SGD::Vector dir = position - other->GetPosition();
+{	
+	SGD::Vector dir;
+	if ( tier >= 3 && (duration - timer) < 0.1f)
+	{
+		dir = other->GetPosition() - position;
+		dir.Normalize();
+		other->AddGravity(dir * strength * 2);
+		EntityType type = (EntityType)other->GetType();
+		if (type == EntityType::Asteroid)
+		{
+			CAsteroid* ast = dynamic_cast<CAsteroid*>(other);
+			ast->TakeDamage(strength * 0.075f);
+		}
+		else if (type >= EntityType::Player && type <= EntityType::Coordinator)
+		{
+			CShip* ship = dynamic_cast<CShip*>(other);
+			ship->TakeDamage(strength * 0.075f);
+		}
+		else if (type >= EntityType::BaseModule && type <= EntityType::WarpModule)
+		{
+			CModule* mod = dynamic_cast<CModule*>(other);
+			mod->TakeDamage(strength * 0.075f);
+		}
+		return;
+	}
+	dir = position - other->GetPosition();
 	dir.Normalize();
 	//float mass = other->GetSize().width * other->GetSize().height;
 	other->AddGravity(dir * strength);
