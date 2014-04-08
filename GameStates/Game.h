@@ -81,7 +81,7 @@ public:
 
 	bool GetFullscreen() { return !m_bWindowed; }
 	void SetFullscreen(bool _fullscreen) { m_bWindowed = !_fullscreen; }
-	std::string GetAppDataPath();
+//	std::string GetAppDataPath();
 
 	/**********************************************************/
 	// Game Font
