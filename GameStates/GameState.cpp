@@ -25,6 +25,8 @@
 #include "../GameStates/GameplayState.h"
 #include "../GameStates/MainMenuState.h"
 
+#include "../Entities/Ships/Human.h"
+
 //comment out
 #include "../Entities/Ships/Enemies/Moccasin.h"
 
@@ -100,7 +102,7 @@ void	CTestLevelState::Enter(void)
 	//Spawn Moccasin near the player
 
 	//EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
-	EntityManager->Spawn(EntityType::Human, player->GetPosition() + SGD::Vector{200,200}, (unsigned int)EntityType::Coral );
+	//EntityManager->Spawn(EntityType::Human, player->GetPosition() + SGD::Vector{200,200}, (unsigned int)EntityType::Coral );
 
 
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();
@@ -653,7 +655,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	{
 							   if (GetInstance()->m_bBossKilled == true)
 							   {
-
+								   GetInstance()->EntityManager->Save();
 								   if (CGameplayState::GetInstance()->GetLevel() == Level::Tutorial)
 								   {
 									   CGameplayState::GetInstance()->SetLevel(Level::Gen1);

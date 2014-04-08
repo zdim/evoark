@@ -511,15 +511,22 @@ saveData CGameplayState::LoadProfile()
 
 void CGameplayState::DeleteProfile(unsigned int prof)
 {
-	std::string filepath = "Resources/XML/Profiles/";
+	std::string filepath = Game::GetInstance()->GetAppDataPath();
 	if (save.profile == 0 || save.profile >= 4)
 		return;
 
 	filepath += "profile_" + std::to_string(prof) + ".xml";
 	TiXmlDocument doc(filepath.c_str());
+	doc.LoadFile();
+	doc.Clear();
 
 	TiXmlElement* deleted = new TiXmlElement("state");
 	deleted->SetAttribute("deleted", "true");
 
 	doc.SaveFile();
+
+	unsigned int old = save.profile;
+	save.profile = prof;
+	LoadProfile();
+	save.profile = old;
 }

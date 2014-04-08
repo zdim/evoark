@@ -26,6 +26,8 @@ class CEntityManager
 	CMoccasin* boss = nullptr;
 	std::vector<SGD::HTexture> images;
 
+	bool clearing = false;
+
 	CEntityManager();
 	~CEntityManager();
 public:

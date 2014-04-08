@@ -133,8 +133,7 @@ void CProfileSelectState::MenuInput()
 			delete confirm;
 			confirm = nullptr;
 			CGameplayState::GetInstance()->DeleteProfile(currentProfile+1);
-			saveData profile = CreateProfile();
-			//profile.profile = currentProfile + 1;
+			profiles[currentProfile] = CreateProfile();
 			TutorialConfirmation();
 			break;
 		}

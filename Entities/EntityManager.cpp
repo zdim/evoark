@@ -40,6 +40,7 @@ CEntityManager* CEntityManager::GetInstance()
 
 void CEntityManager::Initialize()
 {
+	clearing = false;
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
 	images.resize((int)EntityType::Count);
 	for (unsigned int i = 0; i < images.size(); i++)
@@ -689,6 +690,8 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		dynamic_cast<CHuman*>(entity)->SetTarget(nullptr);
 		RemoveFromGroup(ships, entity);
 		RemoveFromGroup(allies, entity);
+		if (!allies.size() && !clearing)
+			Save();
 		break;
 	case EntityType::Copperhead:
 	case EntityType::Cobra:
@@ -700,10 +703,14 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 		if (GetCoordinator() == entity)
 		{
 			coordinator = nullptr;
+			if (!clearing)
+				Save();
 		}
 		break;
 	case EntityType::Moccasin:
 		boss = nullptr;
+		if (!clearing)
+			Save();
 	case EntityType::Coral:
 		dynamic_cast<CEnemy*>(entity)->SetTarget(nullptr);
 		dynamic_cast<CCoral*>(entity)->DestroyAllModules();
@@ -745,6 +752,7 @@ void CEntityManager::DestroyGroup(EntityGroup& group)	//Iterates through every e
 
 void CEntityManager::DestroyAll()	//Calls DestroyGroup on all groups
 {
+	clearing = true;
 	DestroyGroup(ships);
 	DestroyGroup(projectiles);
 	DestroyGroup(asteroids);
@@ -799,12 +807,20 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 	{
 		for (unsigned int i = 0; i < small.size(); i++)
 		{
-			//if (!small[i]->GetRect().IsIntersecting(screen))
-				//continue;
+			if (!small[i]->GetRect().IsIntersecting(screen))
+			{
+				if ((small[i]->GetType() >= (int)EntityType::Player && small[i]->GetType() <= (int)EntityType::Moccasin)
+					|| small[i]->GetType() == (int)EntityType::ModuleShield)
+					continue;
+			}
 			for (unsigned int j = i + 1; j < big.size(); j++)
 			{
-				//if (!big[j]->GetRect().IsIntersecting(screen))
-					//continue;
+				if (!big[j]->GetRect().IsIntersecting(screen))
+				{
+					if ((big[j]->GetType() >= (int)EntityType::Player && big[j]->GetType() <= (int)EntityType::Moccasin)
+						|| big[j]->GetType() == (int)EntityType::ModuleShield)
+						continue;
+				}
 				if (ShapedCollisions(small[i], big[j]))
 				{
 					small[i]->HandleCollision(big[j]);
@@ -817,12 +833,20 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 	{
 		for (unsigned int i = 0; i < small.size(); i++)
 		{
-			//if (!small[i]->GetRect().IsIntersecting(screen))
-				//continue;
+			if (!small[i]->GetRect().IsIntersecting(screen))
+			{
+				if ((small[i]->GetType() >= (int)EntityType::Player && small[i]->GetType() <= (int)EntityType::Moccasin)
+					|| small[i]->GetType() == (int)EntityType::ModuleShield)
+					continue;
+			}
 			for (unsigned int j = 0; j < big.size(); j++)
 			{
-				//if (!big[j]->GetRect().IsIntersecting(screen))
-					//continue;
+				if (!big[j]->GetRect().IsIntersecting(screen))
+				{
+					if ((big[j]->GetType() >= (int)EntityType::Player && big[j]->GetType() <= (int)EntityType::Moccasin)
+						|| big[j]->GetType() == (int)EntityType::ModuleShield)
+						continue;
+				}
 				if (ShapedCollisions(small[i], big[j]))
 				{
 					small[i]->HandleCollision(big[j]);
@@ -930,7 +954,7 @@ void CEntityManager::Update(float dt)
 	}
 	for (unsigned int i = 0; i < ships.size(); i++)
 	{
-		//if(ships[i]->GetRect().IsIntersecting(screen))
+		if(ships[i]->GetRect().IsIntersecting(screen))
 			ships[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < projectiles.size(); i++)
@@ -1167,7 +1191,7 @@ EntityGroup CEntityManager::CreateMambaLeader(Flock& data)
 	mambas.resize(data.members.size());
 	for (unsigned int i = 0; i < mambas.size(); i++)
 	{
-		if (data.members.size() && !coordinator)
+		if (data.members[i].coord && !coordinator)
 		{
 			CMambaCoord* C = new CMambaCoord;
 			mambas[i] = C;
