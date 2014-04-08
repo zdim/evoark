@@ -29,7 +29,7 @@ void CPushModule::Activate()
 
 
 		SGD::Point pos = dynamic_cast<CCoral*>(GetOwner())->GetTarget()->GetPosition();
-		pos.x -= 100;
+		pos.x += 100;
 		pos.y += 0;
 		if (vToTarget.ComputeLength() <= 600 )
 		{
