@@ -228,7 +228,21 @@ void CGameplayState::SaveProfile()
 		world->SetDoubleAttribute("quadsHigh", (double)save.world.size.height);
 		world->SetDoubleAttribute("quadWidth", (double)save.world.quadSize.width);
 		world->SetDoubleAttribute("quadHeight", (double)save.world.quadSize.height);
-		world->LinkEndChild(makeModularDataElement(save.world.boss));
+		if (save.world.boss.type == EntityType::BaseClass)
+		{
+			TiXmlElement* entity = new TiXmlElement("moccasin");
+			entity->SetAttribute("x", 0);
+			entity->SetAttribute("y", 0);
+			TiXmlElement* deadMod = new TiXmlElement("base");
+			deadMod->SetDoubleAttribute("x", 0);
+			deadMod->SetDoubleAttribute("y", 0);
+			deadMod->SetAttribute("hull", 0);
+			deadMod->SetAttribute("shield", 0);
+			deadMod->SetAttribute("coord", false);
+			entity->LinkEndChild(deadMod);
+		}
+		else
+			world->LinkEndChild(makeModularDataElement(save.world.boss));
 		for (unsigned int i = 0; i < save.world.entities.size(); i++)
 		{
 			world->LinkEndChild(makeEntityDataElement(save.world.entities[i]));
@@ -498,6 +512,10 @@ saveData CGameplayState::LoadProfile()
 				break;
 			case 5:
 				save.world.boss = processModularEntity(elem);
+				if (save.world.boss.modules[0].hull == 0)
+				{
+					save.world.boss.type = EntityType::BaseClass;
+				}
 			}
 			if (!elem->NextSibling())
 			{
