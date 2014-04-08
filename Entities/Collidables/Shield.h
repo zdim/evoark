@@ -12,4 +12,5 @@ public:
 	void Render();
 	void HandleCollision(IEntity* other) override;
 	void SetOwner(CShip* p) { m_pOwner = p; }
+	CShip*  GetOwner() { return m_pOwner; }
 };

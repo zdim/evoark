@@ -200,7 +200,7 @@ void CPlayer::CreateLaser()
 	if (laserLevel >= 1)
 		damage += 15;
 
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, m_shield->GetSize(), rotation, damage, laserLevel);
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, m_shield->GetSize(), rotation, damage, laserLevel,-1.0f,this);
 	msg->QueueMessage();
 }
 
@@ -213,7 +213,7 @@ void CPlayer::CreateMissile()
 	int damage = 75;
 	//damage *= int(1.5f * missileLevel);
 	damage += int(1.5f * missileLevel * damage);
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, m_shield->GetSize(), rotation, damage, missileLevel );
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, m_shield->GetSize(), rotation, damage, missileLevel, -1.0f, this);
 	msg->QueueMessage();
 }
 

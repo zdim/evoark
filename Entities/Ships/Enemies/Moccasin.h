@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include "Coral.h"
 
 class CRepairStation;
@@ -13,7 +13,8 @@ private:
 	float m_fAsteroidCD;
 	float m_fShipCD;
 	int   m_nNumberOfShips;
-	std::vector<CRepairStation*> stations;
+	bool  m_bStationsUP;
+  
 
 public:
 	CMoccasin();
@@ -25,6 +26,5 @@ public:
 	void AddModule();
 	virtual int GetType() override { return (int)EntityType::Moccasin; }
 	int GetLevel() { return m_nLevel; }
-	std::vector<CRepairStation*> GetStations() { return stations; }
 	int GetShipNumbers() { return m_nNumberOfShips; }
 };
