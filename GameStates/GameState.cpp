@@ -100,7 +100,7 @@ void	CTestLevelState::Enter(void)
 	//Spawn Moccasin near the player
 
 	//EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
-	EntityManager->Spawn(EntityType::Human, player->GetPosition() + SGD::Vector{200,200}, (unsigned int)EntityType::Coral );
+	//EntityManager->Spawn(EntityType::Human, player->GetPosition() + SGD::Vector{200,200}, (unsigned int)EntityType::Coral );
 
 
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();

@@ -5,8 +5,11 @@
 #include "../../GameStates/Game.h"
 #include "../../Message System/CreateProjectile.h"
 #include "../../GameStates/GameState.h"
-
+#include "../../GameStates/GameplayState.h"
+#include "../EntityManager.h"
 #include <algorithm>
+
+#define SAVING_EXP 50
 
 CHuman::CHuman()
 {
@@ -207,6 +210,9 @@ void CHuman::RescueAI(float dt)
 	CEntity::Update(dt);
 	if (!CCamera::GetInstance()->GetBoxInWorld().IsIntersecting(GetRect()))
 	{
+		CEntityManager::GetInstance()->GetPlayer()->AddExp(SAVING_EXP);
+		CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved++;
 		SelfDestruct();
+
 	}
 }
