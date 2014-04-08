@@ -397,6 +397,7 @@ void	CTestLevelState::Generate()
 			EntityManager->SpawnCollidable(EntityType::InvisTrigger, { events[i].area.left, events[i].area.top }, { events[i].area.right - events[i].area.left, events[i].area.bottom - events[i].area.top }, { 0, 0 }, eventID);
 
 		}
+		EntityManager->PopulateCoordinator();
 	}
 	else
 	{
@@ -614,6 +615,8 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::CreateProjectile:
 	{
 										const CreateProjectileMessage* lMsg = dynamic_cast<const CreateProjectileMessage*>(msg);
+										if (!lMsg->GetPosition().IsWithinRectangle(GetInstance()->cam->GetBoxInWorld()))
+											break;
 										CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(lMsg->GetProjType(), lMsg->GetPosition(), lMsg->GetOwnerSize(), lMsg->GetRotation(), lMsg->GetDamage(), lMsg->GetTier(), lMsg->GetRadius(), lMsg->GetOwner());
 										switch (lMsg->GetProjType())
 										{

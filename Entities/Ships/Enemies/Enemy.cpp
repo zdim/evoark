@@ -133,7 +133,7 @@ void CEnemy::HandleEvent(CCustomEvent* e)
 								  DetectShip(dynamic_cast<CShip*>(other));
 							  }
 							  //detect projectiles and collidables
-							  break;							  
+							  break;
 	}
 	}
 }
@@ -188,3 +188,17 @@ void CEnemy::TakeDamage(int damage, bool collision)
 	}
 }
 
+void CEnemy::SelfDestruct()
+{
+	if (destroying)
+		return;
+
+	CShip::SelfDestruct();
+	CEventManager::GetInstance().UnregisterAll(this);
+}
+
+//float CEnemy::CalculateCollisionTime(IEntity* other)
+//{
+//	SGD::Vector vel = other->GetVelocity();
+//	vel.
+//}

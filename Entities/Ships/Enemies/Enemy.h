@@ -10,6 +10,7 @@ protected:
 	int expValue = 0;
 	float turnRate;
 	CShip* target = nullptr;
+	IEntity* avoid = nullptr;
 	SGD::Point destination;
 	CLeader* leader = nullptr;
 public:
@@ -25,7 +26,11 @@ public:
 	virtual void TakeDamage(int damage, bool collision = false);
 	void HandleEvent(CCustomEvent* e) override;
 	void SetLeader(CLeader* lead) { if (!leader) leader = lead; }
+	CLeader* GetLeader() {return leader;}
 	void SetDestination(SGD::Point newDest) {destination = newDest;}
+	//float CalculateCollisionTime(IEntity* other);
+	//int CalculateDamage(IEntity* other);
 
 	int GetExpValue() { return expValue; }
+	void SelfDestruct();
 };

@@ -610,6 +610,18 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 	}
 }
 
+void CEntityManager::PopulateCoordinator()
+{
+	if (!coordinator)
+		return;
+
+	for (unsigned int i = 0; i < leaders.size(); i++)
+	{
+		coordinator->AddLeader(leaders[i]);
+	}
+}
+
+
 void CEntityManager::ClearTargeted(IEntity* entity)	//Iterates through the groups that could potentially have this entity targeted, and tells them to untarget it.
 {
 	if (!entity)
@@ -954,10 +966,11 @@ bool CEntityManager::rectCollision(IEntity* rect1, IEntity* rect2)
 void CEntityManager::Update(float dt)
 {
 	SGD::Rectangle screen = CCamera::GetInstance()->GetBoxInWorld();
-	screen.top -= 300;
-	screen.left -= 300;
-	screen.right += 300;
-	screen.bottom += 300;
+	float buffer = screen.ComputeSize().width;
+	screen.top -= buffer;
+	screen.left -= buffer;
+	screen.right += buffer;
+	screen.bottom += buffer;
 
 	for (unsigned int i = 0; i < leaders.size(); i++)
 	{
@@ -1347,4 +1360,5 @@ void CEntityManager::Load()
 	{
 		CreateLeader(save.world.modFlocks[i]);
 	}
+	PopulateCoordinator();
 }
