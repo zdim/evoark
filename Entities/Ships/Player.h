@@ -38,6 +38,8 @@ class CPlayer :
 
 	bool arrowsOn = false;
 
+	float damaged = 0.f;
+
 	SGD::HTexture wellIcon = SGD::INVALID_HANDLE;
 	SGD::HTexture pushIcon = SGD::INVALID_HANDLE;
 	SGD::HTexture warpIcon = SGD::INVALID_HANDLE;
