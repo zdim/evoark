@@ -70,7 +70,7 @@ void	CTestLevelState::Enter(void)
 	//soundBox->Enter();
 	soundBox->Play(CSoundBox::sounds::slowTrance, true);
 
-	EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 1);
+	//EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 1);
 	//EntityManager->GetBoss()->Init(4);
 	//EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
 
@@ -90,6 +90,7 @@ void	CTestLevelState::Enter(void)
 	Render();
 	graphics->Update();
 
+
 	//EntityManager->Spawn(EntityType::Stargate, {200,200});
 	if (BackgroundImage == SGD::INVALID_HANDLE)
 		BackgroundImage = graphics->LoadTexture("Resources/Graphics/starfield.jpg");
@@ -99,6 +100,7 @@ void	CTestLevelState::Enter(void)
 	//Spawn Moccasin near the player
 
 	//EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
+	//EntityManager->Spawn(EntityType::Human, player->GetPosition() + SGD::Vector{200,200}, (unsigned int)EntityType::Coral );
 
 
 	m_nScreenHeight = Game::GetInstance()->GetScreenHeight();

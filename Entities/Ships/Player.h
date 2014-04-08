@@ -9,15 +9,15 @@ class CPlayer :
 	int maxShield;
 	int shieldRegen;
 
-	unsigned int exp;
-	unsigned int expRequired;
-	unsigned int level;
-	unsigned int perks = 0;
-	unsigned int laserLevel = 0;
-	unsigned int missileLevel = 0;
-	unsigned int wellLevel = 0;
-	unsigned int pushLevel = 0;
-	unsigned int warpLevel = 0;
+	int exp;
+	int expRequired;
+	int level;
+	int perks = 0;
+	int laserLevel = 0;
+	int missileLevel = 0;
+	int wellLevel = 0;
+	int pushLevel = 0;
+	int warpLevel = 0;
 
 	float shieldTimer;
 	float laserTimer;
@@ -37,6 +37,8 @@ class CPlayer :
 	float warpDuration = 1;
 
 	bool arrowsOn = false;
+
+	float damaged = 0.f;
 
 	SGD::HTexture wellIcon = SGD::INVALID_HANDLE;
 	SGD::HTexture pushIcon = SGD::INVALID_HANDLE;

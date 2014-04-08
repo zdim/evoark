@@ -41,6 +41,7 @@ public:
 	virtual SGD::Size		GetSize()	  override { return size; }
 	virtual SGD::Vector		GetGravVec() override {return gravVec;}
 	virtual bool			IsCircle() override {return false;}
+	virtual bool			IsDestroying() override {return destroying;}
 
 	//Simplify rect collision
 	virtual SGD::Rectangle	GetRect() { return SGD::Rectangle{position - size/2, size}; }

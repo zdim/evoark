@@ -31,22 +31,51 @@ void CEnemy::Update(float dt)
 		tarDir.Normalize();
 		rotateToward(tarDir, dt);
 	}
+	else
+	{
+		SGD::Vector forward = {0,-1};
+		forward.Rotate(rotation);
+		forward.Rotate(SGD::PI/2.1f);
+		rotateToward(forward, dt);
+	}
 
 	//Comment out later:
-	if (target)
+	//if (target)
+	//{
+	//	SGD::Vector dir = target->GetPosition() - position;
+	//	if (dir.ComputeLength() > 100)
+	//	{
+	//		dir.Normalize();
+	//		velocity = dir * speed;
+	//	}
+	//	else velocity = {0,0};
+	//}
+	//else
+	//{
+	//	velocity = { 0, 0 };
+	//}
+
+	if (position != destination)
 	{
-		SGD::Vector dir = target->GetPosition() - position;
-		if (dir.ComputeLength() > 100)
+		SGD::Vector dir = destination - position;
+		float distance = dir.ComputeLength();
+		dir.Normalize();
+		if (distance >= speed)
 		{
-			dir.Normalize();
 			velocity = dir * speed;
 		}
-		else velocity = {0,0};
+		else
+			velocity = dir * distance;
 	}
 	else
 	{
-		velocity = { 0, 0 };
+		velocity = {0,0};
 	}
+
+	//Add evasive direction to velocity
+
+	//Update position based on velocity
+	//CEntity::Update(dt);
 
 	CCustomEvent* e = new CCustomEvent(EventID::position, nullptr, this);
 	e->Queue();

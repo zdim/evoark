@@ -341,6 +341,8 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 
 								  SGD::Vector offset = { 0.0, -1.0 };
 								  offset.Rotate(rotation);
+								  float laserOffset = laser->GetSize().height * 0.75f;
+								  float ownerOffset = ownerSize.height * 0.5f;
 								  offset *= (ownerSize.height + laser->GetSize().height)*0.5f + laser->GetSize().height * 0.25f;
 								  position += offset;
 								  laser->SetPosition(position);
@@ -601,6 +603,10 @@ void CEntityManager::ClearTargeted(IEntity* entity)	//Iterates through the group
 	if (!entity)
 		return;
 
+	if (entity->GetType() >= (int)EntityType::Laser && entity->GetType() <= (int)EntityType::Well)
+		return;
+	CShip* ship = dynamic_cast<CShip*>(entity);
+
 	for (unsigned int i = 0; i < smallEnemies.size(); i++)
 	{
 		CEnemy* enemy = dynamic_cast<CEnemy*>(smallEnemies[i]);
@@ -616,7 +622,7 @@ void CEntityManager::ClearTargeted(IEntity* entity)	//Iterates through the group
 	for (unsigned int i = 0; i < allies.size(); i++)
 	{
 		CHuman* ally = dynamic_cast<CHuman*>(allies[i]);
-		if (ally->GetTarget() == entity)
+		if (ally->GetTarget() == ship)
 			ally->SetTarget(nullptr);
 	}
 }
@@ -793,12 +799,12 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 	{
 		for (unsigned int i = 0; i < small.size(); i++)
 		{
-			if (!small[i]->GetRect().IsIntersecting(screen))
-			{continue;}
+			//if (!small[i]->GetRect().IsIntersecting(screen))
+				//continue;
 			for (unsigned int j = i + 1; j < big.size(); j++)
 			{
-				if (!big[j]->GetRect().IsIntersecting(screen))
-				{continue;}
+				//if (!big[j]->GetRect().IsIntersecting(screen))
+					//continue;
 				if (ShapedCollisions(small[i], big[j]))
 				{
 					small[i]->HandleCollision(big[j]);
@@ -811,12 +817,12 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 	{
 		for (unsigned int i = 0; i < small.size(); i++)
 		{
-			if (!small[i]->GetRect().IsIntersecting(screen))
-				continue;
+			//if (!small[i]->GetRect().IsIntersecting(screen))
+				//continue;
 			for (unsigned int j = 0; j < big.size(); j++)
 			{
-				if (!big[j]->GetRect().IsIntersecting(screen))
-					continue;
+				//if (!big[j]->GetRect().IsIntersecting(screen))
+					//continue;
 				if (ShapedCollisions(small[i], big[j]))
 				{
 					small[i]->HandleCollision(big[j]);
@@ -929,17 +935,17 @@ void CEntityManager::Update(float dt)
 	}
 	for (unsigned int i = 0; i < projectiles.size(); i++)
 	{
-		if (projectiles[i]->GetRect().IsIntersecting(screen))
+		//if (projectiles[i]->GetRect().IsIntersecting(screen))
 			projectiles[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < stationaries.size(); i++)
 	{
-		if (stationaries[i]->GetRect().IsIntersecting(screen))
+		//if (stationaries[i]->GetRect().IsIntersecting(screen))
 			stationaries[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < gravObjects.size(); i++)
 	{
-		if (gravObjects[i]->GetRect().IsIntersecting(screen))
+		//if (gravObjects[i]->GetRect().IsIntersecting(screen))
 			gravObjects[i]->Update(dt);
 	}
 	for (unsigned int i = 0; i < asteroids.size(); i++)
@@ -1289,7 +1295,6 @@ void CEntityManager::Load()
 
 			allies.push_back(human);
 			ships.push_back(human);
-			break;
 		}
 	}
 
