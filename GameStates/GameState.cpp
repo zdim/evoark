@@ -72,7 +72,7 @@ void	CTestLevelState::Enter(void)
 	//soundBox->Enter();
 	soundBox->Play(CSoundBox::sounds::slowTrance, true);
 
-	//EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 1);
+	EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 1);
 	//EntityManager->GetBoss()->Init(4);
 	//EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
 
