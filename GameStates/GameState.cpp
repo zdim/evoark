@@ -216,18 +216,19 @@ void	CTestLevelState::Update(float dt)
 
 	if (CGameplayState::GetInstance()->GetLevel() == Level::Waves && EntityManager->GetAllies().empty() && EntityManager->GetBoss() == nullptr)
 	{
-		EntityManager->Spawn(EntityType::Moccasin, { float(m_nNumQuadsWidth * m_nQuadWidth), float(m_nNumQuadsHeight * m_nQuadHeight) }, 4, false);
+		EntityManager->Spawn(EntityType::Moccasin, { float(m_nNumQuadsWidth * m_nQuadWidth) * .5f, float(m_nNumQuadsHeight * m_nQuadHeight) *.5f }, 4, false);
 		cam->SetTarget(EntityManager->GetBoss());
-		bossPan = 2.f;
+		bossPan = 4.f;
 		CGameplayState::GetInstance()->SetLevel(Level::Final);
 	}
 
-	if (CGameplayState::GetInstance()->GetLevel() == Level::Final && EntityManager->GetBoss() == nullptr)
+	if (CGameplayState::GetInstance()->GetLevel() == Level::Final && EntityManager->GetBoss() == nullptr && m_bBossKilled == false)
 	{
 		bossPan = 5.f;
+		m_bBossKilled = true;
 	}
 
-	if (bossPan <= 0 && EntityManager->GetBoss() == nullptr && CGameplayState::GetInstance()->GetLevel() == Level::Final)
+	if (bossPan <= 0 && EntityManager->GetBoss() == nullptr && CGameplayState::GetInstance()->GetLevel() == Level::Final && m_bBossKilled == true)
 	{
 		CGameOverState::GetInstance()->SetWin(true);
 		Game::GetInstance()->PopState();
