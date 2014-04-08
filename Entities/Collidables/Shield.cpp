@@ -29,7 +29,7 @@ void CShield::HandleCollision(IEntity* other)
 		if (otherType != EntityType::Player)
 		{
 			(m_pOwner)->HandleCollision(other);
-			other->HandleCollision(m_pOwner);
+   			other->HandleCollision(m_pOwner);
 		}
 
 	}

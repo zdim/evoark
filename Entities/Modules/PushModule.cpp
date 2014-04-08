@@ -19,11 +19,22 @@ void CPushModule::Activate()
 {
 	if (timer >= cooldown) 
 	{
+		SGD::Vector vToTarget =
+		{
+			dynamic_cast<CMoccasin*>(GetOwner())->GetTarget()->GetPosition().x - dynamic_cast<CMoccasin*>(GetOwner())->GetPosition().x,
+			dynamic_cast<CMoccasin*>(GetOwner())->GetTarget()->GetPosition().y - dynamic_cast<CMoccasin*>(GetOwner())->GetPosition().y
+		};
+
+
 		SGD::Point pos = dynamic_cast<CMoccasin*>(GetOwner())->GetTarget()->GetPosition();
 		pos.x -= 25;
 		pos.y += 25;
-		CreateProjectileMessage* Msg = new CreateProjectileMessage(EntityType::Push,pos , { 150, 150 }, rotation, damage, tier, radius);
-		Msg->QueueMessage();
+		if (vToTarget.ComputeLength() <= 600 )
+		{
+			CreateProjectileMessage* Msg = new CreateProjectileMessage(EntityType::Push, pos, { 150, 150 }, rotation, damage, tier, radius);
+			Msg->QueueMessage();
+		}
+		
 		timer = 0;
 	}
 }

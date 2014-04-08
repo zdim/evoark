@@ -97,7 +97,7 @@ void CCopperhead::CreateLaser()
 		return;
 	laserTimer = 0;
 
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, size, rotation, damage);
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, size, rotation, damage,0,1.0f,this);
 	msg->QueueMessage();
 }
 
@@ -108,6 +108,6 @@ void CCopperhead::CreateMissile()
 		return;
 	m_fMissileTimer = 0;
 
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, size, rotation, m_nMissileDamage);
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, size, rotation, m_nMissileDamage,0,1.0f, this);
 	msg->QueueMessage();
 }

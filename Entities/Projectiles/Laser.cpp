@@ -53,10 +53,21 @@ void CLaser::HandleCollision(IEntity* other)
 	if (otherType >= EntityType::Player && otherType <= EntityType::Mamba)
 	{
 		CShip* ship = dynamic_cast<CShip*>(other);
-		ship->TakeDamage(damage);
-
-		//Throw a message to destroy this
+		
+	
+			if (this->GetOwner()->GetType() == (int)EntityType::Player)
+			{
+				ship->TakeDamage(damage);
+			}
+			else if (this->GetOwner()->GetType() != (int)EntityType::Player && ship->GetType() == (int)EntityType::Player)
+			{
+				ship->TakeDamage(damage);
+			}
+		
+		
 		SelfDestruct();
+		//Throw a message to destroy this
+		
 	}
 	else if (otherType >= EntityType::BaseModule && otherType <= EntityType::WarpModule)
 	{

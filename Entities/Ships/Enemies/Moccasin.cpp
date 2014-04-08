@@ -37,7 +37,7 @@ void CMoccasin::Init(int l)
 		m_nLevel = 0;
 		break;
 	case 1:
-		m_nLevel = 2;
+		m_nLevel = 3;
 		break;
 	case 2:
 		m_nLevel = 2;	
@@ -91,6 +91,8 @@ void CMoccasin::Update(float dt)
 void CMoccasin::SelfDestruct()
 {
 	CCoral::SelfDestruct();
+	CCustomEvent* e = new CCustomEvent(EventID::bossdead, nullptr, this);
+	e->Queue();
 	BossKilledMessage* msg = new BossKilledMessage;
 	msg->QueueMessage();
 }
