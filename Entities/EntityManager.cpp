@@ -319,21 +319,57 @@ void CEntityManager::SpawnCarrierShips(SGD::Point position, CShip* target, int a
 {
 
 	CLeader* leader = new CLeader();
-	EntityGroup copperheads;
-	copperheads.resize(amount);
-	for (unsigned int i = 0; i < copperheads.size(); i++)
+
+	EntityGroup group;
+
+	group.resize(amount);
+
+	int type = rand() % 3 + 1;
+
+	if (type == 1)
 	{
-		copperheads[i] = new CCopperhead();
-		
-		copperheads[i]->SetImage(images[(int)EntityType::Copperhead]);
-		copperheads[i]->SetSize({ 32, 32 });
-		dynamic_cast<CEnemy*>(copperheads[i])->SetTarget(target);
-		smallEnemies.push_back(copperheads[i]);
-		ships.push_back(copperheads[i]);
+		for (unsigned int i = 0; i < group.size(); i++)
+		{
+			group[i] = new CCopperhead();
+			group[i]->SetImage(images[(int)EntityType::Copperhead]);
+			group[i]->SetSize({ 32, 32 });
+			dynamic_cast<CEnemy*>(group[i])->SetTarget(target);
+			smallEnemies.push_back(group[i]);
+			ships.push_back(group[i]);
+		}
 	}
+
+	else if (type == 2)
+	{
+		for (unsigned int i = 0; i < group.size(); i++)
+		{
+			group[i] = new CCobra();
+			group[i]->SetImage(images[(int)EntityType::Cobra]);
+			group[i]->SetSize({ 32, 32 });
+			smallEnemies.push_back(group[i]);
+			ships.push_back(group[i]);
+		}
+	}
+
+	else if (type == 3)
+	{
+		for (unsigned int i = 0; i < group.size(); i++)
+		{
+			group[i] = new CMamba();
+			group[i]->SetImage(images[(int)EntityType::Mamba]);
+			group[i]->SetSize({ 32, 32 });
+			smallEnemies.push_back(group[i]);
+			ships.push_back(group[i]);
+		}
+
+	}
+
+
+
 	leader->SetHome(position);
-	leader->Assign(copperheads); //Leader repositions entities
+	leader->Assign(group); //Leader repositions entities
 	leaders.push_back(leader);
+
 
 }
 
@@ -461,7 +497,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 									missile->SetVelocity(vel);
 									missileTwo->SetVelocity(vel);
 									missile->SetOwner(owner);
-									missile->SetOwner(owner);
+									missileTwo->SetOwner(owner);
 
 									if (tier == 3)
 									{

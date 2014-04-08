@@ -22,14 +22,15 @@ void CPushModule::Activate()
 
 		SGD::Vector vToTarget =
 		{
-			dynamic_cast<CCoral*>(GetOwner())->GetPosition().x,
-			dynamic_cast<CCoral*>(GetOwner())->GetPosition().y
+			target->GetPosition().x - dynamic_cast<CCoral*>(GetOwner())->GetPosition().x,
+			target->GetPosition().y - dynamic_cast<CCoral*>(GetOwner())->GetPosition().y
 		};
 
 
+
 		SGD::Point pos = dynamic_cast<CCoral*>(GetOwner())->GetTarget()->GetPosition();
-		pos.x -= 25;
-		pos.y += 25;
+		pos.x -= 100;
+		pos.y += 0;
 		if (vToTarget.ComputeLength() <= 600 )
 		{
 			CreateProjectileMessage* Msg = new CreateProjectileMessage(EntityType::Push, pos, { 150, 150 }, rotation, damage, tier, radius);

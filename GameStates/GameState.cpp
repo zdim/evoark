@@ -72,7 +72,7 @@ void	CTestLevelState::Enter(void)
 	//soundBox->Enter();
 	soundBox->Play(CSoundBox::sounds::slowTrance, true);
 
-	//EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 1);
+	EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 1);
 	//EntityManager->GetBoss()->Init(4);
 	//EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
 
@@ -578,14 +578,14 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										
 
 										SGD::Point randPosition = cMsg->GetSender()->GetPosition();
-										randPosition.x += rand() % 1000 + 700;
-										randPosition.y += rand() % 1000 + 700;
+										randPosition.x += rand() % 800 + 700;
+										randPosition.y += rand() % 800 + 700;
 										int m_nAsteroidSize[3] = { 32, 64, 128 };
 										int size = m_nAsteroidSize[rand() % 3];
 
 										SGD::Vector dir = dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetTarget()->GetPosition() - randPosition;								
 										dir.Normalize();
-										SGD::Vector velocity = dir * 100;
+										SGD::Vector velocity = dir * (rand() % 200 + 100);
 										
 										CTestLevelState::GetInstance()->EntityManager->SpawnCollidable(EntityType::Asteroid, randPosition, SGD::Size{ (float)size, (float)size }, velocity);
 									}
