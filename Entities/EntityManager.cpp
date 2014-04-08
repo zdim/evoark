@@ -105,6 +105,16 @@ IEntity* CEntityManager::GetCoordinator()
 
 }
 
+std::vector<SGD::Point> CEntityManager::GetLeaderPositions()
+{
+	std::vector<SGD::Point> positions;
+	for (unsigned int i = 0; i < leaders.size(); i++)
+	{
+		positions.push_back(leaders[i]->GetPosition());
+	}
+	return positions;
+}
+
 void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int amount, bool coord) //Spawns either one entity, or a flock of enemies, making the leader object in the process
 {
 	switch (type)

@@ -42,6 +42,7 @@ public:
 	std::vector<SGD::HTexture>GetImages() {return images;}
 	std::vector<IEntity*> GetAllies() { return allies; }
 	IEntity* GetCoordinator();
+	std::vector<SGD::Point> GetLeaderPositions();
 	//IEntity* GetStargate() { return (IEntity*)stargate; }	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.
 	void SpawnProjectile(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier = 1, float radius = -1.0f, IEntity* owner = nullptr); //Spawns a projectile 
 	void SpawnStation(SGD::Point position, SGD::Size size, CMoccasin* owner);
