@@ -3,6 +3,7 @@
 #include "../SGD Wrappers/SGD_InputManager.h"
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
 #include "Game.h"
+
 CCreditsState::CCreditsState()
 {
 }

@@ -72,7 +72,7 @@ void	CTestLevelState::Enter(void)
 	//soundBox->Enter();
 	soundBox->Play(CSoundBox::sounds::slowTrance, true);
 
-	EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 1);
+	//EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 1);
 	//EntityManager->GetBoss()->Init(4);
 	//EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
 
@@ -207,9 +207,9 @@ void	CTestLevelState::Update(float dt)
 	starsPos = { cam->GetOffset().x * .3f, cam->GetOffset().y * .3f };
 
 	if (bossPan > 0) bossPan -= dt;
-	if (bossPan <= 0 && EntityManager->GetBoss() && CGameplayState::GetInstance()->GetLevel() == Level::Final)
+	if (bossPan < 0 && bossPan > -5.f && EntityManager->GetBoss() && CGameplayState::GetInstance()->GetLevel() == Level::Final)
 	{
-		bossPan = 0.f;
+		bossPan = -10.f;
 		cam->SetTarget(EntityManager->GetPlayer());
 	}
 
@@ -222,17 +222,16 @@ void	CTestLevelState::Update(float dt)
 		CGameplayState::GetInstance()->SetLevel(Level::Final);
 	}
 
-	if (CGameplayState::GetInstance()->GetLevel() == Level::Final && EntityManager->GetBoss() == nullptr && m_bBossKilled == false)
+	if (CGameplayState::GetInstance()->GetLevel() == Level::Final && m_bBossKilled && bossPan == -10.f)
 	{
 		bossPan = 5.f;
-		m_bBossKilled = true;
 	}
 
-	if (bossPan <= 0 && EntityManager->GetBoss() == nullptr && CGameplayState::GetInstance()->GetLevel() == Level::Final && m_bBossKilled == true)
+	if (bossPan <= 0 && bossPan > -1.f && EntityManager->GetBoss() == nullptr && CGameplayState::GetInstance()->GetLevel() == Level::Final && m_bBossKilled == true)
 	{
 		CGameOverState::GetInstance()->SetWin(true);
-		Game::GetInstance()->PopState();
 		Game::GetInstance()->PushState(CGameOverState::GetInstance());
+		bossPan = -1.f;
 	}
 
 }
@@ -278,6 +277,10 @@ void	CTestLevelState::Generate()
 {
 	bool loadSuccess = false;
 	bool genLevel = true;
+
+	// to test final battle
+	CGameplayState::GetInstance()->SetLevel(Level::Waves);
+
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
 	case Level::Tutorial:
