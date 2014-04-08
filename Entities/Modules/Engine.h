@@ -6,5 +6,7 @@ class CEngine :
 public:
 	CEngine();
 	virtual ~CEngine();
+	int GetType() { return (int)EntityType::EngineModule; }
+
 };
 

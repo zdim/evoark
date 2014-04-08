@@ -72,7 +72,7 @@ void	CTestLevelState::Enter(void)
 	//soundBox->Enter();
 	soundBox->Play(CSoundBox::sounds::slowTrance, true);
 
-	//EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 1);
+	//EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 4);
 	//EntityManager->GetBoss()->Init(4);
 	//EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
 
@@ -631,7 +631,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos3, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
 										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos4, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
 									}
-									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 3)
+									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 3 || dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 4 )
 									{		
 										SGD::Point pos = cMsg->GetSender()->GetPosition();
 										SGD::Point pos1 = { pos.x + 200, pos.y + 100 };
