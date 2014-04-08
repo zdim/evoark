@@ -75,6 +75,13 @@ void EventTrigger::Render()
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "has a unique mechanic. Remember to use");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .70f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "your abilities!");
 			break;
+		case (int)triggerID::tutStargate:
+			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .35f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .62f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Stargate");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .66f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "After defeating a boss, the Stargate");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "opens. The Stargate will take you to");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .70f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "the next level.");
+			break;
 		default:
 			break;
 		}

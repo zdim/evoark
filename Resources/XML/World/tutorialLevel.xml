@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Level>
-  <Details width="16" height="16" quadWidth="200" quadHeight="200" events="10" collision="5" background="">
+  <Details width="16" height="16" quadWidth="200" quadHeight="200" events="11" collision="5" background="">
     <Quad x="0" y="0" possibleTypes="0" />
     <Quad x="0" y="1" possibleTypes="0" />
     <Quad x="0" y="2" possibleTypes="0" />
@@ -286,9 +286,10 @@
     <Event type="TUTORIAL.COORDINATOR" x="2294" y="280" width="800" height="511" />
     <Event type="TUTORIAL.ALLY" x="2361" y="1440" width="710" height="397" />
     <Event type="TUTORIAL.WARP" x="1667" y="1009" width="233" height="676" />
-    <Event type="TUTORIAL.WELL" x="403" y="520" width="451" height="203" />
+    <Event type="TUTORIAL.WELL" x="403" y="520" width="451" height="161" />
     <Event type="TUTORIAL.PUSH" x="1693" y="56" width="175" height="520" />
     <Event type="TUTORIAL.BOSS" x="2218" y="2513" width="610" height="665" />
+    <Event type="TUTORIAL.STARGATE" x="1696" y="2729" width="195" height="419" />
     <Collision x="576" y="2199" width="616" height="998" />
     <Collision x="1193" y="2199" width="721" height="291" />
     <Collision x="1915" y="811" width="326" height="1679" />

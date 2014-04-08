@@ -52,6 +52,7 @@ public:
 	int	 Main(void);
 	void Terminate(void);
 
+	std::string GetAppDataPath();
 
 	/**********************************************************/
 	// Screen Size Accessors:

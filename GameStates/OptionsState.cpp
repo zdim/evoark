@@ -115,8 +115,8 @@ void COptionsState::Enter()
 	menu = new CMenu(&Game::GetInstance()->Font, buttons, "Options", true);
 	soundBox = CSoundBox::GetInstance();
 	//soundBox->Enter();
-
-	TiXmlDocument doc("optionsSave.xml");
+	std::string path = Game::GetInstance()->GetAppDataPath() + "optionsSave.xml";
+	TiXmlDocument doc(path.c_str());
 	if (doc.LoadFile() == false)
 		return;
 
@@ -147,7 +147,8 @@ void COptionsState::Exit()
 		element->SetAttribute("fullscreen", "false");
 	doc.LinkEndChild(element);
 
-	doc.SaveFile("optionsSave.xml");
+	std::string path = Game::GetInstance()->GetAppDataPath() + "optionsSave.xml";
+	doc.SaveFile(path.c_str());
 
 	delete menu;
 	menu = nullptr;

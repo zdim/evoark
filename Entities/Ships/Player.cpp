@@ -237,8 +237,27 @@ void CPlayer::CreatePush()
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerPush, false);
 	pushTimer = 0;
 	//TODO: Send CreatePush message
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 500, pushLevel, SGD::PI / 2, this);
-	msg->QueueMessage();
+	if (pushLevel == 0)
+	{
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 500, pushLevel, SGD::PI / 3, this);
+		msg->QueueMessage();
+	}
+	else if (pushLevel == 1)
+	{
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 500, pushLevel, SGD::PI / 2, this);
+		msg->QueueMessage();
+	}
+	else if (pushLevel == 2)
+	{
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 2, this);
+		msg->QueueMessage();
+	}
+	else
+	{
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 2, this);
+		msg->QueueMessage();
+	}
+
 }
 
 void CPlayer::Warp()
