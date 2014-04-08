@@ -4,6 +4,7 @@
 #include "GameState.h"
 #include "CreditsState.h"
 #include "MainMenuState.h"
+#include "GameState.h"
 
 CGameOverState::CGameOverState()
 {
@@ -34,7 +35,7 @@ bool CGameOverState::Input()
 		{
 		case menuReturn::play:
 			Game::GetInstance()->PopState();
-			if (CGameplayState::GetInstance()->GetLevel() == Level::Final)
+			if (CGameplayState::GetInstance()->GetLevel() == Level::Final && CTestLevelState::GetInstance()->GetBossStatus() == true)
 			{
 				Game::GetInstance()->PopState();
 				Game::GetInstance()->PopState();
