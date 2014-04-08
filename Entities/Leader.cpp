@@ -136,7 +136,7 @@ void CLeader::Update(float dt)
 		{
 			distance = std::min(distance, SGD::Vector(members[i]->GetPosition() - target->GetPosition()).ComputeLength());
 		}
-		if (distance > 250)
+		if (distance > CCamera::GetInstance()->GetBoxInWorld().ComputeSize().width * 0.5f)
 		{
 			SetTarget(nullptr);
 			return;

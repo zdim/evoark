@@ -151,7 +151,7 @@ void CEnemy::DetectShip(CShip* other)
 			return;
 
 	float distance = toTarget.ComputeLength();
-	if (distance >= SGD::Vector{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() }.ComputeLength() * 0.25f)
+	if (distance >= SGD::Vector{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() }.ComputeLength() * 0.5f)
 	{
 		//if (other == target)
 		//	SetTarget(nullptr);
