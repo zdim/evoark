@@ -1,7 +1,7 @@
 //
 #include "PushModule.h"
 #include "../../Message System/CreateProjectile.h"
-#include "../../Entities/Ships/Enemies/Moccasin.h"
+#include "../../Entities/Ships/Enemies/Coral.h"
 
 CPushModule::CPushModule()
 {
@@ -22,8 +22,8 @@ void CPushModule::Activate()
 
 		SGD::Vector vToTarget =
 		{
-			dynamic_cast<CCoral*>(GetOwner())->GetTarget()->GetPosition().x - dynamic_cast<CCoral*>(GetOwner())->GetPosition().x,
-			dynamic_cast<CCoral*>(GetOwner())->GetTarget()->GetPosition().y - dynamic_cast<CCoral*>(GetOwner())->GetPosition().y
+			dynamic_cast<CCoral*>(GetOwner())->GetPosition().x,
+			dynamic_cast<CCoral*>(GetOwner())->GetPosition().y
 		};
 
 
