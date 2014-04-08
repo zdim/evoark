@@ -14,6 +14,11 @@ void CEventManager::Queue(CCustomEvent* e)
 
 void CEventManager::SendNow(CCustomEvent* e)
 {
+	if (e->GetID() == EventID::position)
+	{
+		if (e->GetSender()->IsDestroying())
+			return;
+	}
 	ListenerGroup& bucket = listenerMap[e->GetID()];
 	for (unsigned int i = 0; i < bucket.size(); i++)
 	{
@@ -78,10 +83,6 @@ void CEventManager::Update()
 	{
 		CCustomEvent* e = events.front();
 		events.pop();
-		if (events.size() == 55)
-		{
-			e = e;
-		}
 		SendNow(e);
 		delete e;
 	}
