@@ -27,7 +27,7 @@ CMoccasin::~CMoccasin()
 
 void CMoccasin::Init(int l)
 {
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < l; i++)
 		AddModule();
 
 
@@ -37,7 +37,7 @@ void CMoccasin::Init(int l)
 		m_nLevel = 0;
 		break;
 	case 1:
-		m_nLevel = 3;
+		m_nLevel = 1;
 		break;
 	case 2:
 		m_nLevel = 2;	

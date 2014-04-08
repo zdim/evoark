@@ -1,7 +1,7 @@
 //
 #include "PushModule.h"
 #include "../../Message System/CreateProjectile.h"
-#include "../../Entities/Ships/Enemies/Moccasin.h"
+#include "../../Entities/Ships/Enemies/Coral.h"
 
 CPushModule::CPushModule()
 {
@@ -19,14 +19,15 @@ void CPushModule::Activate()
 {
 	if (timer >= cooldown) 
 	{
+
 		SGD::Vector vToTarget =
 		{
-			dynamic_cast<CMoccasin*>(GetOwner())->GetTarget()->GetPosition().x - dynamic_cast<CMoccasin*>(GetOwner())->GetPosition().x,
-			dynamic_cast<CMoccasin*>(GetOwner())->GetTarget()->GetPosition().y - dynamic_cast<CMoccasin*>(GetOwner())->GetPosition().y
+			dynamic_cast<CCoral*>(GetOwner())->GetPosition().x,
+			dynamic_cast<CCoral*>(GetOwner())->GetPosition().y
 		};
 
 
-		SGD::Point pos = dynamic_cast<CMoccasin*>(GetOwner())->GetTarget()->GetPosition();
+		SGD::Point pos = dynamic_cast<CCoral*>(GetOwner())->GetTarget()->GetPosition();
 		pos.x -= 25;
 		pos.y += 25;
 		if (vToTarget.ComputeLength() <= 600 )
