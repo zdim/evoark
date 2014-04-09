@@ -52,9 +52,17 @@ void CParticleSystem::Init()
 	particleEffect[i]->Initialize();
 }
 
-void Terminate()
+void CParticleSystem::Terminate()
 {
-
+	for (int i = 1; i < numEmitters + 1; i++)
+	{
+		particleEffect[i]->GetParticleData()->Terminate();
+		delete particleEffect[i]->GetParticleData();
+		particleEffect[i]->Release();
+		delete particleEffect[i];
+	}
+	particleEffect.clear();
+		
 }
 
 
@@ -82,6 +90,7 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	effectFile[filePath.size()] = '\0';
 
 	doc.LoadFile(effectFile);
+	delete effectFile;
 	TiXmlElement* pRoot = doc.RootElement();
 	
 	//int trash;
@@ -213,6 +222,7 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	numEmitters++;
 	
 	particleEffect[numEmitters] = new CEmitter(eData, emitterSize, m_nShape, emitterPosition, m_nNumParticles, m_fSpawnRate, m_fTimeFromLastSpawn, m_bEmitWay, m_fEmitTime);
+
 
 
 }

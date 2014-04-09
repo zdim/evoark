@@ -22,6 +22,7 @@ CMissile::CMissile()
 		m_pSystem->GetParticleEffect(2)->GetEmitType(),
 		m_pSystem->GetParticleEffect(2)->GetEmitTime()
 		);
+
 	m_eTrail->Initialize();
 
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
@@ -32,6 +33,9 @@ CMissile::~CMissile()
 {
 	SetTarget(nullptr);
 	
+	m_eTrail->Release();
+	delete m_eTrail;
+	
 }
 
 void CMissile::SelfDestruct()
@@ -39,9 +43,12 @@ void CMissile::SelfDestruct()
 	if (destroying)
 		return;
 
+
+
 	CEntity::SelfDestruct();
+
 	SetTarget(nullptr);
-//	CEventManager::GetInstance().Unregister(dynamic_cast<Listener*>(this), EventID::position);
+	//CEventManager::GetInstance().Unregister(dynamic_cast<Listener*>(this), EventID::position);
 }
 
 void CMissile::SetTarget(CShip* t)
