@@ -364,7 +364,7 @@ void CPlayer::SetStats(playerData& data)
 	hull = maxHull;
 	shield = maxShield;
 	perks = data.perks;
-	//perks = 100;
+	perks = 100;
 	for (laserLevel; laserLevel < data.laserLevel; LaserLevelUp());
 	for (missileLevel; missileLevel < data.missileLevel; MissileLevelUp());
 	for (wellLevel; wellLevel < data.wellLevel; WellLevelUp());
