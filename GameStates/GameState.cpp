@@ -358,12 +358,36 @@ void	CTestLevelState::Generate()
 				case HUMAN:
 					if (genLevel == false)
 					{
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 2 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 1 && _alliesSpawned == 4 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 2 && _alliesSpawned == 6 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 3 && _alliesSpawned == 8 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 4 && _alliesSpawned == 10) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 5 && _alliesSpawned == 12) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 2)
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 1 && _alliesSpawned == 4)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 2 && _alliesSpawned == 6)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 3 && _alliesSpawned == 8)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 4 && _alliesSpawned == 10)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 5 && _alliesSpawned == 12)
+						{
+							_alliesSpawned++;
+							break;
+						}
 					}
 					EntityManager->Spawn(EntityType::Human, col[j].pos, 1);
 					_alliesSpawned++;
