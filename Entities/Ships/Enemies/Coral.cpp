@@ -155,7 +155,8 @@ void CCoral::DestroyAllModules()
 
 void CCoral::SetImages(std::vector<SGD::HTexture>& images)
 {
-	m_pShield->SetImage(images[(int)EntityType::Shield]);
+	if (m_pShield)
+		m_pShield->SetImage(images[(int)EntityType::Shield]);
 
 	for (unsigned int i = 0; i < modules.size(); i++)
 	{

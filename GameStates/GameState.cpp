@@ -66,6 +66,8 @@ void	CTestLevelState::Enter(void)
 	backgroundStars1 = graphics->LoadTexture("Resources/Graphics/stars2new.png", { 0, 0, 0 });
 	backgroundStars2 = graphics->LoadTexture("Resources/Graphics/stars3.png", { 0, 0, 0 });
 
+	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
+
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
 	soundBox = CSoundBox::GetInstance();
@@ -114,8 +116,6 @@ void	CTestLevelState::Enter(void)
 	stars1Pos = { cam->GetOffset().x, cam->GetOffset().y };
 	stars2Pos = { cam->GetOffset().x, cam->GetOffset().y };
 	starsPos = { cam->GetOffset().x, cam->GetOffset().y };
-
-	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
 
 	testing = "Initializing";
 	m_nLine += 30;
