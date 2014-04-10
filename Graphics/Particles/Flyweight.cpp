@@ -58,6 +58,10 @@ CFlyweight::CFlyweight(
 
 CFlyweight::~CFlyweight()
 {
-	SGD::GraphicsManager::GetInstance()->UnloadTexture(image);
+	
 }
 
+void CFlyweight::Terminate()
+{
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(image);
+}

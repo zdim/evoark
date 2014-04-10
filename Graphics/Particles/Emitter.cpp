@@ -61,6 +61,7 @@ void CEmitter::Update(float deltaTime)
 			*p = CreateParticle();
 			m_lDeadParticles.pop_front();
 			m_lAliveParticles.push_front(p);
+
 		}
 
 	}
@@ -212,7 +213,30 @@ CParticle CEmitter::CreateParticle()
 
 void CEmitter::Release()
 {
+	if (m_lAliveParticles.size() > 0)
+	{
+		for (std::list<CParticle*>::iterator it = m_lAliveParticles.begin(); it != m_lAliveParticles.end();)
+		{
+			delete *it;
+			it++;
+		}
+			
+	}
+
+	if (m_lDeadParticles.size() > 0)
+	{
+		for (std::list<CParticle*>::iterator it = m_lDeadParticles.begin(); it != m_lDeadParticles.end();)
+		{
+			delete *it;
+			it++;
+		}
+	}
+	
 
 
+	m_lAliveParticles.clear();
+	m_lDeadParticles.clear();
 
+	//particleData->Terminate();
+	//delete particleData;
 }

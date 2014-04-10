@@ -33,4 +33,6 @@ class CCopperheadCoord : public CCopperhead, public Coordinator
 public:
 	virtual ~CCopperheadCoord(){}
 	bool IsCoordinator() override { return true; }
+	void SelfDestruct() override {
+		if (!destroying) { CCopperhead::SelfDestruct(); Coordinator::Unregister();} }
 };

@@ -24,4 +24,7 @@ class CCobraCoord : public CCobra, public Coordinator
 public:
 	virtual ~CCobraCoord(){}
 	bool IsCoordinator() override { return true; }
+	void SelfDestruct() override {
+		if (!destroying) { CCobra::SelfDestruct(); Coordinator::Unregister(); }
+	}
 };

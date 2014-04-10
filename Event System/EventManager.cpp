@@ -33,7 +33,7 @@ void CEventManager::SendNow(CCustomEvent* e)
 				break;
 		}
 		if (j == unlisteners[e->GetID()].size())
-		bucket[i]->HandleEvent(e);
+			bucket[i]->HandleEvent(e);
 	}
 }
 
@@ -44,6 +44,11 @@ void CEventManager::Register(Listener* listener, EventID id)
 
 void CEventManager::Unregister(Listener* listener, EventID id)
 {
+	for (unsigned int i = 0; i < unlisteners[id].size(); i++)
+	{
+		if (unlisteners[id][i] == listener)
+			return;
+	}
 	unlisteners[id].push_back(listener);
 }
 

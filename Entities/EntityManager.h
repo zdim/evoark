@@ -49,6 +49,7 @@ public:
 	void SpawnCarrierShips(SGD::Point position,CShip* target,int amount);
 	void SpawnCollidable(EntityType type, SGD::Point position, SGD::Size size = { 16, 16 }, SGD::Vector velocity = {0,0}, int eventType = -1);
 	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.
+	void PopulateCoordinator();
 	//int GetDamageFromEntity(IEntity* entity, EntityType projType);
 	void ClearTargeted(IEntity* entity);	//Iterates through the groups that could potentially have this entity targeted, and tells them to untarget it.
 	int FindLeaderIndex(IEntity* entity);

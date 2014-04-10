@@ -210,6 +210,10 @@ void Game::Terminate( void )
 	//	delete m_pFont;
 	//	m_pFont = nullptr;
 
+	m_pParticleSystem->Terminate();
+	m_pParticleSystem = nullptr;
+	m_pParticleSystem->DeleteInstance();
+
 	//m_pAudio->UnloadAudio(m_hSfxMusic);
 	CSoundBox::GetInstance()->Exit();
 
@@ -225,6 +229,8 @@ void Game::Terminate( void )
 	m_pInput->Terminate();
 	m_pInput = nullptr;
 	SGD::InputManager::DeleteInstance();
+
+
 }
 
 /**************************************************************/

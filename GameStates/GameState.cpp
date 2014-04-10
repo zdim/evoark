@@ -66,6 +66,8 @@ void	CTestLevelState::Enter(void)
 	backgroundStars1 = graphics->LoadTexture("Resources/Graphics/stars2new.png", { 0, 0, 0 });
 	backgroundStars2 = graphics->LoadTexture("Resources/Graphics/stars3.png", { 0, 0, 0 });
 
+	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
+
 	EntityManager = CEntityManager::GetInstance();
 	EntityManager->Initialize();
 	soundBox = CSoundBox::GetInstance();
@@ -114,8 +116,6 @@ void	CTestLevelState::Enter(void)
 	stars1Pos = { cam->GetOffset().x, cam->GetOffset().y };
 	stars2Pos = { cam->GetOffset().x, cam->GetOffset().y };
 	starsPos = { cam->GetOffset().x, cam->GetOffset().y };
-
-	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
 
 	testing = "Initializing";
 	m_nLine += 30;
@@ -358,12 +358,36 @@ void	CTestLevelState::Generate()
 				case HUMAN:
 					if (genLevel == false)
 					{
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 2 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 1 && _alliesSpawned == 4 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 2 && _alliesSpawned == 6 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 3 && _alliesSpawned == 8 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 4 && _alliesSpawned == 10) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 5 && _alliesSpawned == 12) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 2)
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 1 && _alliesSpawned == 4)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 2 && _alliesSpawned == 6)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 3 && _alliesSpawned == 8)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 4 && _alliesSpawned == 10)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 5 && _alliesSpawned == 12)
+						{
+							_alliesSpawned++;
+							break;
+						}
 					}
 					EntityManager->Spawn(EntityType::Human, col[j].pos, 1);
 					_alliesSpawned++;
@@ -430,6 +454,7 @@ void	CTestLevelState::Generate()
 			EntityManager->SpawnCollidable(EntityType::InvisTrigger, { events[i].area.left, events[i].area.top }, { events[i].area.right - events[i].area.left, events[i].area.bottom - events[i].area.top }, { 0, 0 }, eventID);
 
 		}
+		EntityManager->PopulateCoordinator();
 	}
 	else
 	{
@@ -647,6 +672,8 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::CreateProjectile:
 	{
 										const CreateProjectileMessage* lMsg = dynamic_cast<const CreateProjectileMessage*>(msg);
+										if (!lMsg->GetPosition().IsWithinRectangle(GetInstance()->cam->GetBoxInWorld()))
+											break;
 										CTestLevelState::GetInstance()->EntityManager->SpawnProjectile(lMsg->GetProjType(), lMsg->GetPosition(), lMsg->GetOwnerSize(), lMsg->GetRotation(), lMsg->GetDamage(), lMsg->GetTier(), lMsg->GetRadius(), lMsg->GetOwner());
 										switch (lMsg->GetProjType())
 										{
