@@ -35,9 +35,9 @@ CPlayer::CPlayer()
 	level = 0;
 	perks = 5;
 	
-	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravWellIcon.png");
-	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/GravPushIcon.png");
-	warpIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/WarpIcon.png");
+	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/wellIconPurple32.png");
+	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushIconPurple32.png");
+	warpIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/warpIconPurple32.png");
 	
 	for (int i = 0; i < 4; i++) tutorialWaitForInput[i] = false;
 	for (int i = 0; i < 4; i++) tutorialTriggerHit[i] = false;
@@ -119,13 +119,13 @@ void CPlayer::Update(float dt)
 
 	//Movement
 	SGD::Vector dir = SGD::Vector{0,0};
-	if (input->IsKeyDown(SGD::Key::W))
+	if (input->IsKeyDown(SGD::Key::W) || input->GetLeftJoystick(0).y < 0)
 		dir.y -= 1;
-	if (input->IsKeyDown(SGD::Key::S))
+	if (input->IsKeyDown(SGD::Key::S) || input->GetLeftJoystick(0).y > 0)
 		dir.y += 1;
-	if (input->IsKeyDown(SGD::Key::A))
+	if (input->IsKeyDown(SGD::Key::A) || input->GetLeftJoystick(0).x < 0)
 		dir.x -= 1;
-	if (input->IsKeyDown(SGD::Key::D))
+	if (input->IsKeyDown(SGD::Key::D) || input->GetLeftJoystick(0).x > 0)
 		dir.x += 1;
 	if (dir != SGD::Vector{0, 0})
 		dir.Normalize();
@@ -134,29 +134,46 @@ void CPlayer::Update(float dt)
 		velocity = dir * (speed + warpSpeed);
 	else
 		velocity = dir * speed;
-	SGD::Point mousePos = input->GetMousePosition();
-	rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
+
+	//SGD::Point mousePos = { 0, 0 };
+
+	if (input->GetMouseMovement() != SGD::Vector{ 0, 0 })
+	{
+		SGD::Point mousePos = input->GetMousePosition();
+		rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
+
+	}
+
+	if (input->GetRightJoystick(0) != SGD::Vector{ 0, 0 })
+	{
+		SGD::Vector rotationVec = { 0, -1 };
+
+		SGD::Vector rightThumb = input->GetRightJoystick(0);
+		rotation = rotationVec.ComputeAngle(input->GetRightJoystick(0)) + SGD::PI / 2;
+	}
+		
+	//rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
 
 	
 
 	//Abilities
-	if (input->IsKeyDown(SGD::Key::LButton))
+	if (input->IsKeyDown(SGD::Key::LButton) || input->GetTrigger(0) == 1)
 	{
 		CreateLaser();
 	}
-	if (input->IsKeyDown(SGD::Key::RButton))
+	if (input->IsKeyDown(SGD::Key::RButton) || input->GetTrigger(0) == -1)
 	{
 		CreateMissile();
 	}
-	if (input->IsKeyPressed(SGD::Key::Q))
+	if (input->IsKeyPressed(SGD::Key::Q) || input->IsButtonPressed(0, 4))
 	{
 		CreateWell();
 	}
-	if (input->IsKeyPressed(SGD::Key::E))
+	if (input->IsKeyPressed(SGD::Key::E) || input->IsButtonPressed(0, 5))
 	{
 		CreatePush();
 	}
-	if (input->IsKeyPressed(SGD::Key::Spacebar))
+	if (input->IsKeyPressed(SGD::Key::Spacebar) || input->IsButtonPressed(0, 0))
 	{
 		Warp();
 	}
@@ -417,4 +434,18 @@ void CPlayer::HandleCollision(IEntity* other)
 	}
 
 	CShip::HandleCollision(other);
+}
+
+int CPlayer::GetTutorialPause()
+{
+	if (CGameplayState::GetInstance()->GetLevel() != Level::Tutorial)
+		return -1;
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (tutorialWaitForInput[i])
+			return i;
+	}
+
+	return -1;
 }
