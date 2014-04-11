@@ -7,6 +7,8 @@
 #include "../../GameStates/Game.h"
 #include "../Collidables/ModuleShield.h"
 #include "../Collidables/RepairStation.h"
+#include "../../Event System/CustomEvent.h"
+#include "../../Event System/EventID.h"
 
 CLaser::CLaser()
 {
@@ -38,6 +40,8 @@ void CLaser::Update(float dt)
 	CEntity::Update(dt);
 	if (!position.IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
 		SelfDestruct();
+	CCustomEvent* e = new CCustomEvent(EventID::position, nullptr, this);
+	e->Queue();
 }
 
 void CLaser::Render()

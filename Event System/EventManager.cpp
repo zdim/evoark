@@ -22,10 +22,6 @@ void CEventManager::SendNow(CCustomEvent* e)
 	ListenerGroup& bucket = listenerMap[e->GetID()];
 	for (unsigned int i = 0; i < bucket.size(); i++)
 	{
-		if (i == 6)
-		{
-			i = i;
-		}
 		unsigned int j;
 		for (j = 0; j < unlisteners[e->GetID()].size(); j++)
 		{
@@ -72,7 +68,9 @@ void CEventManager::ClearEvents()
 {
 	while (!events.empty())
 	{
+		CCustomEvent* e = events.back();
 		events.pop();
+		delete e;
 	}
 }
 
