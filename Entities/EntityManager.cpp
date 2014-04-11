@@ -1344,7 +1344,9 @@ void CEntityManager::Load()
 		boss->SetImages(images);
 		bigEnemies.push_back(boss);
 		ships.push_back(boss);
-		ships.push_back(dynamic_cast<CCoral*>(boss)->GetShield());
+		CModuleShield* modShield = dynamic_cast<CCoral*>(boss)->GetShield();
+		if (modShield)
+			ships.push_back(modShield);
 		boss->SetPosition(save.world.boss.position);
 	}
 

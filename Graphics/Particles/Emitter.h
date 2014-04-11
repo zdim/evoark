@@ -19,7 +19,7 @@ private:
 	float                  m_fTimeFromLastSpawn;
 	bool                   m_bLoop;
 	float                  m_fEmitTime;
-
+	float                  m_fSavedEmitTime;
 	
 
 
@@ -35,7 +35,7 @@ public:
 	void Render();
 	CParticle CreateParticle();
 	void Release();
-
+	void Reset();
 
 	SGD::Point GetEmitterPosition() { return emitterPosition; }
 	void       SetEmitterPosition(SGD::Point p) { emitterPosition = p; }

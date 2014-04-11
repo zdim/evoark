@@ -1,5 +1,6 @@
 //
 #include "Enemy.h"
+#include "../../EntityManager.h"
 #include "../../Leader.h"
 #include "../../../Event System/EventID.h"
 #include "../../../Event System/CustomEvent.h"
@@ -20,6 +21,9 @@ CEnemy::~CEnemy()
 
 void CEnemy::Update(float dt)
 {
+	if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
+		return;
+
 	if (damaged > 0)
 		damaged -= dt;
 	if (damaged < 0)

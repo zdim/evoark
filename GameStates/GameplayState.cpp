@@ -126,10 +126,22 @@ TiXmlElement* nameEntityDataElement(EntityType type)
 TiXmlElement* makeEntityDataElement(EntityData& data)
 {
 	TiXmlElement* entity = nameEntityDataElement(data.type);
+	if (data.type == EntityType::BaseClass)
+	{
+		entity = new TiXmlElement("deadMod");
+		double x = 0;
+		double y = 0;
+		entity->SetAttribute("x", x);
+		entity->SetAttribute("y", y);
+		entity->SetAttribute("hull", 0);
+		entity->SetAttribute("shield", 0);
+		entity->SetAttribute("coord", false);
+		return entity;
+	}
 	double x = data.position.x;
 	double y = data.position.y;
-	entity->SetDoubleAttribute("x", x);
-	entity->SetDoubleAttribute("y", y);
+	entity->SetAttribute("x", x);
+	entity->SetAttribute("y", y);
 	entity->SetAttribute("hull", data.hull);
 	entity->SetAttribute("shield", data.shield);
 	entity->SetAttribute("coord", data.coord);

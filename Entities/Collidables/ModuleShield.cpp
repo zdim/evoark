@@ -6,14 +6,57 @@
 #include "../Modules/ShieldModule.h"
 #include "../Ships/Ship.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../Graphics/Particles/ParticleSystem.h"
+#include "../../Graphics/Particles/Emitter.h"
 
+
+CModuleShield::CModuleShield()
+{ 
+	size = { 360, 360 }; 
+	m_pSystem = CParticleSystem::GetInstance();
+
+	m_eShieldDown = new CEmitter(
+		m_pSystem->GetParticleEffect(4)->GetParticleData(),
+		m_pSystem->GetParticleEffect(4)->GetEmitterSize(),
+		m_pSystem->GetParticleEffect(4)->GetShape(),
+		position,
+		m_pSystem->GetParticleEffect(4)->GetNumParticles(),
+		m_pSystem->GetParticleEffect(4)->GetSpawnRate(),
+		m_pSystem->GetParticleEffect(4)->GetSpawnTimeFromLastSpawn(),
+		m_pSystem->GetParticleEffect(4)->GetEmitType(),
+		m_pSystem->GetParticleEffect(4)->GetEmitTime()
+		);
+
+	m_eShieldDown->Initialize();
+}
+
+
+CModuleShield::~CModuleShield()
+{
+	
+	m_eShieldDown->Release();
+	delete m_eShieldDown;
+
+}
 
 void CModuleShield::Update(float dt)
 {
+	
+		
+
 	if (dynamic_cast<CShieldModule*>(m_pOwner)->GetShield() > 0)
 	{
 		position = m_pOwnerShip->GetPosition();
+		m_eShieldDown->Reset();
+		
 	}
+
+	if (dynamic_cast<CShieldModule*>(m_pOwner)->GetShield() <= 0)
+	{
+		m_eShieldDown->Update(dt);
+		m_eShieldDown->SetEmitterPosition(m_pOwnerShip->GetPosition());
+	}
+	
 }
 
 void CModuleShield::HandleCollision(IEntity* other)
@@ -57,8 +100,13 @@ void CModuleShield::HandleCollision(IEntity* other)
 
 void CModuleShield::Render()
 {
+	if (dynamic_cast<CShieldModule*>(m_pOwner)->GetShield() <= 0)
+	m_eShieldDown->Render();
+	
 	if (dynamic_cast<CShieldModule*>(m_pOwner)->GetShield() > 0)
 	{
+		
+
 		SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
 		SGD::Point renderPoint = offsetToCamera();
 		SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, {}, scale);

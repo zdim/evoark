@@ -21,6 +21,7 @@ CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, int s, SGD::Point ePosi
 	m_fTimeFromLastSpawn = 0;
 	m_bLoop = emway;
 	m_fEmitTime = emitTime;
+	m_fSavedEmitTime = emitTime;
 }
 
 CEmitter::~CEmitter()
@@ -38,6 +39,12 @@ void CEmitter::Initialize()
 	}
 
 }
+
+void CEmitter::Reset()
+{
+	m_fEmitTime = m_fSavedEmitTime;
+}
+
 
 void CEmitter::Update(float deltaTime)
 {

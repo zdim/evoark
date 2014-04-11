@@ -47,6 +47,8 @@ void CParticleSystem::Init()
 	LoadEffect(efName2);
 	std::string efName3 = "5.xml";
 	LoadEffect(efName3);
+	std::string efName4 = "ShieldDown.xml";
+	LoadEffect(efName4);
 
 	for (int i = 1; i < numEmitters + 1; i++)
 	particleEffect[i]->Initialize();

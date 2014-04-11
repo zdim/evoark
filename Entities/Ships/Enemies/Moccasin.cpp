@@ -116,6 +116,7 @@ void CMoccasin::SelfDestruct()
 	e->Queue();
 	BossKilledMessage* msg = new BossKilledMessage;
 	msg->QueueMessage();
+
 }
 
 

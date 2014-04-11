@@ -1,6 +1,6 @@
 //
 #include "Cobra.h"
-
+#include "../../EntityManager.h"
 
 CCobra::CCobra()
 {
@@ -18,6 +18,9 @@ CCobra::~CCobra()
 
 void CCobra::Update(float dt)
 {
+	if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
+		return;
+
 	warpTimer += dt; 
 	SGD::Vector dir = CCopperhead::AI(dt);
 

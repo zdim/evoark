@@ -2,7 +2,7 @@
 #include "Copperhead.h"
 #include "../../../SGD Wrappers/SGD_Geometry.h"
 #include "../../../Message System/CreateProjectile.h"
-
+#include "../../EntityManager.h"
 
 
 CCopperhead::CCopperhead()
@@ -23,6 +23,9 @@ CCopperhead::~CCopperhead()
 
 void CCopperhead::Update(float dt)
 {
+	if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
+		return;
+
 	AI(dt);
 	//Rotation
 	CEnemy::Update(dt);
