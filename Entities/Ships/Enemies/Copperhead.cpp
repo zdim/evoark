@@ -2,8 +2,7 @@
 #include "Copperhead.h"
 #include "../../../SGD Wrappers/SGD_Geometry.h"
 #include "../../../Message System/CreateProjectile.h"
-
-
+#include "../../../Event System/EventManager.h"
 
 CCopperhead::CCopperhead()
 {
@@ -14,6 +13,7 @@ CCopperhead::CCopperhead()
     m_fMissileTimer = 0;
     m_nMissileDamage = 75;
 	expValue = 10;
+	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
 }
 
 

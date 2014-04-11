@@ -5,9 +5,11 @@
 #include "../../../GameStates/GameplayState.h"
 #include "../../Collidables/ModuleShield.h"
 #include "../../Projectiles/Laser.h"
+#include "../../../Event System/EventManager.h"
 
 CCoral::CCoral()
 {
+	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
 	expValue = 50;
 	modules.resize(count);
 	modules[engine] = new CEngine();

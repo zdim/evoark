@@ -554,7 +554,7 @@ void CGameplayState::DeleteProfile(unsigned int prof)
 
 	TiXmlElement* deleted = new TiXmlElement("state");
 	deleted->SetAttribute("deleted", "true");
-
+	doc.LinkEndChild(deleted);
 	doc.SaveFile();
 
 	unsigned int old = save.profile;

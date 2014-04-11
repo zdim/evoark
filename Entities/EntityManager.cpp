@@ -663,8 +663,8 @@ void CEntityManager::ClearTargeted(IEntity* entity)	//Iterates through the group
 	if (!entity)
 		return;
 
-	if (entity->GetType() >= (int)EntityType::Laser && entity->GetType() <= (int)EntityType::Well)
-		return;
+	//if (entity->GetType() >= (int)EntityType::Laser && entity->GetType() <= (int)EntityType::Well)
+	//	return;
 	CShip* ship = dynamic_cast<CShip*>(entity);
 
 	for (unsigned int i = 0; i < smallEnemies.size(); i++)
@@ -672,12 +672,16 @@ void CEntityManager::ClearTargeted(IEntity* entity)	//Iterates through the group
 		CEnemy* enemy = dynamic_cast<CEnemy*>(smallEnemies[i]);
 		if (enemy->GetTarget() == entity)
 			enemy->SetTarget(nullptr);
+		if (enemy->GetAvoid() == entity)
+			enemy->SetAvoid(nullptr);
 	}
 	for (unsigned int i = 0; i < bigEnemies.size(); i++)
 	{
 		CEnemy* enemy = dynamic_cast<CEnemy*>(bigEnemies[i]);
 		if (enemy->GetTarget() == entity)
 			enemy->SetTarget(nullptr);
+		if (enemy->GetAvoid() == entity)
+			enemy->SetAvoid(nullptr);
 	}
 	for (unsigned int i = 0; i < allies.size(); i++)
 	{
@@ -756,6 +760,7 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 	case EntityType::Cobra:
 	case EntityType::Mamba:
 		dynamic_cast<CEnemy*>(entity)->SetTarget(nullptr);
+		dynamic_cast<CEnemy*>(entity)->SetAvoid(nullptr);
 		RemoveFromGroup(smallEnemies, entity);
 		RemoveFromGroup(ships, entity);
 		RemoveFromLeader(entity);
@@ -772,6 +777,7 @@ void CEntityManager::Destroy(IEntity* entity)	//Calls ClearTargeted() on the giv
 			Save();
 	case EntityType::Coral:
 		dynamic_cast<CEnemy*>(entity)->SetTarget(nullptr);
+		dynamic_cast<CEnemy*>(entity)->SetAvoid(nullptr);
 		dynamic_cast<CCoral*>(entity)->DestroyAllModules();
 		RemoveFromGroup(bigEnemies, entity);
 		RemoveFromGroup(ships, entity);

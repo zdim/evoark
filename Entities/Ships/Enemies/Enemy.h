@@ -27,9 +27,11 @@ public:
 	void HandleEvent(CCustomEvent* e) override;
 	void SetLeader(CLeader* lead) { if (!leader) leader = lead; }
 	CLeader* GetLeader() {return leader;}
+	void SetAvoid(IEntity* newAvoid);
+	IEntity* GetAvoid() {return avoid;}
 	void SetDestination(SGD::Point newDest) {destination = newDest;}
-	//float CalculateCollisionTime(IEntity* other);
-	//int CalculateDamage(IEntity* other);
+	float CalculateCollisionTime(IEntity* other);
+	int CalculateDamage(IEntity* other);
 
 	int GetExpValue() { return expValue; }
 	void SelfDestruct();
