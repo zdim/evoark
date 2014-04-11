@@ -88,6 +88,9 @@ public:
 	void WarpLevelUp();
 	void RemovePerk() { perks--; }
 
+	// for tutorial
+	int GetTutorialPause();
+
 	// get textures for icons
 	SGD::HTexture GetWellIcon() { return wellIcon; }
 	SGD::HTexture GetPushIcon() { return pushIcon; }

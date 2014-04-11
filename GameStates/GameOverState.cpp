@@ -3,6 +3,8 @@
 #include "Game.h"
 #include "GameState.h"
 #include "CreditsState.h"
+#include "MainMenuState.h"
+#include "GameState.h"
 
 CGameOverState::CGameOverState()
 {
@@ -33,8 +35,11 @@ bool CGameOverState::Input()
 		{
 		case menuReturn::play:
 			Game::GetInstance()->PopState();
-			if (CGameplayState::GetInstance()->GetLevel() == Level::Final)
+			if (CGameplayState::GetInstance()->GetLevel() == Level::Final && CTestLevelState::GetInstance()->GetBossStatus() == true)
 			{
+				Game::GetInstance()->PopState();
+				Game::GetInstance()->PopState();
+				Game::GetInstance()->PushState(CMainMenuState::GetInstance());
 				Game::GetInstance()->PushState(CCreditsState::GetInstance());
 			}
 			else
@@ -57,6 +62,7 @@ void CGameOverState::Update(float dt)
 	m_fTimer += dt;
 	if (m_fTimer < m_fDelay)
 	{
+		Game* _game = Game::GetInstance();
 		Game::GetInstance()->GetLevelState()->Update(dt);
 	}
 }

@@ -646,6 +646,18 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 	}
 }
 
+void CEntityManager::PopulateCoordinator()
+{
+	if (!coordinator)
+		return;
+
+	for (unsigned int i = 0; i < leaders.size(); i++)
+	{
+		coordinator->AddLeader(leaders[i]);
+	}
+}
+
+
 void CEntityManager::ClearTargeted(IEntity* entity)	//Iterates through the groups that could potentially have this entity targeted, and tells them to untarget it.
 {
 	if (!entity)
@@ -990,10 +1002,11 @@ bool CEntityManager::rectCollision(IEntity* rect1, IEntity* rect2)
 void CEntityManager::Update(float dt)
 {
 	SGD::Rectangle screen = CCamera::GetInstance()->GetBoxInWorld();
-	screen.top -= 300;
-	screen.left -= 300;
-	screen.right += 300;
-	screen.bottom += 300;
+	float buffer = screen.ComputeSize().width;
+	screen.top -= buffer;
+	screen.left -= buffer;
+	screen.right += buffer;
+	screen.bottom += buffer;
 
 	for (unsigned int i = 0; i < leaders.size(); i++)
 	{
@@ -1301,6 +1314,7 @@ void CEntityManager::CreateLeader(ModularFlock& data)
 		corals[i]->SetSize({ 128, 128 });
 		bigEnemies.push_back(corals[i]);
 		ships.push_back(corals[i]);
+		ships.push_back(dynamic_cast<CCoral*>(corals[i])->GetShield());
 	}
 	leader->SetHome(data.home);
 	leader->Assign(corals);
@@ -1324,11 +1338,15 @@ void CEntityManager::Load()
 	{
 		boss = new CMoccasin;
 		boss->SetModuleData(save.world.boss.modules);
+		boss->Init((int)save.currLevel);
 		boss->SetImage(images[(int)EntityType::Moccasin]);
 		boss->SetSize({ 256, 256 });
 		boss->SetImages(images);
 		bigEnemies.push_back(boss);
 		ships.push_back(boss);
+		CModuleShield* modShield = dynamic_cast<CCoral*>(boss)->GetShield();
+		if (modShield)
+			ships.push_back(modShield);
 		boss->SetPosition(save.world.boss.position);
 	}
 
@@ -1383,4 +1401,5 @@ void CEntityManager::Load()
 	{
 		CreateLeader(save.world.modFlocks[i]);
 	}
+	PopulateCoordinator();
 }

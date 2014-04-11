@@ -19,5 +19,8 @@ class CMambaCoord : public CMamba, public Coordinator
 {
 	virtual ~CMambaCoord(){}
 	bool IsCoordinator() override {return true;}
+	void SelfDestruct() override {
+		if (!destroying) { CMamba::SelfDestruct(); Coordinator::Unregister(); }
+	}
 };
 

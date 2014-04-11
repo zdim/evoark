@@ -27,7 +27,7 @@ void CProfileSelectState::Enter()
 	labels.push_back("Delete");
 	labels.push_back("Cancel");
 	labels.push_back("Main Menu");
-	menu = new CMenu(&font,labels,"");
+	menu = new CMenu(&font,labels,"Stuff");
 }
 
 void CProfileSelectState::Exit()

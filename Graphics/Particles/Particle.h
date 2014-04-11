@@ -43,7 +43,7 @@ public:
 	void SetCurScale(SGD::Size scale)  { curScale = scale; }
 	void SetCurLife(float sLife)       { m_fCurLife = sLife; }
 	void SetCurRotation(float rotation) { m_fRotation = rotation; }
-	
+	void Delete();
 	
 };
 

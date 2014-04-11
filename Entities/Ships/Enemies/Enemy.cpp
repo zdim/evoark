@@ -1,5 +1,6 @@
 //
 #include "Enemy.h"
+#include "../../EntityManager.h"
 #include "../../Leader.h"
 #include "../../../Event System/EventID.h"
 #include "../../../Event System/CustomEvent.h"
@@ -20,6 +21,9 @@ CEnemy::~CEnemy()
 
 void CEnemy::Update(float dt)
 {
+	if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
+		return;
+
 	if (damaged > 0)
 		damaged -= dt;
 	if (damaged < 0)
@@ -133,7 +137,7 @@ void CEnemy::HandleEvent(CCustomEvent* e)
 								  DetectShip(dynamic_cast<CShip*>(other));
 							  }
 							  //detect projectiles and collidables
-							  break;							  
+							  break;
 	}
 	}
 }
@@ -188,3 +192,17 @@ void CEnemy::TakeDamage(int damage, bool collision)
 	}
 }
 
+void CEnemy::SelfDestruct()
+{
+	if (destroying)
+		return;
+
+	CShip::SelfDestruct();
+	CEventManager::GetInstance().UnregisterAll(this);
+}
+
+//float CEnemy::CalculateCollisionTime(IEntity* other)
+//{
+//	SGD::Vector vel = other->GetVelocity();
+//	vel.
+//}

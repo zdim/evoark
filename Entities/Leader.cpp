@@ -4,6 +4,7 @@
 #include "Ships\Enemies\Coral.h"
 #include "../GameStates/GameplayState.h"
 #include "EntityManager.h"
+#include "../Event System/EventManager.h"
 #include <vector>
 
 std::vector<SGD::Vector> equidistantPointsInCircle(int numPoints, float radius)
@@ -54,6 +55,33 @@ bool CLeader::Assign(const EntityGroup& flock)
 void CLeader::CalculateDestinations()
 {
 	float shipSize = std::max(members[0]->GetSize().width, members[0]->GetSize().height);
+
+	if (state == LeaderState::Backup)
+	{
+		SGD::Size screenSize = CCamera::GetInstance()->GetBoxInWorld().ComputeSize();
+		SGD::Vector fromCall = position - backupCall;
+		if (fromCall.ComputeLength() <= screenSize.width * 3)
+		{
+			std::vector<SGD::Vector> offsets = equidistantPointsInCircle(members.size(), members[0]->GetSize().height * 3);
+			for (unsigned int i = 0; i < members.size(); i++)
+			{
+				destinations[i] = backupCall + offsets[i];
+			}
+			return;
+		}
+		fromCall.Normalize();
+		SGD::Vector offset = fromCall * screenSize.width * 2.5;
+		SGD::Point offscreen = backupCall + offset;
+		std::vector<SGD::Vector> offsets = equidistantPointsInCircle(members.size(), members[0]->GetSize().height * 3);
+		for (unsigned int i = 0; i < destinations.size(); i++)
+		{
+			destinations[i] = offscreen + offsets[i];
+		}
+		Teleport();
+		CalculateDestinations();
+		return;
+	}
+
 	if (target == nullptr)
 	{
 		float radius = std::max(members[0]->GetSize().width, members[0]->GetSize().height);
@@ -125,10 +153,26 @@ bool CLeader::DestinationsOffscreen()
 	return true;
 }
 
+int CLeader::CalculateTotalHull()
+{
+	int ttl = 0;
+	for (unsigned int i = 0; i < members.size(); i++)
+	{
+		ttl += members[i]->getHull();
+	}
+	return ttl;
+}
+
 void CLeader::Update(float dt)
 {
 	timer += dt;
-	//AI not in this user story. Just need a stub to build
+
+	if (state == LeaderState::Backup && !target)
+	{
+		CalculateDestinations();
+		SetDestinations();
+	}
+
 	if (target)
 	{
 		float distance = (members[0]->GetPosition() - target->GetPosition()).ComputeLength();
@@ -143,6 +187,15 @@ void CLeader::Update(float dt)
 		}
 		CalculateDestinations();
 		SetDestinations();
+
+		int currentHull = CalculateTotalHull();
+		if (currentHull < totalHull * 0.25f && !IsBackup() && !calledBackup)
+		{
+			//Send distress event.
+			CCustomEvent* e = new CCustomEvent(EventID::distress, (void*)target, members[0]);
+			e->Queue();
+			calledBackup = true;
+		}
 	}
 	else if (position != home)
 	{
@@ -153,6 +206,7 @@ void CLeader::Update(float dt)
 				if (timer >= teleportDelay && DestinationsOffscreen())
 				{
 					Teleport();
+					position = home;
 				}
 			}
 			else
@@ -167,6 +221,11 @@ void CLeader::Update(float dt)
 			state = LeaderState::Search;
 		}
 	}
+	else if (!position.IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
+		state = LeaderState::Search;
+	else
+		state = LeaderState::Stay;
+
 	position = members[0]->GetPosition();
 }
 
@@ -202,22 +261,36 @@ void CLeader::Remove(IEntity* entity)
 	}
 }
 
+void CLeader::SetBackup(SGD::Point location)
+{
+	if (!target)
+	{
+		state = LeaderState::Backup;
+		backupCall = location;
+		CalculateDestinations();
+		SetDestinations();
+	}
+}
+
 void CLeader::SetTarget(CShip* newTarget)
 {
 	if (target == newTarget)
 		return;
 
-	if ((unsigned int)target == 0xfeeefee)
-	{
-		target = nullptr;
-	}
 	if (target)
 		target->Release();
+	else
+		totalHull = CalculateTotalHull();
 	
 	target = newTarget;
 
 	if (target)
 		target->AddRef();
+	else if (state == LeaderState::Backup)
+	{
+		state = LeaderState::Return;
+		calledBackup = false;
+	}
 
 	for (unsigned int i = 0; i < members.size(); i++)
 	{
@@ -262,4 +335,86 @@ void CLeader::GetEntityData(std::vector<ModularEntityData>& flockData)
 		data.modules = coral->GetModuleData();
 		flockData.push_back(data);
 	}
+}
+
+
+//Coordinator
+Coordinator::Coordinator()
+{
+	CEventManager::GetInstance().Register(this,EventID::distress);
+}
+
+void Coordinator::Unregister()
+{
+	CEventManager::GetInstance().Unregister(this,EventID::distress);
+}
+
+CLeader* Coordinator::GetClosestLeader(CLeader* leader)
+{
+	if (leaders.size() < 2)
+		return nullptr;
+
+	unsigned int closest = 0;
+	if (leaders[0] == leader)
+		closest = 1;
+	for (unsigned int i = closest + 1; i < leaders.size(); i++)
+	{
+		if (leader == leaders[i])
+			continue;
+		SGD::Vector betweenNew = leader->GetPosition() - leaders[i]->GetPosition();
+		float newDistance = betweenNew.ComputeLength();
+		SGD::Vector betweenOld = leader->GetPosition() - leaders[closest]->GetPosition();
+		float oldDistance = betweenOld.ComputeLength();
+
+		if (newDistance < oldDistance)
+		{
+			closest = i;
+		}
+	}
+	return leaders[closest];
+}
+
+void Coordinator::HandleEvent(CCustomEvent* e)
+{
+	EventID id = e->GetID();
+	switch (id)
+	{
+	case EventID::distress:
+	{
+		CShip* target = (CShip*)e->GetData();
+		CEnemy* enemy = dynamic_cast<CEnemy*>(e->GetSender());
+		CLeader* sender = enemy->GetLeader();
+		CLeader* closest = GetClosestLeader(sender);
+		closest->SetBackup(target->GetPosition());
+	}
+	}
+}
+
+void Coordinator::AddLeader(CLeader* l)
+{
+	unsigned int i;
+	for (i = 0; i < leaders.size(); i++)
+	{
+		if (leaders[i] == l)
+			break;
+	}
+	if (i != leaders.size())
+		return;
+
+	leaders.push_back(l);
+}
+
+void Coordinator::RemoveLeader(CLeader* l)
+{
+	unsigned int i;
+	for (i = 0; i < leaders.size(); i++)
+	{
+		if (l == leaders[i])
+			break;
+	}
+	
+	if (i == leaders.size())
+		return;
+
+	leaders.erase(leaders.begin() + i);
 }

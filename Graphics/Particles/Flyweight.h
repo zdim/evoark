@@ -91,7 +91,7 @@ public:
 	unsigned char GetEndG()     { return endG; }
 	unsigned char GetEndB()     { return endB; }
 
-
+	void Terminate(); 
 
 
 
