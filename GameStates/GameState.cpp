@@ -263,7 +263,7 @@ void	CTestLevelState::Render(void)
 
 		EntityManager->Render();
 
-		UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator(), EntityManager->GetStargate());
+		UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator(), EntityManager->GetStargate(), EntityManager->GetLeaderPositions());
 	}
 	else if (m_bLoaded == false)
 	{
@@ -358,12 +358,36 @@ void	CTestLevelState::Generate()
 				case HUMAN:
 					if (genLevel == false)
 					{
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 2 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 1 && _alliesSpawned == 4 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 2 && _alliesSpawned == 6 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 3 && _alliesSpawned == 8 ) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 4 && _alliesSpawned == 10) break;
-						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 5 && _alliesSpawned == 12) break;
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved == 0 && _alliesSpawned == 2)
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 1 && _alliesSpawned == 4)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 2 && _alliesSpawned == 6)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 3 && _alliesSpawned == 8)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 4 && _alliesSpawned == 10)						
+						{
+							_alliesSpawned++;
+							break;
+						}
+						if (CGameplayState::GetInstance()->GetSaveData().waveStat.alliesSaved <= 5 && _alliesSpawned == 12)
+						{
+							_alliesSpawned++;
+							break;
+						}
 					}
 					EntityManager->Spawn(EntityType::Human, col[j].pos, 1);
 					_alliesSpawned++;
@@ -729,98 +753,94 @@ IEntity* CTestLevelState::GetPlayer()
 	return player;
 }
 
-void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntity* _coordinator, IEntity* _stargate)
+void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntity* _coordinator, IEntity* _stargate, std::vector<SGD::Point> _leaders)
 {
 	// set hullbar
 	SGD::Rectangle hullBox = {
 		m_nScreenWidth * .33f,
-		m_nScreenHeight * .92f,
+		m_nScreenHeight * .86f,
 		m_nScreenWidth * .66f,
-		m_nScreenHeight * .95f
+		m_nScreenHeight * .88f
 	};
 
 	// display player's hull percentage
 	SGD::Rectangle hull = {
 		m_nScreenWidth * .33f,
-		m_nScreenHeight * .92f,
+		m_nScreenHeight * .86f,
 		m_nScreenWidth * .33f * _player->getHull() / _player->getMaxHull() + m_nScreenWidth * .33f,
-		m_nScreenHeight * .95f
+		m_nScreenHeight * .88f
 	};
 
 	// set shield bar
 	SGD::Rectangle shieldBox = {
 		m_nScreenWidth * .33f,
-		m_nScreenHeight * .87f,
+		m_nScreenHeight * .83f,
 		m_nScreenWidth * .66f,
-		m_nScreenHeight * .90f };
+		m_nScreenHeight * .85f };
 
 	// display player's shield percentange
 	SGD::Rectangle shield = {
 		m_nScreenWidth * .33f,
-		m_nScreenHeight * .87f,
+		m_nScreenHeight * .83f,
 		m_nScreenWidth * .33f * _player->GetShield() / _player->GetMaxShield() + m_nScreenWidth * .33f,
-		m_nScreenHeight * .90f };
+		m_nScreenHeight * .85f };
 
 	// experience bar
 	SGD::Rectangle expBox = {
 		m_nScreenWidth * .25f,
-		m_nScreenHeight * .97f,
+		m_nScreenHeight * .89f,
 		m_nScreenWidth * .75f,
-		m_nScreenHeight * .98f
+		m_nScreenHeight * .90f
 	};
 
 	SGD::Rectangle exp = {
 		m_nScreenWidth * .25f,
-		m_nScreenHeight * .97f,
+		m_nScreenHeight * .89f,
 		m_nScreenWidth * .50f * _player->GetExp() / _player->GetReqExp() + m_nScreenWidth * .25f,
-		m_nScreenHeight * .98f
+		m_nScreenHeight * .90f
 	};
 
-	// set gravity well box
 	SGD::Rectangle wellBox = {
-		m_nScreenWidth * .40f,
-		m_nScreenHeight * .8f,
-		m_nScreenWidth * .44f,
-		m_nScreenHeight * .85f };
+		{ m_nScreenWidth * .42f,
+		m_nScreenHeight * .78f },
+		SGD::Size{ 32, 32 } };
 
 	// gravity well cooldown calculation
 	float wellCooldownPercentage = _player->GetWellTimer() / _player->GetWellDelay();
 
 	SGD::Rectangle wellCD = {
 		wellBox.left,
-		wellBox.top + m_nScreenHeight * .05f * wellCooldownPercentage,
+		wellBox.top + 32 * wellCooldownPercentage,
 		wellBox.right,
 		wellBox.bottom };
 
 	// set gravity push box
 	SGD::Rectangle pushBox = {
-		m_nScreenWidth * .48f,
-		m_nScreenHeight * .8f,
-		m_nScreenWidth * .52f,
-		m_nScreenHeight * .85f };
+		{ m_nScreenWidth * .48f,
+		m_nScreenHeight * .78f },
+		SGD::Size{ 32, 32 } };
 
 	// gravity push cooldown calculation
 	float pushCooldownPercentage = _player->GetPushTimer() / _player->GetPushDelay();
 
 	SGD::Rectangle pushCD = {
 		pushBox.left,
-		pushBox.top + m_nScreenHeight * .05f * pushCooldownPercentage,
+		pushBox.top + 32 * pushCooldownPercentage,
 		pushBox.right,
 		pushBox.bottom };
 
 	// set warp box
 	SGD::Rectangle warpBox = {
-		m_nScreenWidth * .56f,
-		m_nScreenHeight * .8f,
-		m_nScreenWidth * .60f,
-		m_nScreenHeight * .85f };
+		{ m_nScreenWidth * .54f,
+		m_nScreenHeight * .78f },
+		SGD::Size{ 32, 32 } };
 
 	// warp cooldown calculation
 	float warpCooldownPercentage = _player->GetWarpTimer() / _player->GetWarpDelay();
 
 	SGD::Rectangle warpCD = {
 		warpBox.left,
-		warpBox.top + m_nScreenHeight * .05f * warpCooldownPercentage,
+		warpBox.top + 32 * warpCooldownPercentage,
 		warpBox.right,
 		warpBox.bottom };
 
@@ -861,6 +881,29 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 				graphics->DrawTexture(objArrow, coordArrowPos, coordArrowRot, {}, { 200, 200, 50, 0 }, { .15f, .15f });
 			}
 		}
+
+		if (!_coordinator)
+		{
+			for (unsigned int i = 0; i < _leaders.size(); i++)
+			{
+				SGD::Vector toTarget = _leaders[i] - _player->GetPosition();
+				float leaderDistance = toTarget.ComputeLength();
+				//std::ostringstream oss;
+				//oss << allyDistance;
+				if (leaderDistance > 400)
+				{
+					toTarget.Normalize();
+
+					SGD::Point arrowPos = { m_nScreenWidth * .5f, m_nScreenHeight * .5f };
+					arrowPos += toTarget * 200;
+					float arrowRot = atan2(_leaders[i].y - _player->GetPosition().y, _leaders[i].x - _player->GetPosition().x) + SGD::PI * .5f;
+
+					graphics->DrawTexture(objArrow, arrowPos, arrowRot, {}, { 200, 200, 50, 50 }, { .1f, .1f });
+					//graphics->DrawString(oss.str().c_str(), { arrowPos.x, arrowPos.y + 20 });
+				}
+			}
+		}
+
 		if (_stargate)
 		{
 		SGD::Vector toStargate = _stargate->GetPosition() - _player->GetPosition();
@@ -888,19 +931,19 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	graphics->DrawRectangle(shieldBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
 
 	// draw well
-	graphics->DrawTexture(_player->GetWellIcon(), { wellBox.left, wellBox.top }, 0, {}, {}, { .6f, .6f });
+	graphics->DrawTexture(_player->GetWellIcon(), { wellBox.left, wellBox.top });
 	if (_player->GetWellTimer() < _player->GetWellDelay())
 		graphics->DrawRectangle(wellCD, SGD::Color{ 150, 200, 0, 0 });
 	graphics->DrawRectangle(wellBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
 
 	// draw push
-	graphics->DrawTexture(_player->GetPushIcon(), { pushBox.left, pushBox.top }, 0, {}, {}, { .6f, .6f });
+	graphics->DrawTexture(_player->GetPushIcon(), { pushBox.left, pushBox.top });
 	if (_player->GetPushTimer() < _player->GetPushDelay())
 		graphics->DrawRectangle(pushCD, SGD::Color{ 150, 200, 0, 0 });
 	graphics->DrawRectangle(pushBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
 
 	// draw warp
-	graphics->DrawTexture(_player->GetWarpIcon(), { warpBox.left, warpBox.top }, 0, {}, {}, { .6f, .6f });
+	graphics->DrawTexture(_player->GetWarpIcon(), { warpBox.left, warpBox.top });
 	if (_player->GetWarpTimer() < _player->GetWarpDelay())
 		graphics->DrawRectangle(warpCD, SGD::Color{ 150, 200, 0, 0 });
 	graphics->DrawRectangle(warpBox, { 50, 30, 30, 30 }, { 255, 255, 255 }, 1);
@@ -908,7 +951,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	// draw level
 	std::ostringstream levelString;
 	levelString << _player->GetLevel();
-	Game::GetInstance()->Font.WriteCenter(SGD::Rectangle{ m_nScreenWidth * .26f, m_nScreenHeight * .90f, m_nScreenWidth * .31f, m_nScreenHeight * .97f }, levelString.str().c_str());
+	Game::GetInstance()->Font.WriteCenter(SGD::Rectangle{ m_nScreenWidth * .26f, m_nScreenHeight * .8f, m_nScreenWidth * .31f, m_nScreenHeight * .92f }, levelString.str().c_str());
 }
 
 void CTestLevelState::Save()

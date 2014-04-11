@@ -113,7 +113,7 @@ private:
 
 
 	// UI rendering
-	void UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntity* _coordinator, IEntity* _stargate);
+	void UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntity* _coordinator, IEntity* _stargate, std::vector<SGD::Point> _leaders);
 	SGD::HTexture objArrow = SGD::INVALID_HANDLE;
 };
 
