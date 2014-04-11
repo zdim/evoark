@@ -13,6 +13,7 @@ CPushModule::CPushModule()
 
 CPushModule::~CPushModule()
 {
+
 }
 
 void CPushModule::Activate()
