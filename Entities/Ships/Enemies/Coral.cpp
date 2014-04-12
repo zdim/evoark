@@ -14,12 +14,13 @@ CCoral::CCoral()
 	modules.resize(count);
 	modules[engine] = new CEngine();
 	modules[cockpit] = new CModule();
-	m_pShield = new CModuleShield();
+
+	m_pShield = new CModuleShield(this);
 
 	modules[shieldModule] = new CShieldModule();
 	
 	m_pShield->SetOwner(dynamic_cast<CShieldModule*>(modules[shieldModule]));
-	m_pShield->SetOwnerShip(this);
+	m_pShield->SetSize({ 175, 175 });
 
 	
 	modules[laser] = new CLaserModule();

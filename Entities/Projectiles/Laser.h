@@ -24,7 +24,7 @@ public:
 	IEntity* GetOwner(void){return owner;}
 	void SetOwner(IEntity* _owner);
 
-	//void AddGravity(SGD::Vector grav) override;
+	void AddGravity(SGD::Vector grav) override;
 
 	SGD::HAudio SetSound() {return hitSound;}
 	void SetSound(SGD::HAudio newSound) {hitSound = newSound;}
