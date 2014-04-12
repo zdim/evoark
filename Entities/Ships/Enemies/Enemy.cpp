@@ -67,37 +67,12 @@ void CEnemy::Update(float dt)
 			SetAvoid(nullptr);
 	}
 
-	if (position != destination)
+	SGD::Vector forward = { 0, -1 };
+	forward.Rotate(rotation);
+	SGD::Vector dir;
+	if(avoid)
 	{
-		SGD::Vector dir = destination - position;
-		float distance = dir.ComputeLength();
-		dir.Normalize();
-		if (avoid)
-		{
-			SGD::Vector forward = { 0, -1 };
-			forward.Rotate(rotation);
-			SGD::Vector avoidDir = avoid->GetVelocity();
-			avoidDir.Normalize();
-			float clockwise = avoidDir.ComputeSteering(forward);
-			if (clockwise > 0)
-				avoidDir.Rotate(SGD::PI * -0.5f);
-			else
-				avoidDir.Rotate(SGD::PI * 0.5f);
-			dir = avoidDir;
-		}
-		
-		if (distance >= speed || avoid)
-		{
-			velocity = dir * speed;
-		}
-		else
-			velocity = dir * distance;
-	}
-	else if (avoid)
-	{
-		SGD::Vector forward = { 0, -1 };
-		forward.Rotate(rotation);
-		SGD::Vector dir = avoid->GetVelocity();
+		dir = avoid->GetVelocity();
 		dir.Normalize();
 		float clockwise = dir.ComputeSteering(forward);
 		if (clockwise > 0)
@@ -105,9 +80,31 @@ void CEnemy::Update(float dt)
 		else
 			dir.Rotate(SGD::PI * 0.5f);
 		velocity = dir * speed;
+		float strafeAngle = forward.ComputeAngle(dir);
+		strafeAngle /= SGD::PI;
+		strafeAngle = 1 - strafeAngle;
+		velocity *= strafeAngle;
+	}
+	else if (position != destination)
+	{
+		dir = destination - position;
+		float distance = dir.ComputeLength();
+		dir.Normalize();
+		if (distance >= speed || avoid)
+		{
+			velocity = dir * speed;
+		}
+		else
+			velocity = dir * distance;
+		float strafeAngle = forward.ComputeAngle(dir);
+		strafeAngle /= SGD::PI;
+		strafeAngle = 1 - strafeAngle;
+		velocity *= strafeAngle;
 	}
 	else
+	{
 		velocity = {0,0};
+	}
 
 	//Add evasive direction to velocity
 

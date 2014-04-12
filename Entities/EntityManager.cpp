@@ -872,20 +872,8 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 	{
 		for (unsigned int i = 0; i < small.size(); i++)
 		{
-			if (!small[i]->GetRect().IsIntersecting(screen))
-			{
-				if ((small[i]->GetType() >= (int)EntityType::Player && small[i]->GetType() <= (int)EntityType::Moccasin)
-					|| small[i]->GetType() == (int)EntityType::ModuleShield)
-					continue;
-			}
 			for (unsigned int j = i + 1; j < big.size(); j++)
 			{
-				if (!big[j]->GetRect().IsIntersecting(screen))
-				{
-					if ((big[j]->GetType() >= (int)EntityType::Player && big[j]->GetType() <= (int)EntityType::Moccasin)
-						|| big[j]->GetType() == (int)EntityType::ModuleShield)
-						continue;
-				}
 				if (ShapedCollisions(small[i], big[j]))
 				{
 					small[i]->HandleCollision(big[j]);
@@ -898,20 +886,8 @@ void CEntityManager::CheckCollision(EntityGroup& group1, EntityGroup& group2)
 	{
 		for (unsigned int i = 0; i < small.size(); i++)
 		{
-			if (!small[i]->GetRect().IsIntersecting(screen))
-			{
-				if ((small[i]->GetType() >= (int)EntityType::Player && small[i]->GetType() <= (int)EntityType::Moccasin)
-					|| small[i]->GetType() == (int)EntityType::ModuleShield)
-					continue;
-			}
 			for (unsigned int j = 0; j < big.size(); j++)
 			{
-				if (!big[j]->GetRect().IsIntersecting(screen))
-				{
-					if ((big[j]->GetType() >= (int)EntityType::Player && big[j]->GetType() <= (int)EntityType::Moccasin)
-						|| big[j]->GetType() == (int)EntityType::ModuleShield)
-						continue;
-				}
 				if (ShapedCollisions(small[i], big[j]))
 				{
 					small[i]->HandleCollision(big[j]);
