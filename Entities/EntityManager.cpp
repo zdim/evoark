@@ -74,7 +74,7 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Planet] = graphics->LoadTexture("Resources/Graphics/planet.png");
 	images[(int)EntityType::Barrier] = graphics->LoadTexture("Resources/Graphics/wallTile.png");
 	images[(int)EntityType::Asteroid] = graphics->LoadTexture("Resources/Graphics/asteroid.png");
-	images[(int)EntityType::Shield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
+	images[(int)EntityType::Shield] = graphics->LoadTexture("Resources/Graphics/Shield.png", { 1, 0, 0, 0 });
 	images[(int)EntityType::ModuleShield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
 	images[(int)EntityType::RepairStation] = graphics->LoadTexture("Resources/Graphics/station.png", { 0, 0, 0, 0 });
 

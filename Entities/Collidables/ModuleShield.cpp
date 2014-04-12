@@ -12,7 +12,7 @@
 
 CModuleShield::CModuleShield()
 { 
-	size = { 360, 360 }; 
+	size = { 175, 175 };
 	m_pSystem = CParticleSystem::GetInstance();
 
 	m_eShieldDown = new CEmitter(
