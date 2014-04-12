@@ -2,6 +2,7 @@
 #include <list>
 #include "Particle.h"
 #include "Flyweight.h"
+#include "../../Entities/Ships/Ship.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 
 class CEmitter
@@ -20,7 +21,7 @@ private:
 	bool                   m_bLoop;
 	float                  m_fEmitTime;
 	float                  m_fSavedEmitTime;
-	
+	CShip*                 m_pShipOwner;
 
 
 
@@ -47,6 +48,7 @@ public:
 	float      GetSpawnTimeFromLastSpawn() { return m_fTimeFromLastSpawn; }
 	bool       GetEmitType() { return m_bLoop; }
 	float      GetEmitTime() { return m_fEmitTime; }
+	void       SetOwner(CShip* p)    { m_pShipOwner = p; }
 
 };
 

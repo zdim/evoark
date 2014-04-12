@@ -14,6 +14,8 @@
 #include "../../GameStates/GameplayState.h"
 #include "../Collidables/EventTrigger.h"
 
+#include "../../Graphics/Particles/ParticleSystem.h"
+
 #define SHIELD_SCALE 100
 #define HULL_SCALE 200
 
@@ -34,6 +36,10 @@ CPlayer::CPlayer()
 	expRequired = 100;
 	level = 0;
 	perks = 5;
+
+	size = { 60, 89 };
+
+	imageSize = { 64, 128 };
 	
 	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/wellIconPurple32.png");
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushIconPurple32.png");
@@ -41,6 +47,11 @@ CPlayer::CPlayer()
 	
 	for (int i = 0; i < 4; i++) tutorialWaitForInput[i] = false;
 	for (int i = 0; i < 4; i++) tutorialTriggerHit[i] = false;
+
+	m_Engine = CParticleSystem::GetInstance()->GetParticleEffect(5);
+
+	m_Engine->Initialize();
+	m_Engine->SetOwner(this);
 }
 
 
@@ -53,6 +64,16 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update(float dt)
 {
+	//SGD::Point test = {position.x
+
+	SGD::Vector rotatedOffset = { 0,45 };
+	rotatedOffset.Rotate(rotation);
+	enginePos = position + rotatedOffset;
+
+
+	m_Engine->SetEmitterPosition(enginePos);
+	m_Engine->Update(dt);
+
 	if (damaged > 0)
 		damaged -= dt;
 	if (damaged < 0)
@@ -129,11 +150,16 @@ void CPlayer::Update(float dt)
 		dir.x += 1;
 	if (dir != SGD::Vector{0, 0})
 		dir.Normalize();
+
+
 	 //commented out until finished implementing - was messing up standard input
 	if (warpTimer < warpDuration)
 		velocity = dir * (speed + warpSpeed);
 	else
+	{
 		velocity = dir * speed;
+	}
+	
 
 	//SGD::Point mousePos = { 0, 0 };
 
@@ -191,14 +217,21 @@ void CPlayer::Update(float dt)
 
 void CPlayer::Render()
 {
+
+	m_Engine->Render();
+
+	SGD::Rectangle rShipRegion = SGD::Rectangle (SGD::Point{ 0, 0 }, size);
+	
 	SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
+	
 	SGD::Point renderPoint = offsetToCamera();
 	SGD::Color col = {};
 	if (damaged > 0)
 	{
 		col = { 155, 155, 155 };
 	}
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, col, scale);
+	
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint,rShipRegion, rotation, size / 2, col );
 }
 
 void CPlayer::AddGravity(SGD::Vector grav)

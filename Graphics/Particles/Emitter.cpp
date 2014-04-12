@@ -4,6 +4,7 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include "../../Camera.h"
+#include "../../Entities/Ships/Player.h"
 //#include <stdlib.h>
 
 CEmitter::CEmitter()
@@ -18,10 +19,12 @@ CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, int s, SGD::Point ePosi
 	emitterPosition = ePosition;
 	m_nNumParticles = nParticles;
 	m_fSpawnRate = fSpawnRate;
-	m_fTimeFromLastSpawn = 12;
+	m_fTimeFromLastSpawn = fTimeFromLastSpawn;
 	m_bLoop = emway;
 	m_fEmitTime = emitTime;
 	m_fSavedEmitTime = emitTime;
+
+	m_pShipOwner = nullptr;
 }
 
 CEmitter::~CEmitter()
@@ -48,7 +51,7 @@ void CEmitter::Reset()
 
 void CEmitter::Update(float deltaTime)
 {
-	//m_fTimeFromLastSpawn 
+	m_fTimeFromLastSpawn += deltaTime;
 	m_fEmitTime -= deltaTime;
 
 	if (m_fTimeFromLastSpawn >= m_fSpawnRate)
@@ -106,10 +109,23 @@ void CEmitter::Update(float deltaTime)
 			}
 
 		}
+
+
+		if (m_pShipOwner != nullptr)
+		{
+			float speed = (*it)->GetCurSpeed().ComputeLength();
+			SGD::Vector dir = { 0, 1 };
+			dir.Rotate(m_pShipOwner->GetRotation());
+			(*it)->SetCurSpeed(dir * speed);
+		}
+		
+
+		
 		(*it)->SetCurPos((*it)->GetCurPos() + ((*it)->GetCurSpeed() * deltaTime));
 #pragma endregion
 
-		(*it)->SetCurRotation((*it)->GetCurRotation() + (particleData->GetRotaionSpeed() / 2 * deltaTime));
+
+
 
 
 		// Calculating the life of One particle 
@@ -135,6 +151,8 @@ void CEmitter::Update(float deltaTime)
 		SGD::Color curColor((int)A, (int)R, (int)G, (int)B);
 
 		(*it)->SetCurColor(curColor);
+
+		//(*it)->SetCurRotation();
 #pragma endregion 
 	
 		SGD::Size curSize { particleData->GetEndScale().width + fLifeCycle * (particleData->GetStartScale().width - particleData->GetEndScale().width),
@@ -168,6 +186,8 @@ void CEmitter::Render()
 
 		tPoint += CCamera::GetInstance()->GetOffset();
 
+		
+	
 		SGD::GraphicsManager::GetInstance()->DrawTexture(particleData->GetImage(), tPoint, (*it)->GetCurRotation(),
 			particleData->GetRotationOffset(), (*it)->GetCurColor(), (*it)->GetCurScale());
 	}
@@ -213,7 +233,11 @@ CParticle CEmitter::CreateParticle()
 
 	}
 
-	return CParticle (tempColor, ppositionn, randLife, particleData->GetMinSpeed(), tScale, 0);
+
+	if (m_pShipOwner != nullptr)
+	return CParticle(tempColor, ppositionn, randLife, particleData->GetMinSpeed(), tScale, m_pShipOwner->GetRotation());
+
+	return CParticle(tempColor, ppositionn, randLife, particleData->GetMinSpeed(), tScale, 0);
 
 }
 

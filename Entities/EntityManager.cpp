@@ -47,7 +47,7 @@ void CEntityManager::Initialize()
 	{
 		images[i] = SGD::INVALID_HANDLE;
 	}
-	images[(int)EntityType::Player] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	images[(int)EntityType::Player] = graphics->LoadTexture("Resources/Graphics/Ships/VG_EvoArk.png");
 	images[(int)EntityType::Human] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 	images[(int)EntityType::Copperhead] = graphics->LoadTexture("Resources/Graphics/Ship1.png", { 0, 0, 0 });
 	images[(int)EntityType::Cobra] = graphics->LoadTexture("Resources/Graphics/Ship3.png");
@@ -77,6 +77,8 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Shield] = graphics->LoadTexture("Resources/Graphics/Shield.png", { 1, 0, 0, 0 });
 	images[(int)EntityType::ModuleShield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
 	images[(int)EntityType::RepairStation] = graphics->LoadTexture("Resources/Graphics/station.png", { 0, 0, 0, 0 });
+
+
 
 }
 
@@ -135,7 +137,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							   player = new CPlayer();
 							   player->SetImage(images[(int)EntityType::Player]);
 							   player->SetPosition(position);
-							   player->SetSize({ 32, 32 });
+							   //player->SetSize({ 60, 89 });
 							   dynamic_cast<CPlayer*>(player)->SetStats(CGameplayState::GetInstance()->GetSaveData().playerStat);
 							   dynamic_cast<CPlayer*>(player)->SetShield(shield);
 							   //player->SetImageSize({ 384, 415 });
@@ -1363,11 +1365,11 @@ void CEntityManager::Load()
 			CShield* shield = new CShield();
 			shield->SetPosition(save.world.entities[i].position);
 			shield->SetImage(images[(int)EntityType::Shield]);
-
+			shield->SetSize({ 100, 100 });
 			player = new CPlayer();
 			player->SetImage(images[(int)EntityType::Player]);
 			player->SetPosition(save.world.entities[i].position);
-			player->SetSize({ 32, 32 });
+			//player->SetSize({ 64, 128 });
 			player->SetStats(CGameplayState::GetInstance()->GetSaveData().playerStat);
 			player->SetShield(shield);
 			player->setSpeed(200);

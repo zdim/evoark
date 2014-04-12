@@ -49,8 +49,8 @@ void CParticleSystem::Init()
 	LoadEffect(efName3);
 	std::string efName4 = "ShieldDown.xml";
 	LoadEffect(efName4);
-	//std::string efName5 = "ShieldDown.xml";
-	//LoadEffect(efName5);
+	std::string efName5 = "EnginePlayer.xml";
+	LoadEffect(efName5);
 	//std::string efName6 = "ShieldDown.xml";
 	//LoadEffect(efName6);
 
