@@ -104,18 +104,18 @@ void CLaser::HandleCollision(IEntity* other)
 
 }
 
-//void CLaser::AddGravity(SGD::Vector grav)
-//{
-//	float speed = velocity.ComputeLength();
-//	grav.Normalize();
-//	SGD::Vector dir = velocity;
-//	dir.Normalize();
-//	float angle = dir.ComputeAngle(grav);
-//	angle *= -dir.ComputeSteering(grav);
-//	angle *= 0.5f;
-//	dir.Rotate(angle);
-//	velocity = dir * speed;
-//}
+void CLaser::AddGravity(SGD::Vector grav)
+{
+	float speed = velocity.ComputeLength();
+	grav.Normalize();
+	SGD::Vector dir = velocity;
+	dir.Normalize();
+	float angle = dir.ComputeAngle(grav);
+	angle *= dir.ComputeSteering(grav);
+	angle *= 0.5f;
+	dir.Rotate(angle);
+	velocity = dir * speed;
+}
 
 void CLaser::SetOwner(IEntity* _owner)
 {
