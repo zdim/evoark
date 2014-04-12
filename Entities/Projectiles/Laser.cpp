@@ -115,6 +115,8 @@ void CLaser::AddGravity(SGD::Vector grav)
 	angle *= 0.5f;
 	dir.Rotate(angle);
 	velocity = dir * speed;
+	SGD::Vector forward = {0,-1};
+	rotation = forward.ComputeAngle(dir);
 }
 
 void CLaser::SetOwner(IEntity* _owner)
