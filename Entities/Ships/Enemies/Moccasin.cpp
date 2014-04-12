@@ -18,6 +18,7 @@ CMoccasin::CMoccasin()
 	m_bStationsUP = false;
 	m_nNumberOfShips = 1;
 	speed = 25;
+	m_pShield->SetSize({ 325, 325 });
 }
 
 
