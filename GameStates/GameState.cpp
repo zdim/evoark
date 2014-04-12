@@ -170,7 +170,7 @@ bool	CTestLevelState::Input(void)
 		Game::GetInstance()->PopState();
 		return false;
 	}
-	if (input->IsKeyPressed(SGD::Key::Escape))
+	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 7))
 	{
 		Game::GetInstance()->PushState(CPauseState::GetInstance());
 		return true;
@@ -678,7 +678,10 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										switch (lMsg->GetProjType())
 										{
 										case EntityType::Laser:
-											CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser, false);
+											if (lMsg->GetTier() < 3)
+												CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser, false);
+											else
+												CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaserFinal, false);
 											break;
 										case EntityType::Missile:
 											CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerMissile, false);

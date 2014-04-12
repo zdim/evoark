@@ -79,6 +79,8 @@ public:
 
 	ILevelState* GetLevelState();
 
+	IGameState* GetTopState() { return m_qStates.back(); }
+
 	bool GetFullscreen() { return !m_bWindowed; }
 	void SetFullscreen(bool _fullscreen) { m_bWindowed = !_fullscreen; }
 //	std::string GetAppDataPath();

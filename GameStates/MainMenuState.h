@@ -10,6 +10,18 @@ class CMainMenuState :
 
 	CMainMenuState();
 	virtual ~CMainMenuState();
+
+	SGD::HTexture backgroundStars1 = SGD::INVALID_HANDLE;
+	SGD::HTexture backgroundStars2 = SGD::INVALID_HANDLE;
+	SGD::HTexture backgroundSmoke = SGD::INVALID_HANDLE;
+
+	//SGD::Point backgroundStars1Pos = SGD::Point{ 0, 0 };
+	SGD::Point backgroundStars2Pos = SGD::Point{ 0, 0 };
+	SGD::Point backgroundStars2PosSecond = SGD::Point{ 1024, 0 };
+
+	SGD::Point backgroundSmokePos = SGD::Point{ 0, 0 };
+	SGD::Point backgroundSmokePosSecond = SGD::Point{ 1024, 0 };
+
 public:
 
 	static CMainMenuState* GetInstance();

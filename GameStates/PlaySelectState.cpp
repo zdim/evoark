@@ -58,7 +58,7 @@ void CPlaySelectState::Enter()
 	buttons[menuReturn::loadgame] = "Load Game";
 	buttons[menuReturn::tutorial] = "Tutorial";
 	buttons[menuReturn::back] = "Back";
-	menu = new CMenu(&Game::GetInstance()->Font, buttons, "EvoArk", true);
+	menu = new CMenu(&Game::GetInstance()->Font, buttons, "EvoArk", { 0, 0 }, true);
 }
 
 void CPlaySelectState::Exit()
