@@ -292,7 +292,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 									 return;
 								 stargate = new Trigger();
 								 stargate->SetImage(images[(int)EntityType::Stargate]);
-								 stargate->SetSize({ 64, 64 });
+								 stargate->SetSize({ 256, 256 });
 								 stargate->SetPosition(position);
 								 CVictoryMessage* msg = new CVictoryMessage;
 								 dynamic_cast<Trigger*>(stargate)->Assign(msg);
@@ -615,7 +615,7 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 									 return;
 								 stargate = new Trigger();
 								 stargate->SetImage(images[(int)EntityType::Stargate]);
-								 stargate->SetSize(size);
+								 stargate->SetSize({ 256, 256 });
 								 stargate->SetPosition(position);
 								 CVictoryMessage* msg = new CVictoryMessage;
 								 dynamic_cast<Trigger*>(stargate)->Assign(msg);
