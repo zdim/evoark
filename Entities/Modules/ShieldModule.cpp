@@ -5,8 +5,8 @@ CShieldModule::CShieldModule()
 {
 	
 	cooldown = 4;
-	shield = 500;
-	shieldMax = 500;
+	shield = 25;
+	shieldMax = 25;
 }
 
 

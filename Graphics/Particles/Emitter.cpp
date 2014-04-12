@@ -18,7 +18,7 @@ CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, int s, SGD::Point ePosi
 	emitterPosition = ePosition;
 	m_nNumParticles = nParticles;
 	m_fSpawnRate = fSpawnRate;
-	m_fTimeFromLastSpawn = 0;
+	m_fTimeFromLastSpawn = 12;
 	m_bLoop = emway;
 	m_fEmitTime = emitTime;
 	m_fSavedEmitTime = emitTime;
@@ -48,7 +48,7 @@ void CEmitter::Reset()
 
 void CEmitter::Update(float deltaTime)
 {
-	m_fTimeFromLastSpawn += deltaTime;
+	//m_fTimeFromLastSpawn 
 	m_fEmitTime -= deltaTime;
 
 	if (m_fTimeFromLastSpawn >= m_fSpawnRate)

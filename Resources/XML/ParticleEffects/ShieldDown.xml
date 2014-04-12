@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ParticleEffect>
-  <Emittor NumOfParticles="50" SpawnRate="0.04" TimeFromLastSpawn="0.02" Shape="1" Radius="0" EmitBool="False" EmitTime="0.3" PosX="299" PosY="306" Width="1" Height="1" />
-  <Particle Image="basic blur.png" StartScaleX="0" StartYScale="0" EndXScale="6" EndYScale="6" StartColorA="56" StartColorR="255" StartColorG="255" StartColorB="255" EndColorA="0" EndColorR="255" EndColorG="255" EndColorB="255" SpeedMinX="0" SpeedMinY="0" SpeedMaxX="0" SpeedMaxY="0" LifeMax="0.5" LifeMin="1.01" RotationSpeed="0" Enertia="0" />
+  <Emittor NumOfParticles="50" SpawnRate="0.04" TimeFromLastSpawn="0.04" Shape="1" Radius="0" EmitBool="False" EmitTime="0.3" PosX="250" PosY="317" Width="1" Height="1" />
+  <Particle Image="basic blur.png" StartScaleX="1.3" StartYScale="1.3" EndXScale="0" EndYScale="0" StartColorA="25" StartColorR="255" StartColorG="255" StartColorB="255" EndColorA="0" EndColorR="255" EndColorG="255" EndColorB="255" SpeedMinX="0" SpeedMinY="0" SpeedMaxX="0" SpeedMaxY="0" LifeMax="0.5" LifeMin="1.01" RotationSpeed="0" Enertia="0" />
 </ParticleEffect>
