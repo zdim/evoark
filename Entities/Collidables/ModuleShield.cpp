@@ -10,10 +10,14 @@
 #include "../../Graphics/Particles/Emitter.h"
 
 
-CModuleShield::CModuleShield()
+CModuleShield::CModuleShield(CShip* p)
 { 
-	size = { 175, 175 };
+	m_pOwnerShip = p;
 
+	/*if (m_pOwnerShip->GetType() == (int)EntityType::Coral)
+		size = { 175, 175 };
+	else if (m_pOwnerShip->GetType() == (int)EntityType::Moccasin)
+		size = { 300, 300 };*/
 
 	m_pSystem = CParticleSystem::GetInstance();
 

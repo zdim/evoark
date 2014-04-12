@@ -11,7 +11,7 @@ class CModuleShield : public Stationary
 	CEmitter* m_eShieldDown;
 	CParticleSystem* m_pSystem;
 public:
-	CModuleShield();
+	CModuleShield(CShip* p);
 	~CModuleShield();
 	int GetType() override { return (int)EntityType::ModuleShield; }
 	bool IsCircle() override { return true; }
