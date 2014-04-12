@@ -14,7 +14,7 @@ CMamba::~CMamba()
 
 void CMamba::Update(float dt)
 {
-	if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
+	if (CEntityManager::GetInstance()->GetPlayer() && CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
 		return;
 
 	SGD::Vector dir = CCopperhead::AI(dt);

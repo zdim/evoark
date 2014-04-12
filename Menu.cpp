@@ -6,7 +6,7 @@
 #include "SoundBox.h"
 #include <algorithm>
 
-CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _label, bool fillWindow, bool _horizontal, SGD::Size buttonPadding, SGD::Size menuPadding, SGD::Size buttonSpacing)
+CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _label, SGD::Point topMidPos, bool centered, bool fillWindow, bool _horizontal, SGD::Size buttonPadding, SGD::Size menuPadding, SGD::Size buttonSpacing)
 {
 	font = _font;
 	label = _label;
@@ -40,9 +40,20 @@ CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _labe
 		menuSize.width = std::max(menuSize.width, labelSize.width + buttonSpacing.width * 2);
 		menuSize.height = buttonSize.height * buttons.size() + labelSize.height + buttonSpacing.height * (buttons.size() + 2);
 	}
+	
 	SGD::Point menuTL;
-	menuTL.x = (Game::GetInstance()->GetScreenWidth() - menuSize.width)/2;
-	menuTL.y = (Game::GetInstance()->GetScreenHeight() - menuSize.height)/2;
+
+	if (topMidPos == SGD::Point{ 0, 0 })
+	{
+		menuTL.x = (Game::GetInstance()->GetScreenWidth() - menuSize.width) / 2;
+		menuTL.y = (Game::GetInstance()->GetScreenHeight() - menuSize.height) / 2;
+	}
+
+	else
+	{
+		menuTL.x = topMidPos.x - menuSize.width * .5f;
+		menuTL.y = topMidPos.y;
+	}
 
 	box = SGD::Rectangle(menuTL, menuSize);
 	SGD::Point buttonTL;
@@ -50,9 +61,13 @@ CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _labe
 	{
 		buttonTL.x = menuTL.x + buttonSpacing.width;
 	}
-	else
+	else if (centered)
 	{
 		buttonTL.x = (menuSize.width - buttonSize.width) / 2 + menuTL.x + buttonSpacing.width;
+	}
+	else if (!horizontal && !centered)
+	{
+		buttonTL.x = menuTL.x + 10;
 	}
 	buttonTL.y = menuTL.y + buttonSpacing.height;
 
@@ -184,17 +199,19 @@ int CMenu::Input()
 void CMenu::Render()
 {
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
-	graphics->DrawRectangle(box, SGD::Color{0,0,0});
+	//graphics->DrawRectangle(box, SGD::Color{0,0,0});
 	font->Write(labelPoint, label);
 	for (unsigned int i = 0; i < buttons.size(); i++)
 	{
-		graphics->DrawRectangle(buttons[i].box, SGD::Color{1,1,1});
+		//graphics->DrawRectangle(buttons[i].box, SGD::Color{1,1,1});
 		std::string text;
 		if (cursor == i)
 			text = "=" + buttons[i].label + "=";
 		else
 			text = buttons[i].label;
 
-		font->WriteCenter(buttons[i].box, text);
+		font->Write({ buttons[i].box.left, buttons[i].box.top }, text);
+
+		//font->WriteCenter(buttons[i].box, text);
 	}
 }

@@ -81,9 +81,9 @@ void CGameOverState::Enter()
 	buttons[menuReturn::exit] = "Exit";
 
 	if ( win == false )
-	menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Died", true);
+		menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Died", { 0, 0 }, true);
 	if (win == true)
-		menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Win!", true);
+		menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Win!", { 0, 0 }, true);
 }
 
 void CGameOverState::Exit()

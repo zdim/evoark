@@ -27,7 +27,7 @@ void CProfileSelectState::Enter()
 	labels.push_back("Delete");
 	labels.push_back("Cancel");
 	labels.push_back("Main Menu");
-	menu = new CMenu(&font,labels,"Stuff");
+	menu = new CMenu(&Game::GetInstance()->FontPoiret, labels, "", { Game::GetInstance()->GetScreenWidth() * .3f, Game::GetInstance()->GetScreenHeight() * .55f }, false);
 }
 
 void CProfileSelectState::Exit()
@@ -58,7 +58,7 @@ void CProfileSelectState::SeletionInput()
 	if (input->IsKeyPressed(SGD::Key::Escape))
 	{
 		Game::GetInstance()->PopState();
-		Game::GetInstance()->PushState(CMainMenuState::GetInstance());
+		//Game::GetInstance()->PushState(CMainMenuState::GetInstance());
 		return;
 	}
 
@@ -194,6 +194,7 @@ void CProfileSelectState::MenuInput()
 		case 1:
 			CGameplayState::GetInstance()->SetSaveData(profiles[currentProfile]);
 			Game::GetInstance()->PopState();
+			Game::GetInstance()->PopState();
 			Game::GetInstance()->PushState(CGameplayState::GetInstance());
 			break;
 		case 2:
@@ -224,23 +225,24 @@ void CProfileSelectState::MenuInput()
 		}
 		CGameplayState::GetInstance()->SetSaveData(profiles[currentProfile]);
 		Game::GetInstance()->PopState();
+		Game::GetInstance()->PopState();
 		Game::GetInstance()->PushState(CGameplayState::GetInstance());
 		break;
 	case 1:
 	{
 		std::vector<std::string> yesno;
-		yesno.push_back("yes");
-		yesno.push_back("no");
-		confirm = new CMenu(&font,yesno,"Overwrite this profile?");
+		yesno.push_back("Yes");
+		yesno.push_back("No");
+		confirm = new CMenu(&Game::GetInstance()->FontPoiret, yesno, "Overwrite?", { Game::GetInstance()->GetScreenWidth() * .55f, Game::GetInstance()->GetScreenHeight() * .6f }, false);
 		state = MyState::ConfirmOverwrite;
 		break;
 	}
 	case 2:
 	{
 		std::vector<std::string> yesno;
-		yesno.push_back("yes");
-		yesno.push_back("no");
-		confirm = new CMenu(&font, yesno, "Delete this Profile?");
+		yesno.push_back("Yes");
+		yesno.push_back("No");
+		confirm = new CMenu(&Game::GetInstance()->FontPoiret, yesno, "Delete?", { Game::GetInstance()->GetScreenWidth() * .55f, Game::GetInstance()->GetScreenHeight() * .6f }, false);
 		state = MyState::ConfirmDelete;
 		break;
 	}
@@ -252,7 +254,7 @@ void CProfileSelectState::MenuInput()
 	case 4:
 	{
 		Game::GetInstance()->PopState();
-		Game::GetInstance()->PushState(CMainMenuState::GetInstance());
+		//Game::GetInstance()->PushState(CMainMenuState::GetInstance());
 		break;
 	}
 	case -1:
@@ -264,6 +266,7 @@ void CProfileSelectState::MenuInput()
 
 void CProfileSelectState::Update(float dt)
 {
+	CMainMenuState::GetInstance()->Update(dt);
 	switch (state)
 	{
 	case MyState::Transition:
@@ -308,9 +311,13 @@ void CProfileSelectState::Render()
 
 	if (state >= MyState::Menu)
 	{
+		SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 90, 0, 0, 0 });
 		menu->Render();
 		if (state >= MyState::ConfirmOverwrite)
+		{
+			SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 90, 0, 0, 0 });
 			confirm->Render();
+		}
 	}
 }
 
@@ -512,6 +519,6 @@ void CProfileSelectState::TutorialConfirmation()
 	buttons.push_back("No");
 	buttons.push_back("Cancel");
 	
-	confirm = new CMenu(&font, buttons, "Skip Tutorial?");
+	confirm = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "Skip Tutorial?", { Game::GetInstance()->GetScreenWidth() * .55f, Game::GetInstance()->GetScreenHeight() * .6f }, false);
 	state = MyState::ConfirmTutorial;
 }
