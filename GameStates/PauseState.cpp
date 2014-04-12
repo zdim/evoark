@@ -25,7 +25,7 @@ CPauseState* CPauseState::GetInstance()
 
 bool CPauseState::Input()
 {
-	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Escape) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 1))
+	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Escape) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 1) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 7))
 	{
 		Game::GetInstance()->PopState();
 		return true;

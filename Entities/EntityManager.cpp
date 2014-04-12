@@ -54,7 +54,7 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Mamba] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
 	images[(int)EntityType::Coral] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
 	images[(int)EntityType::Moccasin] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
-	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Laser.png");
+	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/laserOne.png", { 255, 100, 100 });
 	images[(int)EntityType::Missile] = graphics->LoadTexture("Resources/Graphics/Missile.png");
 
 	//Change this when we have module assets
@@ -383,7 +383,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 							  {
 								  CLaser* laser = new CLaser();
 								  laser->SetImage(images[(int)EntityType::Laser]);
-								  laser->SetSize({ 2, 8 });
+								  laser->SetSize({ 4, 16 });
 								  //laser->SetImageSize({ 74, 290 });
 
 								  SGD::Vector offset = { 0.0, -1.0 };
@@ -408,8 +408,8 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 								  CLaser* laserTwo = new CLaser();
 								  laserTwo->SetImage(images[(int)EntityType::Laser]);
 								  laser->SetImage(images[(int)EntityType::Laser]);
-								  laserTwo->SetSize({ 2, 8 });
-								  laser->SetSize({ 2, 8 });
+								  laserTwo->SetSize({ 4, 16 });
+								  laser->SetSize({ 4, 16 });
 								  //laser->SetImageSize({ 74, 290 });
 								  SGD::Vector offset = { 0.5f, -1.0f };
 								  SGD::Vector offset2 = { -0.5f, -1.0f };

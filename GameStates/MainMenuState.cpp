@@ -58,14 +58,14 @@ void CMainMenuState::Update(float dt)
 	if (backgroundStars2PosSecond.x < -Game::GetInstance()->GetScreenWidth())
 		backgroundStars2PosSecond.x = Game::GetInstance()->GetScreenWidth() * 2;
 
-	backgroundSmokePos.x -= 20 * dt;
-	backgroundSmokePosSecond.x -= 20 * dt;
+	backgroundSmokePos.x -= 100 * dt;
+	backgroundSmokePosSecond.x -= 100 * dt;
 
-	if (backgroundSmokePos.x < -1024)
-		backgroundSmokePos.x = 1024;
+	if (backgroundSmokePos.x <= -1024)
+		backgroundSmokePos.x = backgroundSmokePosSecond.x + 1024;
 
-	if (backgroundSmokePosSecond.x < -1024)
-		backgroundSmokePosSecond.x = 1024;
+	if (backgroundSmokePosSecond.x <= -1024)
+		backgroundSmokePosSecond.x = backgroundSmokePos.x + 1024;
 }
 
 void CMainMenuState::Render()
@@ -96,8 +96,8 @@ void CMainMenuState::Enter()
 	backgroundStars2 = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/stars1new.png");
 	backgroundSmoke = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/Smoke.png");
 
-	backgroundSmokePosSecond.x = 1024;
-	backgroundStars2PosSecond.x = 1024;
+	//backgroundSmokePosSecond.x = 1024;
+	//backgroundStars2PosSecond.x = 1024;
 }
 
 void CMainMenuState::Exit()

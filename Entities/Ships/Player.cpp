@@ -149,7 +149,8 @@ void CPlayer::Update(float dt)
 		SGD::Vector rotationVec = { 0, -1 };
 
 		SGD::Vector rightThumb = input->GetRightJoystick(0);
-		rotation = rotationVec.ComputeAngle(input->GetRightJoystick(0)) + SGD::PI / 2;
+		rotation = rotationVec.ComputeAngle(input->GetRightJoystick(0));
+		rotation *= rotationVec.ComputeSteering(rightThumb);
 	}
 		
 	//rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
@@ -179,7 +180,7 @@ void CPlayer::Update(float dt)
 	}
 
 	// UI Toggle
-	if (input->IsKeyPressed(SGD::Key::Tab))
+	if (input->IsKeyPressed(SGD::Key::Tab) || input->IsButtonPressed(0, 6))
 		arrowsOn = !arrowsOn;
 
 	// Position event

@@ -55,14 +55,14 @@ void CProfileSelectState::SeletionInput()
 {
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
 
-	if (input->IsKeyPressed(SGD::Key::Escape))
+	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
 	{
 		Game::GetInstance()->PopState();
 		//Game::GetInstance()->PushState(CMainMenuState::GetInstance());
 		return;
 	}
 
-	if (input->IsKeyPressed(SGD::Key::RightArrow))
+	if (input->IsKeyPressed(SGD::Key::RightArrow) || input->IsDPadPressed(0, SGD::DPad::Right))
 	{
 		if (currentProfile >= 2)
 			currentProfile = 0;
@@ -71,7 +71,7 @@ void CProfileSelectState::SeletionInput()
 		state = MyState::Transition;
 		transTimer = 0;
 	}
-	if (input->IsKeyPressed(SGD::Key::LeftArrow))
+	if (input->IsKeyPressed(SGD::Key::LeftArrow) || input->IsDPadPressed(0, SGD::DPad::Left))
 	{
 		if (currentProfile <= 0)
 			currentProfile = 2;
@@ -80,7 +80,7 @@ void CProfileSelectState::SeletionInput()
 		state = MyState::Transition;
 		transTimer = 0;
 	}
-	if (input->IsKeyPressed(SGD::Key::Enter))
+	if (input->IsKeyPressed(SGD::Key::Enter) || input->IsButtonPressed(0, 0))
 	{
 		state = MyState::Menu;
 	}
@@ -119,7 +119,7 @@ void CProfileSelectState::MenuInput()
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
 	if (state == MyState::ConfirmOverwrite)
 	{
-		if (input->IsKeyPressed(SGD::Key::Escape))
+		if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
 		{
 			delete confirm;
 			confirm = nullptr;
@@ -152,7 +152,7 @@ void CProfileSelectState::MenuInput()
 
 	if (state == MyState::ConfirmDelete)
 	{
-		if (input->IsKeyPressed(SGD::Key::Escape))
+		if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
 		{
 			delete confirm;
 			confirm = nullptr;
@@ -180,7 +180,7 @@ void CProfileSelectState::MenuInput()
 
 	if (state == MyState::ConfirmTutorial)
 	{
-		if (input->IsKeyPressed(SGD::Key::Escape))
+		if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
 		{
 			delete confirm;
 			confirm = nullptr;
@@ -209,7 +209,7 @@ void CProfileSelectState::MenuInput()
 		return;
 	}
 
-	if (input->IsKeyPressed(SGD::Key::Escape))
+	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
 	{
 		state = MyState::Idle;
 		return;
