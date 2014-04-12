@@ -23,7 +23,7 @@ class CMenu
 
 public:
 	//CMenu();
-	CMenu(Fnt* font, std::vector<std::string>buttonLabels,std::string label, bool fillWindow = false, bool horizontal = false, SGD::Size buttonPadding = {10, 10}, SGD::Size menuPadding = {10, 10}, SGD::Size buttonSpacing = {5,5});
+	CMenu(Fnt* font, std::vector<std::string>buttonLabels, std::string label, SGD::Point topMidPos = { 0, 0 }, bool centered = true, bool fillWindow = false, bool horizontal = false, SGD::Size buttonPadding = { 10, 10 }, SGD::Size menuPadding = { 10, 10 }, SGD::Size buttonSpacing = { 5, 5 });
 	int Input();
 	void Render();
 	int GetCursor() { return cursor; }

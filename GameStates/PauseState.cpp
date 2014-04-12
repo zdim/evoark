@@ -4,6 +4,7 @@
 #include "MainMenuState.h"
 #include "UpgradeState.h"
 #include "../SGD Wrappers/SGD_InputManager.h"
+#include "../SGD Wrappers/SGD_GraphicsManager.h"
 
 #include "GameplayState.h" //Comment out later -- Debug stuff
 #include "GameState.h"
@@ -24,7 +25,7 @@ CPauseState* CPauseState::GetInstance()
 
 bool CPauseState::Input()
 {
-	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Escape) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 1))
+	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Escape) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 1) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 7))
 	{
 		Game::GetInstance()->PopState();
 		return true;
@@ -65,6 +66,7 @@ void CPauseState::Update(float dt)
 
 void CPauseState::Render()
 {
+	SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 50, 0, 0, 0 });
 	menu->Render();
 }
 
@@ -72,13 +74,13 @@ void CPauseState::Enter()
 {
 	std::vector<std::string> buttons;
 	buttons.resize(menuReturn::count);
-	buttons[menuReturn::Continue] = "Continue";
+	buttons[menuReturn::Continue] = "Resume";
 	buttons[menuReturn::ForceCheckpoint] = "[Checkpoint]";
 	buttons[menuReturn::ForceSave] = "[Save]";
 	buttons[menuReturn::Upgrades] = "Upgrades";
 	buttons[menuReturn::MainMenu] = "Main Menu";
 	buttons[menuReturn::Options] = "Options";
-	menu = new CMenu(&Game::GetInstance()->Font, buttons, "Paused");
+	menu = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "Paused", { Game::GetInstance()->GetScreenWidth() * .2f, Game::GetInstance()->GetScreenHeight() * .4 }, false);
 }
 
 void CPauseState::Exit()

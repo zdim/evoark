@@ -18,7 +18,7 @@ CCobra::~CCobra()
 
 void CCobra::Update(float dt)
 {
-	if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
+	if (CEntityManager::GetInstance()->GetPlayer() && CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
 		return;
 
 	warpTimer += dt; 

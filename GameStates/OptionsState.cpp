@@ -2,6 +2,7 @@
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../SGD Wrappers/SGD_AudioManager.h"
 #include "OptionsState.h"
+#include "MainMenuState.h"
 #include <sstream>
 
 COptionsState::COptionsState()
@@ -20,13 +21,15 @@ COptionsState::~COptionsState()
 
 bool COptionsState::Input()
 {
-	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Escape) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 1))
+	SGD::InputManager* input = SGD::InputManager::GetInstance();
+
+	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
 	{
 		Game::GetInstance()->PopState();
 		return true;
 	}
 
-	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Right) || SGD::InputManager::GetInstance()->IsDPadPressed(0, SGD::DPad::Right))
+	if (input->IsKeyPressed(SGD::Key::Right) || input->IsDPadPressed(0, SGD::DPad::Right) || (input->IsKeyPressed(SGD::Key::MouseLeft)))
 	{
 		if (menu->GetCursor() == menuReturn::sfx)
 		{
@@ -44,7 +47,7 @@ bool COptionsState::Input()
 		}
 	}
 
-	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::LeftArrow) || SGD::InputManager::GetInstance()->IsDPadPressed(0, SGD::DPad::Left))
+	if (input->IsKeyPressed(SGD::Key::LeftArrow) || input->IsDPadPressed(0, SGD::DPad::Left) || (input->IsKeyPressed(SGD::Key::MouseRight)))
 	{
 		if (menu->GetCursor() == menuReturn::sfx)
 		{
@@ -82,25 +85,27 @@ bool COptionsState::Input()
 void COptionsState::Update(float dt)
 {
 	//Uhm?? Maybe some time-based graphics? This is going to be a pretty boring menu right now.
-
+	CMainMenuState::GetInstance()->Update(dt);
 }
 
 void COptionsState::Render()
 {
+	SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 150, 0, 0, 0 });
+
 	menu->Render();
 
 	std::ostringstream sfxString;
 	sfxString << sfxVolume;
-	Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .7f, Game::GetInstance()->GetScreenHeight() * .39f }, sfxString.str().c_str());
+	Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .56f, Game::GetInstance()->GetScreenHeight() * .57f }, sfxString.str().c_str());
 	std::ostringstream musString;
 	musString << musicVolume;
-	Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .7f, Game::GetInstance()->GetScreenHeight() * .46f }, musString.str().c_str());
+	Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .56f, Game::GetInstance()->GetScreenHeight() * .62f }, musString.str().c_str());
 	if (fullscreenOn)
 	{
-		Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .7f, Game::GetInstance()->GetScreenHeight() * .53f }, "On");
+		Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .56f, Game::GetInstance()->GetScreenHeight() * .67f }, "On");
 	}
 	else
-		Game::GetInstance()->Font.Write({ Game::GetInstance()->GetScreenWidth() * .7f, Game::GetInstance()->GetScreenHeight() * .53f }, "Off");
+		Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .56f, Game::GetInstance()->GetScreenHeight() * .67f }, "Off");
 
 }
 
@@ -112,7 +117,7 @@ void COptionsState::Enter()
 	buttons[menuReturn::music] = "Music";
 	buttons[menuReturn::fullscreen] = "Fullscreen";
 	buttons[menuReturn::back] = "Back";
-	menu = new CMenu(&Game::GetInstance()->Font, buttons, "Options", true);
+	menu = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "Options", { Game::GetInstance()->GetScreenWidth() * .4f, Game::GetInstance()->GetScreenHeight() * .52f }, false);
 	soundBox = CSoundBox::GetInstance();
 	//soundBox->Enter();
 	std::string path = Game::GetInstance()->GetAppDataPath() + "optionsSave.xml";

@@ -9,7 +9,8 @@
 #include "../Collidables/RepairStation.h"
 #include "../../Event System/CustomEvent.h"
 #include "../../Event System/EventID.h"
-
+#include "../../SGD Wrappers/SGD_Color.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 CLaser::CLaser()
 {
 
@@ -46,7 +47,27 @@ void CLaser::Update(float dt)
 
 void CLaser::Render()
 {
-	CProjectile::Render();
+	SGD::Color col = { 0, 0, 0 };
+	switch (tier)
+	{
+	case 0:
+		col = { 200, 20, 20 };
+		break;
+	case 1:
+		col = { 200, 200, 20 };
+		break;
+	case 2:
+		col = { 200, 20, 200 };
+		break;
+	case 3:
+		col = { 20, 200, 20 };
+		break;
+	}
+	SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
+	SGD::Point renderPoint = offsetToCamera();
+
+	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize * .5f, col, scale);
+	//CProjectile::Render();
 }
 
 void CLaser::HandleCollision(IEntity* other)
