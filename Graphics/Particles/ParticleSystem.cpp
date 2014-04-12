@@ -56,6 +56,7 @@ void CParticleSystem::Init()
 
 	for (int i = 1; i < numEmitters + 1; i++)
 	particleEffect[i]->Initialize();
+
 }
 
 void CParticleSystem::Terminate()

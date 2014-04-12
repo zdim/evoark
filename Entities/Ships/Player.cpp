@@ -48,7 +48,17 @@ CPlayer::CPlayer()
 	for (int i = 0; i < 4; i++) tutorialWaitForInput[i] = false;
 	for (int i = 0; i < 4; i++) tutorialTriggerHit[i] = false;
 
-	m_Engine = CParticleSystem::GetInstance()->GetParticleEffect(5);
+	m_Engine = new CEmitter(
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetParticleData(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitterSize(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetShape(),
+		position,
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetNumParticles(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnRate(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnTimeFromLastSpawn(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitType(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitTime()
+		);
 
 	m_Engine->Initialize();
 	m_Engine->SetOwner(this);
@@ -60,6 +70,10 @@ CPlayer::~CPlayer()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(wellIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(warpIcon);
+
+	m_Engine->Release();
+	delete m_Engine;
+
 }
 
 void CPlayer::Update(float dt)
