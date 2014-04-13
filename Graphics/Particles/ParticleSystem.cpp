@@ -20,7 +20,7 @@ CParticleSystem::~CParticleSystem()
 
 /*static*/ CParticleSystem* CParticleSystem::GetInstance()
 {
-	
+
 	if (s_Instance == nullptr)
 		s_Instance = new CParticleSystem;
 
@@ -55,12 +55,64 @@ void CParticleSystem::Init()
 	//LoadEffect(efName6);
 
 	for (int i = 1; i < numEmitters + 1; i++)
-	particleEffect[i]->Initialize();
+		particleEffect[i]->Initialize();
 
+
+	for (int i = 0; i < 25; i++)
+	{
+		CEmitter * emptyEmitter = new CEmitter();
+		standbyPool.push_back(emptyEmitter);
+	}
+
+}
+
+void  CParticleSystem::AddEmitter(CEmitter* emit, CEntity* owner)
+{
+	CEmitter * p = *standbyPool.begin();
+	p = emit;
+	p->Initialize();
+	p->SetOwner(owner);
+	standbyPool.pop_front();
+	emittingPool.push_front(p);
+	
+}
+
+void CParticleSystem::RemoveEmitter(CEntity* owner)
+{
+	for (std::list<CEmitter*>::iterator it = emittingPool.begin(); it != emittingPool.end();)
+	{
+		if ((*it)->GetOwner() == owner)
+		{
+			(*it)->SetEmitType(false);
+			(*it)->SetOwner(nullptr);
+		}
+		it++;
+	}
 }
 
 void CParticleSystem::Terminate()
 {
+
+
+	for (std::list<CEmitter*>::iterator it = emittingPool.begin(); it != emittingPool.end();)
+	{
+		(*it)->Release();
+		delete *it;
+		it++;
+	}
+
+
+	for (std::list<CEmitter*>::iterator it = standbyPool.begin(); it != standbyPool.end();)
+	{
+		(*it)->Release();
+		delete *it;
+		it++;
+	}
+
+	emittingPool.clear();
+	standbyPool.clear();
+
+
 	for (int i = 1; i < numEmitters + 1; i++)
 	{
 		particleEffect[i]->GetParticleData()->Terminate();
@@ -69,20 +121,52 @@ void CParticleSystem::Terminate()
 		delete particleEffect[i];
 	}
 	particleEffect.clear();
-		
+
+
 }
 
 
 void CParticleSystem::Update(float dt)
 {
-	for (int i = 1; i < numEmitters + 1; i++)
-	particleEffect[i]->Update(dt);
+
+
+	for (std::list<CEmitter*>::iterator it = emittingPool.begin(); it != emittingPool.end(); )
+	{
+		if (emittingPool.size() > 0)
+		{
+			if ((*it)->GetLiveListSize() == 0 && (*it)->GetEmitType() == false )
+			{
+				(*it)->Release();
+				standbyPool.push_back(*it);
+				it = emittingPool.erase(it);
+				continue;
+			}
+
+
+			if ((*it)->GetOwner() != nullptr)
+				(*it)->SetEmitterPosition((*it)->GetOwner()->GetPosition());
+
+			(*it)->Update(dt);
+
+			it++;
+		}
+
+        
+	}
+
+
 }
 
 void CParticleSystem::Render()
 {
-	for (int i = 1; i < numEmitters + 1; i++)
-	particleEffect[i]->Render();
+	if (emittingPool.size() > 0)
+	{
+		for (std::list<CEmitter*>::iterator it = emittingPool.begin(); it != emittingPool.end(); )
+		{
+			(*it)->Render();
+			it++;
+		}
+	}
 }
 
 
@@ -99,7 +183,7 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	doc.LoadFile(effectFile);
 	delete effectFile;
 	TiXmlElement* pRoot = doc.RootElement();
-	
+
 	//int trash;
 	TiXmlElement* pEmittor = pRoot->FirstChildElement();
 	//pEmittor->Attribute("Emittor", &trash);
@@ -115,14 +199,14 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	double m_fRadius;
 	pEmittor->Attribute("Radius", &m_fRadius);
 
-	
+
 	std::string m_sEmitStr = pEmittor->Attribute("EmitBool");
 	bool m_bEmitWay;
- 
+
 	if (m_sEmitStr == "True")
 		m_bEmitWay = true;
 	else if (m_sEmitStr == "False")
-		m_bEmitWay = false; 
+		m_bEmitWay = false;
 
 	double  m_fEmitTime;
 	pEmittor->Attribute("EmitTime", &m_fEmitTime);
@@ -190,7 +274,7 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	pFlyweight->Attribute("SpeedMaxX", &m_fSpeedMaxX);
 	pFlyweight->Attribute("SpeedMaxY", &m_fSpeedMaxY);
 
-	SGD::Vector m_vSpeedMin{ (float)m_fSpeedMinX,(float)m_fSpeedMinY };
+	SGD::Vector m_vSpeedMin{ (float)m_fSpeedMinX, (float)m_fSpeedMinY };
 	SGD::Vector m_vSpeedMax{ (float)m_fSpeedMaxX, (float)m_fSpeedMaxY };
 
 	double m_fMaxLife;
@@ -211,23 +295,23 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	imageFile[imageFilePath.size()] = '\0';
 
 	SGD::HTexture ParticleImage = SGD::GraphicsManager::GetInstance()->LoadTexture(imageFile);
-	
-	SGD::Vector ParticleImageOffset = SGD::GraphicsManager::GetInstance()->GetTextureData(ParticleImage)/2;
+
+	SGD::Vector ParticleImageOffset = SGD::GraphicsManager::GetInstance()->GetTextureData(ParticleImage) / 2;
 
 	delete[] imageFile;
 
-	CFlyweight *eData =  new CFlyweight(ParticleImage, m_sStartScale, m_sEndScale,
+	CFlyweight *eData = new CFlyweight(ParticleImage, m_sStartScale, m_sEndScale,
 		ParticleImageOffset,
-	startA, startR, startG, startB,
-	endA, endR, endG, endB,
-	(float)m_fMaxLife, (float)m_fMinLife,
-	m_vSpeedMax,
-	m_vSpeedMin,
-	m_fInertia,
-	m_fRotationSpeed);
+		startA, startR, startG, startB,
+		endA, endR, endG, endB,
+		(float)m_fMaxLife, (float)m_fMinLife,
+		m_vSpeedMax,
+		m_vSpeedMin,
+		m_fInertia,
+		m_fRotationSpeed);
 
 	numEmitters++;
-	
+
 	particleEffect[numEmitters] = new CEmitter(eData, emitterSize, m_nShape, emitterPosition, m_nNumParticles, m_fSpawnRate, m_fTimeFromLastSpawn, m_bEmitWay, m_fEmitTime);
 
 

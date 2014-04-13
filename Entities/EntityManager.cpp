@@ -54,8 +54,8 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Mamba] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
 	images[(int)EntityType::Coral] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
 	images[(int)EntityType::Moccasin] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
-	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/laserOne.png", { 255, 100, 100 });
-	images[(int)EntityType::Missile] = graphics->LoadTexture("Resources/Graphics/Missile.png");
+	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Projectiles/am_blaster_hardpoint_glow.png", { 255, 100, 100 });
+	images[(int)EntityType::Missile] = graphics->LoadTexture("Resources/Graphics/Projectiles/VG_MissileLRM.png");
 
 	//Change this when we have module assets
 	images[(int)EntityType::BaseModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
@@ -385,7 +385,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 							  {
 								  CLaser* laser = new CLaser();
 								  laser->SetImage(images[(int)EntityType::Laser]);
-								  laser->SetSize({ 4, 16 });
+								  //laser->SetSize({ 4, 16 });
 								  //laser->SetImageSize({ 74, 290 });
 
 								  SGD::Vector offset = { 0.0, -1.0 };
@@ -410,8 +410,8 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 								  CLaser* laserTwo = new CLaser();
 								  laserTwo->SetImage(images[(int)EntityType::Laser]);
 								  laser->SetImage(images[(int)EntityType::Laser]);
-								  laserTwo->SetSize({ 4, 16 });
-								  laser->SetSize({ 4, 16 });
+								  //laserTwo->SetSize({ 4, 16 });
+								  //laser->SetSize({ 4, 16 });
 								  //laser->SetImageSize({ 74, 290 });
 								  SGD::Vector offset = { 0.5f, -1.0f };
 								  SGD::Vector offset2 = { -0.5f, -1.0f };
@@ -1365,7 +1365,6 @@ void CEntityManager::Load()
 			CShield* shield = new CShield();
 			shield->SetPosition(save.world.entities[i].position);
 			shield->SetImage(images[(int)EntityType::Shield]);
-			shield->SetSize({ 100, 100 });
 			player = new CPlayer();
 			player->SetImage(images[(int)EntityType::Player]);
 			player->SetPosition(save.world.entities[i].position);

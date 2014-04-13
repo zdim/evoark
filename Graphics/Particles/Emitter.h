@@ -21,7 +21,7 @@ private:
 	bool                   m_bLoop;
 	float                  m_fEmitTime;
 	float                  m_fSavedEmitTime;
-	CShip*                 m_pShipOwner;
+	CEntity*                 m_pShipOwner;
 
 
 
@@ -47,8 +47,10 @@ public:
 	float      GetSpawnRate() { return m_fSpawnRate; }
 	float      GetSpawnTimeFromLastSpawn() { return m_fTimeFromLastSpawn; }
 	bool       GetEmitType() { return m_bLoop; }
+	void       SetEmitType(bool b) { m_bLoop = b;  }
 	float      GetEmitTime() { return m_fEmitTime; }
-	void       SetOwner(CShip* p)    { m_pShipOwner = p; }
-
+	void       SetOwner(CEntity* p)    { m_pShipOwner = p; }
+	CEntity*   GetOwner() { return m_pShipOwner;  }
+	int  GetLiveListSize() { return m_lAliveParticles.size(); }
 };
 

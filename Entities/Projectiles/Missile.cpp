@@ -10,8 +10,8 @@
 CMissile::CMissile()
 {
 	m_pSystem = CParticleSystem::GetInstance();
-	
-	m_eTrail = new CEmitter(
+
+	m_pSystem->AddEmitter(new CEmitter(
 		m_pSystem->GetParticleEffect(2)->GetParticleData(),
 		m_pSystem->GetParticleEffect(2)->GetEmitterSize(),
 		m_pSystem->GetParticleEffect(2)->GetShape(),
@@ -21,9 +21,7 @@ CMissile::CMissile()
 		m_pSystem->GetParticleEffect(2)->GetSpawnTimeFromLastSpawn(),
 		m_pSystem->GetParticleEffect(2)->GetEmitType(),
 		m_pSystem->GetParticleEffect(2)->GetEmitTime()
-		);
-
-	m_eTrail->Initialize();
+		),this);
 
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
 }
@@ -32,9 +30,10 @@ CMissile::CMissile()
 CMissile::~CMissile()
 {
 	SetTarget(nullptr);
-	
-	m_eTrail->Release();
-	delete m_eTrail;
+
+	m_pSystem->RemoveEmitter(this);
+	//m_eTrail->Release();
+	//delete m_eTrail;
 	
 }
 
@@ -95,15 +94,15 @@ void CMissile::Update(float dt)
 
 	}
 
-	m_eTrail->SetEmitterPosition(position);
-    m_eTrail->Update(dt);
+	//m_eTrail->SetEmitterPosition(position);
+   // m_eTrail->Update(dt);
 
 
 }
 
 void  CMissile::Render()
 {
-	m_eTrail->Render();
+	//m_eTrail->Render();
 	CEntity::Render();
 
 }

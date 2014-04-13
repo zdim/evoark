@@ -122,7 +122,7 @@ void	CTestLevelState::Enter(void)
 	Render();
 	graphics->Update();
 
-
+	pSystem = CParticleSystem::GetInstance();
 
 	m_bLoaded = true;
 }
@@ -200,6 +200,9 @@ void	CTestLevelState::Update(float dt)
 	CEventManager::GetInstance().Update();
 	cam->Update(dt);
 
+	pSystem->Update(dt);
+
+
 	// parallax effect
 	nebulaPos = { cam->GetOffset().x * .5f, cam->GetOffset().y * .5f };
 	stars1Pos = { cam->GetOffset().x * .1f, cam->GetOffset().y * .1f };
@@ -247,6 +250,8 @@ void	CTestLevelState::Render(void)
 	if (m_bLoaded == true)
 	{
 
+		
+
 		//graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
 		//graphics->DrawTexture(backgroundBlack, { 0, 0 });
 
@@ -262,6 +267,8 @@ void	CTestLevelState::Render(void)
 		graphics->DrawRectangle({ 0, 0, 2000, 2000 }, { 150, 0, 0, 0 });
 
 		EntityManager->Render();
+
+		pSystem->Render();
 
 		UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator(), EntityManager->GetStargate(), EntityManager->GetLeaderPositions());
 	}

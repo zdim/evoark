@@ -8,7 +8,7 @@ class CMissile :
 	public CLaser, public Listener
 {
 	CShip* target = nullptr;
-	CEmitter* m_eTrail;
+
 	CParticleSystem* m_pSystem;
 public:
 	CMissile();

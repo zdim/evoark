@@ -268,6 +268,5 @@ void CEmitter::Release()
 	m_lAliveParticles.clear();
 	m_lDeadParticles.clear();
 
-	//particleData->Terminate();
-	//delete particleData;
+
 }

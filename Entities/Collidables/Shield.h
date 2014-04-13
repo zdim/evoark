@@ -5,7 +5,7 @@ class CShield : public Stationary
 {
 	CShip* m_pOwner;
 public:
-	CShield(){ size = { 100, 100 }; }
+	CShield(){ size = { 115, 115 }; }
 	int GetType() override { return (int)EntityType::Shield; }
 	bool IsCircle() override { return true; }
 	void Update(float dt);

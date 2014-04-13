@@ -13,7 +13,10 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 CLaser::CLaser()
 {
+	
+	size = { 8, 18 };
 
+	
 }
 
 CLaser::~CLaser()

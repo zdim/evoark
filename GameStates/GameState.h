@@ -109,7 +109,7 @@ private:
 	
 	
 
-	CParticleSystem pSystem;
+	CParticleSystem* pSystem;
 
 
 	// UI rendering
