@@ -24,8 +24,8 @@ CEnemy::~CEnemy()
 
 void CEnemy::Update(float dt)
 {
-	if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
-		return;
+	//if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
+	//	return;
 
 	if (damaged > 0)
 		damaged -= dt;

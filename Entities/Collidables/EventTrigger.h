@@ -2,7 +2,7 @@
 #include "Trigger.h"
 #include "../IEntity.h"
 
-enum class triggerID { tutMovement, tutLasers, tutMissiles, tutWarp, tutWell, tutPush, tutCoordinator, tutHuman, tutBoss, tutStargate, };
+enum class triggerID { tutMovement, tutLasers, tutMissiles, tutWarp, tutWell, tutPush, tutArrows, tutArrowsTwo, tutCoordinator, tutHuman, tutUpgrade, tutBoss, tutStargate, finalLevel, };
 
 class EventTrigger : public Trigger
 {
