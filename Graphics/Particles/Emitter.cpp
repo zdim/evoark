@@ -29,8 +29,7 @@ CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, int s, SGD::Point ePosi
 
 CEmitter::~CEmitter()
 {
-	m_lAliveParticles.clear();
-	m_lDeadParticles.clear();
+	
 }
 
 void CEmitter::Initialize()
@@ -53,6 +52,8 @@ void CEmitter::Update(float deltaTime)
 {
 	m_fTimeFromLastSpawn += deltaTime;
 	m_fEmitTime -= deltaTime;
+
+	
 
 	if (m_fTimeFromLastSpawn >= m_fSpawnRate)
 	{

@@ -51,8 +51,11 @@ void CParticleSystem::Init()
 	LoadEffect(efName4);
 	std::string efName5 = "EnginePlayer.xml";
 	LoadEffect(efName5);
-	//std::string efName6 = "ShieldDown.xml";
-	//LoadEffect(efName6);
+	std::string efName6 = "MissileExplosion1.xml";
+	LoadEffect(efName6);
+	std::string efName7 = "MissileExplosion2.xml";
+	LoadEffect(efName7);
+	
 
 	for (int i = 1; i < numEmitters + 1; i++)
 		particleEffect[i]->Initialize();
@@ -64,17 +67,32 @@ void CParticleSystem::Init()
 		standbyPool.push_back(emptyEmitter);
 	}
 
+
 }
 
-void  CParticleSystem::AddEmitter(CEmitter* emit, CEntity* owner)
+void  CParticleSystem::AddEmitter(int n, CEntity* owner)
 {
-	CEmitter * p = *standbyPool.begin();
-	p = emit;
+	CEmitter* p = *standbyPool.begin();
+
+	*p = CEmitter(
+		GetParticleEffect(n)->GetParticleData(),
+		GetParticleEffect(n)->GetEmitterSize(),
+		GetParticleEffect(n)->GetShape(),
+		owner->GetPosition(),
+		GetParticleEffect(n)->GetNumParticles(),
+		GetParticleEffect(n)->GetSpawnRate(),
+		GetParticleEffect(n)->GetSpawnTimeFromLastSpawn(),
+		GetParticleEffect(n)->GetEmitType(),
+		GetParticleEffect(n)->GetEmitTime()
+		);
+
 	p->Initialize();
 	p->SetOwner(owner);
+	p->SetEmitterPosition(owner->GetPosition());
 	standbyPool.pop_front();
 	emittingPool.push_front(p);
-	
+
+
 }
 
 void CParticleSystem::RemoveEmitter(CEntity* owner)
@@ -94,20 +112,30 @@ void CParticleSystem::Terminate()
 {
 
 
-	for (std::list<CEmitter*>::iterator it = emittingPool.begin(); it != emittingPool.end();)
+	if (emittingPool.size() > 0)
 	{
-		(*it)->Release();
-		delete *it;
-		it++;
+		for (std::list<CEmitter*>::iterator it = emittingPool.begin(); it != emittingPool.end();)
+		{
+			(*it)->Release();
+			delete *it;
+
+			it++;
+		}
 	}
 
 
-	for (std::list<CEmitter*>::iterator it = standbyPool.begin(); it != standbyPool.end();)
+	if (standbyPool.size() > 0)
 	{
-		(*it)->Release();
-		delete *it;
-		it++;
+		for (std::list<CEmitter*>::iterator it = standbyPool.begin(); it != standbyPool.end();)
+		{
+			(*it)->Release();
+			delete *it;
+
+			it++;
+		}
 	}
+
+
 
 	emittingPool.clear();
 	standbyPool.clear();
@@ -123,6 +151,7 @@ void CParticleSystem::Terminate()
 	particleEffect.clear();
 
 
+
 }
 
 
@@ -130,28 +159,28 @@ void CParticleSystem::Update(float dt)
 {
 
 
-	for (std::list<CEmitter*>::iterator it = emittingPool.begin(); it != emittingPool.end(); )
+	for (std::list<CEmitter*>::iterator it = emittingPool.begin(); it != emittingPool.end();)
 	{
 		if (emittingPool.size() > 0)
 		{
-			if ((*it)->GetLiveListSize() == 0 && (*it)->GetEmitType() == false )
+			if ((*it)->GetOwner() != nullptr)
+				(*it)->SetEmitterPosition((*it)->GetOwner()->GetPosition());
+
+			(*it)->Update(dt);
+
+
+
+			if ((*it)->GetLiveListSize() == 0 && (*it)->GetEmitType() == false && (*it)->GetEmitTime() < 0 )
 			{
 				(*it)->Release();
 				standbyPool.push_back(*it);
 				it = emittingPool.erase(it);
 				continue;
 			}
-
-
-			if ((*it)->GetOwner() != nullptr)
-				(*it)->SetEmitterPosition((*it)->GetOwner()->GetPosition());
-
-			(*it)->Update(dt);
-
 			it++;
 		}
 
-        
+
 	}
 
 
@@ -161,7 +190,7 @@ void CParticleSystem::Render()
 {
 	if (emittingPool.size() > 0)
 	{
-		for (std::list<CEmitter*>::iterator it = emittingPool.begin(); it != emittingPool.end(); )
+		for (std::list<CEmitter*>::iterator it = emittingPool.begin(); it != emittingPool.end();)
 		{
 			(*it)->Render();
 			it++;

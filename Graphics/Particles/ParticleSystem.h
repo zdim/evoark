@@ -33,7 +33,7 @@ public:
 	void Update(float dt);
 	void Render();
 	void LoadEffect(std::string effectName);
-	void AddEmitter(CEmitter* emit,CEntity* owner);
+	void AddEmitter(int n,CEntity* owner);
 	void RemoveEmitter(CEntity* owner);
 	CEmitter* GetParticleEffect(int n ) { return particleEffect[n]; }
 

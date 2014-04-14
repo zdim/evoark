@@ -11,17 +11,17 @@ class CEmitter
 private:
 	std::list<CParticle*>   m_lAliveParticles;
 	std::list<CParticle*>   m_lDeadParticles;
-	CFlyweight             *particleData;
-	int                    shape;
-	SGD::Size              emitterSize;
-	SGD::Point             emitterPosition;
-	int                    m_nNumParticles;
-	float                  m_fSpawnRate;
-	float                  m_fTimeFromLastSpawn;
-	bool                   m_bLoop;
-	float                  m_fEmitTime;
-	float                  m_fSavedEmitTime;
-	CEntity*                 m_pShipOwner;
+	CFlyweight              *particleData;
+	int                     shape;
+	SGD::Size               emitterSize;
+	SGD::Point              emitterPosition;
+	int                     m_nNumParticles;
+	float                   m_fSpawnRate;
+	float                   m_fTimeFromLastSpawn;
+	bool                    m_bLoop;
+	float                   m_fEmitTime;
+	float                   m_fSavedEmitTime;
+	CEntity*                m_pShipOwner;
 
 
 
