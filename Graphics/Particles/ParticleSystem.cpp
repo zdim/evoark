@@ -55,13 +55,16 @@ void CParticleSystem::Init()
 	LoadEffect(efName6);
 	std::string efName7 = "MissileExplosion2.xml";
 	LoadEffect(efName7);
-	
+	std::string efName8 = "ShieldDamage.xml";
+	LoadEffect(efName8);
+
+
 
 	for (int i = 1; i < numEmitters + 1; i++)
 		particleEffect[i]->Initialize();
 
 
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i < 75; i++)
 	{
 		CEmitter * emptyEmitter = new CEmitter();
 		standbyPool.push_back(emptyEmitter);

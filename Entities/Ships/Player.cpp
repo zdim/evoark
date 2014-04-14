@@ -80,6 +80,9 @@ void CPlayer::Update(float dt)
 {
 	//SGD::Point test = {position.x
 
+
+	
+
 	SGD::Vector rotatedOffset = { 0,45 };
 	rotatedOffset.Rotate(rotation);
 	enginePos = position + rotatedOffset;
@@ -351,6 +354,9 @@ void CPlayer::Warp()
 
 void CPlayer::TakeDamage(int damage, bool collision)
 {
+	
+		
+
     if (collision && warpTimer <= warpDuration && warpLevel >= 3)
 	{
 		return;
@@ -360,9 +366,12 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	shieldTimer = 0;
 	if (shield > 0)
 	{
+		CParticleSystem::GetInstance()->AddEmitter(8, this);
 		CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyShieldDamage, false);
 		shield -= damage;
 		damage -= shield;
+		if (shield <= 0)
+			CParticleSystem::GetInstance()->AddEmitter(4, this);	
 	}
 	else
 	{
@@ -376,6 +385,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyHullDamage, false);
 
+	
 	hull -= damage;
 	damaged = .15f;
 	if (hull <= 0 && !destroying)
@@ -439,6 +449,7 @@ void CPlayer::SetStats(playerData& data)
 
 void CPlayer::HandleCollision(IEntity* other)
 {
+
 	if (other == m_shield)
 		return;
 
@@ -482,6 +493,8 @@ void CPlayer::HandleCollision(IEntity* other)
 	}
 
 	CShip::HandleCollision(other);
+
+	
 }
 
 int CPlayer::GetTutorialPause()

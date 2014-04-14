@@ -11,7 +11,7 @@ CMissile::CMissile()
 {
 	m_pSystem = CParticleSystem::GetInstance();
 
-	m_pSystem->AddEmitter(2, this);
+	m_pSystem->AddEmitter(5, this);
 	
 
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
