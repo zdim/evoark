@@ -39,6 +39,8 @@ CTestLevelState::CTestLevelState()
 
 CTestLevelState::~CTestLevelState()
 {
+
+
 }
 
 CTestLevelState* CTestLevelState::GetInstance(void)
@@ -53,6 +55,8 @@ void	CTestLevelState::Enter(void)
 	srand((unsigned int)time(nullptr));
 	graphics = SGD::GraphicsManager::GetInstance();
 
+	m_pParticleSystem = CParticleSystem::GetInstance();
+	m_pParticleSystem->Init();
 
 	testing = "Resources";
 	m_nLine = 0;
@@ -65,6 +69,8 @@ void	CTestLevelState::Enter(void)
 	backgroundStars = graphics->LoadTexture("Resources/Graphics/stars1new.png", { 0, 0, 0 });
 	backgroundStars1 = graphics->LoadTexture("Resources/Graphics/stars2new.png", { 0, 0, 0 });
 	backgroundStars2 = graphics->LoadTexture("Resources/Graphics/stars3.png", { 0, 0, 0 });
+	backgroundPlanet1 = graphics->LoadTexture("Resources/Graphics/bgPlanet1.png");
+	backgroundPlanet2 = graphics->LoadTexture("Resources/Graphics/bgPlanet2.png");
 
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
 
@@ -122,7 +128,7 @@ void	CTestLevelState::Enter(void)
 	Render();
 	graphics->Update();
 
-
+	pSystem = CParticleSystem::GetInstance();
 
 	m_bLoaded = true;
 }
@@ -130,6 +136,12 @@ void	CTestLevelState::Enter(void)
 void	CTestLevelState::Exit(void)
 {
 	m_bBossKilled = false;
+
+
+	m_pParticleSystem->Terminate();
+	m_pParticleSystem = nullptr;
+	m_pParticleSystem->DeleteInstance();
+
 
 	cam->Terminate();
 	if (BackgroundImage != SGD::INVALID_HANDLE)
@@ -141,6 +153,8 @@ void	CTestLevelState::Exit(void)
 	graphics->UnloadTexture(backgroundStars);
 	graphics->UnloadTexture(backgroundStars1);
 	graphics->UnloadTexture(backgroundStars2);
+	graphics->UnloadTexture(backgroundPlanet2);
+	graphics->UnloadTexture(backgroundPlanet1);
 	//soundBox->Exit();
 
 	//Terminating Messages or events before Entity manager will BREAK it on the NEXT level.
@@ -200,11 +214,17 @@ void	CTestLevelState::Update(float dt)
 	CEventManager::GetInstance().Update();
 	cam->Update(dt);
 
+	pSystem->Update(dt);
+
+
 	// parallax effect
 	nebulaPos = { cam->GetOffset().x * .5f, cam->GetOffset().y * .5f };
 	stars1Pos = { cam->GetOffset().x * .1f, cam->GetOffset().y * .1f };
 	stars2Pos = { cam->GetOffset().x * .2f, cam->GetOffset().y * .2f };
 	starsPos = { cam->GetOffset().x * .3f, cam->GetOffset().y * .3f };
+	planet1Pos = { cam->GetOffset().x * .25f, cam->GetOffset().y * .25f };
+	planet2Pos = { cam->GetOffset().x * .4f, cam->GetOffset().y * .4f };
+
 
 	if (bossPan > 0) bossPan -= dt;
 	if (bossPan < 0 && bossPan > -5.f && EntityManager->GetBoss() && CGameplayState::GetInstance()->GetLevel() == Level::Final)
@@ -247,6 +267,8 @@ void	CTestLevelState::Render(void)
 	if (m_bLoaded == true)
 	{
 
+		
+
 		//graphics->DrawTexture(BackgroundImage, { cam->GetOffset().x, cam->GetOffset().y });
 		//graphics->DrawTexture(backgroundBlack, { 0, 0 });
 
@@ -255,13 +277,21 @@ void	CTestLevelState::Render(void)
 			for (int j = 0; j < 4; j++)
 			{
 				graphics->DrawTexture(backgroundStars1, stars1Pos + SGD::Vector{ 1024.f * i, 768.f * j });
+				//graphics->DrawTexture(backgroundPlanet1, planet1Pos + SGD::Vector{ 1024.f, 768.f } * i);
+				graphics->DrawTexture(backgroundPlanet2, planet2Pos + SGD::Vector{ 1024.f, 768.f } * i);
 				graphics->DrawTexture(backgroundStars, starsPos + SGD::Vector{ 1024.f * i, 768.f * j });
 				graphics->DrawTextureSection(backgroundNebula, { nebulaPos.x + 1024.f * i, nebulaPos.y + 768.f * j }, { 0, 0, 1024.f, 768.f }, 0, {}, { 50, 50, 120, 100 });
 			}
 		}
+
+		graphics->DrawTexture(backgroundPlanet1, planet1Pos + SGD::Vector{ 1300.f, 190.f });
+		graphics->DrawTexture(backgroundPlanet1, planet1Pos + SGD::Vector{ 150.f, 768.f });
+
 		graphics->DrawRectangle({ 0, 0, 2000, 2000 }, { 150, 0, 0, 0 });
 
 		EntityManager->Render();
+
+		pSystem->Render();
 
 		UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator(), EntityManager->GetStargate(), EntityManager->GetLeaderPositions());
 	}
@@ -434,6 +464,14 @@ void	CTestLevelState::Generate()
 			{
 				eventID = (int)triggerID::tutPush;
 			}
+			else if (events[i].eType == "TUTORIAL.TAB")
+			{
+				eventID = (int)triggerID::tutArrows;
+			}
+			else if (events[i].eType == "TUTORIAL.ARROWS")
+			{
+				eventID = (int)triggerID::tutArrowsTwo;
+			}
 			else if (events[i].eType == "TUTORIAL.COORDINATOR")
 			{
 				eventID = (int)triggerID::tutCoordinator;
@@ -442,6 +480,10 @@ void	CTestLevelState::Generate()
 			{
 				eventID = (int)triggerID::tutHuman;
 			}
+			else if (events[i].eType == "TUTORIAL.UPGRADE")
+			{
+				eventID = (int)triggerID::tutUpgrade;
+			}
 			else if (events[i].eType == "TUTORIAL.BOSS")
 			{
 				eventID = (int)triggerID::tutBoss;
@@ -449,6 +491,10 @@ void	CTestLevelState::Generate()
 			else if (events[i].eType == "TUTORIAL.STARGATE")
 			{
 				eventID = (int)triggerID::tutStargate;
+			}
+			else if (events[i].eType == "FINALLEVEL")
+			{
+				eventID = (int)triggerID::finalLevel;
 			}
 
 			EntityManager->SpawnCollidable(EntityType::InvisTrigger, { events[i].area.left, events[i].area.top }, { events[i].area.right - events[i].area.left, events[i].area.bottom - events[i].area.top }, { 0, 0 }, eventID);
@@ -971,9 +1017,6 @@ void CTestLevelState::Save()
 void CTestLevelState::Load()
 {
 	saveData save = CGameplayState::GetInstance()->GetSaveData();
-
-
-
 
 	m_nNumQuadsWidth = (int)save.world.size.width;
 	m_nNumQuadsHeight = (int)save.world.size.height;

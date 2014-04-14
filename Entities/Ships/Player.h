@@ -2,6 +2,7 @@
 #include "Ship.h"
 struct playerData;
 class CShield;
+class CEmitter;
 class CPlayer :
 	public CShip
 {
@@ -45,10 +46,12 @@ class CPlayer :
 	SGD::HTexture warpIcon = SGD::INVALID_HANDLE;
 
 	CShield* m_shield;
+	CEmitter* m_Engine;
 
+	SGD::Point enginePos;
 	// tutorial
-	bool tutorialWaitForInput[4];
-	bool tutorialTriggerHit[4];
+	bool tutorialWaitForInput[6];
+	bool tutorialTriggerHit[6];
 
 public:
 	CPlayer();
@@ -79,6 +82,7 @@ public:
 	float GetPushTimer() { return pushTimer; }
 	float GetWarpTimer() { return warpTimer; }
 	bool  GetArrowsOn() { return arrowsOn; }
+	SGD::Point GetEnginePos() { return enginePos; }
 
 	void AddExp(int _exp);
 	void LaserLevelUp();

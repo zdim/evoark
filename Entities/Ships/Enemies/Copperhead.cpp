@@ -15,6 +15,9 @@ CCopperhead::CCopperhead()
     m_fMissileTimer = 0;
     m_nMissileDamage = 75;
 	expValue = 10;
+
+	size = { 32, 32 };
+
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
 }
 

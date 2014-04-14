@@ -14,6 +14,8 @@
 #include "../../GameStates/GameplayState.h"
 #include "../Collidables/EventTrigger.h"
 
+#include "../../Graphics/Particles/ParticleSystem.h"
+
 #define SHIELD_SCALE 100
 #define HULL_SCALE 200
 
@@ -34,25 +36,58 @@ CPlayer::CPlayer()
 	expRequired = 100;
 	level = 0;
 	perks = 5;
+
+	size = { 60, 89 };
+
+	imageSize = { 64, 128 };
 	
 	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/wellIconPurple32.png");
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushIconPurple32.png");
 	warpIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/warpIconPurple32.png");
 	
-	for (int i = 0; i < 4; i++) tutorialWaitForInput[i] = false;
-	for (int i = 0; i < 4; i++) tutorialTriggerHit[i] = false;
+	for (int i = 0; i < 6; i++) tutorialWaitForInput[i] = false;
+	for (int i = 0; i < 6; i++) tutorialTriggerHit[i] = false;
+
+	//m_Engine = new CEmitter(
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetParticleData(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitterSize(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetShape(),
+	//	position,
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetNumParticles(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnRate(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnTimeFromLastSpawn(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitType(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitTime()
+	//	);
+
+	//m_Engine->Initialize();
+	//m_Engine->SetOwner(this);
 }
 
 
 CPlayer::~CPlayer()
 {
+
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(wellIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(warpIcon);
+
+	//m_Engine->Release();
+	//delete m_Engine;
+
 }
 
 void CPlayer::Update(float dt)
 {
+	//SGD::Point test = {position.x
+
+	SGD::Vector rotatedOffset = { 0,45 };
+	rotatedOffset.Rotate(rotation);
+	enginePos = position + rotatedOffset;
+
+	//m_Engine->SetEmitterPosition(enginePos);
+	//m_Engine->Update(dt);
+
 	if (damaged > 0)
 		damaged -= dt;
 	if (damaged < 0)
@@ -101,6 +136,26 @@ void CPlayer::Update(float dt)
 			}
 			return;
 		}
+
+		if (tutorialWaitForInput[4])
+		{
+			if (input->IsKeyPressed(SGD::Key::Tab))
+			{
+				tutorialWaitForInput[4] = false;
+				arrowsOn = !arrowsOn;
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[5])
+		{
+			if (input->IsKeyPressed(SGD::Key::Escape))
+			{
+				tutorialWaitForInput[5] = false;
+				//CreatePush();
+			}
+			return;
+		}
 	}
 	//Timers
 	shieldTimer += dt;
@@ -129,11 +184,16 @@ void CPlayer::Update(float dt)
 		dir.x += 1;
 	if (dir != SGD::Vector{0, 0})
 		dir.Normalize();
+
+
 	 //commented out until finished implementing - was messing up standard input
 	if (warpTimer < warpDuration)
 		velocity = dir * (speed + warpSpeed);
 	else
+	{
 		velocity = dir * speed;
+	}
+	
 
 	//SGD::Point mousePos = { 0, 0 };
 
@@ -192,14 +252,19 @@ void CPlayer::Update(float dt)
 
 void CPlayer::Render()
 {
-	SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
+
+	//m_Engine->Render();
+
+	SGD::Rectangle rShipRegion = SGD::Rectangle (SGD::Point{ 0, 0 }, size);
+		
 	SGD::Point renderPoint = offsetToCamera();
 	SGD::Color col = {};
 	if (damaged > 0)
 	{
 		col = { 155, 155, 155 };
 	}
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, col, scale);
+	
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint,rShipRegion, rotation, size / 2, col );
 }
 
 void CPlayer::AddGravity(SGD::Vector grav)
@@ -313,9 +378,12 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	shieldTimer = 0;
 	if (shield > 0)
 	{
+		CParticleSystem::GetInstance()->AddEmitter(8, this);
 		CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyShieldDamage, false);
 		shield -= damage;
 		damage -= shield;
+		if (shield <= 0)
+			CParticleSystem::GetInstance()->AddEmitter(4, this);	
 	}
 	else
 	{
@@ -329,10 +397,18 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyHullDamage, false);
 
+	
 	hull -= damage;
+	if ( hull < 257)
+		CParticleSystem::GetInstance()->AddEmitter(9, this);
+	
+	
 	damaged = .15f;
 	if (hull <= 0 && !destroying)
 	{
+		CParticleSystem::GetInstance()->AddEmitter(10, this);
+		CParticleSystem::GetInstance()->AddEmitter(11, this);
+		CParticleSystem::GetInstance()->AddEmitter(12, this);
 		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
 		msg->QueueMessage();
 		SelfDestruct();
@@ -392,6 +468,7 @@ void CPlayer::SetStats(playerData& data)
 
 void CPlayer::HandleCollision(IEntity* other)
 {
+
 	if (other == m_shield)
 		return;
 
@@ -431,10 +508,26 @@ void CPlayer::HandleCollision(IEntity* other)
 				tutorialTriggerHit[3] = true;
 			}
 			break;
+		case (int)triggerID::tutArrows:
+			if (!tutorialTriggerHit[4])
+			{
+				tutorialWaitForInput[4] = true;
+				tutorialTriggerHit[4] = true;
+			}
+			break;
+		case (int)triggerID::tutUpgrade:
+			if (!tutorialTriggerHit[5])
+			{
+				tutorialWaitForInput[5] = true;
+				tutorialTriggerHit[5] = true;
+			}
+			break;
 		}
 	}
 
 	CShip::HandleCollision(other);
+
+	
 }
 
 int CPlayer::GetTutorialPause()
@@ -442,7 +535,7 @@ int CPlayer::GetTutorialPause()
 	if (CGameplayState::GetInstance()->GetLevel() != Level::Tutorial)
 		return -1;
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		if (tutorialWaitForInput[i])
 			return i;

@@ -19,14 +19,18 @@ class CSoundBox
 	SGD::HAudio playerPushSFX = SGD::INVALID_HANDLE;
 	SGD::HAudio playerLevelUpSFX = SGD::INVALID_HANDLE;
 
+
 	SGD::HAudio enemyShieldDamageSFX = SGD::INVALID_HANDLE;
 	SGD::HAudio enemyHullDamageSFX = SGD::INVALID_HANDLE;
+
+	SGD::HAudio missileHitSFX = SGD::INVALID_HANDLE;
+
 
 	SGD::HAudio creamMusic = SGD::INVALID_HANDLE;
 	SGD::HAudio ambientMusic = SGD::INVALID_HANDLE;
 	SGD::HAudio slowTranceMusic = SGD::INVALID_HANDLE;
 public:
-	enum sounds { uiHighlight, uiSuccess, uiFailure, playerLaser, playerLaserFinal, playerMissile, playerWarp, playerWell, playerPush, playerLevelUp, enemyShieldDamage, enemyHullDamage, cream, ambient, slowTrance, };
+	enum sounds { uiHighlight, uiSuccess, uiFailure, playerLaser, playerLaserFinal, playerMissile, playerWarp, playerWell, playerPush, playerLevelUp, enemyShieldDamage, enemyHullDamage, cream, ambient, slowTrance, missileHit };
 
 	static CSoundBox* GetInstance();
 	void Enter();

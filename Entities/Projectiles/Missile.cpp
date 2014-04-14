@@ -6,24 +6,14 @@
 #include "../../Event System/EventID.h"
 #include "../../Event System/CustomEvent.h"
 #include "../../Camera.h"
+#include "../../SoundBox.h"
 
 CMissile::CMissile()
 {
 	m_pSystem = CParticleSystem::GetInstance();
-	
-	m_eTrail = new CEmitter(
-		m_pSystem->GetParticleEffect(2)->GetParticleData(),
-		m_pSystem->GetParticleEffect(2)->GetEmitterSize(),
-		m_pSystem->GetParticleEffect(2)->GetShape(),
-		position,
-		m_pSystem->GetParticleEffect(2)->GetNumParticles(),
-		m_pSystem->GetParticleEffect(2)->GetSpawnRate(),
-		m_pSystem->GetParticleEffect(2)->GetSpawnTimeFromLastSpawn(),
-		m_pSystem->GetParticleEffect(2)->GetEmitType(),
-		m_pSystem->GetParticleEffect(2)->GetEmitTime()
-		);
 
-	m_eTrail->Initialize();
+	m_pSystem->AddEmitter(2, this);
+	
 
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
 }
@@ -31,15 +21,20 @@ CMissile::CMissile()
 
 CMissile::~CMissile()
 {
-	SetTarget(nullptr);
+
 	
-	m_eTrail->Release();
-	delete m_eTrail;
-	
+
 }
 
 void CMissile::SelfDestruct()
 {
+	CSoundBox::GetInstance()->Play(CSoundBox::sounds::missileHit, false);
+
+	m_pSystem->AddEmitter(6, this);
+	m_pSystem->AddEmitter(7, this);
+	m_pSystem->RemoveEmitter(this);
+
+
 	if (destroying)
 		return;
 
@@ -49,6 +44,8 @@ void CMissile::SelfDestruct()
 
 	SetTarget(nullptr);
 	//CEventManager::GetInstance().Unregister(dynamic_cast<Listener*>(this), EventID::position);
+
+	
 }
 
 void CMissile::SetTarget(CShip* t)
@@ -95,15 +92,15 @@ void CMissile::Update(float dt)
 
 	}
 
-	m_eTrail->SetEmitterPosition(position);
-    m_eTrail->Update(dt);
+	//m_eTrail->SetEmitterPosition(position);
+   // m_eTrail->Update(dt);
 
 
 }
 
 void  CMissile::Render()
 {
-	m_eTrail->Render();
+	//m_eTrail->Render();
 	CEntity::Render();
 
 }

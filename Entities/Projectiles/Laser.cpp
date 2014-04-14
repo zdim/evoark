@@ -11,9 +11,14 @@
 #include "../../Event System/EventID.h"
 #include "../../SGD Wrappers/SGD_Color.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+
+
 CLaser::CLaser()
 {
+	
+	size = { 8, 18 };
 
+	
 }
 
 CLaser::~CLaser()
@@ -86,6 +91,7 @@ void CLaser::HandleCollision(IEntity* other)
 			}
 			else if (this->GetOwner()->GetType() != (int)EntityType::Player && ship->GetType() == (int)EntityType::Player)
 			{
+				
 				ship->TakeDamage(damage);
 			}
 		

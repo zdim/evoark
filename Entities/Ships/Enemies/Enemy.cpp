@@ -11,6 +11,7 @@
 #include "../../../SoundBox.h"
 #include "../../Projectiles/Laser.h"
 #include "../../Collidables/Asteroid.h"
+#include "../../../Graphics/Particles/ParticleSystem.h"
 
 CEnemy::CEnemy()
 {
@@ -23,8 +24,8 @@ CEnemy::~CEnemy()
 
 void CEnemy::Update(float dt)
 {
-	if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
-		return;
+	//if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
+	//	return;
 
 	if (damaged > 0)
 		damaged -= dt;
@@ -117,17 +118,20 @@ void CEnemy::Update(float dt)
 
 void CEnemy::Render()
 {
-	SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
-	//CCamera* cam = Game::GetInstance()->GetLevelState()->GetCam();
-	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
+	SGD::Rectangle rShipRegion = SGD::Rectangle(SGD::Point{ 0, 0 }, size);
+	
 	SGD::Point renderPoint = offsetToCamera();
-	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint,SGD::Rectangle{SGD::Point{0,0}, imageSize}, rotation, imageSize/2, {}, scale);
+
+
 	SGD::Color col = {};
+
+
 	if (damaged > 0)
 	{
 		col = { 155, 155, 155 };
 	}
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, col, scale);
+
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint, rShipRegion, rotation, size / 2, col);
 }
 
 void CEnemy::SetTarget(CShip* newTarget)
@@ -274,7 +278,14 @@ void CEnemy::TakeDamage(int damage, bool collision)
 	damaged = .15f;
 	if (hull <= 0)
 	{
-
+		if (this->GetType() == (int)EntityType::Copperhead)
+		{
+			CParticleSystem::GetInstance()->AddEmitter(10, this);
+			CParticleSystem::GetInstance()->AddEmitter(11, this);
+			CParticleSystem::GetInstance()->AddEmitter(12, this);
+			CParticleSystem::GetInstance()->RemoveEmitter(this);
+		}
+		
 		SelfDestruct();
 	}
 }

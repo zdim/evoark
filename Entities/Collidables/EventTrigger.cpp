@@ -54,6 +54,20 @@ void EventTrigger::Render()
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Gravity Push will reflect everything");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .70f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "of appropriate size in an arc in front of you.");
 			break;
+		case (int)triggerID::tutArrows:
+			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .35f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .62f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Arrow Indicators");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .66f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Hit Tab to toggle the compass.");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Arrows point to your current objectives.");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .70f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Toggle them off to avoid screen clutter.");
+			break;
+		case (int)triggerID::tutArrowsTwo:
+			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .35f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .62f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Arrow Indicators");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .66f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Yellow - Stargate");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Orange - Coordinator");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .70f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Blue - Allied Ship");
+			break;
 		case (int)triggerID::tutCoordinator:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .35f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .62f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Coordinator");
@@ -68,6 +82,13 @@ void EventTrigger::Render()
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "cause for more human assistance in the");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .70f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "final battle.");
 			break;
+		case (int)triggerID::tutUpgrade:
+			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .35f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .62f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Upgrades");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .66f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Press Escape to go to the Upgrade menu.");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Each level you gain one perk to spend.");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .70f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Spend them wisely!");
+			break;
 		case (int)triggerID::tutBoss:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .35f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .62f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Boss");
@@ -81,6 +102,13 @@ void EventTrigger::Render()
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .66f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "After defeating a boss, the Stargate");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "opens. The Stargate will take you to");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .70f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "the next level.");
+			break;
+		case (int)triggerID::finalLevel:
+			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .35f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .62f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Front Lines");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .66f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "You've made it to the front lines!");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "Help save the remaining human ships");
+			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .35f, screenSize.height * .70f }, SGD::Size{ screenSize.width * .3f, screenSize.height * .05f } }, "from alien forces!");
 			break;
 		default:
 			break;

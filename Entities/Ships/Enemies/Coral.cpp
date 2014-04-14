@@ -7,8 +7,73 @@
 #include "../../Projectiles/Laser.h"
 #include "../../../Event System/EventManager.h"
 
+
 CCoral::CCoral()
 {
+	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
+	expValue = 50;
+	modules.resize(count);
+	modules[engine] = new CEngine();
+	modules[cockpit] = new CModule();
+
+	m_pShield = new CModuleShield(this);
+
+	modules[shieldModule] = new CShieldModule();
+
+	m_pShield->SetOwner(dynamic_cast<CShieldModule*>(modules[shieldModule]));
+	m_pShield->SetSize({ 175, 175 });
+
+
+	modules[laser] = new CLaserModule();
+
+	EntityType abilityMod = (EntityType)(rand() % 4 + (int)EntityType::MissileModule);
+	switch (abilityMod)
+	{
+	case EntityType::MissileModule:
+		modules[ability] = new CMissileModule;
+		break;
+	case EntityType::WellModule:
+		modules[ability] = new CWellModule;
+		break;
+	case EntityType::PushModule:
+		modules[ability] = new CPushModule;
+		break;
+	case EntityType::WarpModule:
+		modules[ability] = new CWarpModule;
+		break;
+	}
+
+	modulePositions.resize(count);
+	modulePositions[engine] = SGD::Vector{ 0, 40 };
+	modulePositions[cockpit] = SGD::Vector{ 0, 0 };
+	modulePositions[shieldModule] = SGD::Vector{ 40, 0 };
+	modulePositions[laser] = SGD::Vector{ 0, -40 };
+	modulePositions[ability] = SGD::Vector{ -40, 0 };
+
+	for (unsigned int i = 0; i < modules.size(); i++)
+	{
+		modules[i]->SetOffset(modulePositions[i]);
+		modules[i]->SetOwner(this);
+	}
+}
+
+CCoral::CCoral(int t)
+{
+	type = t;
+
+	switch(t)
+	{
+		case 0:
+			size = { 166, 215 };
+			break;
+		case 1:
+			size = { 158, 212 };
+			break;
+		case 2:
+			size = { 139, 249 };
+			break; 
+	}
+
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
 	expValue = 50;
 	modules.resize(count);
@@ -92,7 +157,23 @@ void CCoral::Update(float dt)
 
 void CCoral::Render()
 {
-	CEntity::Render();
+
+	//CEntity::Render();
+
+
+	SGD::Rectangle rShipRegion = SGD::Rectangle(SGD::Point{ 0, 0 }, size);
+
+	SGD::Point renderPoint = offsetToCamera();
+	SGD::Color col = {};
+
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint, rShipRegion, rotation, size / 2, col);
+
+
+
+
+
+
+
 	for (unsigned int i = 0; i < modules.size(); i++)
 	{
 		if (modules[i])

@@ -70,7 +70,7 @@ void CEventManager::ClearEvents()
 	{
 		CCustomEvent* e = events.back();
 		events.pop();
-		//delete e;
+		delete e;
 	}
 }
 

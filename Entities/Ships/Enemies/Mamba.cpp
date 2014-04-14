@@ -4,6 +4,8 @@
 
 CMamba::CMamba()
 {
+	size = { 52, 80 };
+	imageSize = { 64, 128 };
 }
 
 

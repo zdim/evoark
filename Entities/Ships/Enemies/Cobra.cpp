@@ -9,6 +9,7 @@ CCobra::CCobra()
 	warpDuration = 1;
 	warpSpeed = 300;
 	expValue = 20;
+	size = { 32, 32 };
 }
 
 
