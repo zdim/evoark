@@ -39,6 +39,8 @@ CTestLevelState::CTestLevelState()
 
 CTestLevelState::~CTestLevelState()
 {
+
+
 }
 
 CTestLevelState* CTestLevelState::GetInstance(void)
@@ -53,6 +55,8 @@ void	CTestLevelState::Enter(void)
 	srand((unsigned int)time(nullptr));
 	graphics = SGD::GraphicsManager::GetInstance();
 
+	m_pParticleSystem = CParticleSystem::GetInstance();
+	m_pParticleSystem->Init();
 
 	testing = "Resources";
 	m_nLine = 0;
@@ -130,6 +134,12 @@ void	CTestLevelState::Enter(void)
 void	CTestLevelState::Exit(void)
 {
 	m_bBossKilled = false;
+
+
+	m_pParticleSystem->Terminate();
+	m_pParticleSystem = nullptr;
+	m_pParticleSystem->DeleteInstance();
+
 
 	cam->Terminate();
 	if (BackgroundImage != SGD::INVALID_HANDLE)
@@ -978,9 +988,6 @@ void CTestLevelState::Save()
 void CTestLevelState::Load()
 {
 	saveData save = CGameplayState::GetInstance()->GetSaveData();
-
-
-
 
 	m_nNumQuadsWidth = (int)save.world.size.width;
 	m_nNumQuadsHeight = (int)save.world.size.height;

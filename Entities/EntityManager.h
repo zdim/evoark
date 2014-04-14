@@ -25,6 +25,7 @@ class CEntityManager
 	CEntity* stargate = nullptr;
 	CMoccasin* boss = nullptr;
 	std::vector<SGD::HTexture> images;
+	std::vector<SGD::HTexture> imagesLeaders;
 	std::vector<SGD::HTexture> imagesCoral;
 	std::vector<SGD::HTexture> imagesMoccasin;
 	std::vector<SGD::HTexture> imagesAsteroids;

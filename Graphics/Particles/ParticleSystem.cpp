@@ -43,7 +43,7 @@ void CParticleSystem::Init()
 {
 	std::string efName = "3.xml";
 	LoadEffect(efName);
-	std::string efName2 = "4.xml";
+	std::string efName2 = "MissileTrail.xml";
 	LoadEffect(efName2);
 	std::string efName3 = "5.xml";
 	LoadEffect(efName3);
@@ -57,7 +57,14 @@ void CParticleSystem::Init()
 	LoadEffect(efName7);
 	std::string efName8 = "ShieldDamage.xml";
 	LoadEffect(efName8);
-
+	std::string efName9 = "TestSmoke.xml";
+	LoadEffect(efName9);
+	std::string efName10 = "PlayerExplosion1.xml";
+	LoadEffect(efName10);
+	std::string efName11 = "PlayerExplosion2.xml";
+	LoadEffect(efName11);
+	std::string efName12 = "PlayerExplosion3.xml";
+	LoadEffect(efName12);
 
 
 	for (int i = 1; i < numEmitters + 1; i++)

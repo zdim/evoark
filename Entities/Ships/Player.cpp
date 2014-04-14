@@ -48,31 +48,36 @@ CPlayer::CPlayer()
 	for (int i = 0; i < 4; i++) tutorialWaitForInput[i] = false;
 	for (int i = 0; i < 4; i++) tutorialTriggerHit[i] = false;
 
-	m_Engine = new CEmitter(
-		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetParticleData(),
-		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitterSize(),
-		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetShape(),
-		position,
-		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetNumParticles(),
-		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnRate(),
-		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnTimeFromLastSpawn(),
-		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitType(),
-		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitTime()
-		);
+	//m_Engine = new CEmitter(
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetParticleData(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitterSize(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetShape(),
+	//	position,
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetNumParticles(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnRate(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnTimeFromLastSpawn(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitType(),
+	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitTime()
+	//	);
 
-	m_Engine->Initialize();
-	m_Engine->SetOwner(this);
+	//m_Engine->Initialize();
+	//m_Engine->SetOwner(this);
 }
 
 
 CPlayer::~CPlayer()
 {
+
+
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(wellIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(warpIcon);
 
-	m_Engine->Release();
-	delete m_Engine;
+
+	
+
+	//m_Engine->Release();
+	//delete m_Engine;
 
 }
 
@@ -88,8 +93,8 @@ void CPlayer::Update(float dt)
 	enginePos = position + rotatedOffset;
 
 
-	m_Engine->SetEmitterPosition(enginePos);
-	m_Engine->Update(dt);
+	//m_Engine->SetEmitterPosition(enginePos);
+	//m_Engine->Update(dt);
 
 	if (damaged > 0)
 		damaged -= dt;
@@ -236,12 +241,10 @@ void CPlayer::Update(float dt)
 void CPlayer::Render()
 {
 
-	m_Engine->Render();
+	//m_Engine->Render();
 
 	SGD::Rectangle rShipRegion = SGD::Rectangle (SGD::Point{ 0, 0 }, size);
-	
-	SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
-	
+		
 	SGD::Point renderPoint = offsetToCamera();
 	SGD::Color col = {};
 	if (damaged > 0)
@@ -387,9 +390,16 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 	
 	hull -= damage;
+	if ( hull < 257)
+		CParticleSystem::GetInstance()->AddEmitter(9, this);
+	
+	
 	damaged = .15f;
 	if (hull <= 0 && !destroying)
 	{
+		CParticleSystem::GetInstance()->AddEmitter(10, this);
+		CParticleSystem::GetInstance()->AddEmitter(11, this);
+		CParticleSystem::GetInstance()->AddEmitter(12, this);
 		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
 		msg->QueueMessage();
 		SelfDestruct();

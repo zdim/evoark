@@ -57,6 +57,9 @@ private:
 	SGD::Point stars1Pos = SGD::Point{ 0, 0 };
 	SGD::Point stars2Pos = SGD::Point{ 0, 0 };
 
+	CParticleSystem*        m_pParticleSystem = nullptr;
+
+
 	CEntityManager* EntityManager;
 	SGD::GraphicsManager* graphics;
 	bool m_bBossKilled = false; 

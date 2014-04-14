@@ -20,9 +20,11 @@ protected:
 	std::vector<SGD::Vector>modulePositions;
 	std::vector<CModule*>modules;
 	CModuleShield* m_pShield;
+	int type;
 
 public:
 	CCoral();
+	CCoral(int t);
 	virtual ~CCoral();
 
 	virtual int GetType() override { return (int)EntityType::Coral; }

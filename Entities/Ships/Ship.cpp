@@ -36,7 +36,8 @@ void CShip::TakeDamage(int damage, bool collision)
 	hull -= damage;
 	if (hull <= 0)
 	{
-	
+		
+
 		SelfDestruct();
 	}
 }

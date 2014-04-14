@@ -111,6 +111,7 @@ void CEmitter::Update(float deltaTime)
 
 		}
 
+		//m_lAliveParticles[i].ParticlePositon = m_lAliveParticles[i].ParticlePositon + m_lAliveParticles[i].ParticleSpeed * deltaTime;
 
 		if (m_pShipOwner != nullptr)
 		{
@@ -120,9 +121,9 @@ void CEmitter::Update(float deltaTime)
 			(*it)->SetCurSpeed(dir * speed);
 		}
 		
-
 		
 		(*it)->SetCurPos((*it)->GetCurPos() + ((*it)->GetCurSpeed() * deltaTime));
+
 #pragma endregion
 
 

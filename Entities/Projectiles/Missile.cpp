@@ -6,12 +6,13 @@
 #include "../../Event System/EventID.h"
 #include "../../Event System/CustomEvent.h"
 #include "../../Camera.h"
+#include "../../SoundBox.h"
 
 CMissile::CMissile()
 {
 	m_pSystem = CParticleSystem::GetInstance();
 
-	m_pSystem->AddEmitter(5, this);
+	m_pSystem->AddEmitter(2, this);
 	
 
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
@@ -27,6 +28,7 @@ CMissile::~CMissile()
 
 void CMissile::SelfDestruct()
 {
+	CSoundBox::GetInstance()->Play(CSoundBox::sounds::missileHit, false);
 
 	m_pSystem->AddEmitter(6, this);
 	m_pSystem->AddEmitter(7, this);

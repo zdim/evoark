@@ -81,7 +81,6 @@ bool Game::Initialize( int width, int height )
 	m_pAudio	      = SGD::AudioManager::GetInstance();
 	m_pGraphics	      = SGD::GraphicsManager::GetInstance();
 	m_pInput	      = SGD::InputManager::GetInstance();
-	m_pParticleSystem = CParticleSystem::GetInstance();
 
 	// Initialize each singleton
 	if(   m_pAudio->Initialize() == false 
@@ -91,7 +90,7 @@ bool Game::Initialize( int width, int height )
 		return false;
 	}
 
-	m_pParticleSystem->Init();
+	
 	CSoundBox::GetInstance()->Enter();
 
 	std::string path = GetAppDataPath() + "optionsSave.xml";
@@ -210,9 +209,6 @@ void Game::Terminate( void )
 	//	delete m_pFont;
 	//	m_pFont = nullptr;
 
-	m_pParticleSystem->Terminate();
-	m_pParticleSystem = nullptr;
-	m_pParticleSystem->DeleteInstance();
 
 	//m_pAudio->UnloadAudio(m_hSfxMusic);
 	CSoundBox::GetInstance()->Exit();
