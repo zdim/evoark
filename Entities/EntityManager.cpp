@@ -69,6 +69,13 @@ void CEntityManager::Initialize()
 	}
 
 
+	imagesAsteroids.resize(3);
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		imagesAsteroids[i] = SGD::INVALID_HANDLE;
+	}
+
+
 	images[(int)EntityType::Player] = graphics->LoadTexture("Resources/Graphics/Ships/VG_EvoArk.png");
 
 	//Small Ships 
@@ -76,25 +83,21 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Cobra] = graphics->LoadTexture("Resources/Graphics/Ships/VG_CobraClass.png");
 	images[(int)EntityType::Mamba] = graphics->LoadTexture("Resources/Graphics/Ships/VG_MambaClass.png");
 
+	//Cordinator Images 
 	imagesLeaders[0] = graphics->LoadTexture("Resources/Graphics/Ships/VG_CopperheadClassLeader.png");
 	imagesLeaders[1] = graphics->LoadTexture("Resources/Graphics/Ships/VG_CobraClassLeader.png");
 	imagesLeaders[2] = graphics->LoadTexture("Resources/Graphics/Ships/VG_MambaClassLeader.png");
 
-
-	//Modular Ships 
-
-	images[(int)EntityType::Moccasin] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
-
+	//Modular Ships
 	imagesCoral[0] = graphics->LoadTexture("Resources/Graphics/Ships/VG_CoralType1.png");
 	imagesCoral[1] = graphics->LoadTexture("Resources/Graphics/Ships/VG_CoralType2.png");
 	imagesCoral[2] = graphics->LoadTexture("Resources/Graphics/Ships/VG_CoralType3.png");
-
-
 	imagesMoccasin[0] = graphics->LoadTexture("Resources/Graphics/Ships/VG_MoccasinType1.png");
 	imagesMoccasin[1] = graphics->LoadTexture("Resources/Graphics/Ships/VG_MoccasinType2.png");
 	imagesMoccasin[2] = graphics->LoadTexture("Resources/Graphics/Ships/VG_MoccasinType3.png");
 	imagesMoccasin[3] = graphics->LoadTexture("Resources/Graphics/Ships/VG_MoccasinType4.png");
 	imagesMoccasin[4] = graphics->LoadTexture("Resources/Graphics/Ships/VG_MoccasinType5.png");
+
 
 	images[(int)EntityType::Human] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 
@@ -119,7 +122,12 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Stargate] = graphics->LoadTexture("Resources/Graphics/Stargate.png");
 	images[(int)EntityType::Planet] = graphics->LoadTexture("Resources/Graphics/planet.png");
 	images[(int)EntityType::Barrier] = graphics->LoadTexture("Resources/Graphics/wallTile.png");
-	images[(int)EntityType::Asteroid] = graphics->LoadTexture("Resources/Graphics/asteroid.png");
+
+	imagesAsteroids[0] = graphics->LoadTexture("Resources/Graphics/Collidables/VG_SmallAsteroid.png");
+	imagesAsteroids[1] = graphics->LoadTexture("Resources/Graphics/Collidables/VG_MediumAsteroid.png");
+	imagesAsteroids[2] = graphics->LoadTexture("Resources/Graphics/Collidables/VG_LargeAsteroid.png");
+
+
 	images[(int)EntityType::Shield] = graphics->LoadTexture("Resources/Graphics/Shield.png", { 1, 0, 0, 0 });
 	images[(int)EntityType::ModuleShield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
 	images[(int)EntityType::RepairStation] = graphics->LoadTexture("Resources/Graphics/station.png", { 0, 0, 0, 0 });
@@ -164,6 +172,17 @@ void CEntityManager::Terminate()
 		}
 	}
 	imagesLeaders.clear();
+
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		if (imagesAsteroids[i] != SGD::INVALID_HANDLE)
+		{
+			graphics->UnloadTexture(imagesAsteroids[i]);
+			imagesAsteroids[i] = SGD::INVALID_HANDLE;
+		}
+	}
+	imagesAsteroids.clear();
+
 
 	for (unsigned int i = 0; i < (unsigned int)EntityType::Count; i++)
 	{
@@ -680,7 +699,27 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 	{
 								 CAsteroid* asteroid = new CAsteroid();
 								 asteroid->SetPosition(position);
-								 asteroid->SetSize(size);
+
+								 int aType = rand() % 3;
+
+								 switch (aType)
+								 {
+								 case 0:
+									 asteroid->SetSize({ 36, 35 });
+									 asteroid->SetImage(imagesAsteroids[aType]);
+									 break;
+								 case 1:
+									 asteroid->SetSize({ 51, 51 });
+									 asteroid->SetImage(imagesAsteroids[aType]);
+									 break;
+								 case 2:
+									 asteroid->SetSize({ 86, 81 });
+									 asteroid->SetImage(imagesAsteroids[aType]);
+									 break;
+
+								 }
+
+
 								 //If the velocity is defaulted
 								 if (velocity == SGD::Vector{ 0, 0 })
 								 {
@@ -691,8 +730,8 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 									 //Rotate by that random rotation value, dividing it back down into 0 <= rotation <= 2PI
 									 velocity.Rotate(rotation / 1000.0f);
 								 }
-								 asteroid->SetVelocity(velocity);
-								 asteroid->SetImage(images[(int)EntityType::Asteroid]);
+
+								 asteroid->SetVelocity(velocity);			
 								 asteroids.push_back(asteroid);
 								 break;
 	}
