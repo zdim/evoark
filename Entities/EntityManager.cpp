@@ -253,14 +253,15 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 										   CCopperheadCoord* C = new CCopperheadCoord();
 										   copperheads[i] = C;
 										   coordinator = C;
+										   copperheads[i]->SetImage(imagesLeaders[0]);
 									   }
 									   else
 									   {
 										   copperheads[i] = new CCopperhead();
+										   copperheads[i]->SetImage(images[(int)EntityType::Copperhead]);
 									   }
-									   copperheads[i]->SetImage(images[(int)EntityType::Copperhead]);
-									   copperheads[i]->SetSize({ 32, 32 });
-									   //copperheads[i]->SetImageSize({ 70, 94 });
+									  
+									  
 									   smallEnemies.push_back(copperheads[i]);
 									   ships.push_back(copperheads[i]);
 								   }
@@ -281,12 +282,14 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 									  CCobraCoord* C = new CCobraCoord;
 									  cobras[i] = C;
 									  coordinator = C;
+									  cobras[i]->SetImage(imagesLeaders[1]);
 								  }
 								  else
 								  {
 									  cobras[i] = new CCobra();
+									  cobras[i]->SetImage(images[(int)EntityType::Cobra]);
 								  }
-								  cobras[i]->SetImage(images[(int)EntityType::Cobra]);
+								  
 								  smallEnemies.push_back(cobras[i]);
 								  ships.push_back(cobras[i]);
 							  }
@@ -308,12 +311,14 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 									  CMambaCoord* C = new CMambaCoord;
 									  mambas[i] = C;
 									  coordinator = C;
+									  mambas[i]->SetImage(imagesLeaders[2]);
 								  }
 								  else
 								  {
 									  mambas[i] = new CMamba();
+									  mambas[i]->SetImage(images[(int)EntityType::Mamba]);
 								  }
-								  mambas[i]->SetImage(images[(int)EntityType::Mamba]);
+								
 								  smallEnemies.push_back(mambas[i]);
 								  ships.push_back(mambas[i]);
 							  }
@@ -1294,12 +1299,14 @@ EntityGroup CEntityManager::CreateCopperheadLeader(Flock& data)
 			CCopperheadCoord* C = new CCopperheadCoord();
 			copperheads[j] = C;
 			coordinator = C;
+			copperheads[j]->SetImage(imagesLeaders[0]);
 		}
 		else
 		{
 			copperheads[j] = new CCopperhead();
+			copperheads[j]->SetImage(images[(int)EntityType::Copperhead]);
 		}
-		copperheads[j]->SetImage(imagesLeaders[0]);
+		
 		smallEnemies.push_back(copperheads[j]);
 		ships.push_back(copperheads[j]);
 	}
@@ -1317,12 +1324,14 @@ EntityGroup CEntityManager::CreateCobraLeader(Flock& data)
 			CCobraCoord* C = new CCobraCoord;
 			cobras[i] = C;
 			coordinator = C;
+			cobras[i]->SetImage(imagesLeaders[1]);
 		}
 		else
 		{
 			cobras[i] = new CCobra();
+			cobras[i]->SetImage(images[(int)EntityType::Cobra]);
 		}
-		cobras[i]->SetImage(imagesLeaders[1]);
+		
 		smallEnemies.push_back(cobras[i]);
 		ships.push_back(cobras[i]);
 	}
@@ -1340,12 +1349,14 @@ EntityGroup CEntityManager::CreateMambaLeader(Flock& data)
 			CMambaCoord* C = new CMambaCoord;
 			mambas[i] = C;
 			coordinator = C;
+			mambas[i]->SetImage(imagesLeaders[2]);
 		}
 		else
 		{
 			mambas[i] = new CMamba();
+			mambas[i]->SetImage(images[(int)EntityType::Mamba]);
 		}
-		mambas[i]->SetImage(imagesLeaders[2]);
+		
 		smallEnemies.push_back(mambas[i]);
 		ships.push_back(mambas[i]);
 	}
@@ -1391,7 +1402,7 @@ void CEntityManager::CreateLeader(ModularFlock& data)
 	for (unsigned int i = 0; i < corals.size(); i++)
 	{
 
-		int randnum = rand() % 3 + 1;
+		int randnum = rand() % 3;
 
 		corals[i] = new CCoral(randnum);
 		corals[i]->SetImage(imagesCoral[randnum]);

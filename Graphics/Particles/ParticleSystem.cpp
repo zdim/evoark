@@ -105,6 +105,27 @@ void  CParticleSystem::AddEmitter(int n, CEntity* owner)
 
 }
 
+void CParticleSystem::AddEmitterPos(int n, SGD::Point pos)
+{
+	CEmitter* p = *standbyPool.begin();
+
+	*p = CEmitter(
+		GetParticleEffect(n)->GetParticleData(),
+		GetParticleEffect(n)->GetEmitterSize(),
+		GetParticleEffect(n)->GetShape(),
+		pos,
+		GetParticleEffect(n)->GetNumParticles(),
+		GetParticleEffect(n)->GetSpawnRate(),
+		GetParticleEffect(n)->GetSpawnTimeFromLastSpawn(),
+		GetParticleEffect(n)->GetEmitType(),
+		GetParticleEffect(n)->GetEmitTime()
+		);
+
+	p->Initialize();
+	standbyPool.pop_front();
+	emittingPool.push_front(p);
+}
+
 void CParticleSystem::RemoveEmitter(CEntity* owner)
 {
 	for (std::list<CEmitter*>::iterator it = emittingPool.begin(); it != emittingPool.end();)
