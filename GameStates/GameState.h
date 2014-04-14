@@ -52,10 +52,15 @@ private:
 	SGD::HTexture backgroundStars = SGD::INVALID_HANDLE;
 	SGD::HTexture backgroundStars1 = SGD::INVALID_HANDLE;
 	SGD::HTexture backgroundStars2 = SGD::INVALID_HANDLE;
+	SGD::HTexture backgroundPlanet1 = SGD::INVALID_HANDLE;
+	SGD::HTexture backgroundPlanet2 = SGD::INVALID_HANDLE;
+
 	SGD::Point nebulaPos = SGD::Point{ 0, 0 };
 	SGD::Point starsPos = SGD::Point{ 0, 0 };
 	SGD::Point stars1Pos = SGD::Point{ 0, 0 };
 	SGD::Point stars2Pos = SGD::Point{ 0, 0 };
+	SGD::Point planet1Pos = SGD::Point{ 0, 0 };
+	SGD::Point planet2Pos = SGD::Point{ 0, 0 };
 
 	CEntityManager* EntityManager;
 	SGD::GraphicsManager* graphics;
