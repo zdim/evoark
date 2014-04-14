@@ -69,6 +69,8 @@ void	CTestLevelState::Enter(void)
 	backgroundStars = graphics->LoadTexture("Resources/Graphics/stars1new.png", { 0, 0, 0 });
 	backgroundStars1 = graphics->LoadTexture("Resources/Graphics/stars2new.png", { 0, 0, 0 });
 	backgroundStars2 = graphics->LoadTexture("Resources/Graphics/stars3.png", { 0, 0, 0 });
+	backgroundPlanet1 = graphics->LoadTexture("Resources/Graphics/bgPlanet1.png");
+	backgroundPlanet2 = graphics->LoadTexture("Resources/Graphics/bgPlanet2.png");
 
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
 
@@ -151,6 +153,8 @@ void	CTestLevelState::Exit(void)
 	graphics->UnloadTexture(backgroundStars);
 	graphics->UnloadTexture(backgroundStars1);
 	graphics->UnloadTexture(backgroundStars2);
+	graphics->UnloadTexture(backgroundPlanet2);
+	graphics->UnloadTexture(backgroundPlanet1);
 	//soundBox->Exit();
 
 	//Terminating Messages or events before Entity manager will BREAK it on the NEXT level.
@@ -218,6 +222,9 @@ void	CTestLevelState::Update(float dt)
 	stars1Pos = { cam->GetOffset().x * .1f, cam->GetOffset().y * .1f };
 	stars2Pos = { cam->GetOffset().x * .2f, cam->GetOffset().y * .2f };
 	starsPos = { cam->GetOffset().x * .3f, cam->GetOffset().y * .3f };
+	planet1Pos = { cam->GetOffset().x * .25f, cam->GetOffset().y * .25f };
+	planet2Pos = { cam->GetOffset().x * .4f, cam->GetOffset().y * .4f };
+
 
 	if (bossPan > 0) bossPan -= dt;
 	if (bossPan < 0 && bossPan > -5.f && EntityManager->GetBoss() && CGameplayState::GetInstance()->GetLevel() == Level::Final)
@@ -270,10 +277,16 @@ void	CTestLevelState::Render(void)
 			for (int j = 0; j < 4; j++)
 			{
 				graphics->DrawTexture(backgroundStars1, stars1Pos + SGD::Vector{ 1024.f * i, 768.f * j });
+				//graphics->DrawTexture(backgroundPlanet1, planet1Pos + SGD::Vector{ 1024.f, 768.f } * i);
+				graphics->DrawTexture(backgroundPlanet2, planet2Pos + SGD::Vector{ 1024.f, 768.f } * i);
 				graphics->DrawTexture(backgroundStars, starsPos + SGD::Vector{ 1024.f * i, 768.f * j });
 				graphics->DrawTextureSection(backgroundNebula, { nebulaPos.x + 1024.f * i, nebulaPos.y + 768.f * j }, { 0, 0, 1024.f, 768.f }, 0, {}, { 50, 50, 120, 100 });
 			}
 		}
+
+		graphics->DrawTexture(backgroundPlanet1, planet1Pos + SGD::Vector{ 1300.f, 190.f });
+		graphics->DrawTexture(backgroundPlanet1, planet1Pos + SGD::Vector{ 150.f, 768.f });
+
 		graphics->DrawRectangle({ 0, 0, 2000, 2000 }, { 150, 0, 0, 0 });
 
 		EntityManager->Render();
