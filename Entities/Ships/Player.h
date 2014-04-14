@@ -50,8 +50,8 @@ class CPlayer :
 
 	SGD::Point enginePos;
 	// tutorial
-	bool tutorialWaitForInput[4];
-	bool tutorialTriggerHit[4];
+	bool tutorialWaitForInput[6];
+	bool tutorialTriggerHit[6];
 
 public:
 	CPlayer();

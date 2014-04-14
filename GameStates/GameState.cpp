@@ -464,6 +464,14 @@ void	CTestLevelState::Generate()
 			{
 				eventID = (int)triggerID::tutPush;
 			}
+			else if (events[i].eType == "TUTORIAL.TAB")
+			{
+				eventID = (int)triggerID::tutArrows;
+			}
+			else if (events[i].eType == "TUTORIAL.ARROWS")
+			{
+				eventID = (int)triggerID::tutArrowsTwo;
+			}
 			else if (events[i].eType == "TUTORIAL.COORDINATOR")
 			{
 				eventID = (int)triggerID::tutCoordinator;
@@ -472,6 +480,10 @@ void	CTestLevelState::Generate()
 			{
 				eventID = (int)triggerID::tutHuman;
 			}
+			else if (events[i].eType == "TUTORIAL.UPGRADE")
+			{
+				eventID = (int)triggerID::tutUpgrade;
+			}
 			else if (events[i].eType == "TUTORIAL.BOSS")
 			{
 				eventID = (int)triggerID::tutBoss;
@@ -479,6 +491,10 @@ void	CTestLevelState::Generate()
 			else if (events[i].eType == "TUTORIAL.STARGATE")
 			{
 				eventID = (int)triggerID::tutStargate;
+			}
+			else if (events[i].eType == "FINALLEVEL")
+			{
+				eventID = (int)triggerID::finalLevel;
 			}
 
 			EntityManager->SpawnCollidable(EntityType::InvisTrigger, { events[i].area.left, events[i].area.top }, { events[i].area.right - events[i].area.left, events[i].area.bottom - events[i].area.top }, { 0, 0 }, eventID);

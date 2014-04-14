@@ -45,8 +45,8 @@ CPlayer::CPlayer()
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushIconPurple32.png");
 	warpIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/warpIconPurple32.png");
 	
-	for (int i = 0; i < 4; i++) tutorialWaitForInput[i] = false;
-	for (int i = 0; i < 4; i++) tutorialTriggerHit[i] = false;
+	for (int i = 0; i < 6; i++) tutorialWaitForInput[i] = false;
+	for (int i = 0; i < 6; i++) tutorialTriggerHit[i] = false;
 
 	//m_Engine = new CEmitter(
 	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetParticleData(),
@@ -68,13 +68,9 @@ CPlayer::CPlayer()
 CPlayer::~CPlayer()
 {
 
-
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(wellIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(warpIcon);
-
-
-	
 
 	//m_Engine->Release();
 	//delete m_Engine;
@@ -85,13 +81,9 @@ void CPlayer::Update(float dt)
 {
 	//SGD::Point test = {position.x
 
-
-	
-
 	SGD::Vector rotatedOffset = { 0,45 };
 	rotatedOffset.Rotate(rotation);
 	enginePos = position + rotatedOffset;
-
 
 	//m_Engine->SetEmitterPosition(enginePos);
 	//m_Engine->Update(dt);
@@ -141,6 +133,26 @@ void CPlayer::Update(float dt)
 			{
 				tutorialWaitForInput[3] = false;
 				CreatePush();
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[4])
+		{
+			if (input->IsKeyPressed(SGD::Key::Tab))
+			{
+				tutorialWaitForInput[4] = false;
+				arrowsOn = !arrowsOn;
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[5])
+		{
+			if (input->IsKeyPressed(SGD::Key::Escape))
+			{
+				tutorialWaitForInput[5] = false;
+				//CreatePush();
 			}
 			return;
 		}
@@ -496,6 +508,20 @@ void CPlayer::HandleCollision(IEntity* other)
 				tutorialTriggerHit[3] = true;
 			}
 			break;
+		case (int)triggerID::tutArrows:
+			if (!tutorialTriggerHit[4])
+			{
+				tutorialWaitForInput[4] = true;
+				tutorialTriggerHit[4] = true;
+			}
+			break;
+		case (int)triggerID::tutUpgrade:
+			if (!tutorialTriggerHit[5])
+			{
+				tutorialWaitForInput[5] = true;
+				tutorialTriggerHit[5] = true;
+			}
+			break;
 		}
 	}
 
@@ -509,7 +535,7 @@ int CPlayer::GetTutorialPause()
 	if (CGameplayState::GetInstance()->GetLevel() != Level::Tutorial)
 		return -1;
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		if (tutorialWaitForInput[i])
 			return i;
