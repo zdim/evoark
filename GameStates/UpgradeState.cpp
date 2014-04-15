@@ -436,7 +436,8 @@ void CUpgradeState::Render()
 	case warpTwo:
 		graphics->DrawRectangle({ { screenWidth * .52f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .28f }, SGD::Size{ 150, 100 } }, "Warp II");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Increased Strength");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Increased Warp");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Force");
 		break;
 	case warpThree:
 		graphics->DrawRectangle({ { screenWidth * .52f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
@@ -452,7 +453,8 @@ void CUpgradeState::Render()
 	case wellTwo:
 		graphics->DrawRectangle({ { screenWidth * .44f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .28f }, SGD::Size{ 150, 100 } }, "Gravity Well II");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Increased Strength");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, "Increased Pull");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Force");
 		break;
 	case wellThree:
 		graphics->DrawRectangle({ { screenWidth * .44f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
@@ -469,7 +471,8 @@ void CUpgradeState::Render()
 	case pushTwo:
 		graphics->DrawRectangle({ { screenWidth * .59f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .28f }, SGD::Size{ 150, 100 } }, "Gravity Push II");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Increased Strength");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, "Increased Push");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Force");
 		break;
 	case pushThree:
 		graphics->DrawRectangle({ { screenWidth * .59f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
