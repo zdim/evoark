@@ -82,7 +82,7 @@ void CEnemy::Update(float dt)
 			dir.Rotate(SGD::PI * 0.5f);
 		velocity = dir * speed;
 		float strafeAngle = forward.ComputeAngle(dir);
-		strafeAngle /= SGD::PI;
+		strafeAngle /= (SGD::PI*3/4);
 		strafeAngle = 1 - strafeAngle;
 		velocity *= strafeAngle;
 	}
@@ -98,7 +98,7 @@ void CEnemy::Update(float dt)
 		else
 			velocity = dir * distance;
 		float strafeAngle = forward.ComputeAngle(dir);
-		strafeAngle /= SGD::PI;
+		strafeAngle /= (SGD::PI * 3 / 4);
 		strafeAngle = 1 - strafeAngle;
 		velocity *= strafeAngle;
 	}
