@@ -15,6 +15,7 @@
 #include <Windows.h>		// Win32 Application
 
 //#include <vld.h>			// Visual Leak Detector!
+#include "resource.h"
 #include "GameStates\Game.h"			// Game class
 #include "GameStates\GameState.h"
 #include "GameStates\PauseState.h"
@@ -151,8 +152,8 @@ HWND MakeWindow( HINSTANCE hInstance )
 	winClassEx.cbClsExtra		= 0;
 	winClassEx.cbWndExtra		= 0;
 	winClassEx.hInstance		= hInstance;
-	winClassEx.hIcon			= LoadIconW( NULL, (LPWSTR)IDI_APPLICATION );
-	winClassEx.hIconSm			= LoadIconW( NULL, (LPWSTR)IDI_APPLICATION );
+	winClassEx.hIcon = LoadIconW(hInstance, MAKEINTRESOURCE(IDI_ICON1));
+	winClassEx.hIconSm = NULL; //LoadIconW(NULL, MAKEINTRESOURCE(IDI_ICON1));
 	winClassEx.hCursor			= LoadCursorW( NULL, (LPWSTR)IDC_ARROW );
 	winClassEx.hbrBackground	= (HBRUSH)(1+COLOR_WINDOW);
 	winClassEx.lpszMenuName		= NULL; 
@@ -193,7 +194,7 @@ HWND MakeWindow( HINSTANCE hInstance )
 					(GetSystemMetrics(SM_CYSCREEN) - nWindowHeight)/2,		//	- centered on the desktop
 					nWindowWidth,											// width
 					nWindowHeight,											// height
-					HWND_DESKTOP,											// parent window handle
+					NULL,											// parent window handle
 					NULL,													// menu handle
 					hInstance,												// application instance
 					NULL													// creation parameters

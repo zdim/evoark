@@ -555,10 +555,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="EvoArk.ico">
+    <Image Include="Resources\Graphics\EvoArk.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

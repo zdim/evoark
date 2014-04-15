@@ -248,8 +248,7 @@
     <ResourceCompile Include="EvoArk.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="EvoArk.ico" />
-    <Image Include="small.ico" />
+    <Image Include="Resources\Graphics\EvoArk.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
