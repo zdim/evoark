@@ -38,10 +38,10 @@
     </Quad>
     <Quad x="1" y="15" possibleTypes="0" />
     <Quad x="2" y="0" possibleTypes="0" />
-    <Quad x="2" y="1" possibleTypes="0" />
-    <Quad x="2" y="2" possibleTypes="1">
-      <Type type="COPPERHEAD" amount="2" randomized="False" x="535" y="437" />
+    <Quad x="2" y="1" possibleTypes="1">
+      <Type type="COPPERHEAD" amount="2" randomized="False" x="518" y="327" />
     </Quad>
+    <Quad x="2" y="2" possibleTypes="0" />
     <Quad x="2" y="3" possibleTypes="0" />
     <Quad x="2" y="4" possibleTypes="0" />
     <Quad x="2" y="5" possibleTypes="0" />
@@ -58,7 +58,7 @@
     <Quad x="3" y="0" possibleTypes="0" />
     <Quad x="3" y="1" possibleTypes="0" />
     <Quad x="3" y="2" possibleTypes="1">
-      <Type type="COPPERHEAD" amount="2" randomized="False" x="700" y="442" />
+      <Type type="COPPERHEAD" amount="2" randomized="False" x="666" y="472" />
     </Quad>
     <Quad x="3" y="3" possibleTypes="0" />
     <Quad x="3" y="4" possibleTypes="0" />
