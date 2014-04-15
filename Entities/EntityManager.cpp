@@ -1421,24 +1421,21 @@ void CEntityManager::CreateLeader(ModularFlock& data)
 
 		corals[i] = new CCoral(randnum);
 		corals[i]->SetImage(imagesCoral[randnum]);
-
-
+		dynamic_cast<CCoral*>(corals[i])->SetModuleData(data.members[i].modules);
+		dynamic_cast<CCoral*>(corals[i])->SetImages(images);
+		if (data.backup)
+		{
+			corals[i]->SetPosition(data.members[i].position);
+		}
 		bigEnemies.push_back(corals[i]);
 		ships.push_back(corals[i]);
-		ships.push_back(dynamic_cast<CCoral*>(corals[i])->GetShield());
+		CModuleShield* modshield = dynamic_cast<CCoral*>(corals[i])->GetShield();
+		if (modshield)
+			ships.push_back(modshield);
 	}
 	leader->SetHome(data.home);
 	leader->Assign(corals);
 	leaders.push_back(leader);
-	for (unsigned int j = 0; j < corals.size(); j++)
-	{
-		dynamic_cast<CCoral*>(corals[j])->SetModuleData(data.members[j].modules);
-		dynamic_cast<CCoral*>(corals[j])->SetImages(images);
-		if (data.backup)
-		{
-			corals[j]->SetPosition(data.members[j].position);
-		}
-	}
 }
 
 void CEntityManager::Load()
