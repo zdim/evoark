@@ -444,6 +444,7 @@ void CUpgradeState::Render()
 
 void CUpgradeState::Enter()
 {
+	upArrowTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/upArrow.png", { 255, 100, 100 });
 	iconTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/upgradeIcon.png");
 	player = CEntityManager::GetInstance()->GetPlayer();
 
