@@ -39,6 +39,8 @@ CTestLevelState::CTestLevelState()
 
 CTestLevelState::~CTestLevelState()
 {
+
+
 }
 
 CTestLevelState* CTestLevelState::GetInstance(void)
@@ -53,6 +55,8 @@ void	CTestLevelState::Enter(void)
 	srand((unsigned int)time(nullptr));
 	graphics = SGD::GraphicsManager::GetInstance();
 
+	m_pParticleSystem = CParticleSystem::GetInstance();
+	m_pParticleSystem->Init();
 
 	testing = "Resources";
 	m_nLine = 0;
@@ -65,6 +69,8 @@ void	CTestLevelState::Enter(void)
 	backgroundStars = graphics->LoadTexture("Resources/Graphics/stars1new.png", { 0, 0, 0 });
 	backgroundStars1 = graphics->LoadTexture("Resources/Graphics/stars2new.png", { 0, 0, 0 });
 	backgroundStars2 = graphics->LoadTexture("Resources/Graphics/stars3.png", { 0, 0, 0 });
+	backgroundPlanet1 = graphics->LoadTexture("Resources/Graphics/bgPlanet1.png");
+	backgroundPlanet2 = graphics->LoadTexture("Resources/Graphics/bgPlanet2.png");
 
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
 
@@ -74,6 +80,7 @@ void	CTestLevelState::Enter(void)
 	//soundBox->Enter();
 	soundBox->Play(CSoundBox::sounds::slowTrance, true);
 
+	//EntityManager->Spawn(EntityType::Stargate, { 200, 200 });
 	//EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 4);
 	//EntityManager->GetBoss()->Init(4);
 	//EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
@@ -95,12 +102,14 @@ void	CTestLevelState::Enter(void)
 	graphics->Update();
 
 
-	//EntityManager->Spawn(EntityType::Stargate, {200,200});
+
 	if (BackgroundImage == SGD::INVALID_HANDLE)
 		BackgroundImage = graphics->LoadTexture("Resources/Graphics/starfield.jpg");
 	player = EntityManager->GetPlayer();
 	//Spawn Coral near the player
+
 	//EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
+
 	//Spawn Moccasin near the player
 
 	//EntityManager->Spawn(EntityType::InvisTrigger, player->GetPosition() + SGD::Vector{ 200, 200 }, (unsigned int)EntityType::Coral);
@@ -122,14 +131,18 @@ void	CTestLevelState::Enter(void)
 	Render();
 	graphics->Update();
 
-	pSystem = CParticleSystem::GetInstance();
-
+	m_pParticleSystem->AddEmitter(13, EntityManager->GetStargate());
+	
 	m_bLoaded = true;
+
 }
 
 void	CTestLevelState::Exit(void)
 {
 	m_bBossKilled = false;
+
+
+
 
 	cam->Terminate();
 	if (BackgroundImage != SGD::INVALID_HANDLE)
@@ -141,6 +154,8 @@ void	CTestLevelState::Exit(void)
 	graphics->UnloadTexture(backgroundStars);
 	graphics->UnloadTexture(backgroundStars1);
 	graphics->UnloadTexture(backgroundStars2);
+	graphics->UnloadTexture(backgroundPlanet2);
+	graphics->UnloadTexture(backgroundPlanet1);
 	//soundBox->Exit();
 
 	//Terminating Messages or events before Entity manager will BREAK it on the NEXT level.
@@ -154,6 +169,12 @@ void	CTestLevelState::Exit(void)
 
 	if (CGameplayState::GetInstance()->GetLevel() != Level::Tutorial)
 		CGameplayState::GetInstance()->SaveProfile();
+
+
+
+	m_pParticleSystem->Terminate();
+	m_pParticleSystem = nullptr;
+	m_pParticleSystem->DeleteInstance();
 }
 
 bool	CTestLevelState::Input(void)
@@ -172,19 +193,20 @@ bool	CTestLevelState::Input(void)
 	}
 	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 7))
 	{
+
 		Game::GetInstance()->PushState(CPauseState::GetInstance());
 		return true;
 	}
-	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::C))
-	{
-		cam->SetTarget(EntityManager->GetStargate());
-		return true;
-	}
-	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::P))
-	{
-		cam->SetTarget(EntityManager->GetPlayer());
-		return true;
-	}
+	//if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::C))
+	//{
+	//	cam->SetTarget(EntityManager->GetStargate());
+	//	return true;
+	//}
+	//if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::P))
+	//{
+	//	cam->SetTarget(EntityManager->GetPlayer());
+	//	return true;
+	//}
 	//if (input->IsKeyDown(SGD::Key::K))
 	//{
 	//	CMoccasin* boss = dynamic_cast<CMoccasin*>(EntityManager->GetBoss());
@@ -200,7 +222,7 @@ void	CTestLevelState::Update(float dt)
 	CEventManager::GetInstance().Update();
 	cam->Update(dt);
 
-	pSystem->Update(dt);
+	m_pParticleSystem->Update(dt);
 
 
 	// parallax effect
@@ -208,6 +230,9 @@ void	CTestLevelState::Update(float dt)
 	stars1Pos = { cam->GetOffset().x * .1f, cam->GetOffset().y * .1f };
 	stars2Pos = { cam->GetOffset().x * .2f, cam->GetOffset().y * .2f };
 	starsPos = { cam->GetOffset().x * .3f, cam->GetOffset().y * .3f };
+	planet1Pos = { cam->GetOffset().x * .25f, cam->GetOffset().y * .25f };
+	planet2Pos = { cam->GetOffset().x * .4f, cam->GetOffset().y * .4f };
+
 
 	if (bossPan > 0) bossPan -= dt;
 	if (bossPan < 0 && bossPan > -5.f && EntityManager->GetBoss() && CGameplayState::GetInstance()->GetLevel() == Level::Final)
@@ -260,15 +285,21 @@ void	CTestLevelState::Render(void)
 			for (int j = 0; j < 4; j++)
 			{
 				graphics->DrawTexture(backgroundStars1, stars1Pos + SGD::Vector{ 1024.f * i, 768.f * j });
+				//graphics->DrawTexture(backgroundPlanet1, planet1Pos + SGD::Vector{ 1024.f, 768.f } * i);
+				graphics->DrawTexture(backgroundPlanet2, planet2Pos + SGD::Vector{ 1024.f, 768.f } * i);
 				graphics->DrawTexture(backgroundStars, starsPos + SGD::Vector{ 1024.f * i, 768.f * j });
 				graphics->DrawTextureSection(backgroundNebula, { nebulaPos.x + 1024.f * i, nebulaPos.y + 768.f * j }, { 0, 0, 1024.f, 768.f }, 0, {}, { 50, 50, 120, 100 });
 			}
 		}
+
+		graphics->DrawTexture(backgroundPlanet1, planet1Pos + SGD::Vector{ 1300.f, 190.f });
+		graphics->DrawTexture(backgroundPlanet1, planet1Pos + SGD::Vector{ 150.f, 768.f });
+
 		graphics->DrawRectangle({ 0, 0, 2000, 2000 }, { 150, 0, 0, 0 });
 
 		EntityManager->Render();
 
-		pSystem->Render();
+		m_pParticleSystem->Render();
 
 		UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator(), EntityManager->GetStargate(), EntityManager->GetLeaderPositions());
 	}
@@ -441,6 +472,14 @@ void	CTestLevelState::Generate()
 			{
 				eventID = (int)triggerID::tutPush;
 			}
+			else if (events[i].eType == "TUTORIAL.TAB")
+			{
+				eventID = (int)triggerID::tutArrows;
+			}
+			else if (events[i].eType == "TUTORIAL.ARROWS")
+			{
+				eventID = (int)triggerID::tutArrowsTwo;
+			}
 			else if (events[i].eType == "TUTORIAL.COORDINATOR")
 			{
 				eventID = (int)triggerID::tutCoordinator;
@@ -449,6 +488,10 @@ void	CTestLevelState::Generate()
 			{
 				eventID = (int)triggerID::tutHuman;
 			}
+			else if (events[i].eType == "TUTORIAL.UPGRADE")
+			{
+				eventID = (int)triggerID::tutUpgrade;
+			}
 			else if (events[i].eType == "TUTORIAL.BOSS")
 			{
 				eventID = (int)triggerID::tutBoss;
@@ -456,6 +499,10 @@ void	CTestLevelState::Generate()
 			else if (events[i].eType == "TUTORIAL.STARGATE")
 			{
 				eventID = (int)triggerID::tutStargate;
+			}
+			else if (events[i].eType == "FINALLEVEL")
+			{
+				eventID = (int)triggerID::finalLevel;
 			}
 
 			EntityManager->SpawnCollidable(EntityType::InvisTrigger, { events[i].area.left, events[i].area.top }, { events[i].area.right - events[i].area.left, events[i].area.bottom - events[i].area.top }, { 0, 0 }, eventID);
@@ -641,18 +688,16 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 1 )
 									{
 										
-
 										SGD::Point randPosition = cMsg->GetSender()->GetPosition();
 										randPosition.x += rand() % 800 + 700;
 										randPosition.y += rand() % 800 + 700;
-										int m_nAsteroidSize[3] = { 32, 64, 128 };
-										int size = m_nAsteroidSize[rand() % 3];
 
 										SGD::Vector dir = dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetTarget()->GetPosition() - randPosition;								
 										dir.Normalize();
 										SGD::Vector velocity = dir * (rand() % 200 + 100);
-										
-										CTestLevelState::GetInstance()->EntityManager->SpawnCollidable(EntityType::Asteroid, randPosition, SGD::Size{ (float)size, (float)size }, velocity);
+
+										CTestLevelState::GetInstance()->EntityManager->SpawnCollidable(EntityType::Asteroid, randPosition, SGD::Size{ 0,0 }, velocity);
+
 									}
 									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 2 )
 									{
@@ -662,10 +707,10 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										SGD::Point pos3 = { pos.x - 200, pos.y + 100 };
 										SGD::Point pos4 = { pos.x - 100, pos.y + 200 };
 
-										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos1, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
-										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos2, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
-										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos3, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
-										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos4, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
+										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos1, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
+										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos2, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
+										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos3, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
+										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos4, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
 									}
 									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 3 || dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 4 )
 									{		
@@ -719,6 +764,8 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::BossKilled:
 	{
 								  GetInstance()->m_bBossKilled = true;
+								  GetInstance()->m_pParticleSystem->RemoveEmitter(GetInstance()->EntityManager->GetStargate());
+								  GetInstance()->m_pParticleSystem->AddEmitter(14, GetInstance()->EntityManager->GetStargate());
 								  break;
 
 	}
@@ -978,9 +1025,6 @@ void CTestLevelState::Save()
 void CTestLevelState::Load()
 {
 	saveData save = CGameplayState::GetInstance()->GetSaveData();
-
-
-
 
 	m_nNumQuadsWidth = (int)save.world.size.width;
 	m_nNumQuadsHeight = (int)save.world.size.height;

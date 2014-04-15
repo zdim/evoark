@@ -3,6 +3,8 @@
 #include "../Collidables/Asteroid.h"
 #include "../Ships/Ship.h"
 #include "../Modules/Module.h"
+
+
 CWell::CWell()
 {
 	radius = size.width/2.0f;
@@ -21,6 +23,13 @@ CWell::~CWell()
 //
 //	}
 //}
+
+void CWell::Render()
+{
+
+}
+
+
 
 void CWell::HandleCollision(IEntity* other)
 {	

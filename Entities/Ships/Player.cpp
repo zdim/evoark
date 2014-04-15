@@ -45,8 +45,8 @@ CPlayer::CPlayer()
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushIconPurple32.png");
 	warpIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/warpIconPurple32.png");
 	
-	for (int i = 0; i < 4; i++) tutorialWaitForInput[i] = false;
-	for (int i = 0; i < 4; i++) tutorialTriggerHit[i] = false;
+	for (int i = 0; i < 6; i++) tutorialWaitForInput[i] = false;
+	for (int i = 0; i < 6; i++) tutorialTriggerHit[i] = false;
 
 	m_Engine = new CEmitter(
 		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetParticleData(),
@@ -67,6 +67,7 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
+
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(wellIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(warpIcon);
@@ -83,7 +84,6 @@ void CPlayer::Update(float dt)
 	SGD::Vector rotatedOffset = { 0,45 };
 	rotatedOffset.Rotate(rotation);
 	enginePos = position + rotatedOffset;
-
 
 	m_Engine->SetEmitterPosition(enginePos);
 	m_Engine->Update(dt);
@@ -136,6 +136,26 @@ void CPlayer::Update(float dt)
 			}
 			return;
 		}
+
+		if (tutorialWaitForInput[4])
+		{
+			if (input->IsKeyPressed(SGD::Key::Tab))
+			{
+				tutorialWaitForInput[4] = false;
+				arrowsOn = !arrowsOn;
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[5])
+		{
+			if (input->IsKeyPressed(SGD::Key::Escape))
+			{
+				tutorialWaitForInput[5] = false;
+				//CreatePush();
+			}
+			return;
+		}
 	}
 	//Timers
 	shieldTimer += dt;
@@ -168,7 +188,10 @@ void CPlayer::Update(float dt)
 
 	 //commented out until finished implementing - was messing up standard input
 	if (warpTimer < warpDuration)
+	{
+		
 		velocity = dir * (speed + warpSpeed);
+	}	
 	else
 	{
 		velocity = dir * speed;
@@ -236,9 +259,7 @@ void CPlayer::Render()
 	m_Engine->Render();
 
 	SGD::Rectangle rShipRegion = SGD::Rectangle (SGD::Point{ 0, 0 }, size);
-	
-	SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
-	
+		
 	SGD::Point renderPoint = offsetToCamera();
 	SGD::Color col = {};
 	if (damaged > 0)
@@ -287,6 +308,7 @@ void CPlayer::CreateWell()
 	if(wellTimer <= wellDelay)
 		return;
 
+	CParticleSystem::GetInstance()->AddEmitterPos(18, SGD::InputManager::GetInstance()->GetMousePosition() - CCamera::GetInstance()->GetOffset());
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerWell, false);
 	wellTimer = 0;
 	//TODO: Send CreateWell message
@@ -313,28 +335,32 @@ void CPlayer::CreatePush()
 {
 	if (pushTimer <= pushDelay)
 		return;
-
+	CParticleSystem::GetInstance()->AddEmitter(17, this);
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerPush, false);
 	pushTimer = 0;
+
+	
+
+
 	//TODO: Send CreatePush message
 	if (pushLevel == 0)
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 500, pushLevel, SGD::PI / 3, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 3, this);
 		msg->QueueMessage();
 	}
 	else if (pushLevel == 1)
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 500, pushLevel, SGD::PI / 2, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 2, this);
 		msg->QueueMessage();
 	}
 	else if (pushLevel == 2)
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 2, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 1000, pushLevel, SGD::PI / 2, this);
 		msg->QueueMessage();
 	}
 	else
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI * 2, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 1000, pushLevel, SGD::PI * 2, this);
 		msg->QueueMessage();
 	}
 
@@ -342,9 +368,12 @@ void CPlayer::CreatePush()
 
 void CPlayer::Warp()
 {
+	
+
 	if (warpTimer <= warpDelay)
 		return;
 
+	CParticleSystem::GetInstance()->AddEmitter(15, this);
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerWarp, false);
 	warpTimer = 0;
 }
@@ -360,9 +389,12 @@ void CPlayer::TakeDamage(int damage, bool collision)
 	shieldTimer = 0;
 	if (shield > 0)
 	{
+		CParticleSystem::GetInstance()->AddEmitter(8, this);
 		CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyShieldDamage, false);
 		shield -= damage;
 		damage -= shield;
+		if (shield <= 0)
+			CParticleSystem::GetInstance()->AddEmitter(4, this);	
 	}
 	else
 	{
@@ -376,10 +408,18 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyHullDamage, false);
 
+	
 	hull -= damage;
+	if ( hull < 257)
+		CParticleSystem::GetInstance()->AddEmitter(9, this);
+	
+	
 	damaged = .15f;
 	if (hull <= 0 && !destroying)
 	{
+		CParticleSystem::GetInstance()->AddEmitter(10, this);
+		CParticleSystem::GetInstance()->AddEmitter(11, this);
+		CParticleSystem::GetInstance()->AddEmitter(12, this);
 		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
 		msg->QueueMessage();
 		SelfDestruct();
@@ -439,6 +479,7 @@ void CPlayer::SetStats(playerData& data)
 
 void CPlayer::HandleCollision(IEntity* other)
 {
+
 	if (other == m_shield)
 		return;
 
@@ -478,10 +519,26 @@ void CPlayer::HandleCollision(IEntity* other)
 				tutorialTriggerHit[3] = true;
 			}
 			break;
+		case (int)triggerID::tutArrows:
+			if (!tutorialTriggerHit[4])
+			{
+				tutorialWaitForInput[4] = true;
+				tutorialTriggerHit[4] = true;
+			}
+			break;
+		case (int)triggerID::tutUpgrade:
+			if (!tutorialTriggerHit[5])
+			{
+				tutorialWaitForInput[5] = true;
+				tutorialTriggerHit[5] = true;
+			}
+			break;
 		}
 	}
 
 	CShip::HandleCollision(other);
+
+	
 }
 
 int CPlayer::GetTutorialPause()
@@ -489,7 +546,7 @@ int CPlayer::GetTutorialPause()
 	if (CGameplayState::GetInstance()->GetLevel() != Level::Tutorial)
 		return -1;
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		if (tutorialWaitForInput[i])
 			return i;

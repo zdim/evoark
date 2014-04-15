@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Level>
-  <Details width="16" height="16" quadWidth="200" quadHeight="200" events="11" collision="5" background="">
+  <Details width="16" height="16" quadWidth="200" quadHeight="200" events="14" collision="5" background="">
     <Quad x="0" y="0" possibleTypes="0" />
     <Quad x="0" y="1" possibleTypes="0" />
     <Quad x="0" y="2" possibleTypes="0" />
@@ -29,7 +29,7 @@
     <Quad x="1" y="9" possibleTypes="0" />
     <Quad x="1" y="10" possibleTypes="0" />
     <Quad x="1" y="11" possibleTypes="1">
-      <Type type="COPPERHEAD" amount="2" randomized="False" x="310" y="2351" />
+      <Type type="COPPERHEAD" amount="2" randomized="False" x="302" y="2215" />
     </Quad>
     <Quad x="1" y="12" possibleTypes="0" />
     <Quad x="1" y="13" possibleTypes="0" />
@@ -139,9 +139,15 @@
     <Quad x="7" y="13" possibleTypes="0" />
     <Quad x="7" y="14" possibleTypes="0" />
     <Quad x="7" y="15" possibleTypes="0" />
-    <Quad x="8" y="0" possibleTypes="0" />
-    <Quad x="8" y="1" possibleTypes="0" />
-    <Quad x="8" y="2" possibleTypes="0" />
+    <Quad x="8" y="0" possibleTypes="1">
+      <Type type="MAMBA" amount="1" randomized="False" x="1688" y="174" />
+    </Quad>
+    <Quad x="8" y="1" possibleTypes="1">
+      <Type type="MAMBA" amount="1" randomized="False" x="1692" y="280" />
+    </Quad>
+    <Quad x="8" y="2" possibleTypes="1">
+      <Type type="MAMBA" amount="1" randomized="False" x="1700" y="405" />
+    </Quad>
     <Quad x="8" y="3" possibleTypes="0" />
     <Quad x="8" y="4" possibleTypes="0" />
     <Quad x="8" y="5" possibleTypes="0" />
@@ -155,15 +161,9 @@
     <Quad x="8" y="13" possibleTypes="0" />
     <Quad x="8" y="14" possibleTypes="0" />
     <Quad x="8" y="15" possibleTypes="0" />
-    <Quad x="9" y="0" possibleTypes="1">
-      <Type type="MAMBA" amount="1" randomized="False" x="1900" y="169" />
-    </Quad>
-    <Quad x="9" y="1" possibleTypes="1">
-      <Type type="MAMBA" amount="1" randomized="False" x="1909" y="296" />
-    </Quad>
-    <Quad x="9" y="2" possibleTypes="1">
-      <Type type="MAMBA" amount="1" randomized="False" x="1920" y="454" />
-    </Quad>
+    <Quad x="9" y="0" possibleTypes="0" />
+    <Quad x="9" y="1" possibleTypes="0" />
+    <Quad x="9" y="2" possibleTypes="0" />
     <Quad x="9" y="3" possibleTypes="0" />
     <Quad x="9" y="4" possibleTypes="0" />
     <Quad x="9" y="5" possibleTypes="0" />
@@ -231,10 +231,10 @@
     <Quad x="13" y="1" possibleTypes="0" />
     <Quad x="13" y="2" possibleTypes="0" />
     <Quad x="13" y="3" possibleTypes="0" />
-    <Quad x="13" y="4" possibleTypes="1">
-      <Type type="COORDINATOR" amount="3" randomized="False" x="2699" y="860" />
+    <Quad x="13" y="4" possibleTypes="0" />
+    <Quad x="13" y="5" possibleTypes="1">
+      <Type type="COORDINATOR" amount="3" randomized="False" x="2692" y="1103" />
     </Quad>
-    <Quad x="13" y="5" possibleTypes="0" />
     <Quad x="13" y="6" possibleTypes="0" />
     <Quad x="13" y="7" possibleTypes="0" />
     <Quad x="13" y="8" possibleTypes="0" />
@@ -280,16 +280,19 @@
     <Quad x="15" y="14" possibleTypes="0" />
     <Quad x="15" y="15" possibleTypes="0" />
     <Event type="STARGATE" x="1558" y="2869" width="130" height="134" />
-    <Event type="TUTORIAL.MOVEMENT" x="100" y="2836" width="414" height="236" />
-    <Event type="TUTORIAL.LASERS" x="99" y="2384" width="415" height="409" />
-    <Event type="TUTORIAL.MISSILES" x="942" y="1614" width="270" height="533" />
-    <Event type="TUTORIAL.COORDINATOR" x="2294" y="280" width="800" height="511" />
-    <Event type="TUTORIAL.ALLY" x="2361" y="1440" width="710" height="397" />
+    <Event type="TUTORIAL.MOVEMENT" x="100" y="2964" width="414" height="121" />
+    <Event type="TUTORIAL.LASERS" x="99" y="2376" width="415" height="211" />
+    <Event type="TUTORIAL.MISSILES" x="821" y="1614" width="270" height="533" />
     <Event type="TUTORIAL.WARP" x="1667" y="1009" width="233" height="676" />
-    <Event type="TUTORIAL.WELL" x="403" y="520" width="451" height="161" />
-    <Event type="TUTORIAL.PUSH" x="1693" y="56" width="175" height="520" />
-    <Event type="TUTORIAL.BOSS" x="2218" y="2513" width="610" height="665" />
+    <Event type="TUTORIAL.PUSH" x="1531" y="56" width="175" height="520" />
+    <Event type="TUTORIAL.BOSS" x="2336" y="2542" width="346" height="624" />
     <Event type="TUTORIAL.STARGATE" x="1696" y="2729" width="195" height="419" />
+    <Event type="TUTORIAL.TAB" x="2001" y="250" width="119" height="288" />
+    <Event type="TUTORIAL.UPGRADE" x="2380" y="2113" width="687" height="118" />
+    <Event type="TUTORIAL.ARROWS" x="2318" y="252" width="266" height="288" />
+    <Event type="TUTORIAL.WELL" x="435" y="588" width="408" height="163" />
+    <Event type="TUTORIAL.COORDINATOR" x="2436" y="712" width="517" height="223" />
+    <Event type="TUTORIAL.ALLY" x="2423" y="1552" width="559" height="211" />
     <Collision x="576" y="2199" width="616" height="998" />
     <Collision x="1193" y="2199" width="721" height="291" />
     <Collision x="1915" y="811" width="326" height="1679" />

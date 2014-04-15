@@ -10,6 +10,7 @@ class CMissile :
 	CShip* target = nullptr;
 
 	CParticleSystem* m_pSystem;
+
 public:
 	CMissile();
 	virtual ~CMissile();

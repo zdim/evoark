@@ -18,7 +18,7 @@ CMoccasin::CMoccasin()
 	m_bStationsUP = false;
 	m_nNumberOfShips = 1;
 	speed = 25;
-	m_pShield->SetSize({ 325, 325 });
+	m_pShield->SetSize({ 425, 425 });
 }
 
 
@@ -37,17 +37,22 @@ void CMoccasin::Init(int l)
 	{
 	case 0:
 		m_nLevel = 0;
+		size = { 106, 161 };
 		break;
 	case 1:
+		size = { 270, 351 };
 		m_nLevel = 1;
 		break;
 	case 2:
+		size = { 322, 360 };
 		m_nLevel = 2;	
 		break;
 	case 3:
+		size = { 156, 395 };
 		m_nLevel = 3;
 		break;
 	case 4:
+		size = { 188, 393 };
 		m_nLevel = 4;
 		break;
 	}

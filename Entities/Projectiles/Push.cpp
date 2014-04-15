@@ -6,13 +6,19 @@ CPush::CPush()
 {
 	radius = SGD::PI /4.0f;
 	duration = 0.2;
-	size = {256,256};
+	size = {512,512};
 }
 
 
 CPush::~CPush()
 {
 }
+
+void CPush::Render()
+{
+	
+}
+
 
 void CPush::SetOwner(IEntity* _owner)
 {

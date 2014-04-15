@@ -107,7 +107,7 @@ private:
 	SGD::AudioManager*		m_pAudio = nullptr;
 	SGD::GraphicsManager*	m_pGraphics = nullptr;
 	SGD::InputManager*		m_pInput = nullptr;
-    CParticleSystem*        m_pParticleSystem = nullptr;
+
 
 
 

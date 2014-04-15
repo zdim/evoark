@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Level>
-  <Details width="8" height="8" quadWidth="300" quadHeight="300" events="0" collision="0" background="">
+  <Details width="8" height="8" quadWidth="300" quadHeight="300" events="1" collision="0" background="">
     <Quad x="0" y="0" possibleTypes="0" />
     <Quad x="0" y="1" possibleTypes="0" />
     <Quad x="0" y="2" possibleTypes="1">
@@ -141,5 +141,6 @@
       <Type type="HUMAN" amount="1" randomized="False" x="2148" y="2048" />
     </Quad>
     <Quad x="7" y="7" possibleTypes="0" />
+    <Event type="FINALLEVEL" x="1050" y="1864" width="652" height="403" />
   </Details>
 </Level>

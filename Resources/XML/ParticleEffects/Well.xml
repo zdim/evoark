@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ParticleEffect>
+  <Emittor NumOfParticles="25" SpawnRate="0.1" TimeFromLastSpawn="0.1" Shape="1" Radius="0" EmitBool="False" EmitTime="2" PosX="298" PosY="279" Width="1" Height="1" />
+  <Particle Image="dot blurred.png" StartScaleX="4" StartYScale="4" EndXScale="1" EndYScale="1" StartColorA="44" StartColorR="255" StartColorG="255" StartColorB="255" EndColorA="0" EndColorR="255" EndColorG="255" EndColorB="255" SpeedMinX="0" SpeedMinY="0" SpeedMaxX="0" SpeedMaxY="0" LifeMax="2" LifeMin="1" RotationSpeed="2" Enertia="0" />
+</ParticleEffect>

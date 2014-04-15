@@ -7,9 +7,12 @@ class CMainMenuState :
 {
 	enum menuReturn {play, options, credits, exit, count};
 	CMenu* menu;
+	//Fnt titleFnt;
 
 	CMainMenuState();
 	virtual ~CMainMenuState();
+
+	SGD::HTexture titleTexture = SGD::INVALID_HANDLE;
 
 	SGD::HTexture backgroundStars1 = SGD::INVALID_HANDLE;
 	SGD::HTexture backgroundStars2 = SGD::INVALID_HANDLE;

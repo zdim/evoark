@@ -25,8 +25,8 @@ SGD::Size	Fnt::ComputeStringSpace(std::string str)//Returns the amount of space 
 
 	for (unsigned int i = 0; i < str.length(); i++)
 	{
-		width += characters[str[i]].size.width + characters[str[i]].offset.x;
-		height = std::max(characters[str[i]].size.height + characters[str[i]].offset.y, height);
+		width += characters[str[i]].size.width;
+		height = std::max(characters[str[i]].size.height, height);
 	}
 	return SGD::Size{width, height};
 }
@@ -39,9 +39,12 @@ void		Fnt::Write(SGD::Point pos, std::string str)
 	{
 		FntChar ch = characters[str[i]];
 		float oldY = pos.y;
-		pos.y += stringSize.height - ch.size.height;
+		pos.y += ch.offset.y;
+		//pos.y += stringSize.height - ch.size.height;
+		float oldX = pos.x;
+		pos.x += ch.offset.x;
 		graphics->DrawTextureSection(image, { pos.x, pos.y }, SGD::Rectangle(ch.imagePosition, ch.size));
-		pos.x += ch.size.width;
+		pos.x = oldX + ch.size.width;
 		pos.y = oldY;
 	}
 	//graphics->DrawTexture(image, pos);
@@ -58,9 +61,11 @@ void Fnt::WriteCenter(SGD::Rectangle box, std::string str)
 	{
 		FntChar ch = characters[str[i]];
 		float oldY = pos.y;
-		pos.y += stringSize.height - ch.size.height;
+		pos.y += ch.offset.y;
+		float oldX = pos.x;
+		pos.x += ch.offset.x;
 		graphics->DrawTextureSection(image, { pos.x, pos.y }, SGD::Rectangle(ch.imagePosition, ch.size));
-		pos.x += ch.size.width;
+		pos.x = oldX + ch.size.width;
 		pos.y = oldY;
 	}
 }

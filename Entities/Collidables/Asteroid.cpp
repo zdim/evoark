@@ -56,17 +56,17 @@ void CAsteroid::Update(float dt)
 
 void CAsteroid::Render()
 {
-	SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
-	//CCamera* cam = Game::GetInstance()->GetLevelState()->GetCam();
-	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
+	SGD::Rectangle rShipRegion = SGD::Rectangle(SGD::Point{ 0, 0 }, size);
+
 	SGD::Point renderPoint = offsetToCamera();
-	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint,SGD::Rectangle{SGD::Point{0,0}, imageSize}, rotation, imageSize/2, {}, scale);
 	SGD::Color col = {};
+
 	if (damaged > 0)
 	{
 		col = { 155, 155, 155 };
 	}
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, col, scale);
+
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint, rShipRegion, rotation, size / 2, col);
 }
 
 void CAsteroid::HandleCollision(IEntity* other)
@@ -118,5 +118,5 @@ void CAsteroid::HandleCollision(IEntity* other)
 
 void CAsteroid::AddGravity(SGD::Vector grav)
 {
-	velocity += grav;
+	velocity = grav;
 }

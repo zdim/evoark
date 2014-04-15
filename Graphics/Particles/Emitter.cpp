@@ -29,8 +29,7 @@ CEmitter::CEmitter(CFlyweight *parData, SGD::Size eSize, int s, SGD::Point ePosi
 
 CEmitter::~CEmitter()
 {
-	m_lAliveParticles.clear();
-	m_lDeadParticles.clear();
+	
 }
 
 void CEmitter::Initialize()
@@ -53,6 +52,8 @@ void CEmitter::Update(float deltaTime)
 {
 	m_fTimeFromLastSpawn += deltaTime;
 	m_fEmitTime -= deltaTime;
+
+	
 
 	if (m_fTimeFromLastSpawn >= m_fSpawnRate)
 	{
@@ -110,8 +111,14 @@ void CEmitter::Update(float deltaTime)
 
 		}
 
+		//m_lAliveParticles[i].ParticlePositon = m_lAliveParticles[i].ParticlePositon + m_lAliveParticles[i].ParticleSpeed * deltaTime;
+		//m_lAliveParticles[i].FRotation = m_lAliveParticles[i].FRotation + (particleData.ParticleRotationSpeed / 2 * deltaTime);
 
-		if (m_pShipOwner != nullptr)
+		if (m_pShipOwner != nullptr && m_pShipOwner->GetType() == (int)EntityType::Stargate)
+		{
+			(*it)->SetCurRotation((*it)->GetCurRotation() + (particleData->GetRotaionSpeed() / 2 * deltaTime));
+		}
+		else if (m_pShipOwner != nullptr)
 		{
 			float speed = (*it)->GetCurSpeed().ComputeLength();
 			SGD::Vector dir = { 0, 1 };
@@ -119,9 +126,9 @@ void CEmitter::Update(float deltaTime)
 			(*it)->SetCurSpeed(dir * speed);
 		}
 		
-
 		
 		(*it)->SetCurPos((*it)->GetCurPos() + ((*it)->GetCurSpeed() * deltaTime));
+
 #pragma endregion
 
 

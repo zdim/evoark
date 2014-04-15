@@ -11,6 +11,7 @@
 #include "../../../SoundBox.h"
 #include "../../Projectiles/Laser.h"
 #include "../../Collidables/Asteroid.h"
+#include "../../../Graphics/Particles/ParticleSystem.h"
 
 CEnemy::CEnemy()
 {
@@ -23,8 +24,8 @@ CEnemy::~CEnemy()
 
 void CEnemy::Update(float dt)
 {
-	if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
-		return;
+	//if (CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
+	//	return;
 
 	if (damaged > 0)
 		damaged -= dt;
@@ -67,37 +68,12 @@ void CEnemy::Update(float dt)
 			SetAvoid(nullptr);
 	}
 
-	if (position != destination)
+	SGD::Vector forward = { 0, -1 };
+	forward.Rotate(rotation);
+	SGD::Vector dir;
+	if(avoid)
 	{
-		SGD::Vector dir = destination - position;
-		float distance = dir.ComputeLength();
-		dir.Normalize();
-		if (avoid)
-		{
-			SGD::Vector forward = { 0, -1 };
-			forward.Rotate(rotation);
-			SGD::Vector avoidDir = avoid->GetVelocity();
-			avoidDir.Normalize();
-			float clockwise = avoidDir.ComputeSteering(forward);
-			if (clockwise > 0)
-				avoidDir.Rotate(SGD::PI * -0.5f);
-			else
-				avoidDir.Rotate(SGD::PI * 0.5f);
-			dir = avoidDir;
-		}
-		
-		if (distance >= speed || avoid)
-		{
-			velocity = dir * speed;
-		}
-		else
-			velocity = dir * distance;
-	}
-	else if (avoid)
-	{
-		SGD::Vector forward = { 0, -1 };
-		forward.Rotate(rotation);
-		SGD::Vector dir = avoid->GetVelocity();
+		dir = avoid->GetVelocity();
 		dir.Normalize();
 		float clockwise = dir.ComputeSteering(forward);
 		if (clockwise > 0)
@@ -105,9 +81,35 @@ void CEnemy::Update(float dt)
 		else
 			dir.Rotate(SGD::PI * 0.5f);
 		velocity = dir * speed;
+		float strafeAngle = forward.ComputeAngle(dir);
+		strafeAngle /= (SGD::PI*3/4);
+		strafeAngle = 1 - strafeAngle;
+		if (strafeAngle < 0.1f)
+			strafeAngle = 0.1f;
+		velocity *= strafeAngle;
+	}
+	else if (position != destination)
+	{
+		dir = destination - position;
+		float distance = dir.ComputeLength();
+		dir.Normalize();
+		if (distance >= speed || avoid)
+		{
+			velocity = dir * speed;
+		}
+		else
+			velocity = dir * distance;
+		float strafeAngle = forward.ComputeAngle(dir);
+		strafeAngle /= (SGD::PI * 3 / 4);
+		strafeAngle = 1 - strafeAngle;
+		if (strafeAngle < 0.1f)
+			strafeAngle = 0.1f;
+		velocity *= strafeAngle;
 	}
 	else
+	{
 		velocity = {0,0};
+	}
 
 	//Add evasive direction to velocity
 
@@ -120,17 +122,20 @@ void CEnemy::Update(float dt)
 
 void CEnemy::Render()
 {
-	SGD::Size scale = SGD::Size{ size.width / imageSize.width, size.height / imageSize.height };
-	//CCamera* cam = Game::GetInstance()->GetLevelState()->GetCam();
-	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, position - size/2, SGD::Rectangle(SGD::Point{0,0},imageSize), rotation, imageSize / 2, SGD::Color{}, SGD::Size{scale, scale});
+	SGD::Rectangle rShipRegion = SGD::Rectangle(SGD::Point{ 0, 0 }, size);
+	
 	SGD::Point renderPoint = offsetToCamera();
-	//SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint,SGD::Rectangle{SGD::Point{0,0}, imageSize}, rotation, imageSize/2, {}, scale);
+
+
 	SGD::Color col = {};
+
+
 	if (damaged > 0)
 	{
 		col = { 155, 155, 155 };
 	}
-	SGD::GraphicsManager::GetInstance()->DrawTexture(image, renderPoint, rotation, imageSize / 2, col, scale);
+
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint, rShipRegion, rotation, size / 2, col);
 }
 
 void CEnemy::SetTarget(CShip* newTarget)
@@ -138,10 +143,6 @@ void CEnemy::SetTarget(CShip* newTarget)
 	if (target == newTarget)
 		return;
 
-	if ((unsigned int)target == 0xfeeefeee)
-	{
-		target = nullptr;
-	}
 	if (newTarget && newTarget->GetType() == (int)EntityType::Human)
 	{
 		target = nullptr;
@@ -260,16 +261,7 @@ void CEnemy::DetectShip(CShip* other)
 
 void CEnemy::TakeDamage(int damage, bool collision)
 {
-	//if (shield > 0)
-	//{
-	//	shield -= damage;
-	//	damage -= shield;
-	//}
-	//
-	//if (damage <= 0)
-	//{
-	//	return;
-	//}
+	
 	if (collision)
 		damage *= COLLISION_MODIFIER;
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyShieldDamage, false);
@@ -277,7 +269,14 @@ void CEnemy::TakeDamage(int damage, bool collision)
 	damaged = .15f;
 	if (hull <= 0)
 	{
-
+		if (this->GetType() == (int)EntityType::Copperhead)
+		{
+			CParticleSystem::GetInstance()->AddEmitter(10, this);
+			CParticleSystem::GetInstance()->AddEmitter(11, this);
+			CParticleSystem::GetInstance()->AddEmitter(12, this);
+			CParticleSystem::GetInstance()->RemoveEmitter(this);
+		}
+		
 		SelfDestruct();
 	}
 }

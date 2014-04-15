@@ -1,6 +1,7 @@
 #pragma once
 #include "Enemy.h"
 #include "../../Leader.h"
+class CEmitter;
 class CCopperhead :
 	public CEnemy
 {
@@ -12,6 +13,8 @@ protected:
 	float m_fMissileDelay;
 	float m_fMissileTimer;
 	int   m_nMissileDamage;
+	CEmitter* m_Engine;
+	SGD::Point  enginePos;
 
 public:
 	CCopperhead();
@@ -19,8 +22,11 @@ public:
 
 	int GetType() override { return (int)EntityType::Copperhead; }
 	void Update(float dt);
+	void Render(); 
 	void AddGrav(SGD::Vector grav) { gravVec += grav; }
 	//void CCopperhead::TakeDamage(int damage) override;
+
+	SGD::Point GetEnginePos() { return enginePos; }
 
 	void CCopperhead::CreateLaser();
 	void CCopperhead::CreateMissile();

@@ -36,7 +36,8 @@ void CShip::TakeDamage(int damage, bool collision)
 	hull -= damage;
 	if (hull <= 0)
 	{
-	
+		
+
 		SelfDestruct();
 	}
 }
@@ -59,31 +60,36 @@ void CShip::HandleCollision(IEntity* other)
 		//Have the other ship take damage based on our mass and speed (not necessarily our current speed/velocity)
 		//We will probably rebalance this later.
 		float mass = size.width * size.height/100;
-		dynamic_cast<CShip*>(other)->TakeDamage(int(mass*speed), true);
+		float currspeed = velocity.ComputeLength();
+		dynamic_cast<CShip*>(other)->TakeDamage(int(mass*currspeed), true);
 	}
 	if (otherType == EntityType::Barrier)
 	{
 		SGD::Rectangle myRect = GetRect();
 		SGD::Rectangle itsRect = other->GetRect();
 
-		if (myRect.left < itsRect.right && myRect.right > itsRect.right)
+		if (myRect.left < itsRect.right && myRect.right > itsRect.right
+			&& myRect.top < itsRect.bottom && myRect.bottom > itsRect.top)
 		{
-			position.x = itsRect.right + size.width/2;
+			position.x = itsRect.right + size.width/2 + 0.1f;
 		}
 
-		if (myRect.right > itsRect.left && myRect.left < itsRect.left)
+		if (myRect.right > itsRect.left && myRect.left < itsRect.left
+			&& myRect.top < itsRect.bottom && myRect.bottom > itsRect.top)
 		{
-			position.x = itsRect.left - size.width/2;
+			position.x = itsRect.left - size.width/2 - 0.1f;
 		}
 
-		if (myRect.top < itsRect.bottom && myRect.bottom > itsRect.bottom)
+		if (myRect.top < itsRect.bottom && myRect.bottom > itsRect.bottom
+			&& myRect.left < itsRect.right && myRect.right > itsRect.left)
 		{
-			position.y = itsRect.bottom + size.width/2;
+			position.y = itsRect.bottom + size.width/2 + 0.1f;
 		}
 
-		if (myRect.bottom > itsRect.top && myRect.top < itsRect.top)
+		if (myRect.bottom > itsRect.top && myRect.top < itsRect.top
+			&& myRect.left < itsRect.right && myRect.right > itsRect.left)
 		{
-			position.y = itsRect.top - size.width/2;
+			position.y = itsRect.top - size.width/2 - 0.1f;
 		}
 	}
 	if (otherType == EntityType::Planet)
