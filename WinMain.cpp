@@ -1,4 +1,4 @@
-/***********************************************************************\
+/**********************************************0*************************\
 |																		|
 |	File:			WinMain.cpp			  								|
 |	Author:			Douglas Monroe										|
@@ -16,7 +16,8 @@
 
 //#include <vld.h>			// Visual Leak Detector!
 #include "GameStates\Game.h"			// Game class
-
+#include "GameStates\GameState.h"
+#include "GameStates\PauseState.h"
 
 //*********************************************************************//
 // Preprocessor Constants
@@ -237,6 +238,10 @@ LRESULT CALLBACK WindowProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 		}
 		else									//	losing focus (pause)
 		{
+			if (Game::GetInstance()->GetTopState() == CTestLevelState::GetInstance())
+			{
+				Game::GetInstance()->PushState(CPauseState::GetInstance());
+			}
 		}
 		break;
 

@@ -186,19 +186,20 @@ bool	CTestLevelState::Input(void)
 	}
 	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 7))
 	{
+
 		Game::GetInstance()->PushState(CPauseState::GetInstance());
 		return true;
 	}
-	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::C))
-	{
-		cam->SetTarget(EntityManager->GetStargate());
-		return true;
-	}
-	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::P))
-	{
-		cam->SetTarget(EntityManager->GetPlayer());
-		return true;
-	}
+	//if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::C))
+	//{
+	//	cam->SetTarget(EntityManager->GetStargate());
+	//	return true;
+	//}
+	//if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::P))
+	//{
+	//	cam->SetTarget(EntityManager->GetPlayer());
+	//	return true;
+	//}
 	//if (input->IsKeyDown(SGD::Key::K))
 	//{
 	//	CMoccasin* boss = dynamic_cast<CMoccasin*>(EntityManager->GetBoss());
