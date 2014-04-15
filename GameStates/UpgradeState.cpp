@@ -255,7 +255,31 @@ void CUpgradeState::Render()
 	int screenWidth = Game::GetInstance()->GetScreenWidth();
 	int screenHeight = Game::GetInstance()->GetScreenHeight();
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
+
+	// black background
 	graphics->DrawRectangle({ 0, 0, (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() }, { 0, 0, 0 });
+
+	// draw background boxes
+	graphics->DrawRectangle({ screenWidth * .08f, screenHeight * .10f, screenWidth * .975f, screenHeight * .275f }, { 70, 220, 220, 50 }, { 200, 255, 255, 255 }, 1);
+	graphics->DrawRectangle({ screenWidth * .08f, screenHeight * .30f, screenWidth * .975f, screenHeight * .475f }, { 70, 220, 50, 220 }, { 200, 255, 255, 255 }, 1);
+	graphics->DrawRectangle({ screenWidth * .08f, screenHeight * .50f, screenWidth * .975f, screenHeight * .675f }, { 70, 220, 50, 50 }, { 200, 255, 255, 255 }, 1);
+
+	// tier names
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .83f, screenHeight * .13f, screenWidth * .97f, screenHeight * .20f }, "Tier");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .83f, screenHeight * .16f, screenWidth * .97f, screenHeight * .23f }, "III");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .83f, screenHeight * .33f, screenWidth * .97f, screenHeight * .40f }, "Tier");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .83f, screenHeight * .36f, screenWidth * .97f, screenHeight * .43f }, "II");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .83f, screenHeight * .53f, screenWidth * .97f, screenHeight * .60f }, "Tier");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .83f, screenHeight * .56f, screenWidth * .97f, screenHeight * .63f }, "I");
+
+	// tier costs
+	Game::GetInstance()->FontSmall.WriteCenter({ screenWidth * .87f, screenHeight * .20f, screenWidth * .98f, screenHeight * .32f }, "2 Perks");
+	Game::GetInstance()->FontSmall.WriteCenter({ screenWidth * .87f, screenHeight * .40f, screenWidth * .98f, screenHeight * .52f }, "1 Perk");
+	Game::GetInstance()->FontSmall.WriteCenter({ screenWidth * .87f, screenHeight * .60f, screenWidth * .98f, screenHeight * .72f }, "1 Perk");
+
+
+
+	// ability names
 	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .10f, screenHeight * .65f, screenWidth * .25f,  screenHeight * .75f }, "Lasers");
 	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .25f, screenHeight * .65f, screenWidth * .40f,  screenHeight * .75f }, "Missiles");
 	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .40f, screenHeight * .65f, screenWidth * .55f,  screenHeight * .75f }, "Warp");
@@ -263,30 +287,44 @@ void CUpgradeState::Render()
 	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .70f, screenHeight * .65f, screenWidth * .85f,  screenHeight * .75f }, "Push");
 
 	// draw upgrade boxes / icons
-	graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .25f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .4f });
+	graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .15f });
+	graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .35f });
 	graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .55f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .25f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .4f });
+	graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .15f });
+	graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .35f });
 	graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .55f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .25f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .4f });
+	graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .15f });
+	graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .35f });
 	graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .55f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .25f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .4f });
+	graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .15f });
+	graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .35f });
 	graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .55f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .25f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .4f });
+	graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .15f });
+	graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .35f });
 	graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .55f });
+
+	// draw arrows
+	graphics->DrawTexture(upArrowTexture, { screenWidth * .164f, screenHeight * .232f }, 0, {}, { 200, 50, 190, 180 }, { .15f, .175f });
+	graphics->DrawTexture(upArrowTexture, { screenWidth * .164f, screenHeight * .432f }, 0, {}, { 200, 50, 190, 180 }, { .15f, .175f });
+	graphics->DrawTexture(upArrowTexture, { screenWidth * .314f, screenHeight * .232f }, 0, {}, { 200, 50, 190, 180 }, { .15f, .175f });
+	graphics->DrawTexture(upArrowTexture, { screenWidth * .314f, screenHeight * .432f }, 0, {}, { 200, 50, 190, 180 }, { .15f, .175f });
+	graphics->DrawTexture(upArrowTexture, { screenWidth * .464f, screenHeight * .232f }, 0, {}, { 200, 50, 190, 180 }, { .15f, .175f });
+	graphics->DrawTexture(upArrowTexture, { screenWidth * .464f, screenHeight * .432f }, 0, {}, { 200, 50, 190, 180 }, { .15f, .175f });
+	graphics->DrawTexture(upArrowTexture, { screenWidth * .614f, screenHeight * .232f }, 0, {}, { 200, 50, 190, 180 }, { .15f, .175f });
+	graphics->DrawTexture(upArrowTexture, { screenWidth * .614f, screenHeight * .432f }, 0, {}, { 200, 50, 190, 180 }, { .15f, .175f });
+	graphics->DrawTexture(upArrowTexture, { screenWidth * .764f, screenHeight * .232f }, 0, {}, { 200, 50, 190, 180 }, { .15f, .175f });
+	graphics->DrawTexture(upArrowTexture, { screenWidth * .764f, screenHeight * .432f }, 0, {}, { 200, 50, 190, 180 }, { .15f, .175f });
 
 	switch (player->GetLaserLevel())
 	{
 	case 0:
-		graphics->DrawRectangle({ { screenWidth * .15f, screenHeight * .55f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .15f, screenHeight * .55f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
+		graphics->DrawTexture(upArrowTexture, { screenWidth * .164f, screenHeight * .432f }, 0, {}, { 200, 50, 50, 50 }, { .15f, .175f });
 	case 1:
-		graphics->DrawRectangle({ { screenWidth * .15f, screenHeight * .4f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .15f, screenHeight * .35f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
+		graphics->DrawTexture(upArrowTexture, { screenWidth * .164f, screenHeight * .232f }, 0, {}, { 200, 50, 50, 50 }, { .15f, .175f });
 	case 2:
-		graphics->DrawRectangle({ { screenWidth * .15f, screenHeight * .25f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .15f, screenHeight * .15f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
 		break;
 	default:
 		break;
@@ -295,11 +333,13 @@ void CUpgradeState::Render()
 	switch (player->GetMissileLevel())
 	{
 	case 0:
-		graphics->DrawRectangle({ { screenWidth * .3f, screenHeight * .55f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .3f, screenHeight * .55f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
+		graphics->DrawTexture(upArrowTexture, { screenWidth * .314f, screenHeight * .432f }, 0, {}, { 200, 50, 50, 50 }, { .15f, .175f });
 	case 1:
-		graphics->DrawRectangle({ { screenWidth * .3f, screenHeight * .4f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .3f, screenHeight * .35f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
+		graphics->DrawTexture(upArrowTexture, { screenWidth * .314f, screenHeight * .232f }, 0, {}, { 200, 50, 50, 50 }, { .15f, .175f });
 	case 2:
-		graphics->DrawRectangle({ { screenWidth * .3f, screenHeight * .25f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .3f, screenHeight * .15f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
 		break;
 	default:
 		break;
@@ -308,11 +348,13 @@ void CUpgradeState::Render()
 	switch (player->GetWarpLevel())
 	{
 	case 0:
-		graphics->DrawRectangle({ { screenWidth * .45f, screenHeight * .55f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .45f, screenHeight * .55f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
+		graphics->DrawTexture(upArrowTexture, { screenWidth * .464f, screenHeight * .432f }, 0, {}, { 200, 50, 50, 50 }, { .15f, .175f });
 	case 1:
-		graphics->DrawRectangle({ { screenWidth * .45f, screenHeight * .4f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .45f, screenHeight * .35f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
+		graphics->DrawTexture(upArrowTexture, { screenWidth * .464f, screenHeight * .232f }, 0, {}, { 200, 50, 50, 50 }, { .15f, .175f });
 	case 2:
-		graphics->DrawRectangle({ { screenWidth * .45f, screenHeight * .25f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .45f, screenHeight * .15f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
 		break;
 	default:
 		break;
@@ -321,11 +363,13 @@ void CUpgradeState::Render()
 	switch (player->GetWellLevel())
 	{
 	case 0:
-		graphics->DrawRectangle({ { screenWidth * .6f, screenHeight * .55f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .6f, screenHeight * .55f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
+		graphics->DrawTexture(upArrowTexture, { screenWidth * .614f, screenHeight * .432f }, 0, {}, { 200, 50, 50, 50 }, { .15f, .175f });
 	case 1:
-		graphics->DrawRectangle({ { screenWidth * .6f, screenHeight * .4f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .6f, screenHeight * .35f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
+		graphics->DrawTexture(upArrowTexture, { screenWidth * .614f, screenHeight * .232f }, 0, {}, { 200, 50, 50, 50 }, { .15f, .175f });
 	case 2:
-		graphics->DrawRectangle({ { screenWidth * .6f, screenHeight * .25f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .6f, screenHeight * .15f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
 		break;
 	default:
 		break;
@@ -334,11 +378,13 @@ void CUpgradeState::Render()
 	switch (player->GetPushLevel())
 	{
 	case 0:
-		graphics->DrawRectangle({ { screenWidth * .75f, screenHeight * .55f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .75f, screenHeight * .55f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
+		graphics->DrawTexture(upArrowTexture, { screenWidth * .764f, screenHeight * .432f }, 0, {}, { 200, 50, 50, 50 }, { .15f, .175f });
 	case 1:
-		graphics->DrawRectangle({ { screenWidth * .75f, screenHeight * .4f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .75f, screenHeight * .35f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
+		graphics->DrawTexture(upArrowTexture, { screenWidth * .764f, screenHeight * .232f }, 0, {}, { 200, 50, 50, 50 }, { .15f, .175f });
 	case 2:
-		graphics->DrawRectangle({ { screenWidth * .75f, screenHeight * .25f }, SGD::Size{ 64, 64 } }, { 200, 200, 200, 150 });
+		graphics->DrawRectangle({ { screenWidth * .75f, screenHeight * .15f }, SGD::Size{ 64, 64 } }, { 150, 150, 150, 150 });
 		break;
 	default:
 		break;
@@ -353,17 +399,17 @@ void CUpgradeState::Render()
 
 		break;
 	case laserTwo:
-		graphics->DrawRectangle({ { screenWidth * .22f, screenHeight * .37f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .33f }, SGD::Size{ 150, 100 } }, "Laser II");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .37f }, SGD::Size{ 150, 100 } }, "Additional");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .39f }, SGD::Size{ 150, 100 } }, "Laser Cannon");
+		graphics->DrawRectangle({ { screenWidth * .22f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .28f }, SGD::Size{ 150, 100 } }, "Laser II");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, "Additional");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Laser Cannon");
 
 		break;
 	case laserThree:
-		graphics->DrawRectangle({ { screenWidth * .22f, screenHeight * .22f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .18f }, SGD::Size{ 150, 100 } }, "Laser III");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .22f }, SGD::Size{ 150, 100 } }, "Increased Damage");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .24f }, SGD::Size{ 150, 100 } }, "Increased Firerate");
+		graphics->DrawRectangle({ { screenWidth * .22f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .08f }, SGD::Size{ 150, 100 } }, "Laser III");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, "Increased Damage");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .22f, screenHeight * .14f }, SGD::Size{ 150, 100 } }, "Increased Firerate");
 		break;
 	case missileOne:
 		graphics->DrawRectangle({ { screenWidth * .37f, screenHeight * .52f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
@@ -371,16 +417,16 @@ void CUpgradeState::Render()
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Increased Damage");
 		break;
 	case missileTwo:
-		graphics->DrawRectangle({ { screenWidth * .37f, screenHeight * .37f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .33f }, SGD::Size{ 150, 100 } }, "Missile II");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .37f }, SGD::Size{ 150, 100 } }, "Additional");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .39f }, SGD::Size{ 150, 100 } }, "Missile Launcher");
+		graphics->DrawRectangle({ { screenWidth * .37f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .28f }, SGD::Size{ 150, 100 } }, "Missile II");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, "Additional");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Missile Launcher");
 		break;
 	case missileThree:
-		graphics->DrawRectangle({ { screenWidth * .37f, screenHeight * .22f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .18f }, SGD::Size{ 150, 100 } }, "Missile III");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .22f }, SGD::Size{ 150, 100 } }, "Missiles track");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .24f }, SGD::Size{ 150, 100 } }, "nearby enemies");
+		graphics->DrawRectangle({ { screenWidth * .37f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .08f }, SGD::Size{ 150, 100 } }, "Missile III");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, "Missiles track");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .37f, screenHeight * .14f }, SGD::Size{ 150, 100 } }, "nearby enemies");
 		break;
 	case warpOne:
 		graphics->DrawRectangle({ { screenWidth * .52f, screenHeight * .52f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
@@ -388,15 +434,16 @@ void CUpgradeState::Render()
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Reduced Cooldown");
 		break;
 	case warpTwo:
-		graphics->DrawRectangle({ { screenWidth * .52f, screenHeight * .37f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .33f }, SGD::Size{ 150, 100 } }, "Warp II");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .39f }, SGD::Size{ 150, 100 } }, "Increased Strength");
+		graphics->DrawRectangle({ { screenWidth * .52f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .28f }, SGD::Size{ 150, 100 } }, "Warp II");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Increased Warp");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Force");
 		break;
 	case warpThree:
-		graphics->DrawRectangle({ { screenWidth * .52f, screenHeight * .22f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .18f }, SGD::Size{ 150, 100 } }, "Warp III");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .22f }, SGD::Size{ 150, 100 } }, "Invulnerability");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .24f }, SGD::Size{ 150, 100 } }, "during Warp");
+		graphics->DrawRectangle({ { screenWidth * .52f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .08f }, SGD::Size{ 150, 100 } }, "Warp III");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, "Invulnerability");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .52f, screenHeight * .14f }, SGD::Size{ 150, 100 } }, "during Warp");
 		break;
 	case wellOne:
 		graphics->DrawRectangle({ { screenWidth * .44f, screenHeight * .52f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
@@ -404,16 +451,17 @@ void CUpgradeState::Render()
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Increased Radius");
 		break;
 	case wellTwo:
-		graphics->DrawRectangle({ { screenWidth * .44f, screenHeight * .37f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .33f }, SGD::Size{ 150, 100 } }, "Gravity Well II");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .39f }, SGD::Size{ 150, 100 } }, "Increased Strength");
+		graphics->DrawRectangle({ { screenWidth * .44f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .28f }, SGD::Size{ 150, 100 } }, "Gravity Well II");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, "Increased Pull");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Force");
 		break;
 	case wellThree:
-		graphics->DrawRectangle({ { screenWidth * .44f, screenHeight * .22f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .18f }, SGD::Size{ 150, 100 } }, "Gravity Well III");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .22f }, SGD::Size{ 150, 100 } }, "Gravity Well");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .24f }, SGD::Size{ 150, 100 } }, "explodes upon");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .26f }, SGD::Size{ 150, 100 } }, "expiring");
+		graphics->DrawRectangle({ { screenWidth * .44f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .08f }, SGD::Size{ 150, 100 } }, "Gravity Well III");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, "Gravity Well");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .14f }, SGD::Size{ 150, 100 } }, "explodes upon");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .44f, screenHeight * .16f }, SGD::Size{ 150, 100 } }, "expiring");
 		break;
 	case pushOne:
 		graphics->DrawRectangle({ { screenWidth * .59f, screenHeight * .52f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
@@ -421,35 +469,37 @@ void CUpgradeState::Render()
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .54f }, SGD::Size{ 150, 100 } }, "Larger Arc");
 		break;
 	case pushTwo:
-		graphics->DrawRectangle({ { screenWidth * .59f, screenHeight * .37f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .33f }, SGD::Size{ 150, 100 } }, "Gravity Push II");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .39f }, SGD::Size{ 150, 100 } }, "Increased Strength");
+		graphics->DrawRectangle({ { screenWidth * .59f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .28f }, SGD::Size{ 150, 100 } }, "Gravity Push II");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, "Increased Push");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Force");
 		break;
 	case pushThree:
-		graphics->DrawRectangle({ { screenWidth * .59f, screenHeight * .22f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .18f }, SGD::Size{ 150, 100 } }, "Gravity Push III");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .22f }, SGD::Size{ 150, 100 } }, "Gravity Push");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .24f }, SGD::Size{ 150, 100 } }, "expands in a");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .26f }, SGD::Size{ 150, 100 } }, "full circle");
+		graphics->DrawRectangle({ { screenWidth * .59f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .08f }, SGD::Size{ 150, 100 } }, "Gravity Push III");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .12f }, SGD::Size{ 150, 100 } }, "Gravity Push");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .14f }, SGD::Size{ 150, 100 } }, "expands in a");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .59f, screenHeight * .16f }, SGD::Size{ 150, 100 } }, "full circle");
 		break;
 	}
 
 	// draw selected box
 	if (cursor != -1)
-		graphics->DrawRectangle({ { screenWidth * .15f * (cursor / 3 + 1), screenHeight * (.55f - (cursor % 3) * .15f) }, SGD::Size{ 64, 64 } }, { 50, 255, 255, 255 }, { 255, 255, 255 }, 2);
+		graphics->DrawRectangle({ { screenWidth * .15f * (cursor / 3 + 1), screenHeight * (.55f - (cursor % 3) * .20f) }, SGD::Size{ 64, 64 } }, { 50, 255, 255, 255 }, { 255, 255, 255 }, 2);
 	std::ostringstream perksToSpend;
 	perksToSpend << "Perks to spend: " << player->GetPerks();
-	Game::GetInstance()->FontSmall.Write({ screenWidth * .7f, screenHeight * .9f }, perksToSpend.str().c_str());
+	Game::GetInstance()->FontSmall.Write({ screenWidth * .7f, screenHeight * .8f }, perksToSpend.str().c_str());
 }
 
 void CUpgradeState::Enter()
 {
+	upArrowTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/upArrow.png", { 255, 100, 100 });
 	iconTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/upgradeIcon.png");
 	player = CEntityManager::GetInstance()->GetPlayer();
 
 	for (int i = 0; i < 15; i++)
 	{
-		buttons.push_back({ SGD::Point{ Game::GetInstance()->GetScreenWidth() * .15f * (i / 3 + 1), Game::GetInstance()->GetScreenHeight() * (.55f - (i % 3) * .15f) }, SGD::Size{ 64, 64 } });
+		buttons.push_back({ SGD::Point{ Game::GetInstance()->GetScreenWidth() * .15f * (i / 3 + 1), Game::GetInstance()->GetScreenHeight() * (.55f - (i % 3) * .20f) }, SGD::Size{ 64, 64 } });
 	}
 }
 

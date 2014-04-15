@@ -38,10 +38,10 @@
     </Quad>
     <Quad x="1" y="15" possibleTypes="0" />
     <Quad x="2" y="0" possibleTypes="0" />
-    <Quad x="2" y="1" possibleTypes="0" />
-    <Quad x="2" y="2" possibleTypes="1">
-      <Type type="COPPERHEAD" amount="2" randomized="False" x="535" y="437" />
+    <Quad x="2" y="1" possibleTypes="1">
+      <Type type="COPPERHEAD" amount="2" randomized="False" x="518" y="327" />
     </Quad>
+    <Quad x="2" y="2" possibleTypes="0" />
     <Quad x="2" y="3" possibleTypes="0" />
     <Quad x="2" y="4" possibleTypes="0" />
     <Quad x="2" y="5" possibleTypes="0" />
@@ -58,7 +58,7 @@
     <Quad x="3" y="0" possibleTypes="0" />
     <Quad x="3" y="1" possibleTypes="0" />
     <Quad x="3" y="2" possibleTypes="1">
-      <Type type="COPPERHEAD" amount="2" randomized="False" x="700" y="442" />
+      <Type type="COPPERHEAD" amount="2" randomized="False" x="666" y="472" />
     </Quad>
     <Quad x="3" y="3" possibleTypes="0" />
     <Quad x="3" y="4" possibleTypes="0" />
@@ -292,7 +292,7 @@
     <Event type="TUTORIAL.ARROWS" x="2318" y="252" width="266" height="288" />
     <Event type="TUTORIAL.WELL" x="435" y="588" width="408" height="163" />
     <Event type="TUTORIAL.COORDINATOR" x="2436" y="712" width="517" height="223" />
-    <Event type="TUTORIAL.ALLY" x="2423" y="1552" width="559" height="211" />
+    <Event type="TUTORIAL.ALLY" x="2423" y="1381" width="559" height="211" />
     <Collision x="576" y="2199" width="616" height="998" />
     <Collision x="1193" y="2199" width="721" height="291" />
     <Collision x="1915" y="811" width="326" height="1679" />

@@ -18,6 +18,7 @@ class CUpgradeState : public IGameState
 	std::vector<SGD::Rectangle> buttons;
 
 	SGD::HTexture iconTexture = SGD::INVALID_HANDLE;
+	SGD::HTexture upArrowTexture = SGD::INVALID_HANDLE;
 public:
 	CUpgradeState();
 	virtual ~CUpgradeState();
