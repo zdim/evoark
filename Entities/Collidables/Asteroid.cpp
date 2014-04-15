@@ -118,5 +118,5 @@ void CAsteroid::HandleCollision(IEntity* other)
 
 void CAsteroid::AddGravity(SGD::Vector grav)
 {
-	velocity += grav;
+	velocity = grav;
 }

@@ -112,7 +112,11 @@ void CLeader::CalculateDestinations()
 	else
 	{
 		float radius = std::max(members[0]->GetSize().width, members[0]->GetSize().height);
-		std::vector<SGD::Vector> offsets = equidistantPointsInCircle(members.size(), members[0]->GetSize().height * 3);
+		std::vector<SGD::Vector> offsets;
+		if (members[0]->GetType() != (int)EntityType::Coral)
+			offsets = equidistantPointsInCircle(members.size(), members[0]->GetSize().height * 10);
+		else
+			offsets = equidistantPointsInCircle(members.size(), members[0]->GetSize().height * 3);
 		for (unsigned int i = 0; i < members.size(); i++)
 		{
 			destinations[i] = target->GetPosition() + offsets[i];
@@ -180,7 +184,7 @@ void CLeader::Update(float dt)
 		{
 			distance = std::min(distance, SGD::Vector(members[i]->GetPosition() - target->GetPosition()).ComputeLength());
 		}
-		if (distance > CCamera::GetInstance()->GetBoxInWorld().ComputeSize().width * 0.5f)
+		if (distance > CCamera::GetInstance()->GetBoxInWorld().ComputeSize().width * 0.6f)
 		{
 			SetTarget(nullptr);
 			return;

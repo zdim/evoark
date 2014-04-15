@@ -84,6 +84,8 @@ void CEnemy::Update(float dt)
 		float strafeAngle = forward.ComputeAngle(dir);
 		strafeAngle /= (SGD::PI*3/4);
 		strafeAngle = 1 - strafeAngle;
+		if (strafeAngle < 0.1f)
+			strafeAngle = 0.1f;
 		velocity *= strafeAngle;
 	}
 	else if (position != destination)
@@ -100,6 +102,8 @@ void CEnemy::Update(float dt)
 		float strafeAngle = forward.ComputeAngle(dir);
 		strafeAngle /= (SGD::PI * 3 / 4);
 		strafeAngle = 1 - strafeAngle;
+		if (strafeAngle < 0.1f)
+			strafeAngle = 0.1f;
 		velocity *= strafeAngle;
 	}
 	else
@@ -139,10 +143,6 @@ void CEnemy::SetTarget(CShip* newTarget)
 	if (target == newTarget)
 		return;
 
-	if ((unsigned int)target == 0xfeeefeee)
-	{
-		target = nullptr;
-	}
 	if (newTarget && newTarget->GetType() == (int)EntityType::Human)
 	{
 		target = nullptr;
