@@ -641,7 +641,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 							 push->SetImage(images[(int)EntityType::Push]);
 							 push->SetRadius(radius);
 							 push->SetVelocity({ 0, 0 });
-							 push->SetSize({ 256, 256 });
+							 //push->SetSize({ 256, 256 });
 							 push->SetOwner(owner);
 
 							 //SGD::Vector offset = { 0.0, -1.0 };

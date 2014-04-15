@@ -337,22 +337,22 @@ void CPlayer::CreatePush()
 	//TODO: Send CreatePush message
 	if (pushLevel == 0)
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 500, pushLevel, SGD::PI / 3, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 3, this);
 		msg->QueueMessage();
 	}
 	else if (pushLevel == 1)
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 500, pushLevel, SGD::PI / 2, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 2, this);
 		msg->QueueMessage();
 	}
 	else if (pushLevel == 2)
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 2, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 1000, pushLevel, SGD::PI / 2, this);
 		msg->QueueMessage();
 	}
 	else
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI * 2, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 1000, pushLevel, SGD::PI * 2, this);
 		msg->QueueMessage();
 	}
 

@@ -7,6 +7,7 @@ class CMainMenuState :
 {
 	enum menuReturn {play, options, credits, exit, count};
 	CMenu* menu;
+	//Fnt titleFnt;
 
 	CMainMenuState();
 	virtual ~CMainMenuState();

@@ -78,7 +78,10 @@ void CMainMenuState::Render()
 	SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 50, 0, 0, 0 });
 	if (Game::GetInstance()->GetTopState() != CProfileSelectState::GetInstance())
 	{
-		SGD::GraphicsManager::GetInstance()->DrawTexture(titleTexture, { Game::GetInstance()->GetScreenWidth() * .07f, Game::GetInstance()->GetScreenHeight() * .4f });
+		//[ctrlf]FontRender
+		//SGD::GraphicsManager::GetInstance()->DrawTexture(titleTexture, { Game::GetInstance()->GetScreenWidth() * .07f, Game::GetInstance()->GetScreenHeight() * .4f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(titleTexture, { Game::GetInstance()->GetScreenWidth() * .07f, Game::GetInstance()->GetScreenHeight() * .375f });
+		//titleFnt.Write({ Game::GetInstance()->GetScreenWidth() * .125f, Game::GetInstance()->GetScreenHeight() * .375f }, "EvoArk");
 		SGD::GraphicsManager::GetInstance()->DrawLine({ Game::GetInstance()->GetScreenWidth() * .1f, Game::GetInstance()->GetScreenHeight() * .53f }, { Game::GetInstance()->GetScreenWidth() * .7f, Game::GetInstance()->GetScreenHeight() * .53f }, { 240, 255, 255, 255 });
 		menu->Render();
 	}
@@ -96,7 +99,10 @@ void CMainMenuState::Enter()
 	//CSoundBox::GetInstance()->Enter();
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::ambient, true);
 
-	titleTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/EightOneTitle.png");
+	//[ctrlf]FontLoad
+	//titleTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/EightOneTitle.png");
+	titleTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/FabadaTitle.png");
+	//titleFnt.Load("Resources/XML/gunplay.xml");
 
 	backgroundStars1 = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/stars2new.png");
 	backgroundStars2 = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/stars1new.png");
@@ -111,6 +117,8 @@ void CMainMenuState::Exit()
 	//CSoundBox::GetInstance()->Exit();
 	delete menu;
 	menu = nullptr;
+	//[ctrlf]fontUnload
+	//titleFnt.Unload();
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(titleTexture);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(backgroundStars1);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(backgroundStars2);
