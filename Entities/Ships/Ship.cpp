@@ -99,6 +99,7 @@ void CShip::HandleCollision(IEntity* other)
 		dir.Normalize();
 		SGD::Vector offset = dir * radius;
 		position = other->GetPosition() + offset;
+		CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyHullDamage,false);
 	}
 }
 
