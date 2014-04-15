@@ -41,12 +41,14 @@ void CCreditsState::Render()
 	int screenHeight = Game::GetInstance()->GetScreenHeight();
 
 	SGD::GraphicsManager::GetInstance()->DrawRectangle({ 0, 0, (float)screenWidth, (float)screenHeight }, { 0, 0, 0 });
-	Game::GetInstance()->Font.WriteCenter( SGD::Rectangle{ { screenWidth * .25f, screenHeight * .1f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Credits");
-	Game::GetInstance()->Font.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .3f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "John O'Leske");
-	Game::GetInstance()->Font.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .35f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Rob Martinez");
-	Game::GetInstance()->Font.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .5f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "JD Sullivan");
-	Game::GetInstance()->Font.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .55f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Vladimir Golovan");
-	Game::GetInstance()->Font.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .6f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Zach DiMarco");
+	Game::GetInstance()->FontPoiret.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .1f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Credits");
+	Game::GetInstance()->FontPoiret.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .3f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Executive Producer - John O'Leske");
+	Game::GetInstance()->FontPoiret.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .35f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Associate Producer - Rob Martinez");
+	Game::GetInstance()->FontPoiret.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .5f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Programmer - JD Sullivan");
+	Game::GetInstance()->FontPoiret.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .55f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Programmer - Vladimir Golovan");
+	Game::GetInstance()->FontPoiret.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .6f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Programmer - Zach DiMarco");
+	Game::GetInstance()->FontPoiret.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .65f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Artist - Gregory Bay");
+	Game::GetInstance()->FontPoiret.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .7f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Artist - Caris Frazier");
 
 }
 

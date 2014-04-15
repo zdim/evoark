@@ -298,9 +298,9 @@ void	CTestLevelState::Render(void)
 
 		graphics->DrawRectangle({ 0, 0, 2000, 2000 }, { 150, 0, 0, 0 });
 
+		m_pParticleSystem->Render();
 		EntityManager->Render();
 
-		m_pParticleSystem->Render();
 
 		UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator(), EntityManager->GetStargate(), EntityManager->GetLeaderPositions());
 	}
