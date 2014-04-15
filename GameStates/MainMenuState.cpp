@@ -77,7 +77,11 @@ void CMainMenuState::Render()
 	SGD::GraphicsManager::GetInstance()->DrawTextureSection(backgroundSmoke, backgroundSmokePosSecond, { 0, 0, 1024.f, 768.f }, 0, {}, { 40, 90, 100, 40 });
 	SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 50, 0, 0, 0 });
 	if (Game::GetInstance()->GetTopState() != CProfileSelectState::GetInstance())
+	{
+		SGD::GraphicsManager::GetInstance()->DrawTexture(titleTexture, { Game::GetInstance()->GetScreenWidth() * .07f, Game::GetInstance()->GetScreenHeight() * .4f });
+		SGD::GraphicsManager::GetInstance()->DrawLine({ Game::GetInstance()->GetScreenWidth() * .1f, Game::GetInstance()->GetScreenHeight() * .53f }, { Game::GetInstance()->GetScreenWidth() * .7f, Game::GetInstance()->GetScreenHeight() * .53f }, { 240, 255, 255, 255 });
 		menu->Render();
+	}
 }
 
 void CMainMenuState::Enter()
@@ -92,6 +96,8 @@ void CMainMenuState::Enter()
 	//CSoundBox::GetInstance()->Enter();
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::ambient, true);
 
+	titleTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/EightOneTitle.png");
+
 	backgroundStars1 = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/stars2new.png");
 	backgroundStars2 = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/stars1new.png");
 	backgroundSmoke = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/Smoke.png");
@@ -105,7 +111,7 @@ void CMainMenuState::Exit()
 	//CSoundBox::GetInstance()->Exit();
 	delete menu;
 	menu = nullptr;
-
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(titleTexture);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(backgroundStars1);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(backgroundStars2);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(backgroundSmoke);

@@ -11,6 +11,8 @@ class CMainMenuState :
 	CMainMenuState();
 	virtual ~CMainMenuState();
 
+	SGD::HTexture titleTexture = SGD::INVALID_HANDLE;
+
 	SGD::HTexture backgroundStars1 = SGD::INVALID_HANDLE;
 	SGD::HTexture backgroundStars2 = SGD::INVALID_HANDLE;
 	SGD::HTexture backgroundSmoke = SGD::INVALID_HANDLE;

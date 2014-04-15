@@ -117,7 +117,7 @@ void COptionsState::Enter()
 	buttons[menuReturn::music] = "Music";
 	buttons[menuReturn::fullscreen] = "Fullscreen";
 	buttons[menuReturn::back] = "Back";
-	menu = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "Options", { Game::GetInstance()->GetScreenWidth() * .4f, Game::GetInstance()->GetScreenHeight() * .52f }, false);
+	menu = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "", { Game::GetInstance()->GetScreenWidth() * .4f, Game::GetInstance()->GetScreenHeight() * .51f }, false);
 	soundBox = CSoundBox::GetInstance();
 	//soundBox->Enter();
 	std::string path = Game::GetInstance()->GetAppDataPath() + "optionsSave.xml";
