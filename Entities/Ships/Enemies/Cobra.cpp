@@ -1,6 +1,7 @@
 //
 #include "Cobra.h"
 #include "../../EntityManager.h"
+#include "../../../Graphics/Particles/ParticleSystem.h"
 
 CCobra::CCobra()
 {
@@ -15,6 +16,7 @@ CCobra::CCobra()
 
 CCobra::~CCobra()
 {
+	CParticleSystem::GetInstance()->RemoveEmitter(this);
 }
 
 void CCobra::Update(float dt)
@@ -22,13 +24,13 @@ void CCobra::Update(float dt)
 	if (CEntityManager::GetInstance()->GetPlayer() && CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
 		return;
 
-	warpTimer += dt; 
+	warpTimer += dt;
 	SGD::Vector dir = CCopperhead::AI(dt);
 
-	
 
-	if (target != nullptr )
-	Warp();
+
+	if (target != nullptr)
+		Warp();
 
 	CEnemy::Update(dt);
 
@@ -38,18 +40,23 @@ void CCobra::Update(float dt)
 		forward.Rotate(rotation);
 		velocity += forward * warpSpeed;
 	}
-	
-		
 
-	
+
+
+
 	CEntity::Update(dt);
 }
 
 void CCobra::Warp()
 {
+
 	if (warpTimer > warpDelay)
+	{
+		CParticleSystem::GetInstance()->AddEmitter(16, this);
 		warpTimer = 0;
+	}
 }
+
 
 void CCobra::AddGrav(SGD::Vector grav)
 {

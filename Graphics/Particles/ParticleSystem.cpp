@@ -65,6 +65,14 @@ void CParticleSystem::Init()
 	LoadEffect(efName11);
 	std::string efName12 = "PlayerExplosion3.xml";
 	LoadEffect(efName12);
+	std::string efName13 = "Stargate.xml";
+	LoadEffect(efName13);
+	std::string efName14 = "Stargate2.xml";
+	LoadEffect(efName14);
+	std::string efName15 = "PlayerWarp.xml";
+	LoadEffect(efName15);
+	std::string efName16 = "CobraWarp.xml";
+	LoadEffect(efName16);
 
 
 	for (int i = 1; i < numEmitters + 1; i++)

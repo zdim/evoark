@@ -48,20 +48,20 @@ CPlayer::CPlayer()
 	for (int i = 0; i < 6; i++) tutorialWaitForInput[i] = false;
 	for (int i = 0; i < 6; i++) tutorialTriggerHit[i] = false;
 
-	//m_Engine = new CEmitter(
-	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetParticleData(),
-	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitterSize(),
-	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetShape(),
-	//	position,
-	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetNumParticles(),
-	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnRate(),
-	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnTimeFromLastSpawn(),
-	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitType(),
-	//	CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitTime()
-	//	);
+	m_Engine = new CEmitter(
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetParticleData(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitterSize(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetShape(),
+		position,
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetNumParticles(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnRate(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnTimeFromLastSpawn(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitType(),
+		CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitTime()
+		);
 
-	//m_Engine->Initialize();
-	//m_Engine->SetOwner(this);
+	m_Engine->Initialize();
+	m_Engine->SetOwner(this);
 }
 
 
@@ -72,8 +72,8 @@ CPlayer::~CPlayer()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(warpIcon);
 
-	//m_Engine->Release();
-	//delete m_Engine;
+	m_Engine->Release();
+	delete m_Engine;
 
 }
 
@@ -85,8 +85,8 @@ void CPlayer::Update(float dt)
 	rotatedOffset.Rotate(rotation);
 	enginePos = position + rotatedOffset;
 
-	//m_Engine->SetEmitterPosition(enginePos);
-	//m_Engine->Update(dt);
+	m_Engine->SetEmitterPosition(enginePos);
+	m_Engine->Update(dt);
 
 	if (damaged > 0)
 		damaged -= dt;
@@ -188,7 +188,10 @@ void CPlayer::Update(float dt)
 
 	 //commented out until finished implementing - was messing up standard input
 	if (warpTimer < warpDuration)
+	{
+		
 		velocity = dir * (speed + warpSpeed);
+	}	
 	else
 	{
 		velocity = dir * speed;
@@ -253,7 +256,7 @@ void CPlayer::Update(float dt)
 void CPlayer::Render()
 {
 
-	//m_Engine->Render();
+	m_Engine->Render();
 
 	SGD::Rectangle rShipRegion = SGD::Rectangle (SGD::Point{ 0, 0 }, size);
 		
@@ -360,6 +363,8 @@ void CPlayer::CreatePush()
 
 void CPlayer::Warp()
 {
+	CParticleSystem::GetInstance()->AddEmitter(15, this);
+
 	if (warpTimer <= warpDelay)
 		return;
 

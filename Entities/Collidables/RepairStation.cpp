@@ -6,10 +6,12 @@
 #include "../../Event System/EventID.h"
 #include "../../Event System/CustomEvent.h"
 #include "../../Event System/EventManager.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 CRepairStation::CRepairStation()
 {
 	hull = 100;
+	size = { 92, 217 };
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::bossdead);
 }
 
@@ -43,6 +45,22 @@ void CRepairStation::Update(float dt)
 	}
 
 
+}
+
+
+
+void CRepairStation::Render()
+{
+	SGD::Rectangle rShipRegion = SGD::Rectangle(SGD::Point{ 0, 0 }, size);
+
+	SGD::Point renderPoint = offsetToCamera();
+	SGD::Color col = {};
+	if (damaged > 0)
+	{
+		col = { 155, 155, 155 };
+	}
+
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint, rShipRegion, rotation, size / 2, col);
 }
 
 void CRepairStation::HandleCollision(IEntity* other)

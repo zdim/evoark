@@ -80,6 +80,7 @@ void	CTestLevelState::Enter(void)
 	//soundBox->Enter();
 	soundBox->Play(CSoundBox::sounds::slowTrance, true);
 
+	//EntityManager->Spawn(EntityType::Stargate, { 200, 200 });
 	//EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 4);
 	//EntityManager->GetBoss()->Init(4);
 	//EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
@@ -101,7 +102,7 @@ void	CTestLevelState::Enter(void)
 	graphics->Update();
 
 
-	//EntityManager->Spawn(EntityType::Stargate, {200,200});
+
 	if (BackgroundImage == SGD::INVALID_HANDLE)
 		BackgroundImage = graphics->LoadTexture("Resources/Graphics/starfield.jpg");
 	player = EntityManager->GetPlayer();
@@ -128,9 +129,10 @@ void	CTestLevelState::Enter(void)
 	Render();
 	graphics->Update();
 
-	pSystem = CParticleSystem::GetInstance();
-
+	m_pParticleSystem->AddEmitter(13, EntityManager->GetStargate());
+	
 	m_bLoaded = true;
+
 }
 
 void	CTestLevelState::Exit(void)
@@ -215,7 +217,7 @@ void	CTestLevelState::Update(float dt)
 	CEventManager::GetInstance().Update();
 	cam->Update(dt);
 
-	pSystem->Update(dt);
+	m_pParticleSystem->Update(dt);
 
 
 	// parallax effect
@@ -292,7 +294,7 @@ void	CTestLevelState::Render(void)
 
 		EntityManager->Render();
 
-		pSystem->Render();
+		m_pParticleSystem->Render();
 
 		UI((CPlayer*)player, EntityManager->GetAllies(), EntityManager->GetCoordinator(), EntityManager->GetStargate(), EntityManager->GetLeaderPositions());
 	}
@@ -700,10 +702,10 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										SGD::Point pos3 = { pos.x - 200, pos.y + 100 };
 										SGD::Point pos4 = { pos.x - 100, pos.y + 200 };
 
-										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos1, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
-										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos2, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
-										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos3, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
-										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos4, { 64, 64 }, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
+										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos1, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
+										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos2, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
+										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos3, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
+										CTestLevelState::GetInstance()->EntityManager->SpawnStation(pos4, dynamic_cast<CMoccasin*>(cMsg->GetSender()));
 									}
 									if (dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 3 || dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetLevel() == 4 )
 									{		
@@ -757,6 +759,8 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::BossKilled:
 	{
 								  GetInstance()->m_bBossKilled = true;
+								  GetInstance()->m_pParticleSystem->RemoveEmitter(GetInstance()->EntityManager->GetStargate());
+								  GetInstance()->m_pParticleSystem->AddEmitter(14, GetInstance()->EntityManager->GetStargate());
 								  break;
 
 	}

@@ -21,7 +21,7 @@ CCoral::CCoral()
 	modules[shieldModule] = new CShieldModule();
 
 	m_pShield->SetOwner(dynamic_cast<CShieldModule*>(modules[shieldModule]));
-	m_pShield->SetSize({ 175, 175 });
+	m_pShield->SetSize({ 250, 250 });
 
 
 	modules[laser] = new CLaserModule();
