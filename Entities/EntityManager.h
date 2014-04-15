@@ -9,6 +9,7 @@
 struct Flock;
 struct ModularFlock;
 //class CMoccasin;
+
 class CEntityManager
 {
 	std::vector<CLeader*> leaders;
@@ -29,6 +30,7 @@ class CEntityManager
 	std::vector<SGD::HTexture> imagesCoral;
 	std::vector<SGD::HTexture> imagesMoccasin;
 	std::vector<SGD::HTexture> imagesAsteroids;
+	std::vector<SGD::HTexture> imagesPlanets;
 
 
 
@@ -52,7 +54,7 @@ public:
 	std::vector<SGD::Point> GetLeaderPositions();
 	//IEntity* GetStargate() { return (IEntity*)stargate; }	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.
 	void SpawnProjectile(EntityType type, SGD::Point position, SGD::Size ownerSize, float rotation, int damage, unsigned int tier = 1, float radius = -1.0f, IEntity* owner = nullptr); //Spawns a projectile 
-	void SpawnStation(SGD::Point position, SGD::Size size, CMoccasin* owner);
+	void SpawnStation(SGD::Point position, CMoccasin* owner);
 	void SpawnCarrierShips(SGD::Point position,CShip* target,int amount);
 	void SpawnCollidable(EntityType type, SGD::Point position, SGD::Size size = { 16, 16 }, SGD::Vector velocity = {0,0}, int eventType = -1);
 	void Spawn(EntityType type, SGD::Point position, unsigned int amount = 1, bool coord = false); //Spawns either one entity, or a flock of enemies, making the leader object in the process. Amount is a second entity type for the ally's target.

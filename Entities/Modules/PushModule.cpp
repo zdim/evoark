@@ -2,6 +2,7 @@
 #include "PushModule.h"
 #include "../../Message System/CreateProjectile.h"
 #include "../../Entities/Ships/Enemies/Coral.h"
+#include "../../Graphics/Particles/ParticleSystem.h"
 
 CPushModule::CPushModule()
 {
@@ -34,6 +35,7 @@ void CPushModule::Activate()
 		pos.y += 0;
 		if (vToTarget.ComputeLength() <= 600 )
 		{
+			CParticleSystem::GetInstance()->AddEmitterPos(17, target->GetPosition());
 			CreateProjectileMessage* Msg = new CreateProjectileMessage(EntityType::Push, pos, { 150, 150 }, rotation, damage, tier, radius);
 			Msg->QueueMessage();
 		}

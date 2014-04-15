@@ -13,7 +13,7 @@ public:
 	int GetType() override { return (int)EntityType::RepairStation; }
 	bool IsCircle() override { return true; }
 	void Update(float dt) override;
-
+	void Render();
 	void HandleCollision(IEntity* other) override;
 	void TakeDamage(int damage);
 	CMoccasin* GetOwner() { return m_pOwner; }

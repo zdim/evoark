@@ -112,8 +112,13 @@ void CEmitter::Update(float deltaTime)
 		}
 
 		//m_lAliveParticles[i].ParticlePositon = m_lAliveParticles[i].ParticlePositon + m_lAliveParticles[i].ParticleSpeed * deltaTime;
+		//m_lAliveParticles[i].FRotation = m_lAliveParticles[i].FRotation + (particleData.ParticleRotationSpeed / 2 * deltaTime);
 
-		if (m_pShipOwner != nullptr)
+		if (m_pShipOwner != nullptr && m_pShipOwner->GetType() == (int)EntityType::Stargate)
+		{
+			(*it)->SetCurRotation((*it)->GetCurRotation() + (particleData->GetRotaionSpeed() / 2 * deltaTime));
+		}
+		else if (m_pShipOwner != nullptr)
 		{
 			float speed = (*it)->GetCurSpeed().ComputeLength();
 			SGD::Vector dir = { 0, 1 };

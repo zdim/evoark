@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParticleEffect>
+  <Emittor NumOfParticles="750" SpawnRate="0.01" TimeFromLastSpawn="0.01" Shape="1" Radius="0" EmitBool="True" EmitTime="0" PosX="237" PosY="221" Width="1" Height="1" />
+  <Particle Image="engine flame.png" StartScaleX="0.5" StartYScale="0.2" EndXScale="0.0" EndYScale="0.0" StartColorA="255" StartColorR="255" StartColorG="128" StartColorB="64" EndColorA="0" EndColorR="255" EndColorG="192" EndColorB="0" SpeedMinX="192" SpeedMinY="1" SpeedMaxX="0" SpeedMaxY="1" LifeMax="0.1" LifeMin="0.1" RotationSpeed="0" Enertia="0" />
+</ParticleEffect>

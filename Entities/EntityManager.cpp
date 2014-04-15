@@ -75,8 +75,16 @@ void CEntityManager::Initialize()
 		imagesAsteroids[i] = SGD::INVALID_HANDLE;
 	}
 
+	imagesPlanets.resize(11);
+	for (unsigned int i = 0; i < 11; i++)
+	{
+		imagesPlanets[i] = SGD::INVALID_HANDLE;
+	}
+
 
 	images[(int)EntityType::Player] = graphics->LoadTexture("Resources/Graphics/Ships/VG_EvoArk.png");
+
+	images[(int)EntityType::Human] = graphics->LoadTexture("Resources/Graphics/Ships/VG_Human.png");
 
 	//Small Ships 
 	images[(int)EntityType::Copperhead] = graphics->LoadTexture("Resources/Graphics/Ships/VG_CopperheadClass.png");
@@ -99,13 +107,6 @@ void CEntityManager::Initialize()
 	imagesMoccasin[4] = graphics->LoadTexture("Resources/Graphics/Ships/VG_MoccasinType5.png");
 
 
-	images[(int)EntityType::Human] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
-
-
-
-	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Projectiles/am_blaster_hardpoint_glow.png", { 255, 100, 100 });
-	images[(int)EntityType::Missile] = graphics->LoadTexture("Resources/Graphics/Projectiles/VG_MissileLRM.png");
-
 	//Change this when we have module assets
 	images[(int)EntityType::BaseModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 	images[(int)EntityType::EngineModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
@@ -116,24 +117,41 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::PushModule] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
 	images[(int)EntityType::WarpModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 
-	images[(int)EntityType::Well] = graphics->LoadTexture("Resources/Graphics/GravWellIcon.png");
-	images[(int)EntityType::Push] = graphics->LoadTexture("Resources/Graphics/GravPushIcon.png");
+	//Projectiles 
+	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Projectiles/am_blaster_hardpoint_glow.png", { 255, 100, 100 });
+	images[(int)EntityType::Missile] = graphics->LoadTexture("Resources/Graphics/Projectiles/VG_MissileLRM.png");
 
-	images[(int)EntityType::Stargate] = graphics->LoadTexture("Resources/Graphics/Stargate.png");
-	images[(int)EntityType::Planet] = graphics->LoadTexture("Resources/Graphics/planet.png");
-	images[(int)EntityType::Barrier] = graphics->LoadTexture("Resources/Graphics/wallTile.png");
-
+	//Collidables
+	images[(int)EntityType::RepairStation] = graphics->LoadTexture("Resources/Graphics/Collidables/VG_RepairStation.png");
+	images[(int)EntityType::Stargate] = graphics->LoadTexture("Resources/Graphics/Collidables/VG_Stargate.png");
 	imagesAsteroids[0] = graphics->LoadTexture("Resources/Graphics/Collidables/VG_SmallAsteroid.png");
 	imagesAsteroids[1] = graphics->LoadTexture("Resources/Graphics/Collidables/VG_MediumAsteroid.png");
 	imagesAsteroids[2] = graphics->LoadTexture("Resources/Graphics/Collidables/VG_LargeAsteroid.png");
-
-
 	images[(int)EntityType::Shield] = graphics->LoadTexture("Resources/Graphics/Shield.png", { 1, 0, 0, 0 });
 	images[(int)EntityType::ModuleShield] = graphics->LoadTexture("Resources/Graphics/Shield.png");
-	images[(int)EntityType::RepairStation] = graphics->LoadTexture("Resources/Graphics/station.png", { 0, 0, 0, 0 });
+
+	//UI
+	images[(int)EntityType::Well] = graphics->LoadTexture("Resources/Graphics/GravWellIcon.png");
+	images[(int)EntityType::Push] = graphics->LoadTexture("Resources/Graphics/GravPushIcon.png");
+
+
+	imagesPlanets[0]  = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet1.png");
+	imagesPlanets[1] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet2.png");
+	imagesPlanets[2] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet3.png");
+	imagesPlanets[3] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet4.png");
+	imagesPlanets[4] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet5.png");
+	imagesPlanets[5] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet6.png");
+	imagesPlanets[6] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet7.png");
+	imagesPlanets[7] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet8.png");
+	imagesPlanets[8] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet9.png");
+	imagesPlanets[9] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet10.png");
+	imagesPlanets[10] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet11.png");
 
 
 
+	//NOT FINAL 
+	images[(int)EntityType::Planet] = graphics->LoadTexture("Resources/Graphics/planet.png");
+	images[(int)EntityType::Barrier] = graphics->LoadTexture("Resources/Graphics/wallTile.png");
 }
 
 void CEntityManager::Terminate()
@@ -162,6 +180,21 @@ void CEntityManager::Terminate()
 		}
 	}
 	imagesCoral.clear();
+
+
+	for (unsigned int i = 0; i < 11; i++)
+	{
+		if (imagesPlanets[i] != SGD::INVALID_HANDLE)
+		{
+			graphics->UnloadTexture(imagesPlanets[i]);
+			imagesPlanets[i] = SGD::INVALID_HANDLE;
+		}
+	}
+	imagesPlanets.clear();
+
+
+
+
 
 	for (unsigned int i = 0; i < 3; i++)
 	{
@@ -251,7 +284,6 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  IEntity* human = new CHuman();
 							  human->SetPosition(position);
 							  human->SetImage(images[(int)EntityType::Human]);
-							  human->SetSize({ 32, 32 });
 							  allies.push_back(human);
 							  ships.push_back(human);
 							  type = (EntityType)amount;
@@ -659,11 +691,10 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 }
 
 
-void CEntityManager::SpawnStation(SGD::Point position, SGD::Size size, CMoccasin* owner)
+void CEntityManager::SpawnStation(SGD::Point position, CMoccasin* owner)
 {
 	CRepairStation* station = new CRepairStation();
 	station->SetPosition(position);
-	station->SetSize(size);
 	station->SetOwner(owner);
 	station->SetImage(images[(int)EntityType::RepairStation]);
 	ships.push_back(station);
@@ -678,7 +709,13 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 	{
 							   CPlanet* planet = new CPlanet();
 							   planet->SetPosition(position);
-							   planet->SetImage(images[(int)EntityType::Planet]);
+
+							   int randplanetnum = rand() % 11;
+
+
+							   planet->SetImage(imagesPlanets[randplanetnum]);
+
+
 							   stationaries.push_back(planet);
 							   break;
 	}
@@ -1484,8 +1521,6 @@ void CEntityManager::Load()
 			CShip* human = new CHuman();
 			human->SetPosition(save.world.entities[i].position);
 			human->SetImage(images[(int)EntityType::Human]);
-			human->SetSize({ 32, 32 });
-
 			human->setHull(save.world.entities[i].hull);
 
 			allies.push_back(human);

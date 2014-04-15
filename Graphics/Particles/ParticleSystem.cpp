@@ -65,13 +65,27 @@ void CParticleSystem::Init()
 	LoadEffect(efName11);
 	std::string efName12 = "PlayerExplosion3.xml";
 	LoadEffect(efName12);
-
+	std::string efName13 = "Stargate.xml";
+	LoadEffect(efName13);
+	std::string efName14 = "Stargate2.xml";
+	LoadEffect(efName14);
+	std::string efName15 = "PlayerWarp.xml";
+	LoadEffect(efName15);
+	std::string efName16 = "CobraWarp.xml";
+	LoadEffect(efName16);
+	std::string efName17 = "Push.xml";
+	LoadEffect(efName17);
+	std::string efName18 = "Well.xml";
+	LoadEffect(efName18);
+	std::string efName19 = "EngineCopperHead.xml";
+	LoadEffect(efName19);
+	
 
 	for (int i = 1; i < numEmitters + 1; i++)
 		particleEffect[i]->Initialize();
 
 
-	for (int i = 0; i < 75; i++)
+	for (int i = 0; i < 750; i++)
 	{
 		CEmitter * emptyEmitter = new CEmitter();
 		standbyPool.push_back(emptyEmitter);
@@ -104,6 +118,25 @@ void  CParticleSystem::AddEmitter(int n, CEntity* owner)
 
 
 }
+
+
+void CParticleSystem::AddEngineTrailEmitter(int n, CEntity* owner)
+{
+	CEmitter* p = *standbyPool.begin();
+
+
+
+	standbyPool.pop_front();
+	emittingPool.push_front(p);
+
+
+}
+
+
+
+
+
+
 
 void CParticleSystem::AddEmitterPos(int n, SGD::Point pos)
 {

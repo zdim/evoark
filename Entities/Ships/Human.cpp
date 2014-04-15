@@ -7,6 +7,7 @@
 #include "../../GameStates/GameState.h"
 #include "../../GameStates/GameplayState.h"
 #include "../EntityManager.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include <algorithm>
 
 #define SAVING_EXP 50
@@ -17,6 +18,7 @@ CHuman::CHuman()
 	maxHull = 2000;
 	hull = maxHull;
 	rescueDelay = SGD::PI * 2 / rotSpeed;
+	size = { 60, 70 };
 }
 
 
@@ -93,6 +95,21 @@ void CHuman::Update(float dt)
 
 	CEntity::Update(dt);
 
+}
+
+
+void CHuman::Render()
+{
+	SGD::Rectangle rShipRegion = SGD::Rectangle(SGD::Point{ 0, 0 }, size);
+
+	SGD::Point renderPoint = offsetToCamera();
+	SGD::Color col = {};
+	if (damaged > 0)
+	{
+		col = { 155, 155, 155 };
+	}
+
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint, rShipRegion, rotation, size / 2, col);
 }
 
 void CHuman::SetTarget(CShip* newTarget)
