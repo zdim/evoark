@@ -17,11 +17,11 @@ CCoral::CCoral()
 	modules[cockpit] = new CModule();
 
 	m_pShield = new CModuleShield(this);
-
+	
 	modules[shieldModule] = new CShieldModule();
 
 	m_pShield->SetOwner(dynamic_cast<CShieldModule*>(modules[shieldModule]));
-	m_pShield->SetSize({ 250, 250 });
+	
 
 
 	modules[laser] = new CLaserModule();
@@ -85,7 +85,7 @@ CCoral::CCoral(int t)
 	modules[shieldModule] = new CShieldModule();
 	
 	m_pShield->SetOwner(dynamic_cast<CShieldModule*>(modules[shieldModule]));
-	m_pShield->SetSize({ 175, 175 });
+	m_pShield->SetSize({ 280, 280 });
 
 	
 	modules[laser] = new CLaserModule();

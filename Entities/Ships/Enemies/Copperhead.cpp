@@ -116,6 +116,23 @@ void CCopperhead::CreateMissile()
 		return;
 	m_fMissileTimer = 0;
 
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, position, size, rotation, m_nMissileDamage,0,1.0f, this);
+	SGD::Point pos1 = position;
+
+	SGD::Vector offset = { 0.5f, 0.0f };
+	offset.Rotate(rotation);
+	offset *= (size.height + 4) *0.5f + 4 * 0.1f;
+	pos1 += offset;
+
+	SGD::Point pos2 = position;
+
+	SGD::Vector offset2 = { -0.5f, 0.0f };
+	offset2.Rotate(rotation);
+	offset2 *= (size.height + 4) *0.5f + 4 * 0.1f;
+	pos2 += offset2;
+
+	
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Missile, pos1, size, rotation, m_nMissileDamage, 0, 1.0f, this);
 	msg->QueueMessage();
+	CreateProjectileMessage* msg2 = new CreateProjectileMessage(EntityType::Missile, pos2, size, rotation, m_nMissileDamage, 0, 1.0f, this);
+	msg2->QueueMessage();
 }

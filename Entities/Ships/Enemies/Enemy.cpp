@@ -261,16 +261,7 @@ void CEnemy::DetectShip(CShip* other)
 
 void CEnemy::TakeDamage(int damage, bool collision)
 {
-	//if (shield > 0)
-	//{
-	//	shield -= damage;
-	//	damage -= shield;
-	//}
-	//
-	//if (damage <= 0)
-	//{
-	//	return;
-	//}
+	
 	if (collision)
 		damage *= COLLISION_MODIFIER;
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyShieldDamage, false);
