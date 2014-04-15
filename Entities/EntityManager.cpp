@@ -75,6 +75,12 @@ void CEntityManager::Initialize()
 		imagesAsteroids[i] = SGD::INVALID_HANDLE;
 	}
 
+	imagesPlanets.resize(11);
+	for (unsigned int i = 0; i < 11; i++)
+	{
+		imagesPlanets[i] = SGD::INVALID_HANDLE;
+	}
+
 
 	images[(int)EntityType::Player] = graphics->LoadTexture("Resources/Graphics/Ships/VG_EvoArk.png");
 
@@ -129,6 +135,19 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::Push] = graphics->LoadTexture("Resources/Graphics/GravPushIcon.png");
 
 
+	imagesPlanets[0]  = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet1.png");
+	imagesPlanets[1] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet2.png");
+	imagesPlanets[2] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet3.png");
+	imagesPlanets[3] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet4.png");
+	imagesPlanets[4] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet5.png");
+	imagesPlanets[5] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet6.png");
+	imagesPlanets[6] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet7.png");
+	imagesPlanets[7] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet8.png");
+	imagesPlanets[8] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet9.png");
+	imagesPlanets[9] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet10.png");
+	imagesPlanets[10] = graphics->LoadTexture("Resources/Graphics/Planets/VG_Planet11.png");
+
+
 
 	//NOT FINAL 
 	images[(int)EntityType::Planet] = graphics->LoadTexture("Resources/Graphics/planet.png");
@@ -161,6 +180,20 @@ void CEntityManager::Terminate()
 		}
 	}
 	imagesCoral.clear();
+
+
+	for (unsigned int i = 0; i < 11; i++)
+	{
+		if (imagesPlanets[i] != SGD::INVALID_HANDLE)
+		{
+			graphics->UnloadTexture(imagesPlanets[i]);
+			imagesPlanets[i] = SGD::INVALID_HANDLE;
+		}
+	}
+	imagesPlanets.clear();
+
+
+
 
 
 	for (unsigned int i = 0; i < 3; i++)
@@ -676,7 +709,13 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 	{
 							   CPlanet* planet = new CPlanet();
 							   planet->SetPosition(position);
-							   planet->SetImage(images[(int)EntityType::Planet]);
+
+							   int randplanetnum = rand() % 11;
+
+
+							   planet->SetImage(imagesPlanets[randplanetnum]);
+
+
 							   stationaries.push_back(planet);
 							   break;
 	}
