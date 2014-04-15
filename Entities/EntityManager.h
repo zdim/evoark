@@ -30,6 +30,7 @@ class CEntityManager
 	std::vector<SGD::HTexture> imagesCoral;
 	std::vector<SGD::HTexture> imagesMoccasin;
 	std::vector<SGD::HTexture> imagesAsteroids;
+	std::vector<SGD::HTexture> imagesPlanets;
 
 
 
