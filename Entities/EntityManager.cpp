@@ -99,7 +99,7 @@ void CEntityManager::Initialize()
 	imagesMoccasin[4] = graphics->LoadTexture("Resources/Graphics/Ships/VG_MoccasinType5.png");
 
 
-	images[(int)EntityType::Human] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	images[(int)EntityType::Human] = graphics->LoadTexture("Resources/Graphics/Ships/VG_Human.png");
 
 
 
@@ -251,7 +251,6 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  IEntity* human = new CHuman();
 							  human->SetPosition(position);
 							  human->SetImage(images[(int)EntityType::Human]);
-							  human->SetSize({ 32, 32 });
 							  allies.push_back(human);
 							  ships.push_back(human);
 							  type = (EntityType)amount;
@@ -1487,8 +1486,6 @@ void CEntityManager::Load()
 			CShip* human = new CHuman();
 			human->SetPosition(save.world.entities[i].position);
 			human->SetImage(images[(int)EntityType::Human]);
-			human->SetSize({ 32, 32 });
-
 			human->setHull(save.world.entities[i].hull);
 
 			allies.push_back(human);
