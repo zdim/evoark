@@ -79,8 +79,8 @@ void CMainMenuState::Render()
 	if (Game::GetInstance()->GetTopState() != CProfileSelectState::GetInstance())
 	{
 		//[ctrlf]FontRender
-		//SGD::GraphicsManager::GetInstance()->DrawTexture(titleTexture, { Game::GetInstance()->GetScreenWidth() * .07f, Game::GetInstance()->GetScreenHeight() * .4f });
-		SGD::GraphicsManager::GetInstance()->DrawTexture(titleTexture, { Game::GetInstance()->GetScreenWidth() * .07f, Game::GetInstance()->GetScreenHeight() * .375f });
+		//SGD::GraphicsManager::GetInstance()->DrawTexture(titleTexture, { Game::GetInstance()->GetScreenWidth() * .05f, Game::GetInstance()->GetScreenHeight() * .33f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(titleTexture, { Game::GetInstance()->GetScreenWidth() * .04f, Game::GetInstance()->GetScreenHeight() * .33f });
 		//titleFnt.Write({ Game::GetInstance()->GetScreenWidth() * .125f, Game::GetInstance()->GetScreenHeight() * .375f }, "EvoArk");
 		SGD::GraphicsManager::GetInstance()->DrawLine({ Game::GetInstance()->GetScreenWidth() * .1f, Game::GetInstance()->GetScreenHeight() * .53f }, { Game::GetInstance()->GetScreenWidth() * .7f, Game::GetInstance()->GetScreenHeight() * .53f }, { 240, 255, 255, 255 });
 		menu->Render();

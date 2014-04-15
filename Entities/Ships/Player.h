@@ -107,6 +107,7 @@ public:
 	void CreateLaser();
 	void CreateMissile();
 	void CreateWell();
+	void CreateWellController();
 	void CreatePush();
 	void Warp();
 

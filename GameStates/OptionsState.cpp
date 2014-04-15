@@ -107,6 +107,8 @@ void COptionsState::Render()
 	else
 		Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .56f, Game::GetInstance()->GetScreenHeight() * .67f }, "Off");
 
+	SGD::GraphicsManager::GetInstance()->DrawTexture(mouseTexture, { Game::GetInstance()->GetScreenWidth() * .60f, Game::GetInstance()->GetScreenHeight() * .50f });
+
 }
 
 void COptionsState::Enter()
@@ -119,6 +121,9 @@ void COptionsState::Enter()
 	buttons[menuReturn::back] = "Back";
 	menu = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "", { Game::GetInstance()->GetScreenWidth() * .4f, Game::GetInstance()->GetScreenHeight() * .51f }, false);
 	soundBox = CSoundBox::GetInstance();
+
+	mouseTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/mouseOptionsGraphic.png", { 255, 100, 100 });
+
 	//soundBox->Enter();
 	std::string path = Game::GetInstance()->GetAppDataPath() + "optionsSave.xml";
 	TiXmlDocument doc(path.c_str());
@@ -154,6 +159,8 @@ void COptionsState::Exit()
 
 	std::string path = Game::GetInstance()->GetAppDataPath() + "optionsSave.xml";
 	doc.SaveFile(path.c_str());
+
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(mouseTexture);
 
 	delete menu;
 	menu = nullptr;

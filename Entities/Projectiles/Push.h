@@ -5,6 +5,7 @@ class CPush :
 {
 	SGD::Vector forward;
 	IEntity* owner = nullptr;
+
 public:
 	CPush();
 	virtual ~CPush();

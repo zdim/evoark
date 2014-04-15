@@ -131,7 +131,8 @@ void	CTestLevelState::Enter(void)
 	Render();
 	graphics->Update();
 
-	m_pParticleSystem->AddEmitter(13, EntityManager->GetStargate());
+	if (CGameplayState::GetInstance()->GetLevel() != Level::Waves)
+		m_pParticleSystem->AddEmitter(13, EntityManager->GetStargate());
 	
 	m_bLoaded = true;
 
@@ -859,7 +860,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 
 	SGD::Rectangle wellBox = {
 		{ m_nScreenWidth * .42f,
-		m_nScreenHeight * .78f },
+		m_nScreenHeight * .76f },
 		SGD::Size{ 32, 32 } };
 
 	// gravity well cooldown calculation
@@ -874,7 +875,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	// set gravity push box
 	SGD::Rectangle pushBox = {
 		{ m_nScreenWidth * .48f,
-		m_nScreenHeight * .78f },
+		m_nScreenHeight * .76f },
 		SGD::Size{ 32, 32 } };
 
 	// gravity push cooldown calculation
@@ -889,7 +890,7 @@ void CTestLevelState::UI(CPlayer* _player, std::vector<IEntity*> _allies, IEntit
 	// set warp box
 	SGD::Rectangle warpBox = {
 		{ m_nScreenWidth * .54f,
-		m_nScreenHeight * .78f },
+		m_nScreenHeight * .76f },
 		SGD::Size{ 32, 32 } };
 
 	// warp cooldown calculation

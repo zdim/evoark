@@ -1203,11 +1203,6 @@ void CEntityManager::Render()
 {
 	SGD::Rectangle screen = { SGD::Point{ 0, 0 }, SGD::Size{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() } };
 	//SGD::Rectangle test = { SGD::Point{ 0, 0 }, SGD::Size{ 400, 400 } }; // rect. for testing culling
-	for (unsigned int i = 0; i < stationaries.size(); i++)
-	{
-		if (stationaries[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()) && stationaries[i]->GetType() != (int)EntityType::InvisTrigger)
-			stationaries[i]->Render();
-	}
 
 	for (unsigned int i = 0; i < gravObjects.size(); i++)
 	{
@@ -1231,7 +1226,11 @@ void CEntityManager::Render()
 		if (asteroids[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()))
 			asteroids[i]->Render();
 	}
-
+	for (unsigned int i = 0; i < stationaries.size(); i++)
+	{
+		if (stationaries[i]->GetRect().IsIntersecting(CCamera::GetInstance()->GetBoxInWorld()) && stationaries[i]->GetType() != (int)EntityType::InvisTrigger)
+			stationaries[i]->Render();
+	}
 	//If player exists, he SHOULD be in the EntityGroup "ships"
 	//if (player)
 	//if (player->GetRect().IsIntersecting(screen))

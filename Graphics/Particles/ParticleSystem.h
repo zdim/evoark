@@ -37,6 +37,7 @@ public:
 	void AddEngineTrailEmitter(int n, CEntity* owner);
 	void AddEmitterPos(int n, SGD::Point pos);
 	void RemoveEmitter(CEntity* owner);
+	void RemoveEmitterAt(CEntity* owner, int n);
 	CEmitter* GetParticleEffect(int n ) { return particleEffect[n]; }
 
 };
