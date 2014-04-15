@@ -14,6 +14,12 @@ CPush::~CPush()
 {
 }
 
+void CPush::Render()
+{
+	
+}
+
+
 void CPush::SetOwner(IEntity* _owner)
 {
 	if (owner)

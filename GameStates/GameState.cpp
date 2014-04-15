@@ -108,7 +108,7 @@ void	CTestLevelState::Enter(void)
 	player = EntityManager->GetPlayer();
 	//Spawn Coral near the player
 
-	EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
+	//EntityManager->Spawn(EntityType::Coral, player->GetPosition() + SGD::Vector{ 100, 100 });
 
 	//Spawn Moccasin near the player
 
@@ -142,9 +142,6 @@ void	CTestLevelState::Exit(void)
 	m_bBossKilled = false;
 
 
-	m_pParticleSystem->Terminate();
-	m_pParticleSystem = nullptr;
-	m_pParticleSystem->DeleteInstance();
 
 
 	cam->Terminate();
@@ -172,6 +169,12 @@ void	CTestLevelState::Exit(void)
 
 	if (CGameplayState::GetInstance()->GetLevel() != Level::Tutorial)
 		CGameplayState::GetInstance()->SaveProfile();
+
+
+
+	m_pParticleSystem->Terminate();
+	m_pParticleSystem = nullptr;
+	m_pParticleSystem->DeleteInstance();
 }
 
 bool	CTestLevelState::Input(void)

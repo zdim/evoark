@@ -8,7 +8,7 @@ class CPush :
 public:
 	CPush();
 	virtual ~CPush();
-	
+	void Render();
 	void SetOwner(IEntity* _owner);
 	int GetType() override { return (int)EntityType::Push; }
 	SGD::Vector GetForward() {return forward;}

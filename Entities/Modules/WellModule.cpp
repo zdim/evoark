@@ -2,6 +2,7 @@
 #include "WellModule.h"
 #include "../../Message System/CreateProjectile.h"
 #include "../../Entities/Ships/Enemies/Coral.h"
+#include "../../Graphics/Particles/ParticleSystem.h"
 
 CWellModule::CWellModule()
 {
@@ -33,6 +34,7 @@ void CWellModule::Activate()
 
 		if (vToTarget.ComputeLength() <= 600)
 		{
+			CParticleSystem::GetInstance()->AddEmitterPos(18, target->GetPosition());
 			CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, target->GetPosition(), size, rotation, damage, tier, radius);
 			msg->QueueMessage();
 			timer = 0;

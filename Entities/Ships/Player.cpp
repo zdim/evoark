@@ -308,6 +308,7 @@ void CPlayer::CreateWell()
 	if(wellTimer <= wellDelay)
 		return;
 
+	CParticleSystem::GetInstance()->AddEmitterPos(18, SGD::InputManager::GetInstance()->GetMousePosition() - CCamera::GetInstance()->GetOffset());
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerWell, false);
 	wellTimer = 0;
 	//TODO: Send CreateWell message
@@ -334,9 +335,13 @@ void CPlayer::CreatePush()
 {
 	if (pushTimer <= pushDelay)
 		return;
-
+	CParticleSystem::GetInstance()->AddEmitter(17, this);
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerPush, false);
 	pushTimer = 0;
+
+	
+
+
 	//TODO: Send CreatePush message
 	if (pushLevel == 0)
 	{
@@ -363,11 +368,12 @@ void CPlayer::CreatePush()
 
 void CPlayer::Warp()
 {
-	CParticleSystem::GetInstance()->AddEmitter(15, this);
+	
 
 	if (warpTimer <= warpDelay)
 		return;
 
+	CParticleSystem::GetInstance()->AddEmitter(15, this);
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerWarp, false);
 	warpTimer = 0;
 }

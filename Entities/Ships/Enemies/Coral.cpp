@@ -85,9 +85,9 @@ CCoral::CCoral(int t)
 	modules[shieldModule] = new CShieldModule();
 	
 	m_pShield->SetOwner(dynamic_cast<CShieldModule*>(modules[shieldModule]));
-	m_pShield->SetSize({ 280, 280 });
+	m_pShield->SetSize({ 300, 300 });
 
-	
+
 	modules[laser] = new CLaserModule();
 
 	EntityType abilityMod = (EntityType)(rand()%4 + (int)EntityType::MissileModule);

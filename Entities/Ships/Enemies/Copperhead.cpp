@@ -6,6 +6,9 @@
 #include "../../EntityManager.h"
 
 
+#include "../../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../../Graphics/Particles/ParticleSystem.h"
+
 CCopperhead::CCopperhead()
 {
 	damage = 25;
@@ -19,15 +22,43 @@ CCopperhead::CCopperhead()
 	size = { 32, 32 };
 
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
+
+	m_Engine = new CEmitter(
+		CParticleSystem::GetInstance()->GetParticleEffect(19)->GetParticleData(),
+		CParticleSystem::GetInstance()->GetParticleEffect(19)->GetEmitterSize(),
+		CParticleSystem::GetInstance()->GetParticleEffect(19)->GetShape(),
+		position,
+		CParticleSystem::GetInstance()->GetParticleEffect(19)->GetNumParticles(),
+		CParticleSystem::GetInstance()->GetParticleEffect(19)->GetSpawnRate(),
+		CParticleSystem::GetInstance()->GetParticleEffect(19)->GetSpawnTimeFromLastSpawn(),
+		CParticleSystem::GetInstance()->GetParticleEffect(19)->GetEmitType(),
+		CParticleSystem::GetInstance()->GetParticleEffect(19)->GetEmitTime()
+		);
+
+
+	m_Engine->Initialize();
+	m_Engine->SetOwner(this);
+
 }
 
 
 CCopperhead::~CCopperhead()
 {
+	m_Engine->Release();
+	delete m_Engine;
 }
 
 void CCopperhead::Update(float dt)
 {
+
+	SGD::Vector rotatedOffset = { 0, 9 };
+	rotatedOffset.Rotate(rotation);
+	enginePos = position + rotatedOffset;
+
+	m_Engine->SetEmitterPosition(enginePos);
+
+	m_Engine->Update(dt);
+
 	if (CEntityManager::GetInstance()->GetPlayer() && CEntityManager::GetInstance()->GetPlayer()->GetTutorialPause() != -1)
 		return;
 
@@ -37,6 +68,23 @@ void CCopperhead::Update(float dt)
 	//Movement
 	CEntity::Update(dt);
 }
+
+void CCopperhead::Render()
+{
+	m_Engine->Render();
+	
+	SGD::Rectangle rShipRegion = SGD::Rectangle(SGD::Point{ 0, 0 }, size);
+
+	SGD::Point renderPoint = offsetToCamera();
+	SGD::Color col = {};
+	if (damaged > 0)
+	{
+		col = { 155, 155, 155 };
+	}
+
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint, rShipRegion, rotation, size / 2, col);
+}
+
 
 SGD::Vector CCopperhead::AI(float dt)
 {

@@ -9,6 +9,7 @@
 struct Flock;
 struct ModularFlock;
 //class CMoccasin;
+
 class CEntityManager
 {
 	std::vector<CLeader*> leaders;
