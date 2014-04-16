@@ -88,7 +88,7 @@
     </Quad>
     <Quad x="4" y="6" possibleTypes="0" />
     <Quad x="4" y="7" possibleTypes="1">
-      <Type type="MAMBA" amount="2" randomized="False" x="1427" y="2274" />
+      <Type type="MAMBA" amount="2" randomized="False" x="1467" y="2357" />
     </Quad>
     <Quad x="4" y="8" possibleTypes="3">
       <Type type="COPPERHEAD" amount="3" randomized="False" x="1357" y="2541" />
@@ -142,7 +142,7 @@
     </Quad>
     <Quad x="6" y="6" possibleTypes="0" />
     <Quad x="6" y="7" possibleTypes="1">
-      <Type type="MAMBA" amount="2" randomized="False" x="1910" y="2239" />
+      <Type type="MAMBA" amount="2" randomized="False" x="1819" y="2127" />
     </Quad>
     <Quad x="6" y="8" possibleTypes="3">
       <Type type="COPPERHEAD" amount="2" randomized="False" x="1971" y="2544" />

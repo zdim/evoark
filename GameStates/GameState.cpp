@@ -324,7 +324,7 @@ void	CTestLevelState::Generate()
 	bool genLevel = true;
 
 	// to test final battle
-	//CGameplayState::GetInstance()->SetLevel(Level::Waves);
+	//CGameplayState::GetInstance()->SetLevel(Level::Gen3);
 
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
@@ -765,8 +765,11 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::BossKilled:
 	{
 								  GetInstance()->m_bBossKilled = true;
-								  GetInstance()->m_pParticleSystem->RemoveEmitter(GetInstance()->EntityManager->GetStargate());
-								  GetInstance()->m_pParticleSystem->AddEmitter(14, GetInstance()->EntityManager->GetStargate());
+								  if (CGameplayState::GetInstance()->GetLevel() != Level::Waves || CGameplayState::GetInstance()->GetLevel() != Level::Final)
+								  {
+									  GetInstance()->m_pParticleSystem->RemoveEmitter(GetInstance()->EntityManager->GetStargate());
+									  GetInstance()->m_pParticleSystem->AddEmitter(14, GetInstance()->EntityManager->GetStargate());
+								  }
 								  break;
 
 	}
