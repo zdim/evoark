@@ -680,7 +680,7 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 							 //offset.Rotate(rotation);
 							 //offset *= (ownerSize.height + push->GetSize().height) * 0.25f;
 							 //position += offset;
-
+							 push->SetTier(tier);
 							 push->SetPosition(position);
 							 push->SetRotation(rotation);
 							 push->SetStrength((float)damage);

@@ -29,7 +29,7 @@ CPlayer::CPlayer()
 	laserDelay = 0.2f;
 	missileDelay = 2.0f;
 	wellDelay = 12;
-	pushDelay = 8;
+	pushDelay = 1;
 	warpDelay = 12;
 	warpSpeed = 300;
 	exp = 0;
@@ -374,7 +374,7 @@ void CPlayer::CreatePush()
 {
 	if (pushTimer <= pushDelay)
 		return;
-	CParticleSystem::GetInstance()->AddEmitter(17, this);
+	//CParticleSystem::GetInstance()->AddEmitter(17, this);
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerPush, false);
 	pushTimer = 0;
 
@@ -384,7 +384,7 @@ void CPlayer::CreatePush()
 	//TODO: Send CreatePush message
 	if (pushLevel == 0)
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 3, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 4, this);
 		msg->QueueMessage();
 	}
 	else if (pushLevel == 1)
