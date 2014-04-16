@@ -449,7 +449,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 	
 	hull -= damage;
-	if ( hull / maxHull < .50f)
+	if ( (hull / maxHull) < .50f)
 		CParticleSystem::GetInstance()->AddEmitter(9, this);
 	
 	
