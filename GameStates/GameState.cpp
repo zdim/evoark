@@ -142,9 +142,6 @@ void	CTestLevelState::Exit(void)
 {
 	m_bBossKilled = false;
 
-
-
-
 	cam->Terminate();
 	if (BackgroundImage != SGD::INVALID_HANDLE)
 		graphics->UnloadTexture(BackgroundImage);
@@ -324,7 +321,7 @@ void	CTestLevelState::Generate()
 	bool genLevel = true;
 
 	// to test final battle
-	//CGameplayState::GetInstance()->SetLevel(Level::Gen3);
+	CGameplayState::GetInstance()->SetLevel(Level::Gen3);
 
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
