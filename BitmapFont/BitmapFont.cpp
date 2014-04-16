@@ -31,7 +31,7 @@ SGD::Size	Fnt::ComputeStringSpace(std::string str)//Returns the amount of space 
 	return SGD::Size{width, height};
 }
 
-void		Fnt::Write(SGD::Point pos, std::string str)
+void		Fnt::Write(SGD::Point pos, std::string str, bool selected)
 {
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
 	SGD::Size stringSize = ComputeStringSpace(str);
@@ -43,14 +43,22 @@ void		Fnt::Write(SGD::Point pos, std::string str)
 		//pos.y += stringSize.height - ch.size.height;
 		float oldX = pos.x;
 		pos.x += ch.offset.x;
-		graphics->DrawTextureSection(image, { pos.x, pos.y }, SGD::Rectangle(ch.imagePosition, ch.size));
+		if (selected)
+		{
+			graphics->DrawTextureSection(image, { pos.x - ch.size.width * .375f, pos.y - ch.size.height * .375f }, SGD::Rectangle(ch.imagePosition, ch.size), 0, {}, { 50, 255, 255, 255 }, { 1.75, 1.75 });
+			graphics->DrawTextureSection(image, { pos.x - ch.size.width * .25f, pos.y - ch.size.height * .25f }, SGD::Rectangle(ch.imagePosition, ch.size), 0, {}, { 100, 255, 255, 255 }, { 1.5, 1.5 });
+			graphics->DrawTextureSection(image, { pos.x - ch.size.width * .125f, pos.y - ch.size.height * .125f }, SGD::Rectangle(ch.imagePosition, ch.size), 0, {}, { 150, 255, 255, 255 }, { 1.25, 1.25 });
+			graphics->DrawTextureSection(image, { pos.x, pos.y }, SGD::Rectangle(ch.imagePosition, ch.size), 0, {}, { 200, 255, 255, 255 });
+		}
+		else
+			graphics->DrawTextureSection(image, { pos.x, pos.y }, SGD::Rectangle(ch.imagePosition, ch.size));
 		pos.x = oldX + ch.size.width;
 		pos.y = oldY;
 	}
 	//graphics->DrawTexture(image, pos);
 }
 
-void Fnt::WriteCenter(SGD::Rectangle box, std::string str)
+void Fnt::WriteCenter(SGD::Rectangle box, std::string str, bool selected)
 {
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
 	SGD::Size stringSize = ComputeStringSpace(str);

@@ -5,6 +5,7 @@
 #include "CreditsState.h"
 #include "MainMenuState.h"
 #include "GameState.h"
+#include "../SGD Wrappers/SGD_GraphicsManager.h"
 
 CGameOverState::CGameOverState()
 {
@@ -45,6 +46,11 @@ bool CGameOverState::Input()
 			else
 				Game::GetInstance()->PopState();
 			return true;
+		case menuReturn::mainmenu:
+			Game::GetInstance()->PopState();
+			Game::GetInstance()->PopState();
+			Game::GetInstance()->PushState(CMainMenuState::GetInstance());
+			return true;
 		case menuReturn::exit:
 			Game::GetInstance()->PopState();
 			Game::GetInstance()->PopState();
@@ -69,8 +75,12 @@ void CGameOverState::Update(float dt)
 
 void CGameOverState::Render()
 {
-	if (m_fTimer > m_fDelay )
-	menu->Render();
+
+	if (m_fTimer > m_fDelay)
+	{
+		SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 100, 0, 0, 0 });
+		menu->Render();
+	}
 }
 
 void CGameOverState::Enter()
@@ -78,12 +88,13 @@ void CGameOverState::Enter()
 	std::vector<std::string> buttons;
 	buttons.resize(menuReturn::count);
 	buttons[menuReturn::play] = "Continue";
+	buttons[menuReturn::mainmenu] = "Main Menu";
 	buttons[menuReturn::exit] = "Exit";
 
 	if ( win == false )
-		menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Died", { 0, 0 }, true);
+		menu = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "You Died", { 0, 0 }, true);
 	if (win == true)
-		menu = new CMenu(&Game::GetInstance()->Font, buttons, "You Win!", { 0, 0 }, true);
+		menu = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "You Win!", { 0, 0 }, true);
 }
 
 void CGameOverState::Exit()

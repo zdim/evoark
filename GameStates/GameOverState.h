@@ -12,7 +12,7 @@ class CGameOverState : public IGameState
 	float m_fTimer;
 	float m_fDelay;
 
-	enum menuReturn { play, exit, count };
+	enum menuReturn { play, mainmenu, exit, count };
 	CMenu* menu;
 	bool win; 
 
