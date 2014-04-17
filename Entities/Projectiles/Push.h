@@ -11,6 +11,7 @@ class CPush :
 	float life = 0.f;
 	float alpha = 0.f;
 
+	SGD::HTexture pushZero = SGD::INVALID_HANDLE;
 	SGD::HTexture pushOne = SGD::INVALID_HANDLE;
 	SGD::HTexture pushTwo = SGD::INVALID_HANDLE;
 	SGD::HTexture pushThree = SGD::INVALID_HANDLE;

@@ -10,9 +10,10 @@ CPush::CPush()
 	size = {512,512};
 	imageSize = { 512, 512 };
 
-	pushOne = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/testPush1.png", { 255, 100, 100 });
-	pushTwo = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/testPush2.png", { 255, 100, 100 });
-	pushThree = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/testPush3.png", { 255, 100, 100 });
+	pushZero  = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/push0.png");
+	pushOne   = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/push1.png");
+	pushTwo   = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/push2.png");
+	pushThree = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/push3.png");
 }
 
 
@@ -45,16 +46,16 @@ void CPush::Render()
 	switch (tier)
 	{
 	case 0:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(pushOne, offsetToCamera(), rotation, SGD::Size{ 512, 512 } *.5f, SGD::Color{ (unsigned char)alpha, (unsigned char)100, (unsigned char)200, (unsigned char)200 });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(pushZero, offsetToCamera(), rotation, SGD::Size{ 512, 512 } *.5f, SGD::Color{ (unsigned char)alpha, (unsigned char)255, (unsigned char)255, (unsigned char)255 });
 		break;
 	case 1:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(pushTwo, offsetToCamera(), rotation, SGD::Size{ 512, 512 } *.5f, SGD::Color{ (unsigned char)alpha, (unsigned char)100, (unsigned char)200, (unsigned char)200 });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(pushOne, offsetToCamera(), rotation, SGD::Size{ 512, 512 } *.5f, SGD::Color{ (unsigned char)alpha, (unsigned char)255, (unsigned char)255, (unsigned char)255 });
 		break;
 	case 2:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(pushTwo, offsetToCamera(), rotation, SGD::Size{ 512, 512 } *.5f, SGD::Color{ (unsigned char)alpha, (unsigned char)100, (unsigned char)200, (unsigned char)200 });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(pushTwo, offsetToCamera(), rotation, SGD::Size{ 512, 512 } *.5f, SGD::Color{ (unsigned char)alpha, (unsigned char)255, (unsigned char)255, (unsigned char)255 });
 		break;
 	case 3:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(pushThree, offsetToCamera(), rotation, SGD::Size{ 512, 512 } *.5f, SGD::Color{ (unsigned char)alpha, (unsigned char)100, (unsigned char)200, (unsigned char)200 });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(pushThree, offsetToCamera(), rotation, SGD::Size{ 512, 512 } *.5f, SGD::Color{ (unsigned char)alpha, (unsigned char)255, (unsigned char)255, (unsigned char)255 });
 
 	}
 }
