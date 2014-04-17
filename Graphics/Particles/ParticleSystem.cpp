@@ -124,19 +124,9 @@ void CParticleSystem::AddEngineTrailEmitter(int n, CEntity* owner)
 {
 	CEmitter* p = *standbyPool.begin();
 
-
-
 	standbyPool.pop_front();
 	emittingPool.push_front(p);
-
-
 }
-
-
-
-
-
-
 
 void CParticleSystem::AddEmitterPos(int n, SGD::Point pos)
 {
@@ -170,6 +160,11 @@ void CParticleSystem::RemoveEmitter(CEntity* owner)
 		}
 		it++;
 	}
+}
+
+void CParticleSystem::RemoveEmitterAt(CEntity* owner, int n)
+{
+
 }
 
 void CParticleSystem::Terminate()

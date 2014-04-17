@@ -29,7 +29,7 @@ CPlayer::CPlayer()
 	laserDelay = 0.2f;
 	missileDelay = 2.0f;
 	wellDelay = 12;
-	pushDelay = 8;
+	pushDelay = 1;
 	warpDelay = 12;
 	warpSpeed = 300;
 	exp = 0;
@@ -230,9 +230,13 @@ void CPlayer::Update(float dt)
 	{
 		CreateMissile();
 	}
-	if (input->IsKeyPressed(SGD::Key::Q) || input->IsButtonPressed(0, 4))
+	if (input->IsKeyPressed(SGD::Key::Q))
 	{
 		CreateWell();
+	}
+	if (input->IsButtonPressed(0, 4))
+	{
+		CreateWellController();
 	}
 	if (input->IsKeyPressed(SGD::Key::E) || input->IsButtonPressed(0, 5))
 	{
@@ -332,11 +336,46 @@ void CPlayer::CreateWell()
 
 }
 
+void CPlayer::CreateWellController()
+{
+	if (wellTimer <= wellDelay)
+		return;
+
+	SGD::Point wellPos;
+	SGD::Vector rotationVec = { 0, -1 };
+	rotationVec.Rotate(rotation);
+	rotationVec *= 300;
+	wellPos = this->position + rotationVec;
+
+	CParticleSystem::GetInstance()->AddEmitterPos(18, wellPos);
+	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerWell, false);
+	wellTimer = 0;
+	//TODO: Send CreateWell message
+
+	if (wellLevel == 0)
+	{
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, wellPos, size, rotation, 150, wellLevel, 100);
+		msg->QueueMessage();
+	}
+	else if (wellLevel == 1)
+	{
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, wellPos, size, rotation, 150, wellLevel, 150);
+		msg->QueueMessage();
+	}
+	else
+	{
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, wellPos, size, rotation, 225, wellLevel, 150);
+		msg->QueueMessage();
+	}
+
+}
+
+
 void CPlayer::CreatePush()
 {
 	if (pushTimer <= pushDelay)
 		return;
-	CParticleSystem::GetInstance()->AddEmitter(17, this);
+	//CParticleSystem::GetInstance()->AddEmitter(17, this);
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerPush, false);
 	pushTimer = 0;
 
@@ -346,7 +385,7 @@ void CPlayer::CreatePush()
 	//TODO: Send CreatePush message
 	if (pushLevel == 0)
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 3, this);
+		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Push, position, size, rotation, 750, pushLevel, SGD::PI / 4, this);
 		msg->QueueMessage();
 	}
 	else if (pushLevel == 1)
@@ -411,7 +450,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 	
 	hull -= damage;
-	if ( hull < 257)
+	if ( (hull / maxHull) < .50f)
 		CParticleSystem::GetInstance()->AddEmitter(9, this);
 	
 	
@@ -432,6 +471,7 @@ void CPlayer::AddExp(int _exp)
 	this->exp += _exp;
 	if (this->exp >= expRequired)
 	{
+		CParticleSystem::GetInstance()->RemoveEmitter(this);
 		CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerLevelUp, false);
 		level++;
 		perks++;
@@ -441,6 +481,21 @@ void CPlayer::AddExp(int _exp)
 		maxHull += HULL_SCALE;
 		shield = maxShield;
 		hull = maxHull;
+
+		m_Engine = new CEmitter(
+			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetParticleData(),
+			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitterSize(),
+			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetShape(),
+			position,
+			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetNumParticles(),
+			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnRate(),
+			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnTimeFromLastSpawn(),
+			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitType(),
+			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitTime()
+			);
+
+		m_Engine->Initialize();
+		m_Engine->SetOwner(this);
 	}
 }
 

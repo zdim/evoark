@@ -210,12 +210,15 @@ void CMenu::Render()
 	{
 		//graphics->DrawRectangle(buttons[i].box, SGD::Color{1,1,1});
 		std::string text;
-		if (cursor == i)
-			text = "=" + buttons[i].label + "=";
-		else
-			text = buttons[i].label;
+		text = buttons[i].label;
 
-		font->Write({ buttons[i].box.left, buttons[i].box.top }, text);
+		if (cursor == i)
+			font->Write({ buttons[i].box.left, buttons[i].box.top }, text, true);
+
+			//text = "=" + buttons[i].label + "=";
+		else
+			font->Write({ buttons[i].box.left, buttons[i].box.top }, text);
+		//text = buttons[i].label;
 
 		//font->WriteCenter(buttons[i].box, text);
 	}

@@ -15,6 +15,8 @@ class COptionsState : public IGameState
 	int musicVolume = 0;
 	bool fullscreenOn = false;
 
+	SGD::HTexture mouseTexture = SGD::INVALID_HANDLE;
+
 	CSoundBox* soundBox = nullptr;
 public:
 
