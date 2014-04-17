@@ -33,7 +33,7 @@ void CPush::Update(float dt)
 	}
 
 	else
-		alpha = 200 - 200 * (life - .10f) / .20f;
+		alpha = 255 - 255 * (life - .10f) / .20f;
 
 	CEntity::Update(dt);
 
@@ -56,7 +56,7 @@ void CPush::Render()
 		break;
 	case 3:
 		SGD::GraphicsManager::GetInstance()->DrawTexture(pushThree, offsetToCamera(), rotation, SGD::Size{ 512, 512 } *.5f, SGD::Color{ (unsigned char)alpha, (unsigned char)255, (unsigned char)255, (unsigned char)255 });
-
+		break;
 	}
 }
 
