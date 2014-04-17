@@ -212,6 +212,7 @@ void CPlayer::Update(float dt)
 		SGD::Vector rotationVec = { 0, -1 };
 
 		SGD::Vector rightThumb = input->GetRightJoystick(0);
+		rightThumb.Normalize();
 		rotation = rotationVec.ComputeAngle(input->GetRightJoystick(0));
 		rotation *= rotationVec.ComputeSteering(rightThumb);
 	}

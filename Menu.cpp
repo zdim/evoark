@@ -5,7 +5,7 @@
 #include "SGD Wrappers\SGD_InputManager.h"
 #include "SoundBox.h"
 #include <algorithm>
-
+#include "WinMain.h"
 CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _label, SGD::Point topMidPos, bool centered, bool fillWindow, bool _horizontal, SGD::Size buttonPadding, SGD::Size menuPadding, SGD::Size buttonSpacing)
 {
 	font = _font;
@@ -158,6 +158,10 @@ int CMenu::Input()
 	}
 	else
 	{
+#if ARCADE
+		SGD::Vector LeftJoystick = input->GetLeftJoystick(0);
+		
+#else
 		if (input->IsKeyPressed(SGD::Key::Down) || input->IsDPadPressed(0, SGD::DPad::Down)) // || input->controllerstuff
 		{
 			if (cursor >= (int)buttons.size() - 1)
@@ -176,6 +180,7 @@ int CMenu::Input()
 
 			CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
 		}
+#endif
 	}
 	if (input->IsKeyPressed(SGD::Key::Enter) || input->IsButtonPressed(0, 0))  // || input->controllerstuff
 	{
