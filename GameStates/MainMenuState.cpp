@@ -101,8 +101,8 @@ void CMainMenuState::Enter()
 
 	//[ctrlf]FontLoad
 	//titleTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/EightOneTitle.png");
-	//titleTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/FabadaTitle.png");
-	titleFnt.Load("Resources/XML/gunplay.xml");
+	titleTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/FabadaTitle.png");
+	//titleFnt.Load("Resources/XML/gunplay.xml");
 
 	backgroundStars1 = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/stars2new.png");
 	backgroundStars2 = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/stars1new.png");
@@ -118,8 +118,8 @@ void CMainMenuState::Exit()
 	delete menu;
 	menu = nullptr;
 	//[ctrlf]fontUnload
-	titleFnt.Unload();
-	//SGD::GraphicsManager::GetInstance()->UnloadTexture(titleTexture);
+	//titleFnt.Unload();
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(titleTexture);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(backgroundStars1);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(backgroundStars2);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(backgroundSmoke);
