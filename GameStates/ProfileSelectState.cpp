@@ -26,8 +26,14 @@ void CProfileSelectState::Enter()
 	labels.push_back("Create New");
 	labels.push_back("Delete");
 	labels.push_back("Cancel");
-	labels.push_back("Main Menu");
-	menu = new CMenu(&Game::GetInstance()->FontPoiret, labels, "", { Game::GetInstance()->GetScreenWidth() * .3f, Game::GetInstance()->GetScreenHeight() * .55f }, false);
+	labels.push_back("MainMenu");
+	SGD::Size screen = SGD::Size{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() };
+	menu = new CMenu(&Game::GetInstance()->FontPoiret, labels, "", { screen.width * .3f, screen.height * .55f }, false);
+
+	current = SGD::Point{ (screen.width - profileSize.width) * 0.5f, (screen.height - profileSize.height) * 0.5f };
+	previous = SGD::Point{ profileSize.width * -0.75f, (screen.height - profileSize.height) * 0.75f };
+	 next = SGD::Point{ screen.width - profileSize.width * 0.25f, (screen.height - profileSize.height) * 0.75f };
+
 }
 
 void CProfileSelectState::Exit()

@@ -4,6 +4,7 @@
 #include "../Projectiles/Laser.h"
 #include "../Ships/Player.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../SoundBox.h"
 
 void CShield::Update(float dt)
 {
@@ -23,7 +24,17 @@ void CShield::HandleCollision(IEntity* other)
 		EntityType otherType = (EntityType)other->GetType();
 		SGD::Vector dir = other->GetPosition() - position;
 
-
+		if (otherType == EntityType::Planet)
+		{
+			float radius = (other->GetSize().width + size.width) / 2.0f;
+			SGD::Vector dir = position - other->GetPosition();
+			dir.Normalize();
+			SGD::Vector offset = dir * radius;
+			position = other->GetPosition() + offset;
+			m_pOwner->SetPosition(position);
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyHullDamage, false);
+			return;
+		}
 
 
 		if (otherType != EntityType::Player)

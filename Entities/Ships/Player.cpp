@@ -197,7 +197,7 @@ void CPlayer::Update(float dt)
 	
 
 	//SGD::Point mousePos = { 0, 0 };
-
+	float oldRot = rotation;
 	if (input->GetMouseMovement() != SGD::Vector{ 0, 0 })
 	{
 		SGD::Point mousePos = input->GetMousePosition();
@@ -209,9 +209,20 @@ void CPlayer::Update(float dt)
 	{
 		SGD::Vector rotationVec = { 0, -1 };
 
-		SGD::Vector rightThumb = input->GetRightJoystick(0);
-		rotation = rotationVec.ComputeAngle(input->GetRightJoystick(0));
-		rotation *= rotationVec.ComputeSteering(rightThumb);
+		SGD::Vector rightThumb = {0,0};
+		if (input->GetRightJoystick(0).y < 0)			rightThumb.y -= 1;
+		if (input->GetRightJoystick(0).y > 0)			rightThumb.y += 1;
+		if (input->GetRightJoystick(0).x < 0)			rightThumb.x -= 1;
+		if (input->GetRightJoystick(0).x > 0)			rightThumb.x += 1;
+		if (rightThumb != SGD::Vector{ 0, 0 })
+		{
+			//rightThumb.Normalize();
+			rotation = rotationVec.ComputeAngle(input->GetRightJoystick(0));
+			if(rotation != SGD::PI)
+				rotation *= rotationVec.ComputeSteering(rightThumb);
+		}
+		else
+			rotation = oldRot;
 	}
 		
 	//rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;

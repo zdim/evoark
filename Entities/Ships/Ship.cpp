@@ -71,25 +71,64 @@ void CShip::HandleCollision(IEntity* other)
 		if (myRect.left < itsRect.right && myRect.right > itsRect.right
 			&& myRect.top < itsRect.bottom && myRect.bottom > itsRect.top)
 		{
-			position.x = itsRect.right + size.width/2 + 0.1f;
+			float width = itsRect.right - myRect.left;
+			if (myRect.top < itsRect.bottom && myRect.bottom > itsRect.bottom
+				&& myRect.left < itsRect.right && myRect.right > itsRect.left)
+			{
+				float height = itsRect.bottom - myRect.top;
+				if(height < width)
+					position.y += height;
+				else
+					position.x += width;
+			}
+			else if (myRect.bottom > itsRect.top && myRect.top < itsRect.top
+				&& myRect.left < itsRect.right && myRect.right > itsRect.left)
+			{
+				float height = myRect.bottom - itsRect.top;
+				if (height < width)
+					position.y -= height;
+				else
+					position.x += width;
+			}
+			else
+				position.x += width;
 		}
-
-		if (myRect.right > itsRect.left && myRect.left < itsRect.left
+		else if (myRect.right > itsRect.left && myRect.left < itsRect.left
 			&& myRect.top < itsRect.bottom && myRect.bottom > itsRect.top)
 		{
-			position.x = itsRect.left - size.width/2 - 0.1f;
+			float width = myRect.right - itsRect.left;
+			if (myRect.top < itsRect.bottom && myRect.bottom > itsRect.bottom
+				&& myRect.left < itsRect.right && myRect.right > itsRect.left)
+			{
+				float height = itsRect.bottom - myRect.top;
+				if (height < width)
+					position.y += height;
+				else
+					position.x -= width;
+			}
+			else if (myRect.bottom > itsRect.top && myRect.top < itsRect.top
+				&& myRect.left < itsRect.right && myRect.right > itsRect.left)
+			{
+				float height = myRect.bottom - itsRect.top;
+				if (height < width)
+					position.y -= height;
+				else
+					position.x -= width;
+			}
+			else
+				position.x -= width;
 		}
-
 		if (myRect.top < itsRect.bottom && myRect.bottom > itsRect.bottom
 			&& myRect.left < itsRect.right && myRect.right > itsRect.left)
 		{
-			position.y = itsRect.bottom + size.width/2 + 0.1f;
+			float height = itsRect.bottom - myRect.top;
+			position.y += height;
 		}
-
-		if (myRect.bottom > itsRect.top && myRect.top < itsRect.top
+		else if (myRect.bottom > itsRect.top && myRect.top < itsRect.top
 			&& myRect.left < itsRect.right && myRect.right > itsRect.left)
 		{
-			position.y = itsRect.top - size.width/2 - 0.1f;
+			float height = myRect.bottom - itsRect.top;
+				position.y -= height;
 		}
 	}
 	if (otherType == EntityType::Planet)

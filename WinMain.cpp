@@ -20,6 +20,7 @@
 #include "GameStates\GameState.h"
 #include "GameStates\PauseState.h"
 
+
 //*********************************************************************//
 // Preprocessor Constants
 #define WINDOW_CLASS_NAME	((const wchar_t*)L"EvoArk")		// window class name
