@@ -331,8 +331,8 @@ void	CTestLevelState::Generate()
 	bool genLevel = true;
 
 	// to test final battle
-	if (CGameplayState::GetInstance()->GetLevel() < Level::Gen3)
-		CGameplayState::GetInstance()->SetLevel(Level::Gen3);
+	//if (CGameplayState::GetInstance()->GetLevel() < Level::Gen3)
+	//	CGameplayState::GetInstance()->SetLevel(Level::Gen3);
 
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{

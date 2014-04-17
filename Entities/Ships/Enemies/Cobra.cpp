@@ -6,7 +6,7 @@
 CCobra::CCobra()
 {
 	damage = 35;
-	maxHull = 500;
+	maxHull = 350;
 	hull = maxHull;
 	warpDelay = 4;
 	warpTimer = warpDelay;
