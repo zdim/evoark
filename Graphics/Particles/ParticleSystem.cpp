@@ -398,12 +398,12 @@ void CParticleSystem::LoadEffect(std::string effectName)
 		(float)m_fMaxLife, (float)m_fMinLife,
 		m_vSpeedMax,
 		m_vSpeedMin,
-		m_fInertia,
-		m_fRotationSpeed);
+		(float)m_fInertia,
+		(float)m_fRotationSpeed);
 
 	numEmitters++;
 
-	particleEffect[numEmitters] = new CEmitter(eData, emitterSize, m_nShape, emitterPosition, m_nNumParticles, m_fSpawnRate, m_fTimeFromLastSpawn, m_bEmitWay, m_fEmitTime);
+	particleEffect[numEmitters] = new CEmitter(eData, emitterSize, m_nShape, emitterPosition, m_nNumParticles, (float)m_fSpawnRate, (float)m_fTimeFromLastSpawn, m_bEmitWay, (float)m_fEmitTime);
 
 
 

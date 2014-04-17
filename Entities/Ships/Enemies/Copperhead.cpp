@@ -11,9 +11,11 @@
 
 CCopperhead::CCopperhead()
 {
+	maxHull = 200;
+	hull = maxHull;
 	damage = 25;
 	laserTimer = 0;
-	laserDelay = 1;
+	laserDelay = 0.5f;
     m_fMissileDelay = 2;
     m_fMissileTimer = 0;
     m_nMissileDamage = 75;
@@ -109,7 +111,7 @@ SGD::Vector CCopperhead::AI(float dt)
 			CreateLaser();
 			
 		}
-		if (vToTarget.ComputeLength() <= 800 && angle < SGD::PI / 4.0f )
+		if (vToTarget.ComputeLength() <= 800 && vToTarget.ComputeLength() >= 200 && angle < SGD::PI / 4.0f )
 		{	
 			if (GetType() == (int)EntityType::Mamba)
 			{

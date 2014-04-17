@@ -264,7 +264,10 @@ void CEnemy::TakeDamage(int damage, bool collision)
 	
 	if (collision)
 		damage *= COLLISION_MODIFIER;
-	CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyHullDamage, false);
+
+
+	if (offsetToCamera().IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
+		CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyHullDamage, false);
 	hull -= damage;
 	damaged = .15f;
 	if (hull <= 0)

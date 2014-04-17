@@ -161,7 +161,7 @@ int Game::Main( void )
 	// Cap the elapsed time to 1/8th of a second
 	if( elapsedTime > 0.125f )
 		elapsedTime = 0.125f;
-	
+#if !ARCADE
 	if (m_pInput->IsKeyDown(SGD::Key::Alt) == true
 		&& m_pInput->IsKeyPressed(SGD::Key::Enter) == true)
 	{
@@ -169,6 +169,7 @@ int Game::Main( void )
 		m_pGraphics->Resize(SGD::Size{ (float)m_nScreenWidth, (float)m_nScreenHeight }, m_bWindowed);
 		return 0;
 	}
+#endif
 
 	// Let the current state handle input
 	if( m_qStates.back()->Input() == false )

@@ -5,23 +5,33 @@
 
 CLaserModule::CLaserModule()
 {
+	damage = 20;
+
 	m_nSprayCD = 3;
-	cooldown = 0.25;
 	m_fSprayTimer = m_nSprayCD;
+
+	cooldown = 1;
 	timer = cooldown;
+
+	//For regular modules spray
+	shotDelay = 0.05f;
+	shotTimer = shotDelay;
+	shotDuration = 5;
+	shotCount = 0;
 }
 
 
 CLaserModule::~CLaserModule()
 {
+
 }
 
 void CLaserModule::Update(float dt)
 {
 	timer += dt;
-
+	shotTimer += dt;
 	if (GetOwner()->GetType() == (int) EntityType::Moccasin )
-	m_fSprayTimer += dt;
+		m_fSprayTimer += dt;
 
 	float test = owner->GetRotation();
 	SGD::Vector rotatedOffset = posOffset;
@@ -57,8 +67,19 @@ void CLaserModule::Activate()
 
 	if (timer >= cooldown)
 	{
-		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, size * 1.25, GetRotation(), damage, tier, -1.0f, owner);
-		msg->QueueMessage();
-		timer = 0;
+		if (shotTimer >= shotDelay)
+		{
+			float rotOff = float(rand() % int(SGD::PI/2 * 100000)) / 100000.0f;
+			rotOff *= 1 + (rand()%1 * -2);
+			CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, size * 1.25, GetRotation() + rotOff, damage, tier, -1.0f, owner);
+			msg->QueueMessage();
+			shotTimer = 0;
+			shotCount++;
+			if (shotCount >= shotDuration)
+			{
+				timer = 0;
+				shotCount = 0;
+			}
+		}
 	}
 }

@@ -85,13 +85,14 @@ void CLaser::HandleCollision(IEntity* other)
 		CShip* ship = dynamic_cast<CShip*>(other);
 		
 	
-			if (this->GetOwner()->GetType() == (int)EntityType::Player)
+			if ((this->GetOwner()->GetType() == (int)EntityType::Player || GetOwner()->GetType() == (int)EntityType::Human)
+				&& ship->GetType() >= (int)EntityType::Copperhead && ship->GetType() <= (int)EntityType::Moccasin)
 			{
 				ship->TakeDamage(damage);
 			}
-			else if (this->GetOwner()->GetType() != (int)EntityType::Player && ship->GetType() == (int)EntityType::Player)
-			{
-				
+			else if ((GetOwner()->GetType() >= (int)EntityType::Copperhead && GetOwner()->GetType() <= (int)EntityType::Moccasin)
+				&& (ship->GetType() == (int)EntityType::Player || ship->GetType() == (int)EntityType::Human))
+			{				
 				ship->TakeDamage(damage);
 			}
 		

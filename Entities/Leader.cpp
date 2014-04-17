@@ -60,7 +60,7 @@ void CLeader::CalculateDestinations()
 	{
 		SGD::Size screenSize = CCamera::GetInstance()->GetBoxInWorld().ComputeSize();
 		SGD::Vector fromCall = position - backupCall;
-		if (fromCall.ComputeLength() <= screenSize.width * 3)
+		if (fromCall.ComputeLength() <= screenSize.width * 5)
 		{
 			std::vector<SGD::Vector> offsets = equidistantPointsInCircle(members.size(), members[0]->GetSize().height * 3);
 			for (unsigned int i = 0; i < members.size(); i++)
@@ -184,7 +184,7 @@ void CLeader::Update(float dt)
 		{
 			distance = std::min(distance, SGD::Vector(members[i]->GetPosition() - target->GetPosition()).ComputeLength());
 		}
-		if (distance > CCamera::GetInstance()->GetBoxInWorld().ComputeSize().width * 0.6f)
+		if (distance > CCamera::GetInstance()->GetBoxInWorld().ComputeSize().width * 0.75f)
 		{
 			SetTarget(nullptr);
 			return;
@@ -258,6 +258,9 @@ void CLeader::Remove(IEntity* entity)
 	if (!members.size())
 	{
 		CEntityManager::GetInstance()->DestroyLeader(this);
+		Coordinator* coord = dynamic_cast<Coordinator*>(CEntityManager::GetInstance()->GetCoordinator());
+		if (coord)
+			coord->RemoveLeader(this);
 	}
 	else
 	{

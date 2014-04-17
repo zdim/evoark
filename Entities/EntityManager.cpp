@@ -386,7 +386,7 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 							  for (unsigned int i = 0; i < corals.size(); i++)
 							  {
 
-								  int randnum = rand() % 3;
+								  int randnum = 1;//rand() % 3;
 								  corals[i] = new CCoral(randnum);
 								  corals[i]->SetImage(imagesCoral[randnum]);
 
@@ -786,6 +786,7 @@ void CEntityManager::SpawnCollidable(EntityType type, SGD::Point position, SGD::
 								 break;
 	}
 	case EntityType::InvisTrigger:
+	case EntityType::EventTrigger:
 	{
 									 /* InvisTrigger* trig = new InvisTrigger;
 									  trig->SetPosition(position);
@@ -1305,6 +1306,11 @@ void CEntityManager::Save()
 		col.type = (EntityType)stationaries[i]->GetType();
 		col.size = stationaries[i]->GetSize();
 		col.position = stationaries[i]->GetPosition();
+		Trigger* t = dynamic_cast<Trigger*>(stationaries[i]);
+		if (t)
+			col.ID = t->GetID();
+		else
+			col.ID = (MessageID)-1;
 		save.world.collidables.push_back(col);
 	}
 
@@ -1453,7 +1459,7 @@ void CEntityManager::CreateLeader(ModularFlock& data)
 	for (unsigned int i = 0; i < corals.size(); i++)
 	{
 
-		int randnum = rand() % 3;
+		int randnum = 1; //rand() % 3;
 
 		corals[i] = new CCoral(randnum);
 		corals[i]->SetImage(imagesCoral[randnum]);
@@ -1529,7 +1535,9 @@ void CEntityManager::Load()
 
 	for (unsigned int i = 0; i < save.world.collidables.size(); i++)
 	{
-		SpawnCollidable(save.world.collidables[i].type, save.world.collidables[i].position, save.world.collidables[i].size);
+		if (i == 7)
+			i = i;
+		SpawnCollidable(save.world.collidables[i].type, save.world.collidables[i].position, save.world.collidables[i].size, {0,0}, (int)save.world.collidables[i].ID);
 	}
 
 	for (unsigned int i = 0; i < save.world.flocks.size(); i++)

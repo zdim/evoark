@@ -116,6 +116,9 @@ TiXmlElement* nameEntityDataElement(EntityType type)
 	case EntityType::Trigger:
 		elem = new TiXmlElement("trigger");
 		break;
+	case EntityType::EventTrigger:
+		elem = new TiXmlElement("eventTrigger");
+		break;
 	default:
 		elem = nullptr;
 		break;
@@ -232,7 +235,7 @@ void CGameplayState::SaveProfile()
 	doc.LinkEndChild(wave);
 
 	//See if the world element is saved
-	if (save.world.saved)
+	if (save.world.saved)// && save.currLevel != Level::Final)
 	{
 		TiXmlElement* world = new TiXmlElement("world");
 		world->SetAttribute("currentLevel", (int)save.currLevel);
@@ -327,6 +330,8 @@ EntityType getElementEntityType(TiXmlElement* elem)
 	strings.push_back("planet");
 	types.push_back(EntityType::Stargate);
 	strings.push_back("stargate");
+	types.push_back(EntityType::EventTrigger);
+	strings.push_back("eventTrigger");
 	for (unsigned int i = 0; i < strings.size(); i++)
 	{
 		if (elem->Value() == strings[i])
@@ -442,12 +447,15 @@ CollidableData processCollidable(TiXmlElement* col)
 	double y;
 	double width;
 	double height;
+	int id;
 	col->Attribute("x", &x);
 	col->Attribute("y", &y);
 	col->Attribute("width", &width);
 	col->Attribute("height", &height);
+	col->Attribute("ID", &id);
 	data.position = {(float)x,(float)y};
 	data.size = {(float)width, (float)height};
+	data.ID = (MessageID)id;
 	return data;
 }
 

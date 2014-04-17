@@ -24,7 +24,11 @@ bool CUpgradeState::Input()
 {
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
 
+#if ARCADE
+	if (input->IsButtonPressed(0, 1) || input->IsButtonPressed(1, 1))
+#else
 	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
+#endif
 	{
 		Game::GetInstance()->PopState();
 		return true;
@@ -46,7 +50,11 @@ bool CUpgradeState::Input()
 		cursor = -1;
 	}
 
+#if ARCADE
+	if (input->GetLeftJoystick(0).y > 0 || input->GetLeftJoystick(1).y > 0)
+#else
 	if (input->IsKeyPressed(SGD::Key::Up) || input->IsDPadPressed(0, SGD::DPad::Up))
+#endif
 	{
 		if (cursor == laserThree || cursor == missileThree || cursor == warpThree || cursor == wellThree || cursor == pushThree)
 			cursor -= 2;
@@ -55,7 +63,11 @@ bool CUpgradeState::Input()
 		CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
 	}
 
+#if ARCADE
+	else if (input->GetLeftJoystick(0).y < 0 || input->GetLeftJoystick(1).y < 0)
+#else
 	else if (input->IsKeyPressed(SGD::Key::Down) || input->IsDPadPressed(0, SGD::DPad::Down))
+#endif
 	{
 		if (cursor == laserOne || cursor == missileOne || cursor == warpOne || cursor == wellOne || cursor == pushOne)
 			cursor += 2;
@@ -64,7 +76,12 @@ bool CUpgradeState::Input()
 		CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
 	}
 
+
+#if ARCADE
+	else if (input->GetLeftJoystick(0).x > 0 || input->GetLeftJoystick(1).x > 0)
+#else
 	else if (input->IsKeyPressed(SGD::Key::Right) || input->IsDPadPressed(0, SGD::DPad::Right))
+#endif
 	{
 		if (cursor == pushOne || cursor == pushTwo || cursor == pushThree)
 			cursor -= 12;
@@ -73,7 +90,11 @@ bool CUpgradeState::Input()
 		CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
 	}
 
+#if ARCADE
+	else if (input->GetLeftJoystick(0).x < 0 || input->GetLeftJoystick(1).x < 0)
+#else
 	else if (input->IsKeyPressed(SGD::Key::Left) || input->IsDPadPressed(0, SGD::DPad::Left))
+#endif
 	{
 		if (cursor == laserOne || cursor == laserTwo || cursor == laserThree)
 			cursor += 12;
@@ -82,7 +103,11 @@ bool CUpgradeState::Input()
 		CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
 	}
 
+#if ARCADE
+	if (input->IsButtonPressed(0, 0) || input->IsKeyPressed(SGD::Key::MouseLeft))
+#else
 	if (input->IsKeyPressed(SGD::Key::Enter) || input->IsButtonPressed(0, 0) || input->IsKeyPressed(SGD::Key::MouseLeft))
+#endif
 	{
 		switch (cursor)
 		{

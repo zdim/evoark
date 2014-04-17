@@ -3,7 +3,9 @@
 #include "../Ships/Enemies/Coral.h"
 CShieldModule::CShieldModule()
 {
-	
+	hullMax = 200;
+	hull = hullMax;
+
 	cooldown = 4;
 	shield = 25;
 	shieldMax = 25;

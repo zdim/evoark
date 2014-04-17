@@ -25,11 +25,19 @@ CPauseState* CPauseState::GetInstance()
 
 bool CPauseState::Input()
 {
+#if ARCADE
+	if (SGD::InputManager::GetInstance()->IsButtonPressed(0, 6) || SGD::InputManager::GetInstance()->IsButtonPressed(1, 6))
+	{
+		Game::GetInstance()->PopState();
+		return true;
+	}
+#else
 	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Escape) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 1) || SGD::InputManager::GetInstance()->IsButtonPressed(0, 7))
 	{
 		Game::GetInstance()->PopState();
 		return true;
 	}
+#endif
 	int ret = menu->Input();
 	switch (ret)
 	{
@@ -66,7 +74,7 @@ void CPauseState::Update(float dt)
 
 void CPauseState::Render()
 {
-	SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 50, 0, 0, 0 });
+	SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0.0f, 0.0f }, SGD::Point{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() } }, { 50, 0, 0, 0 });
 	menu->Render();
 }
 

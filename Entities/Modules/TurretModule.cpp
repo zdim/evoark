@@ -5,6 +5,9 @@
 
 CTurretModule::CTurretModule()
 {
+	hullMax = 150;
+	hull = hullMax;
+
 	rotSpeed = SGD::PI;
 	target = nullptr;
 }

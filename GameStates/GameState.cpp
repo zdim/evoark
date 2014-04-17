@@ -131,9 +131,10 @@ void	CTestLevelState::Enter(void)
 	Render();
 	graphics->Update();
 
-	if (CGameplayState::GetInstance()->GetLevel() != Level::Waves)
+	if (CGameplayState::GetInstance()->GetLevel() < Level::Waves)
 		m_pParticleSystem->AddEmitter(13, EntityManager->GetStargate());
 	
+
 	m_bLoaded = true;
 
 }
@@ -178,23 +179,32 @@ void	CTestLevelState::Exit(void)
 bool	CTestLevelState::Input(void)
 {
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
-	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::R))
+	//if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::R))
+	//{
+	//	Game::GetInstance()->PopState();
+	//	return true;
+	//}
+	//if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::Q))
+	//{
+	//	Game::GetInstance()->PopState();
+	//	Game::GetInstance()->PopState();
+	//	return false;
+	//}
+#if ARCADE
+	if (input->IsButtonPressed(0, 6) || input->IsButtonPressed(1, 6))
 	{
-		Game::GetInstance()->PopState();
+
+		Game::GetInstance()->PushState(CPauseState::GetInstance());
 		return true;
 	}
-	if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::Q))
-	{
-		Game::GetInstance()->PopState();
-		Game::GetInstance()->PopState();
-		return false;
-	}
+#else
 	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 7))
 	{
 
 		Game::GetInstance()->PushState(CPauseState::GetInstance());
 		return true;
 	}
+#endif
 	//if (input->IsKeyDown(SGD::Key::Alt) && input->IsKeyPressed(SGD::Key::C))
 	//{
 	//	cam->SetTarget(EntityManager->GetStargate());
@@ -321,7 +331,8 @@ void	CTestLevelState::Generate()
 	bool genLevel = true;
 
 	// to test final battle
-	//CGameplayState::GetInstance()->SetLevel(Level::Gen3);
+	if (CGameplayState::GetInstance()->GetLevel() < Level::Gen3)
+		CGameplayState::GetInstance()->SetLevel(Level::Gen3);
 
 	switch (CGameplayState::GetInstance()->GetLevel())
 	{
@@ -762,7 +773,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 	case MessageID::BossKilled:
 	{
 								  GetInstance()->m_bBossKilled = true;
-								  if (CGameplayState::GetInstance()->GetLevel() != Level::Waves || CGameplayState::GetInstance()->GetLevel() != Level::Final)
+								  if (CGameplayState::GetInstance()->GetLevel() != Level::Waves && CGameplayState::GetInstance()->GetLevel() != Level::Final)
 								  {
 									  GetInstance()->m_pParticleSystem->RemoveEmitter(GetInstance()->EntityManager->GetStargate());
 									  GetInstance()->m_pParticleSystem->AddEmitter(14, GetInstance()->EntityManager->GetStargate());

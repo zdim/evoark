@@ -27,7 +27,7 @@ void CProfileSelectState::Enter()
 	labels.push_back("Delete");
 	labels.push_back("Cancel");
 	labels.push_back("MainMenu");
-	SGD::Size screen = SGD::Size{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() };
+	SGD::Size screen = SGD::Size{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() };
 	menu = new CMenu(&Game::GetInstance()->FontPoiret, labels, "", { screen.width * .3f, screen.height * .55f }, false);
 
 	current = SGD::Point{ (screen.width - profileSize.width) * 0.5f, (screen.height - profileSize.height) * 0.5f };
@@ -60,7 +60,67 @@ bool CProfileSelectState::Input()
 void CProfileSelectState::SeletionInput()
 {
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
+#if ARCADE
+	if (input->IsButtonPressed(0, 6) || input->IsButtonPressed(1, 6) || input->IsButtonPressed(0, 2) || input->IsButtonPressed(1, 2))
+	{
+		Game::GetInstance()->PopState();
+		//Game::GetInstance()->PushState(CMainMenuState::GetInstance());
+		return;
+	}
 
+	SGD::Vector joy1 = input->GetLeftJoystick(0);
+	SGD::Vector joy2 = input->GetLeftJoystick(1);
+	if (joy1.x > 0 || joy2.x > 0)
+	{
+		if (currentProfile >= 2)
+			currentProfile = 0;
+		else
+			currentProfile++;
+		state = MyState::Transition;
+		transTimer = 0;
+	}
+	if (joy1.x < 0 || joy2.x < 0)
+	{
+		if (currentProfile <= 0)
+			currentProfile = 2;
+		else
+			currentProfile--;
+		state = MyState::Transition;
+		transTimer = 0;
+	}
+	if (input->IsButtonPressed(0, 0) || input->IsButtonPressed(1, 0))
+	{
+		state = MyState::Menu;
+	}
+
+	if (input->IsKeyPressed(SGD::Key::MouseLeft))
+	{
+		SGD::Point mouse = input->GetMousePosition();
+		if (mouse.IsWithinRectangle(SGD::Rectangle{ current, profileSize }))
+		{
+			state = MyState::Menu;
+			return;
+		}
+		if (mouse.IsWithinRectangle(SGD::Rectangle{ next, profileSize }))
+		{
+			if (currentProfile >= 2)
+				currentProfile = 0;
+			else
+				currentProfile++;
+			state = MyState::Transition;
+			transTimer = 0;
+		}
+		if (mouse.IsWithinRectangle(SGD::Rectangle{ previous, profileSize }))
+		{
+			if (currentProfile <= 0)
+				currentProfile = 2;
+			else
+				currentProfile--;
+			state = MyState::Transition;
+			transTimer = 0;
+		}
+	}
+#else
 	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
 	{
 		Game::GetInstance()->PopState();
@@ -118,14 +178,20 @@ void CProfileSelectState::SeletionInput()
 			transTimer = 0;
 		}
 	}
+#endif
 }
 
 void CProfileSelectState::MenuInput()
 {
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
+
 	if (state == MyState::ConfirmOverwrite)
 	{
+#if ARCADE
+		if (input->IsButtonPressed(0, 1) || input->IsButtonPressed(1, 1))
+#else
 		if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
+#endif
 		{
 			delete confirm;
 			confirm = nullptr;
@@ -158,7 +224,11 @@ void CProfileSelectState::MenuInput()
 
 	if (state == MyState::ConfirmDelete)
 	{
+#if ARCADE
+		if (input->IsButtonPressed(0, 1) || input->IsButtonPressed(1, 1))
+#else
 		if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
+#endif
 		{
 			delete confirm;
 			confirm = nullptr;
@@ -186,7 +256,11 @@ void CProfileSelectState::MenuInput()
 
 	if (state == MyState::ConfirmTutorial)
 	{
+#if ARCADE
+		if (input->IsButtonPressed(0, 1) || input->IsButtonPressed(1, 1))
+#else
 		if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
+#endif
 		{
 			delete confirm;
 			confirm = nullptr;
@@ -215,7 +289,11 @@ void CProfileSelectState::MenuInput()
 		return;
 	}
 
+#if ARCADE
+	if (input->IsButtonPressed(0, 1) || input->IsButtonPressed(1, 1))
+#else
 	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
+#endif
 	{
 		state = MyState::Idle;
 		return;
@@ -317,7 +395,7 @@ void CProfileSelectState::Render()
 
 	if (state >= MyState::Menu)
 	{
-		SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 90, 0, 0, 0 });
+		SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() } }, { 90, 0, 0, 0 });
 		menu->Render();
 		if (state >= MyState::ConfirmOverwrite)
 		{

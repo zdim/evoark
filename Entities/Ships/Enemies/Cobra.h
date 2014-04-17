@@ -17,6 +17,8 @@ public:
 	void Update(float dt);
 	void AddGrav(SGD::Vector);
 	void Warp();
+	void HandleCollision(IEntity* other) override;
+	void TakeDamage(int damage, bool collision) override;
 };
 
 class CCobraCoord : public CCobra, public Coordinator

@@ -6,6 +6,8 @@
 CModule::CModule()
 {
 	owner = nullptr;
+	hullMax = 1000;
+	hull = hullMax;
 }
 
 

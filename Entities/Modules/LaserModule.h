@@ -4,7 +4,13 @@ class CLaserModule :
 	public CTurretModule
 {
 	float m_fSprayTimer;
-	int m_nSprayCD;
+	float m_nSprayCD;
+
+	//Regular module spray
+	float shotTimer;
+	float shotDelay;
+	int shotDuration;
+	int shotCount;
 
 public:
 	CLaserModule();

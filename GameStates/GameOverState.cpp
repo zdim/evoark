@@ -38,6 +38,7 @@ bool CGameOverState::Input()
 			Game::GetInstance()->PopState();
 			if (CGameplayState::GetInstance()->GetLevel() == Level::Final && CTestLevelState::GetInstance()->GetBossStatus() == true)
 			{
+				CGameplayState::GetInstance()->SetLevel(Level::Gen1);
 				Game::GetInstance()->PopState();
 				Game::GetInstance()->PopState();
 				Game::GetInstance()->PushState(CMainMenuState::GetInstance());

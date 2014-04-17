@@ -21,12 +21,19 @@ CCreditsState* CCreditsState::GetInstance()
 
 bool CCreditsState::Input()
 {
+#if ARCADE
+	if (SGD::InputManager::GetInstance()->IsButtonDown(0, 6) || SGD::InputManager::GetInstance()->IsButtonDown(1, 6))
+	{
+		Game::GetInstance()->PopState();
+		return true;
+	}
+#else
 	if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Escape) || SGD::InputManager::GetInstance()->IsButtonDown(0, 1))
 	{
 		Game::GetInstance()->PopState();
 		return true;
 	}
-
+#endif
 	return true;
 }
 

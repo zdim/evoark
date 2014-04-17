@@ -4,6 +4,8 @@
 
 CEngine::CEngine()
 {
+	hullMax = 100;
+	hull = hullMax;
 }
 
 

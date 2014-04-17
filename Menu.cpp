@@ -135,6 +135,57 @@ int CMenu::Input()
 		if (success == false)
 			cursor = -1;
 	}
+
+#if ARCADE
+	SGD::Vector joy1 = input->GetLeftJoystick(0);
+	SGD::Vector joy2 = input->GetLeftJoystick(1);
+	if (horizontal)
+	{
+		if (joy1.x > 0 || joy2.x > 0) // || input->controllerstuff
+		{
+			if (cursor >= (int)buttons.size() - 1)
+				cursor = 0;
+			else
+				cursor++;
+
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+		}
+		if (joy1.x < 0 || joy2.x < 0) // || input->controllerstuff
+		{
+			if (cursor <= 0)
+				cursor = buttons.size() - 1;
+			else
+				cursor--;
+
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+		}
+	}
+	else
+	{
+		if (joy1.y > 0 || joy2.y > 0) // || input->controllerstuff
+		{
+			if (cursor >= (int)buttons.size() - 1)
+				cursor = 0;
+			else
+				cursor++;
+
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+		}
+		if (joy1.y < 0 || joy2.y < 0) // || input->controllerstuff
+		{
+			if (cursor <= 0)
+				cursor = buttons.size() - 1;
+			else
+				cursor--;
+
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
+		}
+	}
+	if (input->IsButtonPressed(0, 0) || input->IsButtonPressed(1, 0))  // || input->controllerstuff
+	{
+		return cursor;
+	}
+#else
 	if (horizontal)
 	{
 		if (input->IsKeyPressed(SGD::Key::Right) || input->IsDPadPressed(0, SGD::DPad::Right)) // || input->controllerstuff
@@ -158,10 +209,6 @@ int CMenu::Input()
 	}
 	else
 	{
-#if ARCADE
-		SGD::Vector LeftJoystick = input->GetLeftJoystick(0);
-		
-#else
 		if (input->IsKeyPressed(SGD::Key::Down) || input->IsDPadPressed(0, SGD::DPad::Down)) // || input->controllerstuff
 		{
 			if (cursor >= (int)buttons.size() - 1)
@@ -180,13 +227,12 @@ int CMenu::Input()
 
 			CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
 		}
-#endif
 	}
 	if (input->IsKeyPressed(SGD::Key::Enter) || input->IsButtonPressed(0, 0))  // || input->controllerstuff
 	{
 		return cursor;
 	}
-
+#endif
 	if (input->IsKeyPressed(SGD::Key::MouseLeft))
 	{
 		for (unsigned int i = 0; i < buttons.size(); i++)

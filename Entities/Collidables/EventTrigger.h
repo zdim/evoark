@@ -15,6 +15,7 @@ public:
 
 	int GetType() { return (int)EntityType::EventTrigger; }
 	int GetTriggerType() { return triggerType; }
+	MessageID GetID() {return (MessageID)triggerType; }
 	void Render();
 
 	void SetType(int _type) { triggerType = _type; }

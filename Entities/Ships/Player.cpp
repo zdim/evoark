@@ -13,15 +13,17 @@
 #include "../Collidables/Shield.h"
 #include "../../GameStates/GameplayState.h"
 #include "../Collidables/EventTrigger.h"
-
+#include "../../WinMain.h"
 #include "../../Graphics/Particles/ParticleSystem.h"
 
-#define SHIELD_SCALE 100
-#define HULL_SCALE 200
+#define SHIELD_SCALE 75
+#define HULL_SCALE 125
 
 CPlayer::CPlayer()
 {
-	maxShield = 500;
+	maxHull = 750;
+	hull = maxHull;
+	maxShield = 375;
 	shield = maxShield;
 	shieldRegen = 500;
 	shieldDelay = 2;
@@ -95,9 +97,11 @@ void CPlayer::Update(float dt)
 
 	if (CGameplayState::GetInstance()->GetLevel() == Level::Tutorial)
 	{
+#if ARCADE
 		if (tutorialWaitForInput[0])
 		{
-			if (input->IsKeyDown(SGD::Key::MouseRight))
+			//Arcade control check here
+			if (input->IsKeyDown(SGD::Key::RButton))
 			{
 				tutorialWaitForInput[0] = false;
 				CreateMissile();
@@ -107,7 +111,7 @@ void CPlayer::Update(float dt)
 
 		if (tutorialWaitForInput[1])
 		{
-			if (input->IsKeyPressed(SGD::Key::Space))
+			if (input->IsButtonPressed(0, 2) || input->IsButtonPressed(1, 2))
 			{
 				tutorialWaitForInput[1] = false;
 				Warp();
@@ -117,7 +121,7 @@ void CPlayer::Update(float dt)
 
 		if (tutorialWaitForInput[2])
 		{
-			if (input->IsKeyPressed(SGD::Key::Q))
+			if (input->IsButtonPressed(0, 0) || input->IsButtonPressed(1, 0))
 			{
 				tutorialWaitForInput[2] = false;
 				CreateWell();
@@ -127,7 +131,7 @@ void CPlayer::Update(float dt)
 
 		if (tutorialWaitForInput[3])
 		{
-			if (input->IsKeyPressed(SGD::Key::E))
+			if (input->IsButtonPressed(0, 1) || input->IsButtonPressed(1, 1))
 			{
 				tutorialWaitForInput[3] = false;
 				CreatePush();
@@ -137,7 +141,7 @@ void CPlayer::Update(float dt)
 
 		if (tutorialWaitForInput[4])
 		{
-			if (input->IsKeyPressed(SGD::Key::Tab))
+			if (input->IsButtonPressed(0, 3) || input->IsButtonPressed(1, 3))
 			{
 				tutorialWaitForInput[4] = false;
 				arrowsOn = !arrowsOn;
@@ -147,13 +151,74 @@ void CPlayer::Update(float dt)
 
 		if (tutorialWaitForInput[5])
 		{
-			if (input->IsKeyPressed(SGD::Key::Escape))
+			if (input->IsButtonPressed(0, 6) || input->IsButtonPressed(1, 6))
 			{
 				tutorialWaitForInput[5] = false;
 				//CreatePush();
 			}
 			return;
 		}
+#else
+		if (tutorialWaitForInput[0])
+		{
+			if (input->IsKeyDown(SGD::Key::RButton) || input->GetTrigger(0) == -1)
+			{
+				tutorialWaitForInput[0] = false;
+				CreateMissile();
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[1])
+		{
+			if (input->IsKeyPressed(SGD::Key::Spacebar) || input->IsButtonPressed(0, 0))
+			{
+				tutorialWaitForInput[1] = false;
+				Warp();
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[2])
+		{
+			if (input->IsKeyPressed(SGD::Key::Q) || input->IsButtonPressed(0, 4))
+			{
+				tutorialWaitForInput[2] = false;
+				CreateWell();
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[3])
+		{
+			if (input->IsKeyPressed(SGD::Key::E) || input->IsButtonPressed(0, 5))
+			{
+				tutorialWaitForInput[3] = false;
+				CreatePush();
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[4])
+		{
+			if (input->IsKeyPressed(SGD::Key::Tab) || input->IsButtonPressed(0, 6))
+			{
+				tutorialWaitForInput[4] = false;
+				arrowsOn = !arrowsOn;
+			}
+			return;
+		}
+
+		if (tutorialWaitForInput[5])
+		{
+			if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 7))
+			{
+				tutorialWaitForInput[5] = false;
+				//CreatePush();
+			}
+			return;
+		}
+#endif
 	}
 	//Timers
 	shieldTimer += dt;
@@ -170,6 +235,70 @@ void CPlayer::Update(float dt)
 			shield = maxShield;
 	}
 
+
+#if ARCADE
+	//Movement
+	SGD::Vector dir = SGD::Vector{ 0, 0 };
+	SGD::Vector joy = input->GetLeftJoystick(0);
+	if(joy == SGD::Vector{0,0})
+		joy = input->GetLeftJoystick(1);
+	if (joy.y < 0)
+		dir.y -= 1;
+	if (joy.y > 0)
+		dir.y += 1;
+	if (joy.x < 0)
+		dir.x -= 1;
+	if (joy.x > 0)
+		dir.x += 1;
+	if (dir != SGD::Vector{ 0, 0 })
+		dir.Normalize();
+
+
+	//commented out until finished implementing - was messing up standard input
+	if (warpTimer < warpDuration)
+	{
+		velocity = dir * (speed + warpSpeed);
+	}
+	else
+	{
+		velocity = dir * speed;
+	}
+
+
+	//SGD::Point mousePos = { 0, 0 };
+	float oldRot = rotation;
+	if (input->GetMouseMovement() != SGD::Vector{ 0, 0 })
+	{
+		SGD::Point mousePos = input->GetMousePosition();
+		rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
+	}
+
+	//Abilities
+	if (input->IsKeyDown(SGD::Key::LButton))
+	{
+		CreateLaser();
+	}
+	if (input->IsKeyDown(SGD::Key::RButton))
+	{
+		CreateMissile();
+	}
+	if (input->IsButtonPressed(0, 0) || input->IsButtonPressed(1, 0))
+	{
+		CreateWell();
+	}
+	if (input->IsButtonPressed(0, 1) || input->IsButtonPressed(1, 1))
+	{
+		CreatePush();
+	}
+	if (input->IsButtonPressed(0, 2) || input->IsButtonPressed(1, 2))
+	{
+		Warp();
+	}
+
+	// UI Toggle
+	if (input->IsButtonPressed(0, 3) || input->IsButtonPressed(1, 3))
+		arrowsOn = !arrowsOn;
+#else
 	//Movement
 	SGD::Vector dir = SGD::Vector{0,0};
 	if (input->IsKeyDown(SGD::Key::W) || input->GetLeftJoystick(0).y < 0)
@@ -258,6 +387,8 @@ void CPlayer::Update(float dt)
 	// UI Toggle
 	if (input->IsKeyPressed(SGD::Key::Tab) || input->IsButtonPressed(0, 6))
 		arrowsOn = !arrowsOn;
+#endif
+
 
 	// Position event
 	CCustomEvent* e = new CCustomEvent(EventID::position, nullptr, this);
@@ -346,6 +477,7 @@ void CPlayer::CreateWell()
 
 void CPlayer::CreateWellController()
 {
+#if !ARCADE
 	if (wellTimer <= wellDelay)
 		return;
 
@@ -375,7 +507,7 @@ void CPlayer::CreateWellController()
 		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, wellPos, size, rotation, 225, wellLevel, 150);
 		msg->QueueMessage();
 	}
-
+#endif
 }
 
 
@@ -534,7 +666,7 @@ void CPlayer::SetStats(playerData& data)
 	hull = maxHull;
 	shield = maxShield;
 	perks = data.perks;
-	perks = 100;
+	//perks = 100;
 	for (laserLevel; laserLevel < data.laserLevel; LaserLevelUp());
 	for (missileLevel; missileLevel < data.missileLevel; MissileLevelUp());
 	for (wellLevel; wellLevel < data.wellLevel; WellLevelUp());

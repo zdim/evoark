@@ -4,6 +4,7 @@
 #include "OptionsState.h"
 #include "MainMenuState.h"
 #include <sstream>
+#include "../WinMain.h"
 
 COptionsState::COptionsState()
 {
@@ -23,6 +24,52 @@ bool COptionsState::Input()
 {
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
 
+#if ARCADE
+	if (input->IsButtonPressed(0, 6) || input->IsButtonPressed(0, 6))
+	{
+		Game::GetInstance()->PopState();
+		return true;
+	}
+
+	SGD::Vector joy1 = input->GetLeftJoystick(0);
+	SGD::Vector joy2 = input->GetLeftJoystick(1);
+	if (joy1.x > 0 || joy2.x > 0)
+	{
+		if (menu->GetCursor() == menuReturn::sfx)
+		{
+			soundBox->Play(CSoundBox::sounds::playerLaser, false);
+			if (sfxVolume < 10)
+			{
+				sfxVolume++;
+				SGD::AudioManager::GetInstance()->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_SOUND_EFFECTS, sfxVolume * 10);
+			}
+		}
+		else if (menu->GetCursor() == menuReturn::music && musicVolume < 10)
+		{
+			musicVolume++;
+			SGD::AudioManager::GetInstance()->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_MUSIC, musicVolume * 10);
+		}
+	}
+
+	if (joy1.x < 0 || joy2.x < 0)
+	{
+		if (menu->GetCursor() == menuReturn::sfx)
+		{
+			soundBox->Play(CSoundBox::sounds::playerLaser, false);
+
+			if (sfxVolume > 0)
+			{
+				sfxVolume--;
+				SGD::AudioManager::GetInstance()->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_SOUND_EFFECTS, sfxVolume * 10);
+			}
+		}
+		else if (menu->GetCursor() == menuReturn::music && musicVolume > 0)
+		{
+			musicVolume--;
+			SGD::AudioManager::GetInstance()->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_MUSIC, musicVolume * 10);
+		}
+	}
+#else
 	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 1))
 	{
 		Game::GetInstance()->PopState();
@@ -65,6 +112,7 @@ bool COptionsState::Input()
 			SGD::AudioManager::GetInstance()->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_MUSIC, musicVolume * 10);
 		}
 	}
+#endif
 
 	int ret = menu->Input();
 	switch (ret)

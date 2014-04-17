@@ -60,7 +60,7 @@ CCoral::CCoral()
 CCoral::CCoral(int t)
 {
 	type = t;
-
+	t = 1;
 	switch(t)
 	{
 		case 0:
@@ -108,11 +108,16 @@ CCoral::CCoral(int t)
 	}
 
 	modulePositions.resize(count);
-	modulePositions[engine] = SGD::Vector{ 0, 40 };
-	modulePositions[cockpit] = SGD::Vector{ 0, 0 };
-	modulePositions[shieldModule] = SGD::Vector{ 40, 0 };
-	modulePositions[laser] = SGD::Vector{ 0, -40 };
-	modulePositions[ability] = SGD::Vector{ -40, 0 };
+	modulePositions[cockpit] = SGD::Vector{ 78, 130 };
+	modulePositions[engine] = SGD::Vector{ 52, 189 };
+	modulePositions[shieldModule] = SGD::Vector{ 104, 189 };
+	modulePositions[laser] = SGD::Vector{ 40, 114 };
+	modulePositions[ability] = SGD::Vector{ 116, 114 };
+
+	for (unsigned int i = 0; i < count; i++)
+	{
+		modulePositions[i] -= size/2;
+	}
 
 	for (unsigned int i = 0; i < modules.size(); i++)
 	{
