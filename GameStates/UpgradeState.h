@@ -17,6 +17,8 @@ class CUpgradeState : public IGameState
 	CPlayer* player = nullptr;
 	std::vector<SGD::Rectangle> buttons;
 
+	SGD::HTexture iconTextures[15];
+
 	SGD::HTexture iconTexture = SGD::INVALID_HANDLE;
 	SGD::HTexture upArrowTexture = SGD::INVALID_HANDLE;
 public:

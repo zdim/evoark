@@ -290,7 +290,7 @@
     <Event type="TUTORIAL.BOSS" x="2336" y="2674" width="346" height="476" />
     <Event type="TUTORIAL.STARGATE" x="1696" y="2729" width="195" height="419" />
     <Event type="TUTORIAL.TAB" x="2001" y="250" width="119" height="288" />
-    <Event type="TUTORIAL.UPGRADE" x="2380" y="2184" width="687" height="118" />
+    <Event type="TUTORIAL.UPGRADE" x="2380" y="2184" width="687" height="202" />
     <Event type="TUTORIAL.ARROWS" x="2318" y="138" width="173" height="288" />
     <Event type="TUTORIAL.WELL" x="435" y="588" width="408" height="163" />
     <Event type="TUTORIAL.COORDINATOR" x="2436" y="646" width="517" height="223" />

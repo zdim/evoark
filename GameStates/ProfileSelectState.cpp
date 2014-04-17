@@ -26,7 +26,9 @@ void CProfileSelectState::Enter()
 	labels.push_back("Create New");
 	labels.push_back("Delete");
 	labels.push_back("Cancel");
-	labels.push_back("MainMenu");
+
+	labels.push_back("Main Menu");
+
 	SGD::Size screen = SGD::Size{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() };
 	menu = new CMenu(&Game::GetInstance()->FontPoiret, labels, "", { screen.width * .3f, screen.height * .55f }, false);
 
@@ -395,6 +397,7 @@ void CProfileSelectState::Render()
 
 	if (state >= MyState::Menu)
 	{
+
 		SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() } }, { 90, 0, 0, 0 });
 		menu->Render();
 		if (state >= MyState::ConfirmOverwrite)

@@ -1,10 +1,12 @@
 #include "EventTrigger.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../GameStates/Game.h"
+#include "../../WinMain.h"
 
 void EventTrigger::HandleCollision(IEntity* other)
 {
-	if (other->GetType() == (int)EntityType::Player)
+	if (other->GetType() == (int)EntityType::Player || other->GetType() == (int)EntityType::Shield)
 	{
 		colliding = true;
 	}
@@ -22,43 +24,98 @@ void EventTrigger::Render()
 		case (int)triggerID::tutMovement:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .30f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .62f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Basic Movement");
-			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "WASD to move. Mouse to aim.");
+			if (SGD::InputManager::GetInstance()->IsControllerConnected(0))
+			{
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .66f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Left Joystick to move.");
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .69f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Right Joystick to aim.");
+			}
+			else
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .66f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "WASD to move. Mouse to aim.");
 			break;
 		case (int)triggerID::tutLasers:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .30f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .62f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Lasers");
-			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Left click to fire lasers.");
+			if (SGD::InputManager::GetInstance()->IsControllerConnected(0))
+			{
+				if (ARCADE == 1)
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Left Red to fire lasers.");
+				else
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Right Trigger to fire lasers.");
+			}
+			else
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Left click to fire lasers.");
 			break;
 		case (int)triggerID::tutMissiles:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .30f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .62f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Missiles");
-			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Right click to fire missiles.");
+			if (SGD::InputManager::GetInstance()->IsControllerConnected(0))
+			{
+				if (ARCADE == 1)
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Right Red to fire missiles.");
+				else
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Left Trigger to fire missiles.");
+			}
+			else
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Right click to fire missiles.");
 			break;
 		case (int)triggerID::tutWarp:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .30f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .60f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Warp");
-			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit Space to Warp.");
+			if (SGD::InputManager::GetInstance()->IsControllerConnected(0))
+			{
+				if (ARCADE == 1)
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Button 2 to Warp.");
+				else
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit A to Warp.");
+			}
+			else
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit Space to Warp.");
+
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .67f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Warping allows you");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .69f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "to evade incoming fire.");
 			break;
 		case (int)triggerID::tutWell:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .30f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .60f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Well");
-			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit Q to spawn a Gravity Well.");
+			if (SGD::InputManager::GetInstance()->IsControllerConnected(0))
+			{
+				if (ARCADE == 1)
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Button 0 for Gravity Well.");
+				else
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "RB to spawn a Gravity Well.");
+			}
+			else
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit Q to spawn a Gravity Well.");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .67f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Gravity Well will suck in everything");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .69f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "of appropriate size.");
 			break;
 		case (int)triggerID::tutPush:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .30f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .60f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Push");
-			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit E to use Gravity Push.");
+			if (SGD::InputManager::GetInstance()->IsControllerConnected(0))
+			{
+				if (ARCADE == 1)
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Button 1 for Gravity Push.");
+				else
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "LB to use Gravity Push.");
+			}
+			else
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit E to use Gravity Push.");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .67f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Gravity Push will reflect everything");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .69f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "in an arc in front of you.");
 			break;
 		case (int)triggerID::tutArrows:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .30f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .60f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Arrow Indicators");
-			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit Tab to toggle the compass.");
+			if (SGD::InputManager::GetInstance()->IsControllerConnected(0))
+			{
+				if (ARCADE == 1)
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Button 3 to toggle the compass.");
+				else
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Select to toggle the compass.");
+			}
+			else
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit Tab to toggle the compass.");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .67f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Arrows point to current objectives.");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .69f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Toggle them on/off at any time.");
 			break;
@@ -89,7 +146,12 @@ void EventTrigger::Render()
 		case (int)triggerID::tutUpgrade:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .30f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .60f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Upgrades");
-			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Press Escape for the Upgrade menu.");
+			if (SGD::InputManager::GetInstance()->IsControllerConnected(0))
+			{
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit Start for the Upgrade menu.");
+			}
+			else
+				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Press Escape for the Upgrade menu.");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .67f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Each level you gain one perk.");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .69f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Spend them wisely!");
 			break;

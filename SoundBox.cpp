@@ -22,13 +22,18 @@ void CSoundBox::Enter()
 	uiHighlightSFX = audio->LoadAudio("Resources/Audio/UIHighlight.wav");
 	uiFailureSFX = audio->LoadAudio("Resources/Audio/UIFailure.wav");
 	uiSuccessSFX = audio->LoadAudio("Resources/Audio/UISuccess.wav");
+	uiEnterSFX = audio->LoadAudio("Resources/Audio/UIEnter.wav");
+
 	playerLaserSFX = audio->LoadAudio("Resources/Audio/LaserFire1.wav");
 	playerLaserFinalSFX = audio->LoadAudio("Resources/Audio/PlayerLaser2.wav");
 	playerMissileSFX = audio->LoadAudio("Resources/Audio/PlayerMissile.wav");
+
 	playerWarpSFX = audio->LoadAudio("Resources/Audio/PlayerWarp.wav");
 	playerWellSFX = audio->LoadAudio("Resources/Audio/PlayerWell3Sec.wav");
 	playerPushSFX = audio->LoadAudio("Resources/Audio/PlayerPush.wav");
+
 	playerLevelUpSFX = audio->LoadAudio("Resources/Audio/PlayerLevelUp.wav");
+
 	enemyHullDamageSFX = audio->LoadAudio("Resources/Audio/EnemyHullDamage.wav");
 	enemyShieldDamageSFX = audio->LoadAudio("Resources/Audio/EnemyShieldDamage.wav");
 	missileHitSFX = audio->LoadAudio("Resources/Audio/MissileHit.wav");
@@ -45,6 +50,7 @@ void CSoundBox::Exit()
 	audio->UnloadAudio(uiHighlightSFX);
 	audio->UnloadAudio(uiFailureSFX);
 	audio->UnloadAudio(uiSuccessSFX);
+	audio->UnloadAudio(uiEnterSFX);
 	audio->UnloadAudio(playerLaserSFX);
 	audio->UnloadAudio(playerLaserFinalSFX);
 	audio->UnloadAudio(playerMissileSFX);
@@ -74,6 +80,9 @@ void CSoundBox::Play(int _soundEnum, bool _loop)
 		break;
 	case uiFailure:
 		soundToPlay = uiFailureSFX;
+		break;
+	case uiEnter:
+		soundToPlay = uiEnterSFX;
 		break;
 	case playerLaser:
 		soundToPlay = playerLaserSFX;
