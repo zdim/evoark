@@ -287,21 +287,26 @@ void CUpgradeState::Render()
 	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .70f, screenHeight * .65f, screenWidth * .85f,  screenHeight * .75f }, "Push");
 
 	// draw upgrade boxes / icons
-	graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .15f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .35f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .55f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .15f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .35f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .55f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .15f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .35f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .55f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .15f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .35f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .55f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .15f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .35f });
-	graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .55f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .15f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .35f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .55f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .15f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .35f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .55f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .15f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .35f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .55f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .15f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .35f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .55f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .15f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .35f });
+	//graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .55f });
+
+	for (int i = 0; i < 15; i++)
+	{
+		graphics->DrawTexture(iconTextures[i], { screenWidth * .15f * (i / 3 + 1), screenHeight * (.55f - (i % 3) * .20f) });
+	}
 
 	// draw arrows
 	graphics->DrawTexture(upArrowTexture, { screenWidth * .174f, screenHeight * .255f }, 0, {}, { 200, 50, 190, 180 }, { .10f, .115f });
@@ -497,6 +502,23 @@ void CUpgradeState::Enter()
 	iconTexture = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/upgradeIcon.png");
 	player = CEntityManager::GetInstance()->GetPlayer();
 
+	iconTextures[laserOne]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/lazeryellow.png");
+	iconTextures[laserTwo]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/lazerpurple.png");
+	iconTextures[laserThree]	= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/lazergreen.png");
+	iconTextures[missileOne]	= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/missile1.png");
+	iconTextures[missileTwo]	= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/missile2.png");
+	iconTextures[missileThree]	= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/missile3.png");
+	iconTextures[warpOne]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/warpyellow.png");
+	iconTextures[warpTwo]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/warpred.png");
+	iconTextures[warpThree]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/warpteal.png");
+	iconTextures[wellOne]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/wellyellow.png");
+	iconTextures[wellTwo]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/wellred.png");
+	iconTextures[wellThree]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/wellteal.png");
+	iconTextures[pushOne]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushyellow.png");
+	iconTextures[pushTwo]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushred.png");
+	iconTextures[pushThree]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushteal.png");
+
+
 	for (int i = 0; i < 15; i++)
 	{
 		buttons.push_back({ SGD::Point{ Game::GetInstance()->GetScreenWidth() * .15f * (i / 3 + 1), Game::GetInstance()->GetScreenHeight() * (.55f - (i % 3) * .20f) }, SGD::Size{ 64, 64 } });
@@ -506,4 +528,9 @@ void CUpgradeState::Enter()
 void CUpgradeState::Exit()
 {
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(iconTexture);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(upArrowTexture);
+	for (int i = 0; i < 15; i++)
+	{
+		SGD::GraphicsManager::GetInstance()->UnloadTexture(iconTextures[i]);
+	}
 }
