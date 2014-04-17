@@ -113,10 +113,9 @@ void  CParticleSystem::AddEmitter(int n, CEntity* owner)
 	p->Initialize();
 	p->SetOwner(owner);
 	p->SetEmitterPosition(owner->GetPosition());
+
 	standbyPool.pop_front();
 	emittingPool.push_front(p);
-
-
 }
 
 
@@ -223,8 +222,12 @@ void CParticleSystem::Update(float dt)
 		if (emittingPool.size() > 0)
 		{
 			if ((*it)->GetOwner() != nullptr)
+			{
+				if ((*it)->GetParticleData()->GetStartB() == 191 && (*it)->GetParticleData()->GetStartR() == 191 && (*it)->GetParticleData()->GetStartG() == 191)
+					(*it)->SetEmitterPosition({ (*it)->GetOwner()->GetPosition().x - 30, (*it)->GetOwner()->GetPosition().y - 44 });
+				else
 				(*it)->SetEmitterPosition((*it)->GetOwner()->GetPosition());
-
+			}
 			(*it)->Update(dt);
 
 

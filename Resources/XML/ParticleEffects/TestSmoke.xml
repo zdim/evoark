@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ParticleEffect>
-  <Emittor NumOfParticles="50" SpawnRate="0.1" TimeFromLastSpawn="0.1" Shape="3" Radius="50" EmitBool="True" EmitTime="0.3" PosX="120" PosY="46" Width="100" Height="100" />
-  <Particle Image="FirePuff.png" StartScaleX="0" StartYScale="0" EndXScale="1" EndYScale="1" StartColorA="255" StartColorR="192" StartColorG="192" StartColorB="192" EndColorA="0" EndColorR="192" EndColorG="192" EndColorB="192" SpeedMinX="-100" SpeedMinY="-100" SpeedMaxX="-100" SpeedMaxY="-100" LifeMax="0.5" LifeMin="0.01" RotationSpeed="0" Enertia="0" />
+  <Emittor NumOfParticles="50" SpawnRate="0.1" TimeFromLastSpawn="0.1" Shape="3" Radius="50" EmitBool="True" EmitTime="0.3" PosX="-2000" PosY="-2000" Width="100" Height="100" />
+  <Particle Image="FirePuff.png" StartScaleX="0" StartYScale="0" EndXScale="1" EndYScale="1" StartColorA="255" StartColorR="191" StartColorG="191" StartColorB="191" EndColorA="0" EndColorR="192" EndColorG="192" EndColorB="192" SpeedMinX="-100" SpeedMinY="-100" SpeedMaxX="-100" SpeedMaxY="-100" LifeMax="0.5" LifeMin="0.01" RotationSpeed="0" Enertia="0" />
 </ParticleEffect>

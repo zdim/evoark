@@ -79,8 +79,6 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update(float dt)
 {
-	//SGD::Point test = {position.x
-
 	SGD::Vector rotatedOffset = { 0,45 };
 	rotatedOffset.Rotate(rotation);
 	enginePos = position + rotatedOffset;
@@ -460,7 +458,8 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 	
 	hull -= damage;
-	if ( (hull / maxHull) < .50f)
+	float hullPercent = (float)hull / (float)maxHull;
+	if ( hullPercent < .50f)
 		CParticleSystem::GetInstance()->AddEmitter(9, this);
 	
 	
