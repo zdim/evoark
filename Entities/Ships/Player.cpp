@@ -30,7 +30,7 @@ CPlayer::CPlayer()
 	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 20;
 	laserDelay = 0.1f;
 	missileDelay = 2.0f;
-	wellDelay = 12;
+	wellDelay = 8;
 	pushDelay = 1;
 	warpDelay = 12;
 	warpSpeed = 300;
