@@ -7,6 +7,7 @@
 #include "GameState.h"
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
 
+
 CGameOverState::CGameOverState()
 {
 	m_fTimer = 0;
@@ -45,6 +46,7 @@ bool CGameOverState::Input()
 			}
 			else
 				Game::GetInstance()->PopState();
+
 			return true;
 		case menuReturn::mainmenu:
 			Game::GetInstance()->PopState();

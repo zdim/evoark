@@ -184,6 +184,7 @@ int CMenu::Input()
 	}
 	if (input->IsKeyPressed(SGD::Key::Enter) || input->IsButtonPressed(0, 0))  // || input->controllerstuff
 	{
+		CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiEnter, false);
 		return cursor;
 	}
 
@@ -193,7 +194,9 @@ int CMenu::Input()
 		{
 			if (input->GetMousePosition().IsWithinRectangle(buttons[i].box))
 			{
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiEnter, false);
 				return i;
+
 			}
 		}
 	}

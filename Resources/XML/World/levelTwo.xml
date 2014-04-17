@@ -83,8 +83,8 @@
       <Type type="COPPERHEAD" amount="5" randomized="False" x="1212" y="149" />
     </Quad>
     <Quad x="4" y="1" possibleTypes="2">
-      <Type type="COBRA" amount="2" randomized="False" x="1327" y="453" />
       <Type type="COPPERHEAD" amount="5" randomized="False" x="1220" y="446" />
+      <Type type="COBRA" amount="2" randomized="False" x="1215" y="477" />
     </Quad>
     <Quad x="4" y="2" possibleTypes="0" />
     <Quad x="4" y="3" possibleTypes="2">

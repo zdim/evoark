@@ -26,7 +26,7 @@ void CProfileSelectState::Enter()
 	labels.push_back("Create New");
 	labels.push_back("Delete");
 	labels.push_back("Cancel");
-	labels.push_back("MainMenu");
+	labels.push_back("Main Menu");
 	SGD::Size screen = SGD::Size{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() };
 	menu = new CMenu(&Game::GetInstance()->FontPoiret, labels, "", { screen.width * .3f, screen.height * .55f }, false);
 

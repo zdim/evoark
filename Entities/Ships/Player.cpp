@@ -97,7 +97,7 @@ void CPlayer::Update(float dt)
 	{
 		if (tutorialWaitForInput[0])
 		{
-			if (input->IsKeyDown(SGD::Key::MouseRight))
+			if (input->IsKeyDown(SGD::Key::MouseRight) || input->GetTrigger(0) == -1)
 			{
 				tutorialWaitForInput[0] = false;
 				CreateMissile();
