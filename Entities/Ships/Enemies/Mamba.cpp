@@ -5,7 +5,7 @@
 CMamba::CMamba()
 {
 	damage = 35;
-	maxHull = 750;
+	maxHull = 400;
 	hull = maxHull;
 	size = { 52, 80 };
 	imageSize = { 64, 128 };

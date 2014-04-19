@@ -1307,7 +1307,9 @@ void CEntityManager::Save()
 		col.size = stationaries[i]->GetSize();
 		col.position = stationaries[i]->GetPosition();
 		Trigger* t = dynamic_cast<Trigger*>(stationaries[i]);
-		if (t)
+		if (t && t->GetType() == (int)EntityType::Stargate)
+			col.ID = MessageID::Victory;
+		else if (t)
 			col.ID = t->GetID();
 		else
 			col.ID = (MessageID)-1;

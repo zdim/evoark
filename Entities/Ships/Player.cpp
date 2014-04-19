@@ -23,14 +23,14 @@ CPlayer::CPlayer()
 {
 	maxHull = 750;
 	hull = maxHull;
-	maxShield = 375;
+	maxShield = 750;
 	shield = maxShield;
 	shieldRegen = 500;
 	shieldDelay = 2;
 	shieldTimer = laserTimer = missileTimer = wellTimer = pushTimer = warpTimer = 20;
-	laserDelay = 0.2f;
+	laserDelay = 0.1f;
 	missileDelay = 2.0f;
-	wellDelay = 12;
+	wellDelay = 8;
 	pushDelay = 1;
 	warpDelay = 12;
 	warpSpeed = 300;
@@ -644,7 +644,7 @@ void CPlayer::LaserLevelUp()
 { 
 	laserLevel++;
 	if (laserLevel == 3)
-		laserDelay = .15f;
+		laserDelay = .05f;
 }
 
 void CPlayer::WarpLevelUp()
