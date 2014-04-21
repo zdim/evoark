@@ -312,7 +312,6 @@ void CPlayer::Update(float dt)
 	if (dir != SGD::Vector{0, 0})
 		dir.Normalize();
 
-
 	 //commented out until finished implementing - was messing up standard input
 	if (warpTimer < warpDuration)
 	{
@@ -329,7 +328,7 @@ void CPlayer::Update(float dt)
 	float oldRot = rotation;
 	if (input->GetMouseMovement() != SGD::Vector{ 0, 0 })
 	{
-		SGD::Point mousePos = input->GetMousePosition();
+		SGD::Point mousePos = input->GetMousePosition() - SGD::Vector{ size.width, size.height } * .5f;
 		rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
 
 	}
