@@ -2,8 +2,10 @@
 #include "Player.h"
 #include <math.h>
 #include <algorithm>
+#include <sstream>
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../GameStates/Game.h"
 #include "../../Message System/CreateProjectile.h"
 #include "../../Camera.h"
 #include "../../Event System/CustomEvent.h"
@@ -92,6 +94,11 @@ void CPlayer::Update(float dt)
 		damaged -= dt;
 	if (damaged < 0)
 		damaged = 0;
+
+	if (levelUpTimer > 0)
+		levelUpTimer -= dt;
+	if (levelUpTimer < 0)
+		levelUpTimer = 0;
 
 	SGD::InputManager* input = SGD::InputManager::GetInstance();
 
@@ -398,11 +405,18 @@ void CPlayer::Update(float dt)
 
 void CPlayer::Render()
 {
+	if (levelUpTimer)
+	{
+		std::ostringstream levelText;
+		levelText << "Level " << level;
+		Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .25f, Game::GetInstance()->GetScreenHeight() * .65f + levelUpTimer / 3.f * Game::GetInstance()->GetScreenHeight() * .10f }, levelText.str().c_str(), false, levelUpTimer / 3.f * 255);
+
+	}
+
 
 	m_Engine->Render();
 
 	SGD::Rectangle rShipRegion = SGD::Rectangle (SGD::Point{ 0, 0 }, size);
-		
 	SGD::Point renderPoint = offsetToCamera();
 	SGD::Color col = {};
 	if (damaged > 0)
@@ -621,6 +635,7 @@ void CPlayer::AddExp(int _exp)
 		maxHull += HULL_SCALE;
 		shield = maxShield;
 		hull = maxHull;
+		levelUpTimer = 3.f;
 
 		m_Engine = new CEmitter(
 			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetParticleData(),

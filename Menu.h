@@ -18,7 +18,7 @@ class CMenu
 	std::string label;
 	SGD::Point labelPoint;
 	Fnt* font;
-	int cursor;
+	int cursor = 0;
 	bool horizontal;
 
 public:

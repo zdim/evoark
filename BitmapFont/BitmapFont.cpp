@@ -31,7 +31,7 @@ SGD::Size	Fnt::ComputeStringSpace(std::string str)//Returns the amount of space 
 	return SGD::Size{width, height};
 }
 
-void		Fnt::Write(SGD::Point pos, std::string str, bool selected)
+void		Fnt::Write(SGD::Point pos, std::string str, bool selected, char opacity)
 {
 	SGD::GraphicsManager* graphics = SGD::GraphicsManager::GetInstance();
 	SGD::Size stringSize = ComputeStringSpace(str);
@@ -51,7 +51,7 @@ void		Fnt::Write(SGD::Point pos, std::string str, bool selected)
 			graphics->DrawTextureSection(image, { pos.x, pos.y }, SGD::Rectangle(ch.imagePosition, ch.size), 0, {}, { 200, 255, 255, 255 });
 		}
 		else
-			graphics->DrawTextureSection(image, { pos.x, pos.y }, SGD::Rectangle(ch.imagePosition, ch.size));
+			graphics->DrawTextureSection(image, { pos.x, pos.y }, SGD::Rectangle(ch.imagePosition, ch.size), 0, {}, { (unsigned char)opacity, (unsigned char)255, (unsigned char)255, (unsigned char)255 });
 		pos.x = oldX + ch.size.width;
 		pos.y = oldY;
 	}
