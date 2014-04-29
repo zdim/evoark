@@ -29,14 +29,13 @@ void CPushModule::Activate()
 		};
 
 
-
-		SGD::Point pos = dynamic_cast<CCoral*>(GetOwner())->GetTarget()->GetPosition();
-		pos.x += 100;
-		pos.y += 0;
+		SGD::Vector offset = { 0, -GetOwner()->GetSize().height/2 };
+		offset.Rotate(rotation + GetOwner()->GetRotation());
+		SGD::Point pos = owner->GetPosition() + offset;
 		if (vToTarget.ComputeLength() <= 600 )
 		{
-			CParticleSystem::GetInstance()->AddEmitterPos(17, target->GetPosition());
-			CreateProjectileMessage* Msg = new CreateProjectileMessage(EntityType::Push, pos, { 150, 150 }, rotation, damage, tier, radius);
+			CParticleSystem::GetInstance()->AddEmitterPos(17, pos);
+			CreateProjectileMessage* Msg = new CreateProjectileMessage(EntityType::Push, pos, { 150, 150 }, rotation + owner->GetRotation(), damage, tier, radius);
 			Msg->QueueMessage();
 		}
 		

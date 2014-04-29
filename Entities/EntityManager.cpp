@@ -1490,8 +1490,11 @@ void CEntityManager::Load()
 	{
 		boss = new CMoccasin;
 		boss->SetModuleData(save.world.boss.modules);
-		boss->Init((int)save.currLevel);
-		boss->SetImage(imagesMoccasin[(int)save.currLevel]);
+		Level l = save.currLevel;
+		if (l == Level::Final)
+			l = Level::Waves;
+		boss->Init((int)l);
+		boss->SetImage(imagesMoccasin[(int)l]);
 		boss->SetImages(images);
 		bigEnemies.push_back(boss);
 		ships.push_back(boss);
