@@ -14,7 +14,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>		// Win32 Application
 
-#include <vld.h>			// Visual Leak Detector!
+//#include <vld.h>			// Visual Leak Detector!
 #include "resource.h"
 #include "GameStates\Game.h"			// Game class
 #include "GameStates\GameState.h"

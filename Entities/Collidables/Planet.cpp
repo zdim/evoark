@@ -3,6 +3,7 @@
 #include "Asteroid.h"
 #include "Shield.h"
 #include "ModuleShield.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 void CPlanet::Update(float dt)
 {
@@ -39,4 +40,14 @@ void CPlanet::HandleCollision(IEntity* other)
 		//Make a new velocity going in a different direction with the same speed
 		ast->SetVelocity(dir*speed);
 	}
+}
+
+void CPlanet::Render()
+{
+	SGD::Rectangle rShipRegion = SGD::Rectangle(SGD::Point{ 0, 0 }, size);
+	SGD::Point renderPoint = offsetToCamera();
+	SGD::Color col = {};
+	
+
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint, rShipRegion, rotation, size / 2, col);
 }
