@@ -178,7 +178,7 @@ void CPlayer::Update(float dt)
 
 		if (tutorialWaitForInput[1])
 		{
-			if (input->IsKeyPressed(SGD::Key::Spacebar) || input->IsButtonPressed(0, 0))
+			if (input->IsKeyPressed(SGD::Key::Spacebar) || input->IsButtonPressed(0, 8))
 			{
 				tutorialWaitForInput[1] = false;
 				Warp();
@@ -188,12 +188,18 @@ void CPlayer::Update(float dt)
 
 		if (tutorialWaitForInput[2])
 		{
-			if (input->IsKeyPressed(SGD::Key::Q) || input->IsButtonPressed(0, 4))
+			if (input->IsKeyPressed(SGD::Key::Q))
 			{
 				tutorialWaitForInput[2] = false;
 				CreateWell();
+				return;
 			}
-			return;
+			if (input->IsButtonPressed(0, 4))
+			{
+				tutorialWaitForInput[2] = false;
+				CreateWellController();
+				return;
+			}
 		}
 
 		if (tutorialWaitForInput[3])
@@ -385,7 +391,7 @@ void CPlayer::Update(float dt)
 	{
 		CreatePush();
 	}
-	if (input->IsKeyPressed(SGD::Key::Spacebar) || input->IsButtonPressed(0, 0))
+	if (input->IsKeyPressed(SGD::Key::Spacebar) || input->IsButtonPressed(0, 8))
 	{
 		Warp();
 	}
@@ -533,7 +539,7 @@ void CPlayer::CreatePush()
 	pushTimer = 0;
 
 
-
+	SGD::Point _pos = offsetToCamera();
 
 	//TODO: Send CreatePush message
 	if (pushLevel == 0)
