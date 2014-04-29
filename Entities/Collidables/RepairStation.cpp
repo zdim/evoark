@@ -87,7 +87,7 @@ void CRepairStation::HandleCollision(IEntity* other)
 	if (otherType >= EntityType::Player && otherType <= EntityType::Moccasin)
 	{
 		//This formula gets the direction from us to them (so away from us), then multiplies that by (their speed * 1.1) so that they can only fight the push from impact a little bit
-		other->AddGravity(dir * (dynamic_cast<CShip*>(other)->getSpeed() * 1.1));
+		other->AddGravity(dir * (dynamic_cast<CShip*>(other)->getSpeed() * 1.1f));
 	}
 
 	//Is other an asteroid?

@@ -6,7 +6,7 @@
 CPush::CPush()
 {
 	radius = SGD::PI /4.0f;
-	duration = 0.3;
+	duration = 0.3f;
 	size = {512,512};
 	imageSize = { 512, 512 };
 

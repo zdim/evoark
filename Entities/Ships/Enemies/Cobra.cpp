@@ -84,7 +84,7 @@ void CCobra::HandleCollision(IEntity* other)
 		//This formula gets the direction from us to them (so away from us), then multiplies that by (their speed * 1.1) so that they can only fight the push from impact a little bit
 		SGD::Vector dir = other->GetPosition() - position;
 		dir.Normalize();
-		other->AddGravity(dir * (dynamic_cast<CShip*>(other)->getSpeed() * 1.1));
+		other->AddGravity(dir * (dynamic_cast<CShip*>(other)->getSpeed() * 1.1f));
 		//Have the other ship take damage based on our mass and speed (not necessarily our current speed/velocity)
 		//We will probably rebalance this later.
 		float mass = size.width * size.height / 100;

@@ -402,7 +402,7 @@ void CProfileSelectState::Render()
 		menu->Render();
 		if (state >= MyState::ConfirmOverwrite)
 		{
-			SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 90, 0, 0, 0 });
+			SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ float(Game::GetInstance()->GetScreenWidth()), float(Game::GetInstance()->GetScreenHeight()) } }, { 90, 0, 0, 0 });
 			confirm->Render();
 		}
 	}

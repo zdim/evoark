@@ -107,6 +107,8 @@ CMenu::CMenu(Fnt* _font, std::vector<std::string>buttonLabels, std::string _labe
 		box.top -= menuPadding.height;
 		box.bottom += menuPadding.height;
 	}
+
+	cursor = 0;
 }
 
 int CMenu::Input()

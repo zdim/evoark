@@ -23,7 +23,7 @@ void CShieldModule::Update(float dt)
 	CModule::Update(dt);
 	if (timer >= cooldown)
 	{
-		shield += regen * dt;
+		shield += int(regen * dt);
 		if (shield > shieldMax)
 			shield = shieldMax;
 	}

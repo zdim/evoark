@@ -134,8 +134,8 @@ TiXmlElement* makeEntityDataElement(EntityData& data)
 		entity = new TiXmlElement("deadMod");
 		double x = 0;
 		double y = 0;
-		entity->SetAttribute("x", x);
-		entity->SetAttribute("y", y);
+		entity->SetDoubleAttribute("x", x);
+		entity->SetDoubleAttribute("y", y);
 		entity->SetAttribute("hull", 0);
 		entity->SetAttribute("shield", 0);
 		entity->SetAttribute("coord", false);
@@ -143,8 +143,8 @@ TiXmlElement* makeEntityDataElement(EntityData& data)
 	}
 	double x = data.position.x;
 	double y = data.position.y;
-	entity->SetAttribute("x", x);
-	entity->SetAttribute("y", y);
+	entity->SetDoubleAttribute("x", x);
+	entity->SetDoubleAttribute("y", y);
 	entity->SetAttribute("hull", data.hull);
 	entity->SetAttribute("shield", data.shield);
 	entity->SetAttribute("coord", data.coord);

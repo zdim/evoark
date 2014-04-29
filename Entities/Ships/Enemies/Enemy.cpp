@@ -213,10 +213,10 @@ void CEnemy::HandleEvent(CCustomEvent* e)
 		if (timeDiff < dodgeTime)
 		{
 			//Get the damage of each
-			float dam = CalculateDamage(other);
+			float dam = float(CalculateDamage(other));
 			if (dam <= 0)
 				return;
-			float oldDam = CalculateDamage(avoid);
+			float oldDam = float(CalculateDamage(avoid));
 			//If the new thing does more damage than the old thing
 			if (dam > oldDam)
 				//Avoid the new thing
