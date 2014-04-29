@@ -407,10 +407,6 @@ void CEntityManager::Spawn(EntityType type, SGD::Point position, unsigned int am
 								 if (boss)
 									 return;
 
-
-
-
-
 								 CMoccasin* moccasin = new CMoccasin;
 
 								 dynamic_cast<CMoccasin*>(moccasin)->Init((int)CGameplayState::GetInstance()->GetLevel());

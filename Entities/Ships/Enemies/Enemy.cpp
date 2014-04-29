@@ -272,20 +272,7 @@ void CEnemy::TakeDamage(int damage, bool collision)
 	damaged = .15f;
 	if (hull <= 0)
 	{
-		if (this->GetType() == (int)EntityType::Copperhead || this->GetType() == (int)EntityType::Cobra )
-		{
-			CParticleSystem::GetInstance()->AddEmitter(10, this);
-			CParticleSystem::GetInstance()->AddEmitter(11, this);
-			CParticleSystem::GetInstance()->AddEmitter(12, this);
-			CParticleSystem::GetInstance()->RemoveEmitter(this);
-		}
-		if (this->GetType() == (int)EntityType::Mamba )
-		{
-			CParticleSystem::GetInstance()->AddEmitter(20, this);
-			CParticleSystem::GetInstance()->AddEmitter(21, this);
-			CParticleSystem::GetInstance()->AddEmitter(22, this);
-			CParticleSystem::GetInstance()->RemoveEmitter(this);
-		}
+		
 
 		SelfDestruct();
 	}
@@ -295,6 +282,21 @@ void CEnemy::SelfDestruct()
 {
 	if (destroying)
 		return;
+
+	if (this->GetType() == (int)EntityType::Copperhead || this->GetType() == (int)EntityType::Cobra)
+	{
+		CParticleSystem::GetInstance()->AddEmitter(10, this);
+		CParticleSystem::GetInstance()->AddEmitter(11, this);
+		CParticleSystem::GetInstance()->AddEmitter(12, this);
+		CParticleSystem::GetInstance()->RemoveEmitter(this);
+	}
+	if (this->GetType() == (int)EntityType::Mamba)
+	{
+		CParticleSystem::GetInstance()->AddEmitter(20, this);
+		CParticleSystem::GetInstance()->AddEmitter(21, this);
+		CParticleSystem::GetInstance()->AddEmitter(22, this);
+		CParticleSystem::GetInstance()->RemoveEmitter(this);
+	}
 
 	CShip::SelfDestruct();
 	CEventManager::GetInstance().UnregisterAll(this);

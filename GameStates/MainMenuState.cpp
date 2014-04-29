@@ -76,7 +76,7 @@ void CMainMenuState::Render()
 	SGD::GraphicsManager::GetInstance()->DrawTextureSection(backgroundSmoke, backgroundSmokePos, { 0, 0, 1024.f, 768.f }, 0, {}, { 40, 90, 100, 40 });
 	SGD::GraphicsManager::GetInstance()->DrawTextureSection(backgroundSmoke, backgroundSmokePosSecond, { 0, 0, 1024.f, 768.f }, 0, {}, { 40, 90, 100, 40 });
 	SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 50, 0, 0, 0 });
-	if (Game::GetInstance()->GetTopState() != CProfileSelectState::GetInstance())
+	if (Game::GetInstance()->GetTopState() != CProfileSelectState::GetInstance() && Game::GetInstance()->GetTopState() != CCreditsState::GetInstance())
 	{
 		//[ctrlf]FontRender
 		//SGD::GraphicsManager::GetInstance()->DrawTexture(titleTexture, { Game::GetInstance()->GetScreenWidth() * .05f, Game::GetInstance()->GetScreenHeight() * .33f });

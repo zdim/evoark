@@ -40,7 +40,7 @@ void EventTrigger::Render()
 				if (ARCADE == 1)
 					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Left Red to fire lasers.");
 				else
-				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Right Trigger to fire lasers.");
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Right Trigger to fire lasers.");
 			}
 			else
 				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .68f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Left click to fire lasers.");
@@ -66,7 +66,7 @@ void EventTrigger::Render()
 				if (ARCADE == 1)
 					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Button 2 to Warp.");
 				else
-					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit A to Warp.");
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Click LS to Warp.");
 			}
 			else
 				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit Space to Warp.");
@@ -142,6 +142,7 @@ void EventTrigger::Render()
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .65f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "you with experience,");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .67f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "as well as provide more aid");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .69f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "in the final battle.");
+			graphics->DrawTextureSection(CEntityManager::GetInstance()->GetImages()[(int)EntityType::Human], { screenSize.width * .20f, screenSize.height * .70f }, { 0, 0, 60, 70 }, 0, {}, { 230, 255, 255, 255 }, { .75f, .75f });
 			break;
 		case (int)triggerID::tutUpgrade:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .30f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
