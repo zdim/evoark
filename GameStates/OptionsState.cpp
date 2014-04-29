@@ -144,16 +144,16 @@ void COptionsState::Render()
 
 	std::ostringstream sfxString;
 	sfxString << sfxVolume;
-	Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .56f, Game::GetInstance()->GetScreenHeight() * .57f }, sfxString.str().c_str());
+	Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .54f, Game::GetInstance()->GetScreenHeight() * .57f }, sfxString.str().c_str());
 	std::ostringstream musString;
 	musString << musicVolume;
-	Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .56f, Game::GetInstance()->GetScreenHeight() * .62f }, musString.str().c_str());
+	Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .54f, Game::GetInstance()->GetScreenHeight() * .6325f }, musString.str().c_str());
 	if (fullscreenOn)
 	{
-		Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .56f, Game::GetInstance()->GetScreenHeight() * .67f }, "On");
+		Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .54f, Game::GetInstance()->GetScreenHeight() * .695f }, "On");
 	}
 	else
-		Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .56f, Game::GetInstance()->GetScreenHeight() * .67f }, "Off");
+		Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .54f, Game::GetInstance()->GetScreenHeight() * .695f }, "Off");
 
 	SGD::GraphicsManager::GetInstance()->DrawTexture(mouseTexture, { Game::GetInstance()->GetScreenWidth() * .60f, Game::GetInstance()->GetScreenHeight() * .50f });
 
