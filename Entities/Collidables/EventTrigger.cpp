@@ -66,7 +66,7 @@ void EventTrigger::Render()
 				if (ARCADE == 1)
 					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Button 2 to Warp.");
 				else
-					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit A to Warp.");
+					Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Click LS to Warp.");
 			}
 			else
 				Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .63f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "Hit Space to Warp.");
