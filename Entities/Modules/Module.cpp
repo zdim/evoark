@@ -2,7 +2,7 @@
 #include "Module.h"
 #include "../Ships/Enemies/Coral.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
-
+#include "../../Graphics/Particles/ParticleSystem.h"
 CModule::CModule()
 {
 	owner = nullptr;
@@ -68,6 +68,25 @@ void CModule::TakeDamage(int damage, bool collision)
 	damaged = .15f;
 	if (hull <= 0)
 	{
+
+		if (this->GetType() == (int)EntityType::BaseModule)
+		{
+			if (owner->GetType() == (int)EntityType::Coral)
+			{
+				CParticleSystem::GetInstance()->AddEmitter(23, this);
+				CParticleSystem::GetInstance()->AddEmitter(24, this);
+				CParticleSystem::GetInstance()->AddEmitter(25, this);
+				CParticleSystem::GetInstance()->RemoveEmitter(this);
+			}
+
+			if (owner->GetType() == (int)EntityType::Moccasin)
+			{
+				CParticleSystem::GetInstance()->AddEmitter(26, this);
+				CParticleSystem::GetInstance()->AddEmitter(27, this);
+				CParticleSystem::GetInstance()->RemoveEmitter(this);
+			}
+		}
+
 		SelfDestruct();
 	}
 }

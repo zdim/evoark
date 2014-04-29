@@ -38,7 +38,13 @@ void CShip::TakeDamage(int damage, bool collision)
 	hull -= damage;
 	if (hull <= 0)
 	{
-		
+		if (this->GetType() == (int)EntityType::Human )
+		{
+			CParticleSystem::GetInstance()->AddEmitter(20, this);
+			CParticleSystem::GetInstance()->AddEmitter(21, this);
+			CParticleSystem::GetInstance()->AddEmitter(22, this);
+			CParticleSystem::GetInstance()->RemoveEmitter(this);
+		}
 
 		SelfDestruct();
 	}

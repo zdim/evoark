@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ParticleEffect>
+  <Emittor NumOfParticles="200" SpawnRate="0.05" TimeFromLastSpawn="0.01" Shape="1" Radius="50" EmitBool="False" EmitTime="0.3" PosX="316" PosY="252" Width="1" Height="1" />
+  <Particle Image="cloud blob.png" StartScaleX="0" StartYScale="0" EndXScale="2.5" EndYScale="2.5" StartColorA="255" StartColorR="0" StartColorG="0" StartColorB="0" EndColorA="15" EndColorR="192" EndColorG="192" EndColorB="192" SpeedMinX="0" SpeedMinY="0" SpeedMaxX="0" SpeedMaxY="0" LifeMax="1" LifeMin="0.01" RotationSpeed="0" Enertia="0" />
+</ParticleEffect>
