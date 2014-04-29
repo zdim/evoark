@@ -131,7 +131,7 @@ void CPlayer::Update(float dt)
 			if (input->IsButtonPressed(0, 0) || input->IsButtonPressed(1, 0))
 			{
 				tutorialWaitForInput[2] = false;
-				CreateWell();
+				CreateWellController();
 			}
 			return;
 		}
