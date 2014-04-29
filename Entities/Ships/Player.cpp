@@ -44,11 +44,11 @@ CPlayer::CPlayer()
 	size = { 60, 89 };
 
 	imageSize = { 64, 128 };
-	
+
 	wellIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/wellIconPurple32.png");
 	pushIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushIconPurple32.png");
 	warpIcon = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/warpIconPurple32.png");
-	
+
 	for (int i = 0; i < 6; i++) tutorialWaitForInput[i] = false;
 	for (int i = 0; i < 6; i++) tutorialTriggerHit[i] = false;
 
@@ -83,7 +83,7 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update(float dt)
 {
-	SGD::Vector rotatedOffset = { 0,45 };
+	SGD::Vector rotatedOffset = { 0, 45 };
 	rotatedOffset.Rotate(rotation);
 	enginePos = position + rotatedOffset;
 
@@ -307,7 +307,7 @@ void CPlayer::Update(float dt)
 		arrowsOn = !arrowsOn;
 #else
 	//Movement
-	SGD::Vector dir = SGD::Vector{0,0};
+	SGD::Vector dir = SGD::Vector{ 0, 0 };
 	if (input->IsKeyDown(SGD::Key::W) || input->GetLeftJoystick(0).y < 0)
 		dir.y -= 1;
 	if (input->IsKeyDown(SGD::Key::S) || input->GetLeftJoystick(0).y > 0)
@@ -316,26 +316,26 @@ void CPlayer::Update(float dt)
 		dir.x -= 1;
 	if (input->IsKeyDown(SGD::Key::D) || input->GetLeftJoystick(0).x > 0)
 		dir.x += 1;
-	if (dir != SGD::Vector{0, 0})
+	if (dir != SGD::Vector{ 0, 0 })
 		dir.Normalize();
 
-	 //commented out until finished implementing - was messing up standard input
+	//commented out until finished implementing - was messing up standard input
 	if (warpTimer < warpDuration)
 	{
-		
+
 		velocity = dir * (speed + warpSpeed);
-	}	
+	}
 	else
 	{
 		velocity = dir * speed;
 	}
-	
+
 
 	//SGD::Point mousePos = { 0, 0 };
 	float oldRot = rotation;
 	if (input->GetMouseMovement() != SGD::Vector{ 0, 0 })
 	{
-		SGD::Point mousePos = input->GetMousePosition() - SGD::Vector{ size.width, size.height } * .5f;
+		SGD::Point mousePos = input->GetMousePosition() - SGD::Vector{ size.width, size.height } *.5f;
 		rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
 
 	}
@@ -344,7 +344,7 @@ void CPlayer::Update(float dt)
 	{
 		SGD::Vector rotationVec = { 0, -1 };
 
-		SGD::Vector rightThumb = {0,0};
+		SGD::Vector rightThumb = { 0, 0 };
 		if (input->GetRightJoystick(0).y < 0)			rightThumb.y -= 1;
 		if (input->GetRightJoystick(0).y > 0)			rightThumb.y += 1;
 		if (input->GetRightJoystick(0).x < 0)			rightThumb.x -= 1;
@@ -353,16 +353,16 @@ void CPlayer::Update(float dt)
 		{
 			//rightThumb.Normalize();
 			rotation = rotationVec.ComputeAngle(input->GetRightJoystick(0));
-			if(rotation != SGD::PI)
+			if (rotation != SGD::PI)
 				rotation *= rotationVec.ComputeSteering(rightThumb);
 		}
 		else
 			rotation = oldRot;
 	}
-		
+
 	//rotation = atan2(mousePos.y - offsetToCamera().y, mousePos.x - offsetToCamera().x) + SGD::PI / 2;
 
-	
+
 
 	//Abilities
 	if (input->IsKeyDown(SGD::Key::LButton) || input->GetTrigger(0) == 1)
@@ -416,15 +416,15 @@ void CPlayer::Render()
 
 	m_Engine->Render();
 
-	SGD::Rectangle rShipRegion = SGD::Rectangle (SGD::Point{ 0, 0 }, size);
+	SGD::Rectangle rShipRegion = SGD::Rectangle(SGD::Point{ 0, 0 }, size);
 	SGD::Point renderPoint = offsetToCamera();
 	SGD::Color col = {};
 	if (damaged > 0)
 	{
 		col = { 155, 155, 155 };
 	}
-	
-	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint,rShipRegion, rotation, size / 2, col );
+
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(image, renderPoint, rShipRegion, rotation, size / 2, col);
 }
 
 void CPlayer::AddGravity(SGD::Vector grav)
@@ -443,7 +443,7 @@ void CPlayer::CreateLaser()
 	if (laserLevel >= 1)
 		damage += 15;
 
-	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, m_shield->GetSize(), rotation, damage, laserLevel,-1.0f,this);
+	CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Laser, position, m_shield->GetSize(), rotation, damage, laserLevel, -1.0f, this);
 	msg->QueueMessage();
 }
 
@@ -462,14 +462,14 @@ void CPlayer::CreateMissile()
 
 void CPlayer::CreateWell()
 {
-	if(wellTimer <= wellDelay)
+	if (wellTimer <= wellDelay)
 		return;
 
 	CParticleSystem::GetInstance()->AddEmitterPos(18, SGD::InputManager::GetInstance()->GetMousePosition() - CCamera::GetInstance()->GetOffset());
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerWell, false);
 	wellTimer = 0;
 	//TODO: Send CreateWell message
-	
+
 	if (wellLevel == 0)
 	{
 		CreateProjectileMessage* msg = new CreateProjectileMessage(EntityType::Well, SGD::InputManager::GetInstance()->GetMousePosition() - CCamera::GetInstance()->GetOffset(), size, rotation, 150, wellLevel, 100);
@@ -532,7 +532,7 @@ void CPlayer::CreatePush()
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerPush, false);
 	pushTimer = 0;
 
-	
+
 
 
 	//TODO: Send CreatePush message
@@ -561,7 +561,7 @@ void CPlayer::CreatePush()
 
 void CPlayer::Warp()
 {
-	
+
 
 	if (warpTimer <= warpDelay)
 		return;
@@ -573,7 +573,7 @@ void CPlayer::Warp()
 
 void CPlayer::TakeDamage(int damage, bool collision)
 {
-    if (collision && warpTimer <= warpDuration && warpLevel >= 3)
+	if (collision && warpTimer <= warpDuration && warpLevel >= 3)
 	{
 		return;
 	}
@@ -587,7 +587,7 @@ void CPlayer::TakeDamage(int damage, bool collision)
 		shield -= damage;
 		damage -= shield;
 		if (shield <= 0)
-			CParticleSystem::GetInstance()->AddEmitter(4, this);	
+			CParticleSystem::GetInstance()->AddEmitter(4, this);
 	}
 	else
 	{
@@ -601,19 +601,21 @@ void CPlayer::TakeDamage(int damage, bool collision)
 
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyHullDamage, false);
 
-	
+
 	hull -= damage;
 	float hullPercent = (float)hull / (float)maxHull;
-	if ( hullPercent < .50f)
+	if (hullPercent < .50f)
 		CParticleSystem::GetInstance()->AddEmitter(9, this);
-	
-	
+
+
 	damaged = .15f;
 	if (hull <= 0 && !destroying)
 	{
-		CParticleSystem::GetInstance()->AddEmitter(10, this);
-		CParticleSystem::GetInstance()->AddEmitter(11, this);
-		CParticleSystem::GetInstance()->AddEmitter(12, this);
+		CParticleSystem::GetInstance()->AddEmitter(20, this);
+		CParticleSystem::GetInstance()->AddEmitter(21, this);
+		CParticleSystem::GetInstance()->AddEmitter(22, this);
+		CParticleSystem::GetInstance()->RemoveEmitter(this);
+
 		CCreateGameOverMessage* msg = new CCreateGameOverMessage();
 		msg->QueueMessage();
 		SelfDestruct();
@@ -654,16 +656,16 @@ void CPlayer::AddExp(int _exp)
 	}
 }
 
-void CPlayer::LaserLevelUp() 
-{ 
+void CPlayer::LaserLevelUp()
+{
 	laserLevel++;
 	if (laserLevel == 3)
 		laserDelay = .05f;
 }
 
 void CPlayer::WarpLevelUp()
-{ 
-	warpLevel++; 
+{
+	warpLevel++;
 	if (warpLevel == 1)
 		warpDelay = 6.0f;
 	else if (warpLevel == 2)
@@ -749,7 +751,7 @@ void CPlayer::HandleCollision(IEntity* other)
 
 	CShip::HandleCollision(other);
 
-	
+
 }
 
 int CPlayer::GetTutorialPause()
