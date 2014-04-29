@@ -341,7 +341,7 @@ void	CTestLevelState::Generate()
 		genLevel = false;
 		break;
 	case Level::Gen1:
-		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne.xml");
+		loadSuccess = LoadXMLLevel("Resources/XML/World/levelOne500.xml");
 		testing += "1";
 		//loadSuccess = LoadXMLLevel("Resources/XML/World/JDTest.xml");
 		break;

@@ -466,7 +466,7 @@ void CUpgradeState::Render()
 	case warpTwo:
 		graphics->DrawRectangle({ { screenWidth * .54f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, { 200, 0, 0, 0 }, { 255, 255, 255 }, 1);
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .54f, screenHeight * .28f }, SGD::Size{ 150, 100 } }, "Warp II");
-		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .54f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Increased Warp");
+		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .54f, screenHeight * .32f }, SGD::Size{ 150, 100 } }, "Increased Warp");
 		Game::GetInstance()->FontSmall.WriteCenter({ { screenWidth * .54f, screenHeight * .34f }, SGD::Size{ 150, 100 } }, "Force");
 		break;
 	case warpThree:
@@ -514,7 +514,7 @@ void CUpgradeState::Render()
 	}
 
 	// draw selected box
-	if (cursor != -1)
+	if (cursor > -1)
 		graphics->DrawRectangle({ { screenWidth * .15f * (cursor / 3 + 1), screenHeight * (.55f - (cursor % 3) * .20f) }, SGD::Size{ 64, 64 } }, { 50, 255, 255, 255 }, { 255, 255, 255 }, 2);
 	std::ostringstream perksToSpend;
 	perksToSpend << "Perks to spend: " << player->GetPerks();

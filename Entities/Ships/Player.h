@@ -53,6 +53,9 @@ class CPlayer :
 	bool tutorialWaitForInput[6];
 	bool tutorialTriggerHit[6];
 
+	// level up graphic
+	float levelUpTimer = 0.f;
+
 public:
 	CPlayer();
 	virtual ~CPlayer();
