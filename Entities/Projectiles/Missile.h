@@ -11,6 +11,9 @@ class CMissile :
 
 	CParticleSystem* m_pSystem;
 
+	float m_fTimer;
+	float m_fMissileLife;
+
 public:
 	CMissile();
 	virtual ~CMissile();

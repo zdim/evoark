@@ -40,9 +40,9 @@ void CEnemy::Update(float dt)
 	}
 	else
 	{
-		SGD::Vector forward = {0,-1};
+		SGD::Vector forward = { 0, -1 };
 		forward.Rotate(rotation);
-		forward.Rotate(SGD::PI/2.1f);
+		forward.Rotate(SGD::PI / 2.1f);
 		rotateToward(forward, dt);
 	}
 
@@ -71,7 +71,7 @@ void CEnemy::Update(float dt)
 	SGD::Vector forward = { 0, -1 };
 	forward.Rotate(rotation);
 	SGD::Vector dir;
-	if(avoid)
+	if (avoid)
 	{
 		dir = avoid->GetVelocity();
 		dir.Normalize();
@@ -82,7 +82,7 @@ void CEnemy::Update(float dt)
 			dir.Rotate(SGD::PI * 0.5f);
 		velocity = dir * speed;
 		float strafeAngle = forward.ComputeAngle(dir);
-		strafeAngle /= (SGD::PI*3/4);
+		strafeAngle /= (SGD::PI * 3 / 4);
 		strafeAngle = 1 - strafeAngle;
 		if (strafeAngle < 0.1f)
 			strafeAngle = 0.1f;
@@ -108,7 +108,7 @@ void CEnemy::Update(float dt)
 	}
 	else
 	{
-		velocity = {0,0};
+		velocity = { 0, 0 };
 	}
 
 	//Add evasive direction to velocity
@@ -123,7 +123,7 @@ void CEnemy::Update(float dt)
 void CEnemy::Render()
 {
 	SGD::Rectangle rShipRegion = SGD::Rectangle(SGD::Point{ 0, 0 }, size);
-	
+
 	SGD::Point renderPoint = offsetToCamera();
 
 
@@ -164,88 +164,88 @@ void CEnemy::HandleEvent(CCustomEvent* e)
 	{
 	case EventID::position:
 	{
-		IEntity* other = dynamic_cast<IEntity*> (e->GetSender());
-		if (other == this)
-			return;
-		if (other->IsDestroying())
-			return;
-		EntityType otherType = (EntityType)other->GetType();
-		if (otherType == EntityType::Human || otherType == EntityType::Player)
-		{
-			DetectShip(dynamic_cast<CShip*>(other));
-		}
-		//detect projectiles and collidables
+							  IEntity* other = dynamic_cast<IEntity*> (e->GetSender());
+							  if (other == this)
+								  return;
+							  if (other->IsDestroying())
+								  return;
+							  EntityType otherType = (EntityType)other->GetType();
+							  if (otherType == EntityType::Human || otherType == EntityType::Player)
+							  {
+								  DetectShip(dynamic_cast<CShip*>(other));
+							  }
+							  //detect projectiles and collidables
 
-		//Calculate how long it will take to collide
-		float collisionTime = CalculateCollisionTime(other);
-		//-1 means it won't collide
-		if (collisionTime == -1)
-			break;
+							  //Calculate how long it will take to collide
+							  float collisionTime = CalculateCollisionTime(other);
+							  //-1 means it won't collide
+							  if (collisionTime == -1)
+								  break;
 
 
-		//Between the width and height of the potential new avoid
-		float larger = std::max(size.width * 2, std::max(size.height * 2, std::max(other->GetSize().width, other->GetSize().height)));
-		//Calculate the amount of time it should take to dodge the object at the avoid pointer.
-		float dodgeTime = larger/speed;
-		//If there is no current avoid
-		if (!avoid)
-		{
-			//If it will collide soon enouggh for us to worry about taking damage
-			if(collisionTime < dodgeTime * 2 && CalculateDamage(other) > 0)
-				//Avoid other
-				SetAvoid(other);
-			//We're done
-			break;
-		}
+							  //Between the width and height of the potential new avoid
+							  float larger = std::max(size.width * 2, std::max(size.height * 2, std::max(other->GetSize().width, other->GetSize().height)));
+							  //Calculate the amount of time it should take to dodge the object at the avoid pointer.
+							  float dodgeTime = larger / speed;
+							  //If there is no current avoid
+							  if (!avoid)
+							  {
+								  //If it will collide soon enouggh for us to worry about taking damage
+								  if (collisionTime < dodgeTime * 2 && CalculateDamage(other) > 0)
+									  //Avoid other
+									  SetAvoid(other);
+								  //We're done
+								  break;
+							  }
 
-		//We have another avoid, recalculate dodgetime based on it's size too
-		//Get the new largest dimension, including the old thing's size
-		larger = std::max(larger, std::max(avoid->GetSize().width, avoid->GetSize().height));
-		//recalculat dodgetime
-		dodgeTime = larger/speed;
+							  //We have another avoid, recalculate dodgetime based on it's size too
+							  //Get the new largest dimension, including the old thing's size
+							  larger = std::max(larger, std::max(avoid->GetSize().width, avoid->GetSize().height));
+							  //recalculat dodgetime
+							  dodgeTime = larger / speed;
 
-		//Calculate the collision time for the old collider
-		float oldCollisionTime = CalculateCollisionTime(avoid);
-		//calculate the differnce between the collision times
-		float timeDiff = abs(oldCollisionTime - collisionTime);
+							  //Calculate the collision time for the old collider
+							  float oldCollisionTime = CalculateCollisionTime(avoid);
+							  //calculate the differnce between the collision times
+							  float timeDiff = abs(oldCollisionTime - collisionTime);
 
-		//If we can't dodge both
-		if (timeDiff < dodgeTime)
-		{
-			//Get the damage of each
-			float dam = float(CalculateDamage(other));
-			if (dam <= 0)
-				return;
-			float oldDam = float(CalculateDamage(avoid));
-			//If the new thing does more damage than the old thing
-			if (dam > oldDam)
-				//Avoid the new thing
-				SetAvoid(other);
-			//We're done
-			return;
-		}
-		
-		//If the new thing will collide earlier than the old thing
-		if (collisionTime < oldCollisionTime && CalculateDamage(other) >= 0)
-		{
-			//Avoid the new thing
-			SetAvoid(other);
-		}
+							  //If we can't dodge both
+							  if (timeDiff < dodgeTime)
+							  {
+								  //Get the damage of each
+								  float dam = float(CalculateDamage(other));
+								  if (dam <= 0)
+									  return;
+								  float oldDam = float(CalculateDamage(avoid));
+								  //If the new thing does more damage than the old thing
+								  if (dam > oldDam)
+									  //Avoid the new thing
+									  SetAvoid(other);
+								  //We're done
+								  return;
+							  }
+
+							  //If the new thing will collide earlier than the old thing
+							  if (collisionTime < oldCollisionTime && CalculateDamage(other) >= 0)
+							  {
+								  //Avoid the new thing
+								  SetAvoid(other);
+							  }
 	}
 	}
 }
 
 void CEnemy::DetectShip(CShip* other)
 {
-		SGD::Point pos = other->GetPosition();
-		SGD::Vector toTarget = pos - position;
+	SGD::Point pos = other->GetPosition();
+	SGD::Vector toTarget = pos - position;
 
-		SGD::Vector forward = { 0, -1 };
-		forward.Rotate(rotation);
-		//"delta rotation" the amount of rotation it will take to face the target.
-		float angle = forward.ComputeAngle(toTarget);
-		if (angle >= SGD::PI / 4.0f)
-			return;
+	SGD::Vector forward = { 0, -1 };
+	forward.Rotate(rotation);
+	//"delta rotation" the amount of rotation it will take to face the target.
+	float angle = forward.ComputeAngle(toTarget);
+	if (angle >= SGD::PI / 4.0f)
+		return;
 
 	float distance = toTarget.ComputeLength();
 	if (distance >= SGD::Vector{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() }.ComputeLength() * 0.5f)
@@ -254,14 +254,14 @@ void CEnemy::DetectShip(CShip* other)
 		//	SetTarget(nullptr);
 		return;
 	}
-		SetTarget(other);
-		if (leader)
-			leader->SetTarget(other);
+	SetTarget(other);
+	if (leader)
+		leader->SetTarget(other);
 }
 
 void CEnemy::TakeDamage(int damage, bool collision)
 {
-	
+
 	if (collision)
 		damage *= COLLISION_MODIFIER;
 
@@ -272,7 +272,13 @@ void CEnemy::TakeDamage(int damage, bool collision)
 	damaged = .15f;
 	if (hull <= 0)
 	{
-		
+		if (this->GetType() == (int)EntityType::Copperhead)
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::copperheadE, false);
+		else if (this->GetType() == (int)EntityType::Cobra)
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::cobraE, false);
+		else if (this->GetType() == (int)EntityType::Mamba)
+			CSoundBox::GetInstance()->Play(CSoundBox::sounds::mExplosion, false);
+
 
 		SelfDestruct();
 	}
@@ -304,7 +310,7 @@ void CEnemy::SelfDestruct()
 
 void CEnemy::SetAvoid(IEntity* newAvoid)
 {
-  	if (avoid)
+	if (avoid)
 		avoid->Release();
 
 	avoid = newAvoid;
@@ -326,24 +332,24 @@ float CEnemy::CalculateCollisionTime(IEntity* other)
 
 	SGD::Rectangle otherRect = other->GetRect();
 	SGD::Rectangle myRect = GetRect();
-	myRect.left -= size.width/2;
-	myRect.right += size.width/2;
-	myRect.top -= size.height/2;
-	myRect.bottom += size.height/2;
+	myRect.left -= size.width / 2;
+	myRect.right += size.width / 2;
+	myRect.top -= size.height / 2;
+	myRect.bottom += size.height / 2;
 	SGD::Size otherSize = other->GetSize();
-	otherRect.MoveTo((other->GetPosition() + vel * time) - otherSize/2);
+	otherRect.MoveTo((other->GetPosition() + vel * time) - otherSize / 2);
 
 	if (!otherRect.IsIntersecting(myRect))
 	{
 		//See if we're heading toawrd them instead
-		time = distance/speed;
+		time = distance / speed;
 		SGD::Rectangle otherRect = other->GetRect();
 		SGD::Rectangle myRect = GetRect();
 		otherRect.left -= otherSize.width / 2;
 		otherRect.right += otherSize.width / 2;
 		otherRect.top -= otherSize.height / 2;
 		otherRect.bottom += otherSize.height / 2;
-		myRect.MoveTo((position + velocity * time) - size/2);
+		myRect.MoveTo((position + velocity * time) - size / 2);
 		if (!otherRect.IsIntersecting(myRect))
 			return -1;
 	}

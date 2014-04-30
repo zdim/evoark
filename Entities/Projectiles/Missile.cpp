@@ -11,11 +11,12 @@
 CMissile::CMissile()
 {
 	m_pSystem = CParticleSystem::GetInstance();
-
 	m_pSystem->AddEmitter(2, this);
-	
-
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
+
+	m_fTimer = 0;
+	m_fMissileLife = 0.5;
+
 }
 
 
@@ -67,6 +68,10 @@ void CMissile::SetTarget(CShip* t)
 
 void CMissile::Update(float dt)
 {
+	m_fTimer += dt;
+
+	if (m_fTimer >= m_fMissileLife)
+		SelfDestruct();
 
 	CLaser::Update(dt);
 
@@ -92,17 +97,14 @@ void CMissile::Update(float dt)
 
 	}
 
-	//m_eTrail->SetEmitterPosition(position);
-   // m_eTrail->Update(dt);
+
 
 
 }
 
 void  CMissile::Render()
 {
-	//m_eTrail->Render();
 	CEntity::Render();
-
 }
 
 void CMissile::HandleEvent(CCustomEvent* e)

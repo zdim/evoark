@@ -1,6 +1,7 @@
 #pragma once
 #include "Copperhead.h"
 #include "../../Leader.h"
+class CEmitter;
 class CCobra :
 	public CCopperhead
 {
@@ -9,11 +10,18 @@ class CCobra :
 	float warpDuration;
 	float warpSpeed;
 
+	CEmitter* m_Engine;
+	SGD::Point  enginePos;
+
+	CEmitter* m_Engine2;
+	SGD::Point  enginePos2;
+
 public:
 	CCobra();
 	virtual ~CCobra();
 
 	int GetType() override { return (int)EntityType::Cobra; }
+	void Render();
 	void Update(float dt);
 	void AddGrav(SGD::Vector);
 	void Warp();

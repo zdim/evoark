@@ -740,7 +740,10 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										{
 										case EntityType::Laser:
 											if (lMsg->GetTier() < 3)
+											{
+												//if (lMsg->GetOwner()->GetType() == (int)EntityType::Player)
 												CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser, false);
+											}											
 											else
 												CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaserFinal, false);
 											break;

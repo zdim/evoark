@@ -98,6 +98,8 @@ void CParticleSystem::Init()
 	std::string efName27 = "Boss Explosion2.xml";
 	LoadEffect(efName27);
 	
+	std::string efName28 = "CobraEngine.xml";
+	LoadEffect(efName28);
 
 	for (int i = 1; i < numEmitters + 1; i++)
 		particleEffect[i]->Initialize();
