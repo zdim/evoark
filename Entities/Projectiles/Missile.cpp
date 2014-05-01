@@ -15,7 +15,7 @@ CMissile::CMissile()
 	CEventManager::GetInstance().Register(dynamic_cast<Listener*>(this), EventID::position);
 
 	m_fTimer = 0;
-	m_fMissileLife = 0.5;
+	m_fMissileLife = 3;
 
 }
 
