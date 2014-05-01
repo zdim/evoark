@@ -937,7 +937,7 @@ namespace SGD
 			if( m_eStatus != E_INITIALIZED )
 				return false;
 
-			if( controller <= m_vGamepads.size() )
+			if( controller >= m_vGamepads.size() )
 				return false;
 
 			return m_vGamepads[ controller ].bConnected;

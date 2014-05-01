@@ -119,7 +119,8 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::WarpModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 
 	//Projectiles 
-	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Projectiles/am_blaster_hardpoint_glow.png", { 255, 100, 100 });
+	//images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Projectiles/am_blaster_hardpoint_glow.png", { 255, 100, 100 });
+	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/laserOne.png", { 255, 100, 100 });
 	images[(int)EntityType::Missile] = graphics->LoadTexture("Resources/Graphics/Projectiles/VG_MissileLRM.png");
 
 	//Collidables

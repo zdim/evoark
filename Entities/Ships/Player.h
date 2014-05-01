@@ -97,6 +97,7 @@ public:
 
 	// for tutorial
 	int GetTutorialPause();
+	void SetTutorialPause(int i) { tutorialWaitForInput[i] = !tutorialWaitForInput[i]; }
 
 	// get textures for icons
 	SGD::HTexture GetWellIcon() { return wellIcon; }

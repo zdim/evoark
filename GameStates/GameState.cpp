@@ -200,7 +200,8 @@ bool	CTestLevelState::Input(void)
 #else
 	if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 7))
 	{
-
+		if (EntityManager->GetPlayer()->GetTutorialPause() == 5)
+			EntityManager->GetPlayer()->SetTutorialPause(5);
 		Game::GetInstance()->PushState(CPauseState::GetInstance());
 		return true;
 	}

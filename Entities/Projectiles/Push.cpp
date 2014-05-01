@@ -21,6 +21,10 @@ CPush::CPush()
 CPush::~CPush()
 {
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushOne);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushTwo);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushThree);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushZero);
+
 }
 
 void CPush::Update(float dt)
