@@ -648,6 +648,11 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 	}
 	case EntityType::Well:
 	{
+							 for (unsigned int i = 0; i < stationaries.size(); i++)
+							 {
+								 if ((stationaries[i]->GetType() == (int)EntityType::Planet  || stationaries[i]->GetType() == (int)EntityType::Barrier) && position.IsWithinRectangle(stationaries[i]->GetRect()))
+									 break;
+							 }
 							 CWell* well = new CWell;
 							 well->SetImage(images[(int)EntityType::Well]);
 							 well->SetRadius(radius);
