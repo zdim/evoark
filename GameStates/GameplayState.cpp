@@ -256,6 +256,7 @@ void CGameplayState::SaveProfile()
 			deadMod->SetAttribute("shield", 0);
 			deadMod->SetAttribute("coord", false);
 			entity->LinkEndChild(deadMod);
+			world->LinkEndChild(entity);
 		}
 		else
 			world->LinkEndChild(makeModularDataElement(save.world.boss));

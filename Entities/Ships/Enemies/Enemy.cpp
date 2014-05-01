@@ -263,7 +263,7 @@ void CEnemy::TakeDamage(int damage, bool collision)
 {
 
 	if (collision)
-		damage *= COLLISION_MODIFIER;
+		damage = int((float)damage * COLLISION_MODIFIER);
 
 
 	if (offsetToCamera().IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
@@ -372,7 +372,7 @@ int CEnemy::CalculateDamage(IEntity* other)
 		CShip* ship = dynamic_cast<CShip*>(other);
 		SGD::Size shipsize = ship->GetSize();
 		float mass = shipsize.width * shipsize.height / 100;
-		return mass * ship->getSpeed() * COLLISION_MODIFIER;
+		return int(mass * ship->getSpeed() * COLLISION_MODIFIER);
 	}
 
 	if (type == EntityType::Laser || type == EntityType::Missile)
@@ -391,7 +391,7 @@ int CEnemy::CalculateDamage(IEntity* other)
 		CAsteroid* ast = dynamic_cast<CAsteroid*>(other);
 		SGD::Size astsize = ast->GetSize();
 		float mass = astsize.width * astsize.height / 10;
-		return mass * ast->GetSpeed() * COLLISION_MODIFIER;
+		return int(mass * ast->GetSpeed() * COLLISION_MODIFIER);
 	}
 
 	return 0;

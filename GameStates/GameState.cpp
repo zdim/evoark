@@ -252,7 +252,7 @@ void	CTestLevelState::Update(float dt)
 	}
 
 
-	if (CGameplayState::GetInstance()->GetLevel() == Level::Waves && EntityManager->GetAllies().empty() && EntityManager->GetBoss() == nullptr)
+	if (CGameplayState::GetInstance()->GetLevel() == Level::Waves && EntityManager->GetAllies().empty() && EntityManager->GetBoss() == nullptr && EntityManager->GetStargate() == nullptr)
 	{
 		if (player->GetPosition().x < GetWorldSize().width * .5f)
 			EntityManager->Spawn(EntityType::Moccasin, { float(m_nNumQuadsWidth * m_nQuadWidth) * .75f, float(m_nNumQuadsHeight * m_nQuadHeight) *.5f }, 4, false);
@@ -704,7 +704,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 
 										SGD::Vector dir = dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetTarget()->GetPosition() - randPosition;								
 										dir.Normalize();
-										SGD::Vector velocity = dir * (rand() % 200 + 100);
+										SGD::Vector velocity = dir * float(rand() % 200 + 100);
 
 										CTestLevelState::GetInstance()->EntityManager->SpawnCollidable(EntityType::Asteroid, randPosition, SGD::Size{ 0,0 }, velocity);
 

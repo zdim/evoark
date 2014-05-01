@@ -1150,6 +1150,8 @@ bool CEntityManager::rectCollision(IEntity* rect1, IEntity* rect2)
 
 void CEntityManager::Update(float dt)
 {
+	saveTimer += dt;
+
 	SGD::Rectangle screen = CCamera::GetInstance()->GetBoxInWorld();
 	float buffer = screen.ComputeSize().width;
 	screen.top -= buffer;
@@ -1239,6 +1241,20 @@ void CEntityManager::Render()
 	//if (player)
 	//if (player->GetRect().IsIntersecting(screen))
 	//	player->Render();
+
+	if (saveTimer < saveDur)
+	{
+		float alpha;
+		if (saveTimer < saveDur * 0.5f)
+		{
+			alpha = saveTimer / (saveDur *0.5f);
+		}
+		else
+		{
+			alpha = saveDur - saveTimer / (saveDur * 0.5f);
+		}
+		Game::GetInstance()->FontPoiret.Write({Game::GetInstance()->GetScreenWidth() * 0.6f, Game::GetInstance()->GetScreenHeight() * 0.75f},"Saved",false,char(255 * alpha));
+	}
 }
 
 void CEntityManager::Save()
@@ -1348,6 +1364,7 @@ void CEntityManager::Save()
 
 	save.world.saved = true;
 	CGameplayState::GetInstance()->SetSaveData(save);
+	saveTimer = 0;
 }
 
 EntityGroup CEntityManager::CreateCopperheadLeader(Flock& data)

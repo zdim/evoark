@@ -30,7 +30,7 @@ void CShip::TakeDamage(int damage, bool collision)
 	//	return;
 	//}
 	if (collision)
-		damage *= COLLISION_MODIFIER;
+		damage = int((float)damage * COLLISION_MODIFIER);
 
 	if (offsetToCamera().IsWithinRectangle(CCamera::GetInstance()->GetBoxInWorld()))
 		CSoundBox::GetInstance()->Play(CSoundBox::sounds::enemyShieldDamage, false);

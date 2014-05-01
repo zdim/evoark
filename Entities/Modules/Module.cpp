@@ -64,7 +64,7 @@ void CModule::TakeDamage(int damage, bool collision)
 {
 	damage -= owner->RequestShield(damage);
 	if (collision)
-		damage *= COLLISION_MODIFIER;
+		damage = int((float)damage * COLLISION_MODIFIER);
 	hull -= damage;
 	damaged = .15f;
 	if (hull <= 0)

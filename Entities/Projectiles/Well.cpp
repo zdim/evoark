@@ -43,17 +43,17 @@ void CWell::HandleCollision(IEntity* other)
 		if (type == EntityType::Asteroid)
 		{
 			CAsteroid* ast = dynamic_cast<CAsteroid*>(other);
-			ast->TakeDamage(strength * 0.075f);
+			ast->TakeDamage(int(strength * 0.075f));
 		}
 		else if (type >= EntityType::Player && type <= EntityType::Coordinator)
 		{
 			CShip* ship = dynamic_cast<CShip*>(other);
-			ship->TakeDamage(strength * 0.075f);
+			ship->TakeDamage(int(strength * 0.075f));
 		}
 		else if (type >= EntityType::BaseModule && type <= EntityType::WarpModule)
 		{
 			CModule* mod = dynamic_cast<CModule*>(other);
-			mod->TakeDamage(strength * 0.075f);
+			mod->TakeDamage(int(strength * 0.075f));
 		}
 		return;
 	}
