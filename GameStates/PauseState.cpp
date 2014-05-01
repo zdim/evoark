@@ -88,7 +88,7 @@ void CPauseState::Enter()
 	buttons[menuReturn::Upgrades] = "Upgrades";
 	buttons[menuReturn::MainMenu] = "Main Menu";
 	buttons[menuReturn::Options] = "Options";
-	menu = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "Paused", { Game::GetInstance()->GetScreenWidth() * .2f, Game::GetInstance()->GetScreenHeight() * .4 }, false);
+	menu = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "Paused", { Game::GetInstance()->GetScreenWidth() * .2f, Game::GetInstance()->GetScreenHeight() * .4f }, false);
 }
 
 void CPauseState::Exit()

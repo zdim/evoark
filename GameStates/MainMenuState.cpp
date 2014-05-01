@@ -53,10 +53,10 @@ void CMainMenuState::Update(float dt)
 	backgroundStars2PosSecond.x -= 3 * dt;
 
 	if (backgroundStars2Pos.x < -Game::GetInstance()->GetScreenWidth())
-		backgroundStars2Pos.x = Game::GetInstance()->GetScreenWidth() * 2;
+		backgroundStars2Pos.x = Game::GetInstance()->GetScreenWidth() * 2.f;
 
 	if (backgroundStars2PosSecond.x < -Game::GetInstance()->GetScreenWidth())
-		backgroundStars2PosSecond.x = Game::GetInstance()->GetScreenWidth() * 2;
+		backgroundStars2PosSecond.x = Game::GetInstance()->GetScreenWidth() * 2.f;
 
 	backgroundSmokePos.x -= 100 * dt;
 	backgroundSmokePosSecond.x -= 100 * dt;
@@ -75,7 +75,7 @@ void CMainMenuState::Render()
 	SGD::GraphicsManager::GetInstance()->DrawTexture(backgroundStars2, backgroundStars2PosSecond);
 	SGD::GraphicsManager::GetInstance()->DrawTextureSection(backgroundSmoke, backgroundSmokePos, { 0, 0, 1024.f, 768.f }, 0, {}, { 40, 90, 100, 40 });
 	SGD::GraphicsManager::GetInstance()->DrawTextureSection(backgroundSmoke, backgroundSmokePosSecond, { 0, 0, 1024.f, 768.f }, 0, {}, { 40, 90, 100, 40 });
-	SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 50, 0, 0, 0 });
+	SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ float(Game::GetInstance()->GetScreenWidth()), float(Game::GetInstance()->GetScreenHeight()) } }, { 50, 0, 0, 0 });
 	if (Game::GetInstance()->GetTopState() != CProfileSelectState::GetInstance() && Game::GetInstance()->GetTopState() != CCreditsState::GetInstance())
 	{
 		//[ctrlf]FontRender

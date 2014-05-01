@@ -23,6 +23,7 @@ void CSoundBox::Enter()
 	uiFailureSFX = audio->LoadAudio("Resources/Audio/UIFailure.wav");
 	uiSuccessSFX = audio->LoadAudio("Resources/Audio/UISuccess.wav");
 	uiEnterSFX = audio->LoadAudio("Resources/Audio/UIEnter.wav");
+	uiSwishSFX = audio->LoadAudio("Resources/Audio/Swish.wav");
 
 	playerLaserSFX = audio->LoadAudio("Resources/Audio/LaserFire1.wav");
 	playerLaserFinalSFX = audio->LoadAudio("Resources/Audio/PlayerLaser2.wav");
@@ -36,7 +37,18 @@ void CSoundBox::Enter()
 
 	enemyHullDamageSFX = audio->LoadAudio("Resources/Audio/EnemyHullDamage.wav");
 	enemyShieldDamageSFX = audio->LoadAudio("Resources/Audio/EnemyShieldDamage.wav");
+
+
 	missileHitSFX = audio->LoadAudio("Resources/Audio/MissileHit.wav");
+
+
+	copperheadExplosion = audio->LoadAudio("Resources/Audio/CopperheadExplosion.wav");
+	cobraExlosion       = audio->LoadAudio("Resources/Audio/CobraExplosion.wav");
+	mediumExplosion     = audio->LoadAudio("Resources/Audio/Mamba&PlayerExplosion.wav");
+	coralExplosion      = audio->LoadAudio("Resources/Audio/CoralExplosion.wav");
+	moccasinExplosion   = audio->LoadAudio("Resources/Audio/MoccasinExplosion.wav");
+
+
 
 
 	creamMusic = audio->LoadAudio("Resources/Audio/cream.xwm");
@@ -51,6 +63,7 @@ void CSoundBox::Exit()
 	audio->UnloadAudio(uiFailureSFX);
 	audio->UnloadAudio(uiSuccessSFX);
 	audio->UnloadAudio(uiEnterSFX);
+	audio->UnloadAudio(uiSwishSFX);
 	audio->UnloadAudio(playerLaserSFX);
 	audio->UnloadAudio(playerLaserFinalSFX);
 	audio->UnloadAudio(playerMissileSFX);
@@ -63,6 +76,12 @@ void CSoundBox::Exit()
 	audio->UnloadAudio(creamMusic);
 	audio->UnloadAudio(slowTranceMusic);
 	audio->UnloadAudio(ambientMusic);
+
+	audio->UnloadAudio(copperheadExplosion);
+	audio->UnloadAudio(cobraExlosion);
+	audio->UnloadAudio(mediumExplosion);
+	audio->UnloadAudio(coralExplosion);
+	audio->UnloadAudio(moccasinExplosion);
 
 	audio->UnloadAudio(missileHitSFX);
 }
@@ -83,6 +102,9 @@ void CSoundBox::Play(int _soundEnum, bool _loop)
 		break;
 	case uiEnter:
 		soundToPlay = uiEnterSFX;
+		break;
+	case uiSwish:
+		soundToPlay = uiSwishSFX;
 		break;
 	case playerLaser:
 		soundToPlay = playerLaserSFX;
@@ -125,6 +147,22 @@ void CSoundBox::Play(int _soundEnum, bool _loop)
 	case missileHit:
 		soundToPlay = missileHitSFX;
 		break;
+	case copperheadE:
+		soundToPlay = copperheadExplosion;
+		break;
+	case cobraE:
+		soundToPlay = cobraExlosion;
+		break;
+	case mExplosion:
+		soundToPlay = mediumExplosion;
+		break;
+	case cExplosion:
+		soundToPlay = coralExplosion;
+		break;
+	case bossExplosion:
+		soundToPlay = moccasinExplosion;
+		break;
+
 	default:
 		break;
 	}

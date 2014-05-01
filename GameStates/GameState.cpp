@@ -80,7 +80,7 @@ void	CTestLevelState::Enter(void)
 	//soundBox->Enter();
 	soundBox->Play(CSoundBox::sounds::slowTrance, true);
 
-	//EntityManager->Spawn(EntityType::Stargate, { 200, 200 });
+	EntityManager->Spawn(EntityType::Mamba, { 200, 200 });
 	//EntityManager->Spawn(EntityType::Moccasin, { 600, 600 }, 4);
 	//EntityManager->GetBoss()->Init(4);
 	//EntityManager->GetBoss()->SetImages(EntityManager->GetImages());
@@ -294,8 +294,8 @@ void	CTestLevelState::Render(void)
 			{
 				graphics->DrawTexture(backgroundStars1, stars1Pos + SGD::Vector{ 1024.f * i, 768.f * j });
 				//graphics->DrawTexture(backgroundPlanet1, planet1Pos + SGD::Vector{ 1024.f, 768.f } * i);
-				graphics->DrawTexture(backgroundPlanet2, planet2Pos + SGD::Vector{ 1024.f, 768.f } * i);
-				graphics->DrawTexture(backgroundStars, starsPos + SGD::Vector{ 1024.f * i, 768.f * j });
+				graphics->DrawTexture(backgroundPlanet2, planet2Pos + SGD::Vector{ 1024.f, 768.f } * (float)i);
+				graphics->DrawTexture(backgroundStars, starsPos + SGD::Vector{ 1024.f * i, 768.f * (float)j });
 				graphics->DrawTextureSection(backgroundNebula, { nebulaPos.x + 1024.f * i, nebulaPos.y + 768.f * j }, { 0, 0, 1024.f, 768.f }, 0, {}, { 50, 50, 120, 100 });
 			}
 		}
@@ -740,7 +740,10 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 										{
 										case EntityType::Laser:
 											if (lMsg->GetTier() < 3)
+											{
+												//if (lMsg->GetOwner()->GetType() == (int)EntityType::Player)
 												CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaser, false);
+											}											
 											else
 												CTestLevelState::GetInstance()->soundBox->Play(CSoundBox::sounds::playerLaserFinal, false);
 											break;

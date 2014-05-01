@@ -138,7 +138,7 @@ void COptionsState::Update(float dt)
 
 void COptionsState::Render()
 {
-	SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 150, 0, 0, 0 });
+	SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ float(Game::GetInstance()->GetScreenWidth()), float(Game::GetInstance()->GetScreenHeight()) } }, { 150, 0, 0, 0 });
 
 	menu->Render();
 

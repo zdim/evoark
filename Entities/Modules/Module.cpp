@@ -3,6 +3,7 @@
 #include "../Ships/Enemies/Coral.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../Graphics/Particles/ParticleSystem.h"
+#include "../../SoundBox.h"
 CModule::CModule()
 {
 	owner = nullptr;
@@ -73,6 +74,7 @@ void CModule::TakeDamage(int damage, bool collision)
 		{
 			if (owner->GetType() == (int)EntityType::Coral)
 			{
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::cExplosion, false);
 				CParticleSystem::GetInstance()->AddEmitter(23, this);
 				CParticleSystem::GetInstance()->AddEmitter(24, this);
 				CParticleSystem::GetInstance()->AddEmitter(25, this);
@@ -81,6 +83,7 @@ void CModule::TakeDamage(int damage, bool collision)
 
 			if (owner->GetType() == (int)EntityType::Moccasin)
 			{
+				CSoundBox::GetInstance()->Play(CSoundBox::sounds::bossExplosion, false);
 				CParticleSystem::GetInstance()->AddEmitter(26, this);
 				CParticleSystem::GetInstance()->AddEmitter(27, this);
 				CParticleSystem::GetInstance()->RemoveEmitter(this);

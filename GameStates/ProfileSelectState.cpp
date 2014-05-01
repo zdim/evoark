@@ -2,6 +2,7 @@
 #include "../SGD Wrappers/SGD_InputManager.h"
 #include "../SGD Wrappers/SGD_GraphicsManager.h"
 #include "Game.h"
+#include "../SoundBox.h"
 #include "../BitmapFont/BitmapFont.h"
 #include "MainMenuState.h"
 #include <string>
@@ -80,6 +81,7 @@ void CProfileSelectState::SeletionInput()
 			currentProfile++;
 		state = MyState::Transition;
 		transTimer = 0;
+		CSoundBox::GetInstance()->Play((int)CSoundBox::sounds::uiSwish, false);
 	}
 	if (joy1.x < 0 || joy2.x < 0)
 	{
@@ -89,6 +91,7 @@ void CProfileSelectState::SeletionInput()
 			currentProfile--;
 		state = MyState::Transition;
 		transTimer = 0;
+		CSoundBox::GetInstance()->Play((int)CSoundBox::sounds::uiSwish, false);
 	}
 	if (input->IsButtonPressed(0, 0) || input->IsButtonPressed(1, 0))
 	{
@@ -111,6 +114,7 @@ void CProfileSelectState::SeletionInput()
 				currentProfile++;
 			state = MyState::Transition;
 			transTimer = 0;
+			CSoundBox::GetInstance()->Play((int)CSoundBox::sounds::uiSwish, false);
 		}
 		if (mouse.IsWithinRectangle(SGD::Rectangle{ previous, profileSize }))
 		{
@@ -120,6 +124,7 @@ void CProfileSelectState::SeletionInput()
 				currentProfile--;
 			state = MyState::Transition;
 			transTimer = 0;
+			CSoundBox::GetInstance()->Play((int)CSoundBox::sounds::uiSwish, false);
 		}
 	}
 #else
@@ -138,6 +143,7 @@ void CProfileSelectState::SeletionInput()
 			currentProfile++;
 		state = MyState::Transition;
 		transTimer = 0;
+		CSoundBox::GetInstance()->Play((int)CSoundBox::sounds::uiSwish, false);
 	}
 	if (input->IsKeyPressed(SGD::Key::LeftArrow) || input->IsDPadPressed(0, SGD::DPad::Left))
 	{
@@ -147,6 +153,7 @@ void CProfileSelectState::SeletionInput()
 			currentProfile--;
 		state = MyState::Transition;
 		transTimer = 0;
+		CSoundBox::GetInstance()->Play((int)CSoundBox::sounds::uiSwish, false);
 	}
 	if (input->IsKeyPressed(SGD::Key::Enter) || input->IsButtonPressed(0, 0))
 	{
@@ -169,6 +176,7 @@ void CProfileSelectState::SeletionInput()
 				currentProfile++;
 			state = MyState::Transition;
 			transTimer = 0;
+			CSoundBox::GetInstance()->Play((int)CSoundBox::sounds::uiSwish, false);
 		}
 		if (mouse.IsWithinRectangle(SGD::Rectangle{ previous, profileSize }))
 		{
@@ -178,6 +186,7 @@ void CProfileSelectState::SeletionInput()
 				currentProfile--;
 			state = MyState::Transition;
 			transTimer = 0;
+			CSoundBox::GetInstance()->Play((int)CSoundBox::sounds::uiSwish, false);
 		}
 	}
 #endif
@@ -402,7 +411,7 @@ void CProfileSelectState::Render()
 		menu->Render();
 		if (state >= MyState::ConfirmOverwrite)
 		{
-			SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 90, 0, 0, 0 });
+			SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ float(Game::GetInstance()->GetScreenWidth()), float(Game::GetInstance()->GetScreenHeight()) } }, { 90, 0, 0, 0 });
 			confirm->Render();
 		}
 	}

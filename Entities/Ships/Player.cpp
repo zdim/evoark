@@ -227,7 +227,6 @@ void CPlayer::Update(float dt)
 			if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 7))
 			{
 				tutorialWaitForInput[5] = false;
-				//CreatePush();
 			}
 			return;
 		}
@@ -415,7 +414,7 @@ void CPlayer::Render()
 	{
 		std::ostringstream levelText;
 		levelText << "Level " << level;
-		Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .25f, Game::GetInstance()->GetScreenHeight() * .65f + levelUpTimer / 3.f * Game::GetInstance()->GetScreenHeight() * .10f }, levelText.str().c_str(), false, levelUpTimer / 3.f * 255);
+		Game::GetInstance()->FontPoiret.Write({ Game::GetInstance()->GetScreenWidth() * .25f, Game::GetInstance()->GetScreenHeight() * .65f + levelUpTimer / 3.f * Game::GetInstance()->GetScreenHeight() * .10f }, levelText.str().c_str(), false, char(levelUpTimer / 3.f * 255));
 
 	}
 

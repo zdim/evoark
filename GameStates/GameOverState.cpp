@@ -81,7 +81,7 @@ void CGameOverState::Render()
 
 	if (m_fTimer > m_fDelay)
 	{
-		SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() } }, { 100, 0, 0, 0 });
+		SGD::GraphicsManager::GetInstance()->DrawRectangle({ { 0, 0 }, SGD::Point{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() } }, { 100, 0, 0, 0 });
 		menu->Render();
 	}
 }
