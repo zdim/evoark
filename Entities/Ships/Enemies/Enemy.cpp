@@ -310,6 +310,9 @@ void CEnemy::SelfDestruct()
 
 void CEnemy::SetAvoid(IEntity* newAvoid)
 {
+	if (avoid == newAvoid)
+		return;
+
 	if (avoid)
 		avoid->Release();
 

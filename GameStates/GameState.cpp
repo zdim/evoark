@@ -789,30 +789,31 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 							   if (GetInstance()->m_bBossKilled == true)
 							   {
 								   GetInstance()->EntityManager->Save();
+								   saveData save = CGameplayState::GetInstance()->GetSaveData();
 								   if (CGameplayState::GetInstance()->GetLevel() == Level::Tutorial)
 								   {
-									   CGameplayState::GetInstance()->SetLevel(Level::Gen1);
-									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+									   save.currLevel = Level::Gen1;
+									   save.world.saved = false;
 								   }
 								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen1)
 								   {
-									   CGameplayState::GetInstance()->SetLevel(Level::Gen2);
-									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+									   save.currLevel = Level::Gen2;
+									   save.world.saved = false;
 								   }
 								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen2)
 								   {
-									   CGameplayState::GetInstance()->SetLevel(Level::Gen3);
-									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+									   save.currLevel = Level::Gen3;
+									   save.world.saved = false;
 								   }
 								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen3)
 								   {
-									   CGameplayState::GetInstance()->SetLevel(Level::Waves);
-									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+									   save.currLevel = Level::Waves;
+									   save.world.saved = false;
 								   }
-
+								   CGameplayState::GetInstance()->SetSaveData(save);
 								   CGameOverState::GetInstance()->SetWin(true);
+								   GetInstance()->m_bBossKilled = false;
 								   Game::GetInstance()->PushState(CGameOverState::GetInstance());
-
 								   break;
 							   }
 							   break;
