@@ -22,6 +22,7 @@
 #include "../Message System/CreateTriggerMessage.h"
 #include "Collidables\EventTrigger.h"
 #include "../GameStates/GameplayState.h"
+#include "../Message System/BossKilledMessage.h"
 
 CEntityManager::CEntityManager()
 {
@@ -1498,6 +1499,12 @@ void CEntityManager::Load()
 		if (modShield)
 			ships.push_back(modShield);
 		boss->SetPosition(save.world.boss.position);
+	}
+	else
+	{
+		boss = nullptr;
+		BossKilledMessage* msg = new BossKilledMessage;
+		msg->QueueMessage();
 	}
 
 	for (unsigned int i = 0; i < save.world.entities.size(); i++)

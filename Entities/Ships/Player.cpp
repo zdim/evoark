@@ -436,7 +436,7 @@ void CPlayer::Render()
 void CPlayer::AddGravity(SGD::Vector grav)
 {
 	if (warpTimer >= warpDuration)
-		gravVec += grav;
+		gravVec = grav;
 }
 
 void CPlayer::CreateLaser()

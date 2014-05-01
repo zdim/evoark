@@ -88,6 +88,8 @@ void CGameOverState::Render()
 
 void CGameOverState::Enter()
 {
+	m_fTimer = 0;
+
 	std::vector<std::string> buttons;
 	buttons.resize(menuReturn::count);
 	buttons[menuReturn::play] = "Continue";
