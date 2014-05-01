@@ -23,6 +23,7 @@ void CSoundBox::Enter()
 	uiFailureSFX = audio->LoadAudio("Resources/Audio/UIFailure.wav");
 	uiSuccessSFX = audio->LoadAudio("Resources/Audio/UISuccess.wav");
 	uiEnterSFX = audio->LoadAudio("Resources/Audio/UIEnter.wav");
+	uiSwishSFX = audio->LoadAudio("Resources/Audio/Swish.wav");
 
 	playerLaserSFX = audio->LoadAudio("Resources/Audio/LaserFire1.wav");
 	playerLaserFinalSFX = audio->LoadAudio("Resources/Audio/PlayerLaser2.wav");
@@ -51,6 +52,7 @@ void CSoundBox::Exit()
 	audio->UnloadAudio(uiFailureSFX);
 	audio->UnloadAudio(uiSuccessSFX);
 	audio->UnloadAudio(uiEnterSFX);
+	audio->UnloadAudio(uiSwishSFX);
 	audio->UnloadAudio(playerLaserSFX);
 	audio->UnloadAudio(playerLaserFinalSFX);
 	audio->UnloadAudio(playerMissileSFX);
@@ -83,6 +85,9 @@ void CSoundBox::Play(int _soundEnum, bool _loop)
 		break;
 	case uiEnter:
 		soundToPlay = uiEnterSFX;
+		break;
+	case uiSwish:
+		soundToPlay = uiSwishSFX;
 		break;
 	case playerLaser:
 		soundToPlay = playerLaserSFX;
