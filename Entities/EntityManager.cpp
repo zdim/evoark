@@ -119,7 +119,8 @@ void CEntityManager::Initialize()
 	images[(int)EntityType::WarpModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
 
 	//Projectiles 
-	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Projectiles/am_blaster_hardpoint_glow.png", { 255, 100, 100 });
+	//images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Projectiles/am_blaster_hardpoint_glow.png", { 255, 100, 100 });
+	images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/laserOne.png", { 255, 100, 100 });
 	images[(int)EntityType::Missile] = graphics->LoadTexture("Resources/Graphics/Projectiles/VG_MissileLRM.png");
 
 	//Collidables
@@ -647,6 +648,11 @@ void CEntityManager::SpawnProjectile(EntityType type, SGD::Point position, SGD::
 	}
 	case EntityType::Well:
 	{
+							 for (unsigned int i = 0; i < stationaries.size(); i++)
+							 {
+								 if ((stationaries[i]->GetType() == (int)EntityType::Planet  || stationaries[i]->GetType() == (int)EntityType::Barrier) && position.IsWithinRectangle(stationaries[i]->GetRect()))
+									 break;
+							 }
 							 CWell* well = new CWell;
 							 well->SetImage(images[(int)EntityType::Well]);
 							 well->SetRadius(radius);

@@ -16,7 +16,7 @@
 CLaser::CLaser()
 {
 	
-	size = { 8, 18 };
+	size = { 10, 20 };
 
 	
 }
