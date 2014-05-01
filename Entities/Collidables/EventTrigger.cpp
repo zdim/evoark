@@ -142,7 +142,11 @@ void EventTrigger::Render()
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .65f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "you with experience,");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .67f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "as well as provide more aid");
 			Game::GetInstance()->FontSmall.WriteCenter({ { screenSize.width * .30f, screenSize.height * .69f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .05f } }, "in the final battle.");
-			graphics->DrawTextureSection(CEntityManager::GetInstance()->GetImages()[(int)EntityType::Human], { screenSize.width * .20f, screenSize.height * .70f }, { 0, 0, 60, 70 }, 0, {}, { 230, 255, 255, 255 }, { .75f, .75f });
+			
+			//drawing human
+			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .20f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .08f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);
+
+			graphics->DrawTextureSection(CEntityManager::GetInstance()->GetImages()[(int)EntityType::Human], { screenSize.width * .212f, screenSize.height * .63f }, { 0, 0, 60, 70 }, 0, {}, { 230, 255, 255, 255 }, { .75f, .75f });
 			break;
 		case (int)triggerID::tutUpgrade:
 			graphics->DrawRectangle(SGD::Rectangle{ { screenSize.width * .30f, screenSize.height * .6f }, SGD::Size{ screenSize.width * .4f, screenSize.height * .15f } }, { 200, 0, 0, 0 }, { 200, 255, 255, 255 }, 2);

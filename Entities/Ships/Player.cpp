@@ -227,7 +227,6 @@ void CPlayer::Update(float dt)
 			if (input->IsKeyPressed(SGD::Key::Escape) || input->IsButtonPressed(0, 7))
 			{
 				tutorialWaitForInput[5] = false;
-				//CreatePush();
 			}
 			return;
 		}
