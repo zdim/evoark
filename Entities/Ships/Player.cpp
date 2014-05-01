@@ -533,7 +533,6 @@ void CPlayer::CreatePush()
 {
 	if (pushTimer <= pushDelay)
 		return;
-	//CParticleSystem::GetInstance()->AddEmitter(17, this);
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerPush, false);
 	pushTimer = 0;
 
@@ -633,6 +632,7 @@ void CPlayer::AddExp(int _exp)
 	if (this->exp >= expRequired)
 	{
 		CParticleSystem::GetInstance()->RemoveEmitter(this);
+
 		CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerLevelUp, false);
 		level++;
 		perks++;
@@ -644,20 +644,6 @@ void CPlayer::AddExp(int _exp)
 		hull = maxHull;
 		levelUpTimer = 3.f;
 
-		m_Engine = new CEmitter(
-			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetParticleData(),
-			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitterSize(),
-			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetShape(),
-			position,
-			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetNumParticles(),
-			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnRate(),
-			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetSpawnTimeFromLastSpawn(),
-			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitType(),
-			CParticleSystem::GetInstance()->GetParticleEffect(5)->GetEmitTime()
-			);
-
-		m_Engine->Initialize();
-		m_Engine->SetOwner(this);
 	}
 }
 
