@@ -265,7 +265,16 @@ bool CUpgradeState::Input()
 		}
 	}
 
-	return true;
+	int ret = menu->Input();
+	switch (ret)
+	{
+	case menuReturn::back:
+		Game::GetInstance()->PopState();
+		return true;
+	default:
+		return true;
+	}
+
 }
 
 void CUpgradeState::Update(float dt)
@@ -498,6 +507,8 @@ void CUpgradeState::Render()
 	std::ostringstream perksToSpend;
 	perksToSpend << "Perks to spend: " << player->GetPerks();
 	Game::GetInstance()->FontPoiret.Write({ screenWidth * .7f, screenHeight * .8f }, perksToSpend.str().c_str());
+
+	menu->Render();
 }
 
 void CUpgradeState::Enter()
@@ -526,6 +537,11 @@ void CUpgradeState::Enter()
 	{
 		buttons.push_back({ SGD::Point{ Game::GetInstance()->GetScreenWidth() * .15f * (i / 3 + 1), Game::GetInstance()->GetScreenHeight() * (.55f - (i % 3) * .20f) }, SGD::Size{ 64, 64 } });
 	}
+
+	std::vector<std::string> buttons;
+	buttons.resize(menuReturn::count);
+	buttons[menuReturn::back] = "Back";
+	menu = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "", { Game::GetInstance()->GetScreenWidth() * .12f, Game::GetInstance()->GetScreenHeight() * .85f }, false, false);
 }
 
 void CUpgradeState::Exit()
@@ -536,4 +552,7 @@ void CUpgradeState::Exit()
 	{
 		SGD::GraphicsManager::GetInstance()->UnloadTexture(iconTextures[i]);
 	}
+
+	delete menu;
+	menu = nullptr;
 }
