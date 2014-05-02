@@ -9,7 +9,6 @@ CUpgradeState::CUpgradeState()
 {
 }
 
-
 CUpgradeState::~CUpgradeState()
 {
 }
@@ -75,7 +74,6 @@ bool CUpgradeState::Input()
 			cursor--;
 		CSoundBox::GetInstance()->Play(CSoundBox::sounds::uiHighlight, false);
 	}
-
 
 #if ARCADE
 	else if (input->GetLeftJoystick(0).x > 0 || input->GetLeftJoystick(1).x > 0)
@@ -302,31 +300,12 @@ void CUpgradeState::Render()
 	Game::GetInstance()->FontSmall.WriteCenter({ screenWidth * .87f, screenHeight * .40f, screenWidth * .98f, screenHeight * .52f }, "1 Perk");
 	Game::GetInstance()->FontSmall.WriteCenter({ screenWidth * .87f, screenHeight * .60f, screenWidth * .98f, screenHeight * .72f }, "1 Perk");
 
-
-
 	// ability names
-	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .10f, screenHeight * .65f, screenWidth * .25f,  screenHeight * .75f }, "Lasers");
-	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .25f, screenHeight * .65f, screenWidth * .40f,  screenHeight * .75f }, "Missiles");
-	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .40f, screenHeight * .65f, screenWidth * .55f,  screenHeight * .75f }, "Warp");
-	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .55f, screenHeight * .65f, screenWidth * .70f,  screenHeight * .75f }, "Well");
-	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .70f, screenHeight * .65f, screenWidth * .85f,  screenHeight * .75f }, "Push");
-
-	// draw upgrade boxes / icons
-	//graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .15f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .35f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .15f, screenHeight * .55f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .15f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .35f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .30f, screenHeight * .55f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .15f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .35f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .45f, screenHeight * .55f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .15f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .35f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .60f, screenHeight * .55f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .15f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .35f });
-	//graphics->DrawTexture(iconTexture, { screenWidth * .75f, screenHeight * .55f });
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .10f, screenHeight * .65f, screenWidth * .28f,  screenHeight * .75f }, "Lasers");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .25f, screenHeight * .65f, screenWidth * .43f,  screenHeight * .75f }, "Missiles");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .40f, screenHeight * .65f, screenWidth * .58f,  screenHeight * .75f }, "Warp");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .55f, screenHeight * .65f, screenWidth * .73f,  screenHeight * .75f }, "Well");
+	Game::GetInstance()->FontPoiret.WriteCenter({ screenWidth * .70f, screenHeight * .65f, screenWidth * .88f,  screenHeight * .75f }, "Push");
 
 	for (int i = 0; i < 15; i++)
 	{
@@ -518,7 +497,7 @@ void CUpgradeState::Render()
 		graphics->DrawRectangle({ { screenWidth * .15f * (cursor / 3 + 1), screenHeight * (.55f - (cursor % 3) * .20f) }, SGD::Size{ 64, 64 } }, { 50, 255, 255, 255 }, { 255, 255, 255 }, 2);
 	std::ostringstream perksToSpend;
 	perksToSpend << "Perks to spend: " << player->GetPerks();
-	Game::GetInstance()->FontSmall.Write({ screenWidth * .7f, screenHeight * .8f }, perksToSpend.str().c_str());
+	Game::GetInstance()->FontPoiret.Write({ screenWidth * .7f, screenHeight * .8f }, perksToSpend.str().c_str());
 }
 
 void CUpgradeState::Enter()
@@ -542,7 +521,6 @@ void CUpgradeState::Enter()
 	iconTextures[pushOne]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushyellow.png");
 	iconTextures[pushTwo]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushred.png");
 	iconTextures[pushThree]		= SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/pushteal.png");
-
 
 	for (int i = 0; i < 15; i++)
 	{
