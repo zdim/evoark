@@ -20,6 +20,7 @@ CPush::CPush()
 
 CPush::~CPush()
 {
+	SetOwner(nullptr);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushOne);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushTwo);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(pushThree);
@@ -39,7 +40,7 @@ void CPush::Update(float dt)
 	else
 		alpha = 255 - 255 * (life - .10f) / .20f;
 
-	CEntity::Update(dt);
+	//CEntity::Update(dt);
 
 	if (life > duration)
 		SelfDestruct();

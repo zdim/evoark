@@ -240,6 +240,11 @@ void CPlayer::Update(float dt)
 	pushTimer += dt;
 	warpTimer += dt;
 
+	if (warpTimer - dt < warpDuration && warpTimer >= warpDuration)
+	{
+		CCamera::GetInstance()->SetSpeed(speed);
+	}
+
 	if (shieldTimer >= shieldDelay)
 	{
 		shield += int(shieldRegen * dt);
@@ -573,6 +578,7 @@ void CPlayer::Warp()
 	CParticleSystem::GetInstance()->AddEmitter(15, this);
 	CSoundBox::GetInstance()->Play(CSoundBox::sounds::playerWarp, false);
 	warpTimer = 0;
+	CCamera::GetInstance()->SetSpeed(speed + warpSpeed * 0.5f);
 }
 
 void CPlayer::TakeDamage(int damage, bool collision)

@@ -60,26 +60,26 @@ void CLeader::CalculateDestinations()
 	{
 		SGD::Size screenSize = CCamera::GetInstance()->GetBoxInWorld().ComputeSize();
 		SGD::Vector fromCall = position - backupCall;
-		if (fromCall.ComputeLength() <= screenSize.width * 5)
-		{
+//		if (fromCall.ComputeLength() <= screenSize.width * 5)
+	//	{
 			std::vector<SGD::Vector> offsets = equidistantPointsInCircle(members.size(), members[0]->GetSize().height * 3);
 			for (unsigned int i = 0; i < members.size(); i++)
 			{
 				destinations[i] = backupCall + offsets[i];
 			}
 			return;
-		}
-		fromCall.Normalize();
-		SGD::Vector offset = fromCall * screenSize.width * 2.5;
-		SGD::Point offscreen = backupCall + offset;
-		std::vector<SGD::Vector> offsets = equidistantPointsInCircle(members.size(), members[0]->GetSize().height * 3);
-		for (unsigned int i = 0; i < destinations.size(); i++)
-		{
-			destinations[i] = offscreen + offsets[i];
-		}
-		Teleport();
-		CalculateDestinations();
-		return;
+		//}
+		//fromCall.Normalize();
+		//SGD::Vector offset = fromCall * screenSize.width * 2.5;
+		//SGD::Point offscreen = backupCall + offset;
+		//std::vector<SGD::Vector> offsets = equidistantPointsInCircle(members.size(), members[0]->GetSize().height * 3);
+		//for (unsigned int i = 0; i < destinations.size(); i++)
+		//{
+		//	destinations[i] = offscreen + offsets[i];
+		//}
+		//Teleport();
+		//CalculateDestinations();
+		//return;
 	}
 
 	if (target == nullptr)

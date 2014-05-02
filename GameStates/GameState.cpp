@@ -252,7 +252,7 @@ void	CTestLevelState::Update(float dt)
 	}
 
 
-	if (CGameplayState::GetInstance()->GetLevel() == Level::Waves && EntityManager->GetAllies().empty() && EntityManager->GetBoss() == nullptr)
+	if (CGameplayState::GetInstance()->GetLevel() == Level::Waves && EntityManager->GetAllies().empty() && EntityManager->GetBoss() == nullptr && EntityManager->GetStargate() == nullptr)
 	{
 		if (player->GetPosition().x < GetWorldSize().width * .5f)
 			EntityManager->Spawn(EntityType::Moccasin, { float(m_nNumQuadsWidth * m_nQuadWidth) * .75f, float(m_nNumQuadsHeight * m_nQuadHeight) *.5f }, 4, false);
@@ -704,7 +704,7 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 
 										SGD::Vector dir = dynamic_cast<CMoccasin*>(cMsg->GetSender())->GetTarget()->GetPosition() - randPosition;								
 										dir.Normalize();
-										SGD::Vector velocity = dir * (rand() % 200 + 100);
+										SGD::Vector velocity = dir * float(rand() % 200 + 100);
 
 										CTestLevelState::GetInstance()->EntityManager->SpawnCollidable(EntityType::Asteroid, randPosition, SGD::Size{ 0,0 }, velocity);
 
@@ -790,30 +790,31 @@ void CTestLevelState::MessageProc(const SGD::Message* msg)
 							   if (GetInstance()->m_bBossKilled == true)
 							   {
 								   GetInstance()->EntityManager->Save();
+								   saveData save = CGameplayState::GetInstance()->GetSaveData();
 								   if (CGameplayState::GetInstance()->GetLevel() == Level::Tutorial)
 								   {
-									   CGameplayState::GetInstance()->SetLevel(Level::Gen1);
-									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+									   save.currLevel = Level::Gen1;
+									   save.world.saved = false;
 								   }
 								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen1)
 								   {
-									   CGameplayState::GetInstance()->SetLevel(Level::Gen2);
-									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+									   save.currLevel = Level::Gen2;
+									   save.world.saved = false;
 								   }
 								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen2)
 								   {
-									   CGameplayState::GetInstance()->SetLevel(Level::Gen3);
-									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+									   save.currLevel = Level::Gen3;
+									   save.world.saved = false;
 								   }
 								   else if (CGameplayState::GetInstance()->GetLevel() == Level::Gen3)
 								   {
-									   CGameplayState::GetInstance()->SetLevel(Level::Waves);
-									   CGameplayState::GetInstance()->GetSaveData().world.saved = false;
+									   save.currLevel = Level::Waves;
+									   save.world.saved = false;
 								   }
-
+								   CGameplayState::GetInstance()->SetSaveData(save);
 								   CGameOverState::GetInstance()->SetWin(true);
+								   GetInstance()->m_bBossKilled = false;
 								   Game::GetInstance()->PushState(CGameOverState::GetInstance());
-
 								   break;
 							   }
 							   break;

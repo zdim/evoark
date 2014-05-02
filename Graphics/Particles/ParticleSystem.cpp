@@ -290,12 +290,12 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	std::string filePath = "Resources/XML/ParticleEffects/";
 	filePath += effectName;
 
-	char * effectFile = new char[filePath.size() + 1];
-	std::copy(filePath.begin(), filePath.end(), effectFile);
-	effectFile[filePath.size()] = '\0';
+	//char * effectFile = new char[filePath.size() + 1];
+	//std::copy(filePath.begin(), filePath.end(), effectFile);
+	//effectFile[filePath.size()] = '\0';
 
-	doc.LoadFile(effectFile);
-	delete effectFile;
+	doc.LoadFile(filePath.c_str());
+	//delete effectFile;
 	TiXmlElement* pRoot = doc.RootElement();
 
 	//int trash;
@@ -403,16 +403,16 @@ void CParticleSystem::LoadEffect(std::string effectName)
 	pFlyweight->Attribute("Enertia", &m_fInertia);
 
 
-	char * imageFile = new char[imageFilePath.size() + 1];
+	//char * imageFile = new char[imageFilePath.size() + 1];
 
-	std::copy(imageFilePath.begin(), imageFilePath.end(), imageFile);
-	imageFile[imageFilePath.size()] = '\0';
+	//std::copy(imageFilePath.begin(), imageFilePath.end(), imageFile);
+	//imageFile[imageFilePath.size()] = '\0';
 
-	SGD::HTexture ParticleImage = SGD::GraphicsManager::GetInstance()->LoadTexture(imageFile);
+	SGD::HTexture ParticleImage = SGD::GraphicsManager::GetInstance()->LoadTexture(imageFilePath.c_str());
 
 	SGD::Vector ParticleImageOffset = SGD::GraphicsManager::GetInstance()->GetTextureData(ParticleImage) / 2;
 
-	delete[] imageFile;
+	//delete[] imageFile;
 
 	CFlyweight *eData = new CFlyweight(ParticleImage, m_sStartScale, m_sEndScale,
 		ParticleImageOffset,

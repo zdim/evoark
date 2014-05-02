@@ -32,6 +32,8 @@ class CEntityManager
 	std::vector<SGD::HTexture> imagesAsteroids;
 	std::vector<SGD::HTexture> imagesPlanets;
 
+	float saveTimer = 0;
+	float saveDur = 2;
 
 
 
