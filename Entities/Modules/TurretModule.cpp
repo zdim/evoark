@@ -15,6 +15,7 @@ CTurretModule::CTurretModule()
 
 CTurretModule::~CTurretModule()
 {
+	SetTarget(nullptr);
 }
 
 void CTurretModule::SetTarget(CShip* newTarget)

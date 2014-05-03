@@ -37,6 +37,7 @@ void CProfileSelectState::Enter()
 	previous = SGD::Point{ profileSize.width * -0.75f, (screen.height - profileSize.height) * 0.75f };
 	 next = SGD::Point{ screen.width - profileSize.width * 0.25f, (screen.height - profileSize.height) * 0.75f };
 
+	 profileImage = SGD::GraphicsManager::GetInstance()->LoadTexture("Resources/Graphics/Hologram hud.png");
 }
 
 void CProfileSelectState::Exit()
@@ -49,6 +50,7 @@ void CProfileSelectState::Exit()
 	delete menu;
 	menu = nullptr;
 	font.Unload();
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(profileImage);
 }
 
 bool CProfileSelectState::Input()
@@ -535,13 +537,14 @@ saveData CProfileSelectState::CreateProfile()
 
 void CProfileSelectState::RenderProfile(int index, SGD::Point pos)
 {
-	SGD::GraphicsManager::GetInstance()->DrawRectangle(SGD::Rectangle{ pos, profileSize }, SGD::Color(0,0, 155));
+	//SGD::GraphicsManager::GetInstance()->DrawRectangle(SGD::Rectangle{ pos, profileSize }, SGD::Color(0,0, 155));
+	SGD::GraphicsManager::GetInstance()->DrawTexture(profileImage, pos,0.0f,{},{100,255,255,255});
 	if (index > 2)
 		index = 0;
 	if (index < 0)
 		index = 2;
 
-	SGD::Point fontCursor = pos;
+	SGD::Point fontCursor = pos + SGD::Vector{50,50};
 	saveData profile = profiles[index];
 	std::string text = "Profile " + std::to_string(profile.profile);
 	font.Write(fontCursor, text);

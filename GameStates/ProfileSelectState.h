@@ -24,7 +24,8 @@ class CProfileSelectState : public IGameState
 	SGD::Point current = SGD::Point{ 300, 200 };
 	SGD::Point next = SGD::Point{ 900, 300 };
 
-	SGD::Size profileSize = SGD::Size{ 375, 200 };
+	SGD::Size profileSize = SGD::Size{ 450, 250 };
+	SGD::HTexture profileImage = SGD::INVALID_HANDLE;
 
 	CProfileSelectState(){}
 	~CProfileSelectState(){}

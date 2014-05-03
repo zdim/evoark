@@ -109,14 +109,23 @@ void CEntityManager::Initialize()
 
 
 	//Change this when we have module assets
-	images[(int)EntityType::BaseModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
-	images[(int)EntityType::EngineModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
-	images[(int)EntityType::ShieldModule] = graphics->LoadTexture("Resources/Graphics/Ship1.png");
-	images[(int)EntityType::LaserModule] = graphics->LoadTexture("Resources/Graphics/Ship3.png");
-	images[(int)EntityType::MissileModule] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
-	images[(int)EntityType::WellModule] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
-	images[(int)EntityType::PushModule] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
-	images[(int)EntityType::WarpModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	//images[(int)EntityType::BaseModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	//images[(int)EntityType::EngineModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+	//images[(int)EntityType::ShieldModule] = graphics->LoadTexture("Resources/Graphics/Ship1.png");
+	//images[(int)EntityType::LaserModule] = graphics->LoadTexture("Resources/Graphics/Ship3.png");
+	//images[(int)EntityType::MissileModule] = graphics->LoadTexture("Resources/Graphics/Ship2.png");
+	//images[(int)EntityType::WellModule] = graphics->LoadTexture("Resources/Graphics/Ship4.png");
+	//images[(int)EntityType::PushModule] = graphics->LoadTexture("Resources/Graphics/Ship6.png");
+	//images[(int)EntityType::WarpModule] = graphics->LoadTexture("Resources/Graphics/shipTmp.png");
+
+	images[(int)EntityType::BaseModule] = graphics->LoadTexture("Resources/Graphics/modules.png");
+	images[(int)EntityType::EngineModule] = graphics->LoadTexture("Resources/Graphics/modules.png");
+	images[(int)EntityType::ShieldModule] = graphics->LoadTexture("Resources/Graphics/modules.png");
+	images[(int)EntityType::LaserModule] = graphics->LoadTexture("Resources/Graphics/modules_cannon.png");
+	images[(int)EntityType::MissileModule] = graphics->LoadTexture("Resources/Graphics/modules_cannon.png");
+	images[(int)EntityType::WellModule] = graphics->LoadTexture("Resources/Graphics/modules_cannon.png");
+	images[(int)EntityType::PushModule] = graphics->LoadTexture("Resources/Graphics/modules_cannon.png");
+	images[(int)EntityType::WarpModule] = graphics->LoadTexture("Resources/Graphics/modules_damaged.png");
 
 	//Projectiles 
 	//images[(int)EntityType::Laser] = graphics->LoadTexture("Resources/Graphics/Projectiles/am_blaster_hardpoint_glow.png", { 255, 100, 100 });
