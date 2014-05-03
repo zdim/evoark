@@ -355,10 +355,10 @@ void CPlayer::Update(float dt)
 		SGD::Vector rotationVec = { 0, -1 };
 
 		SGD::Vector rightThumb = { 0, 0 };
-		if (input->GetRightJoystick(0).y < 0)			rightThumb.y -= 1;
-		if (input->GetRightJoystick(0).y > 0)			rightThumb.y += 1;
-		if (input->GetRightJoystick(0).x < 0)			rightThumb.x -= 1;
-		if (input->GetRightJoystick(0).x > 0)			rightThumb.x += 1;
+		if (input->GetRightJoystick(0).y < -.30f)			rightThumb.y -= 1;
+		if (input->GetRightJoystick(0).y >  .30f)			rightThumb.y += 1;
+		if (input->GetRightJoystick(0).x < -.30f)			rightThumb.x -= 1;
+		if (input->GetRightJoystick(0).x >  .30f)			rightThumb.x += 1;
 		if (rightThumb != SGD::Vector{ 0, 0 })
 		{
 			//rightThumb.Normalize();

@@ -35,7 +35,15 @@ bool CCreditsState::Input()
 		return true;
 	}
 #endif
-	return true;
+	int ret = menu->Input();
+	switch (ret)
+	{
+	case menuReturn::back:
+		Game::GetInstance()->PopState();
+		return true;
+	default:
+		return true;
+	}
 }
 
 void CCreditsState::Update(float dt)
@@ -57,14 +65,19 @@ void CCreditsState::Render()
 	Game::GetInstance()->FontPoiret.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .6f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Programmer - Zach DiMarco");
 	Game::GetInstance()->FontPoiret.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .65f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Artist - Gregory Bay");
 	Game::GetInstance()->FontPoiret.WriteCenter(SGD::Rectangle{ { screenWidth * .25f, screenHeight * .7f }, SGD::Size{ screenWidth * .5f, screenHeight * .1f } }, "Artist - Caris Frazier");
+	menu->Render();
 }
 
 void CCreditsState::Enter()
 {
-
+	std::vector<std::string> buttons;
+	buttons.resize(menuReturn::count);
+	buttons[menuReturn::back] = "Back";
+	menu = new CMenu(&Game::GetInstance()->FontPoiret, buttons, "", { Game::GetInstance()->GetScreenWidth() * .12f, Game::GetInstance()->GetScreenHeight() * .85f }, false, false);
 }
 
 void CCreditsState::Exit()
 {
-
+	delete menu;
+	menu = nullptr;
 }

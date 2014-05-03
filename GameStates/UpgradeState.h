@@ -2,15 +2,18 @@
 #include "../SGD Wrappers/SGD_Handle.h"
 #include "IGameState.h"
 #include "../Entities/EntityManager.h"
+#include "../Menu.h"
 class CUpgradeState : public IGameState
 {
+	enum menuReturn { back, count };
+	CMenu* menu;
+
 	enum upgrades {
 		laserOne, laserTwo, laserThree, 
 		missileOne, missileTwo, missileThree, 
 		warpOne, warpTwo, warpThree, 
 		wellOne, wellTwo, wellThree, 
 		pushOne, pushTwo, pushThree, 
-		back
 	};
 
 	int cursor = 0;

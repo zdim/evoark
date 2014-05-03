@@ -1,8 +1,11 @@
 #pragma once
 #include "IGameState.h"
+#include "../Menu.h"
 class CCreditsState :
 	public IGameState
 {
+	enum menuReturn { back, count };
+	CMenu* menu;
 public:
 	CCreditsState();
 	virtual ~CCreditsState();
