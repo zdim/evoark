@@ -5,6 +5,8 @@
 #include "MainMenuState.h"
 #include <sstream>
 #include "../WinMain.h"
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 
 COptionsState::COptionsState()
 {
@@ -124,6 +126,13 @@ bool COptionsState::Input()
 		fullscreenOn = !fullscreenOn;
 		// make window fullscreen
 		SGD::GraphicsManager::GetInstance()->Resize(SGD::Size{ (float)Game::GetInstance()->GetScreenWidth(), (float)Game::GetInstance()->GetScreenHeight() }, !fullscreenOn);
+		if (fullscreenOn)
+		{
+			HWND hWnd = FindWindowA("EvoArk", "EvoArk");
+			RECT winSize;
+			GetWindowRect(hWnd, &winSize);
+			ClipCursor(&winSize);
+		}
 		return true;
 	default:
 		return true;

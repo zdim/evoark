@@ -115,7 +115,16 @@ bool Game::Initialize( int width, int height )
 	}
 
 	m_pGraphics->Resize(SGD::Size{ (float)m_nScreenWidth, (float)m_nScreenHeight }, m_bWindowed);
+	if (!m_bWindowed)
+	{
+		//RECT winSize;
+		//GetWindowRect(, &winSize);
 
+		HWND hWnd = FindWindowA("EvoArk", "EvoArk");
+		RECT winSize;
+		GetWindowRect(hWnd, &winSize);
+		ClipCursor(&winSize);
+	}
 //	m_hSfxMusic = m_pAudio->LoadAudio("resource/audio/JDS_backgroundMusic.xwm");
 //	m_pAudio->SetMasterVolume(SGD::AudioManager::VolumeType::MASTER_MUSIC, m_nVolMusic);
 //	m_pAudio->PlayAudio(m_hSfxMusic,true);
@@ -167,6 +176,18 @@ int Game::Main( void )
 	{
 		m_bWindowed = !m_bWindowed;
 		m_pGraphics->Resize(SGD::Size{ (float)m_nScreenWidth, (float)m_nScreenHeight }, m_bWindowed);
+
+		if (!m_bWindowed)
+		{
+			//RECT winSize;
+			//GetWindowRect(, &winSize);
+			
+			HWND hWnd = FindWindowA("EvoArk", "EvoArk");
+			RECT winSize;
+			GetWindowRect(hWnd, &winSize);
+			ClipCursor(&winSize);
+		}
+
 		return 0;
 	}
 #endif

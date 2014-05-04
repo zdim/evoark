@@ -14,7 +14,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>		// Win32 Application
 
-#include <vld.h>			// Visual Leak Detector!
+//#include <vld.h>			// Visual Leak Detector!
 #include "resource.h"
 #include "GameStates\Game.h"			// Game class
 #include "GameStates\GameState.h"
@@ -237,6 +237,7 @@ LRESULT CALLBACK WindowProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 	case WM_ACTIVATE:		// Window activated / deactivated
 		if( LOWORD( wParam ) != WA_INACTIVE )	//	gaining focus (unpause)
 		{
+
 		}
 		else									//	losing focus (pause)
 		{
