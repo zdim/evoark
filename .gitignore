@@ -1,7 +1,0 @@
-/Debug
-/Release
-/*.sdf
-/Resources/XML/Profiles
-/Tools/World Editor/*.suo
-/Tools/World Editor/obj/Debug
-/*.opensdf
